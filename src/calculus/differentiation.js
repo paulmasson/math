@@ -1,9 +1,9 @@
 
 function diff( f, x, n=1, method='ridders' ) {
 
-  // Central differences have h^2 error but division
-  //   by h^n increases roundoff error
-  // Step sizes chosen as epsilon^(1/(n+2)) to minimize error
+  // central differences have h**2 error but division
+  //   by h**n increases roundoff error
+  // step sizes chosen as epsilon**(1/(n+2)) to minimize error
 
   function difference() {
 

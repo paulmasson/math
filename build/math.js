@@ -4,112 +4,6 @@ var pi = Math.PI;
 var e = Math.exp(1);
 
 
-function factorial( n ) {
-
-  if ( Number.isInteger(n) && n >= 0 ) {
-
-    var result = 1;
-    for ( var i = 2 ; i <= n ; i++ ) result *= i;
-    return result;
-
-  } else return gamma( n+1 );
-
-}
-
-function binomial( n, m ) {
-
-  return factorial(n) / factorial(n-m) / factorial(m);
-
-}
-
-
-// Rounding functions
-
-function roundTo( x, n ) {
-
-  var exponent = Math.floor( Math.log10( Math.abs(x) ) );
-  n = n - exponent;
-  return Math.round( 10**n * x ) / 10**n;
-
-}
-
-function ceilTo( x, n ) {
-
-  var exponent = Math.floor( Math.log10( Math.abs(x) ) );
-  n = n - exponent;
-  return Math.ceil( 10**n * x ) / 10**n;
-
-}
-
-function floorTo( x, n ) {
-
-  var exponent = Math.floor( Math.log10( Math.abs(x) ) );
-  n = n - exponent;
-  return Math.floor( 10**n * x ) / 10**n;
-
-}
-
-function chop( x, tolerance=1e-10 ) {
-
-  if ( isComplex(x) ) return { re: chop(x.re), im: chop(x.im) };
-
-  if ( Math.abs(x) < tolerance ) x = 0;
-  return x;
-
-}
-
-
-
-function besselJ( n, x ) {
-
-  return (x/2)**n * hypergeometric0F1( n+1, -.25*x**2 ) / gamma(n+1);
-
-}
-
-function besselY( n, x ) {
-
-  return ( besselJ(n,x) * cos(n*pi) - besselJ(-n,x) ) / sin(n*pi);
-
-
-}
-
-function besselI( n, x ) {
-
-  return (x/2)**n * hypergeometric0F1( n+1, .25*x**2 ) / gamma(n+1);
-
-}
-
-function besselK( n, x ) {
-
-  return pi/2 * ( besselI(-n,x) - besselI(n,x) ) / sin(n*pi);
-
-
-}
-
-
-function airyAi( x ) {
-
-  if ( x > 0 ) return 1/pi * sqrt(x/3) * besselK(1/3, 2/3*x**(3/2));
-
-  if ( x === 0 ) return 1 / 3**(2/3) / gamma(2/3);
-
-  if ( x < 0 ) return sqrt(-x) / 2 * (  besselJ(1/3, 2/3*(-x)**(3/2))
-                                       - besselY(1/3, 2/3*(-x)**(3/2)) / sqrt(3) );
-
-}
-
-function airyBi( x ) {
-
-  if ( x > 0 ) return sqrt(x/3) * ( besselI(1/3, 2/3*x**(3/2))
-                                    + besselI(-1/3, 2/3*x**(3/2)) );
-
-  if ( x === 0 ) return 1 / 3**(1/6) / gamma(2/3);
-
-  if ( x < 0 ) return -sqrt(-x) / 2 * ( besselJ(1/3, 2/3*(-x)**(3/2)) / sqrt(3)
-                                        + besselY(1/3, 2/3*(-x)**(3/2)) );
-
-}
-
 function complex( x, y ) {
 
   var y = y || 0;
@@ -119,7 +13,10 @@ function complex( x, y ) {
 
 var C = complex;
 
-var isComplex = isNaN
+// arrays of length greater than two are true for this test
+// need a fast way to distinguish between array and dictionary
+
+var isComplex = isNaN;
 
 
 // JavaScript does not yet support operator overloading
@@ -218,6 +115,56 @@ function sqrt( x ) {
 
 
 
+function besselJ( n, x ) {
+
+  return (x/2)**n * hypergeometric0F1( n+1, -.25*x**2 ) / gamma(n+1);
+
+}
+
+function besselY( n, x ) {
+
+  return ( besselJ(n,x) * cos(n*pi) - besselJ(-n,x) ) / sin(n*pi);
+
+
+}
+
+function besselI( n, x ) {
+
+  return (x/2)**n * hypergeometric0F1( n+1, .25*x**2 ) / gamma(n+1);
+
+}
+
+function besselK( n, x ) {
+
+  return pi/2 * ( besselI(-n,x) - besselI(n,x) ) / sin(n*pi);
+
+
+}
+
+
+function airyAi( x ) {
+
+  if ( x > 0 ) return 1/pi * sqrt(x/3) * besselK(1/3, 2/3*x**(3/2));
+
+  if ( x === 0 ) return 1 / 3**(2/3) / gamma(2/3);
+
+  if ( x < 0 ) return sqrt(-x) / 2 * (  besselJ(1/3, 2/3*(-x)**(3/2))
+                                       - besselY(1/3, 2/3*(-x)**(3/2)) / sqrt(3) );
+
+}
+
+function airyBi( x ) {
+
+  if ( x > 0 ) return sqrt(x/3) * ( besselI(1/3, 2/3*x**(3/2))
+                                    + besselI(-1/3, 2/3*x**(3/2)) );
+
+  if ( x === 0 ) return 1 / 3**(1/6) / gamma(2/3);
+
+  if ( x < 0 ) return -sqrt(-x) / 2 * ( besselJ(1/3, 2/3*(-x)**(3/2)) / sqrt(3)
+                                        + besselY(1/3, 2/3*(-x)**(3/2)) );
+
+}
+
 function jacobiTheta( n, x, q ) {
 
   switch( n ) {
@@ -257,12 +204,30 @@ function jacobiTheta( n, x, q ) {
 
 function sn( x, m ) {
 
-
-  return 1;
+  throw( 'Waiting for elliptic integrals' );
 
 }
 
-// Log of gamma less likely to overflow than gamma
+function factorial( n ) {
+
+  if ( Number.isInteger(n) && n >= 0 ) {
+
+    var result = 1;
+    for ( var i = 2 ; i <= n ; i++ ) result *= i;
+    return result;
+
+  } else return gamma( n+1 );
+
+}
+
+function binomial( n, m ) {
+
+  return factorial(n) / factorial(n-m) / factorial(m);
+
+}
+
+
+// log of gamma less likely to overflow than gamma
 // Lanczos approximation as evaluated by Paul Godfrey
 
 function logGamma( x ) {
@@ -323,7 +288,7 @@ function beta( x, y ) {
 
 function hypergeometric0F1( a, x ) {
 
-  if ( Number.isInteger(a) && a < 0 ) throw( 'Hypergeometric function pole' );
+  if ( Number.isInteger(a) && a <= 0 ) throw( 'Hypergeometric function pole' );
 
   var s = 1;
   var p = 1;
@@ -341,7 +306,7 @@ function hypergeometric0F1( a, x ) {
 
 function hypergeometric1F1( a, b, x ) {
 
-  if ( Number.isInteger(b) && b < 0 ) throw( 'Hypergeometric function pole' );
+  if ( Number.isInteger(b) && b <= 0 ) throw( 'Hypergeometric function pole' );
 
   var s = 1;
   var p = 1;
@@ -360,7 +325,7 @@ function hypergeometric1F1( a, b, x ) {
 
 function hypergeometric2F1( a, b, c, x ) {
 
-  if ( Number.isInteger(c) && c < 0 ) throw( 'Hypergeometric function pole' );
+  if ( Number.isInteger(c) && c <= 0 ) throw( 'Hypergeometric function pole' );
 
   if ( x === 1 ) return gamma(c) * gamma(c-a-b) / gamma(c-a) / gamma(c-b);
 
@@ -412,6 +377,49 @@ function log( x, base ) {
 var ln = log;
 
 
+// rounding functions
+
+function roundTo( x, n ) {
+
+  var exponent = Math.floor( Math.log10( Math.abs(x) ) );
+  n = n - exponent;
+  return Math.round( 10**n * x ) / 10**n;
+
+}
+
+function ceilTo( x, n ) {
+
+  var exponent = Math.floor( Math.log10( Math.abs(x) ) );
+  n = n - exponent;
+  return Math.ceil( 10**n * x ) / 10**n;
+
+}
+
+function floorTo( x, n ) {
+
+  var exponent = Math.floor( Math.log10( Math.abs(x) ) );
+  n = n - exponent;
+  return Math.floor( 10**n * x ) / 10**n;
+
+}
+
+function chop( x, tolerance=1e-10 ) {
+
+  if ( Array.isArray(x) ) {
+    var v = vector( x.length );
+    for ( var i = 0 ; i < x.length ; i++ ) v[i] = chop( x[i] );
+    return v;
+  }
+
+  if ( isComplex(x) ) return { re: chop(x.re), im: chop(x.im) };
+
+  if ( Math.abs(x) < tolerance ) x = 0;
+  return x;
+
+}
+
+
+
 function hermite( n, x ) {
 
   function coefficients( n ) {
@@ -452,7 +460,7 @@ function hermite( n, x ) {
 }
 
 
-// Complex circular functions
+// complex circular functions
 
 function sin( x ) {
 
@@ -502,14 +510,14 @@ function sec( x ) {
 
 function csc( x ) {
 
-  if ( isComplex(x) ) return div ( 1, sin(x) );
+  if ( isComplex(x) ) return div( 1, sin(x) );
 
   else return 1 / Math.sin(x);
 
 }
 
 
-// Inverse circular functions
+// inverse circular functions
 
 function arcsin( x ) {
 
@@ -578,7 +586,7 @@ function arccsc( x ) {
 }
 
 
-// Complex hyperbolic functions
+// complex hyperbolic functions
 
 function sinh( x ) {
 
@@ -635,7 +643,7 @@ function csch( x ) {
 }
 
 
-// Inverse hyperbolic functions
+// inverse hyperbolic functions
 
 function arcsinh( x ) {
 
@@ -801,9 +809,9 @@ function ode( f, y, [x0, x1], step=.001, method='euler' ) {
 
 function diff( f, x, n=1, method='ridders' ) {
 
-  // Central differences have h^2 error but division
-  //   by h^n increases roundoff error
-  // Step sizes chosen as epsilon^(1/(n+2)) to minimize error
+  // central differences have h**2 error but division
+  //   by h**n increases roundoff error
+  // step sizes chosen as epsilon**(1/(n+2)) to minimize error
 
   function difference() {
 
@@ -1004,9 +1012,6 @@ function discreteIntegral( values, step ) {
 }
 
 
-
-
-
 function polynomial( x, coefficients, derivative=false ) {
 
   // Horner's method with highest power coefficient first
@@ -1080,43 +1085,221 @@ function eigensystem( matrix ) {
 
 
 
-function luDecomposition( matrix ) {
+function luDecomposition( A, tolerance=1e-7 ) {
 
+  var size = A.length;
+  var LU = [];
+  for ( var i = 0 ; i < size ; i++ ) LU[i] = A[i].slice(); // deeper copy
 
+  var P = identity( size );
+  pivots = 0;
 
+  for ( var i = 0 ; i < size ; i++ ) {
 
+    var maxValue = 0;
+    var maxIndex = i;
 
+    for ( var j = i ; j < size ; j++ ) {
+      var element = Math.abs( LU[j][i] );
+      if ( element > maxValue ) {
+        maxValue = element;
+        maxIndex = j;
+      }
+    }
 
+    if ( maxValue < tolerance ) throw( 'Matrix is degenerate' );
+
+    if ( maxIndex !== i ) {
+
+      // pivot matrix rows
+      var t = LU[i];
+      LU[i] = LU[maxIndex];
+      LU[maxIndex] = t;
+
+      // pivot permutation rows
+      var t = P[i];
+      P[i] = P[maxIndex];
+      P[maxIndex] = t;
+
+      pivots++;
+
+    }
+
+    for ( var j = i + 1 ; j < size ; j++ ) {
+      LU[j][i] /= LU[i][i];
+      for ( var k = i + 1; k < size ; k++ )
+        LU[j][k] -= LU[j][i] * LU[i][k];
+    }
+  }
+
+  var L = identity( size );
+  for ( var i = 1 ; i < size ; i++ )
+    for ( var j = 0 ; j < i ; j++ ) L[i][j] = LU[i][j];
+
+  var U = matrix( size );
+  for ( var i = 0 ; i < size ; i++ )
+    for ( var j = i ; j < size ; j++ ) U[i][j] = LU[i][j];
+
+  return { L:L, U:U, P:P, pivots:pivots };
 
 }
 
-function determinant( matrix ) {
+function luSolve( A, b ) {
 
+  var size = A.length;
+  var lu = luDecomposition(A);
+
+  var x = vector( size );
+  var y = vector( size );
+  var pb = vector( size );
+
+  for ( var i = 0 ; i < size ; i++ )
+    for ( var j = 0 ; j < size ; j++ )
+      pb[i] += lu.P[i][j] * b[j];
+
+  // forward solve
+  for ( var i = 0 ; i < size ; i++ ) {
+    y[i] = pb[i];
+    for ( var j = 0 ; j < i ; j++ ) y[i] -= lu.L[i][j] * y[j];
+    y[i] /= lu.L[i][i];
+  }
+
+  // backward solve
+  for ( var i = size - 1 ; i >= 0 ; i-- ) {
+    x[i] = y[i];
+    for ( var j = i + 1 ; j < size ; j++ ) x[i] -= lu.U[i][j] * x[j];
+    x[i] /= lu.U[i][i];
+  }
+
+  return x;
+
+}
+
+function determinant( A ) {
+
+  var lu = luDecomposition(A);
+
+  var product = 1;
+  for ( var i = 0 ; i < A.length; i++ ) product *= lu.U[i][i];
+
+  return (-1)**lu.pivots * product;
+
+}
+
+function inverse( A ) {
+
+  // calling luSolve for each column is not efficient
+  //   but avoids code duplication
+
+  var I = matrix( A.length );
+
+  for ( var i = 0 ; i < A.length ; i++ ) {
+
+    var b = vector( A.length );
+    b[i] = 1;
+
+    var x = luSolve( A, b );
+    for ( var j = 0 ; j < A.length ; j++ ) I[j][i] = x[j];
+
+  }
+
+  return I;
 
 }
 
 
-function matrix( rows, columns ) {
+
+function vector( size, value=0 ) {
+
+  var v = [];
+  for ( var i = 0 ; i < size ; i++ ) v.push( value );
+
+  return v;
+
+}
+
+function matrix( rows, columns, value=0 ) {
 
   var columns = columns || rows;
 
   var m = [];
   for ( var i = 0 ; i < rows ; i++ ) {
     m.push( [] );
-    for ( var j = 0 ; j < columns ; j++ ) m[i].push( 0 );
+    for ( var j = 0 ; j < columns ; j++ ) m[i].push( value );
   }
 
   return m;
 
 }
 
-function identity( rows ) {
+function identity( rows, value=1 ) {
 
   var m = matrix( rows );
-  for ( var i = 0 ; i < rows ; i++ ) m[i][i] = 1;
+  for ( var i = 0 ; i < rows ; i++ ) m[i][i] = value;
 
   return m;
 
 }
 
+function transpose( A ) {
+
+  var T = matrix( A[0].length, A.length );
+
+  for ( var i = 0 ; i < A.length ; i++ )
+    for ( var j = 0 ; j < A[0].length ; j++ )
+      T[j][i] = A[i][j];
+
+  return T;
+
+}
+
+function matrixAdd( A, B ) {
+
+  if ( !Array.isArray(A) && !Array.isArray(B) ) throw( 'No matrices' );
+  if ( !Array.isArray(A) ) A = matrix( B.length, B[0].length, A );
+  if ( !Array.isArray(B) ) B = matrix( A.length, A[0].length, B );
+
+  var C = matrix( A.length, A[0].length, 0 );
+
+  for ( var i = 0 ; i < A.length ; i++ )
+    for ( var j = 0 ; j < A[0].length ; j++ )
+      C[i][j] = add( A[i][j], B[i][j] );
+
+  return C;
+
+}
+
+function matrixSub( A, B ) {
+
+  if ( !Array.isArray(A) && !Array.isArray(B) ) throw( 'No matrices' );
+  if ( !Array.isArray(A) ) A = matrix( B.length, B[0].length, A );
+  if ( !Array.isArray(B) ) B = matrix( A.length, A[0].length, B );
+
+  var C = matrix( A.length, A[0].length, 0 );
+
+  for ( var i = 0 ; i < A.length ; i++ )
+    for ( var j = 0 ; j < A[0].length ; j++ )
+      C[i][j] = sub( A[i][j], B[i][j] );
+
+  return C;
+
+}
+
+function matrixMul( A, B ) {
+
+  if ( !Array.isArray(A) && !Array.isArray(B) ) throw( 'No matrices' );
+  if ( !Array.isArray(A) ) A = identity( B.length, A );
+  if ( !Array.isArray(B) ) B = identity( A[0].length, B );
+  if ( A[0].length !== B.length ) throw( 'Incompatible matrices' );
+
+  var C = matrix( A.length, B[0].length, 0 );
+
+  for ( var i = 0 ; i < A.length ; i++ )
+    for ( var j = 0 ; j < B[0].length ; j++ )
+      for ( var k = 0 ; k < A[0].length ; k++ )
+        C[i][j] = add( C[i][j], mul( A[i][k], B[k][j] ) );
+
+  return C;
+
+}
 

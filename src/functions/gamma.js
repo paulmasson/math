@@ -1,5 +1,24 @@
 
-// Log of gamma less likely to overflow than gamma
+function factorial( n ) {
+
+  if ( Number.isInteger(n) && n >= 0 ) {
+
+    var result = 1;
+    for ( var i = 2 ; i <= n ; i++ ) result *= i;
+    return result;
+
+  } else return gamma( n+1 );
+
+}
+
+function binomial( n, m ) {
+
+  return factorial(n) / factorial(n-m) / factorial(m);
+
+}
+
+
+// log of gamma less likely to overflow than gamma
 // Lanczos approximation as evaluated by Paul Godfrey
 
 function logGamma( x ) {

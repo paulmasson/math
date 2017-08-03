@@ -1,24 +1,5 @@
 
-function factorial( n ) {
-
-  if ( Number.isInteger(n) && n >= 0 ) {
-
-    var result = 1;
-    for ( var i = 2 ; i <= n ; i++ ) result *= i;
-    return result;
-
-  } else return gamma( n+1 );
-
-}
-
-function binomial( n, m ) {
-
-  return factorial(n) / factorial(n-m) / factorial(m);
-
-}
-
-
-// Rounding functions
+// rounding functions
 
 function roundTo( x, n ) {
 
@@ -45,6 +26,12 @@ function floorTo( x, n ) {
 }
 
 function chop( x, tolerance=1e-10 ) {
+
+  if ( Array.isArray(x) ) {
+    var v = vector( x.length );
+    for ( var i = 0 ; i < x.length ; i++ ) v[i] = chop( x[i] );
+    return v;
+  }
 
   if ( isComplex(x) ) return { re: chop(x.re), im: chop(x.im) };
 

@@ -38,7 +38,6 @@ function jacobiTheta( n, x, q ) {
 
 function sn( x, m ) {
 
-
-  return 1;
+  throw( 'Waiting for elliptic integrals' );
 
 }

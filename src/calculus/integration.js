@@ -131,6 +131,3 @@ function discreteIntegral( values, step ) {
 
 }
 
-
-
-

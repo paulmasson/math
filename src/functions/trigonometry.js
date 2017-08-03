@@ -1,5 +1,5 @@
 
-// Complex circular functions
+// complex circular functions
 
 function sin( x ) {
 
@@ -49,14 +49,14 @@ function sec( x ) {
 
 function csc( x ) {
 
-  if ( isComplex(x) ) return div ( 1, sin(x) );
+  if ( isComplex(x) ) return div( 1, sin(x) );
 
   else return 1 / Math.sin(x);
 
 }
 
 
-// Inverse circular functions
+// inverse circular functions
 
 function arcsin( x ) {
 
@@ -125,7 +125,7 @@ function arccsc( x ) {
 }
 
 
-// Complex hyperbolic functions
+// complex hyperbolic functions
 
 function sinh( x ) {
 
@@ -182,7 +182,7 @@ function csch( x ) {
 }
 
 
-// Inverse hyperbolic functions
+// inverse hyperbolic functions
 
 function arcsinh( x ) {
 
