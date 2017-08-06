@@ -1,10 +1,12 @@
 # math.js
 
-Nontrivial mathematics in the browser. 100% pure JavaScript.
+Nontrivial mathematics in the browser. 100% pure JavaScript. For modern mathematical physicists and their ilk.
 
-Complex numbers are supported as a dictionary with `re` and `im` attributes. Fully complex functions include exponentials, logarithms and circular and hyperbolic trigonometric functions, all implemented with builtin JavaScript functions. Also available in the entire complex plane are the gamma and beta functions, implemented with the Lanczos approximation.
+All mathematical functions are exposed in the global context for ease of use. While this is contrary to most JavaScript development, it makes life much simpler for the end user. This library is not intended to be sliced and diced by Node users, so please do not complain to me about namespace pollution. The current behavior is intended. Mathematics is a global phenomenon.
 
-Hypergeometric functions 0F1, 1F1 and 2F1 of a real argument are currently supported as power series. These make available Bessel J, Y, I and K functions of a real argument, as well as Airy Ai and Bi functions. Elliptic integrals and functions of a real argument are coming soon.
+Complex numbers are supported as dictionaries with `re` and `im` attributes. Fully complex functions include exponentials, logarithms, circular and hyperbolic functions, all implemented with builtin JavaScript functions. Also available in the entire complex plane are the gamma and beta functions, implemented with the Lanczos approximation.
+
+Hypergeometric functions <sub>0</sub>F<sub>1</sub>, <sub>1</sub>F<sub>1</sub> and <sub>2</sub>F<sub>1</sub> of a real argument are currently supported as power series. These make available Bessel *J*, *Y*, *I* and *K* functions of a real argument, as well as Airy Ai and Bi functions. Elliptic integrals and functions of a real argument are coming soon.
 
 Basic support for integration of functions and ordinary differential equations are available for real values, as well as eigensystems of real matrices.
 
