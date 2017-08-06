@@ -1,4 +1,4 @@
-# math.js
+# Math
 
 Nontrivial mathematics in the browser. 100% pure JavaScript. For modern mathematical physicists and their ilk.
 
