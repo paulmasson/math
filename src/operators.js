@@ -84,7 +84,7 @@ function pow( x, y ) {
     var phi = Math.atan2( x.im, x.re );
 
     var R = r**y.re * Math.exp( -phi * y.im );
-    var Phi = phi * y.re + y.im * Math.log(r);
+    var Phi = phi * y.re + y.im * Math.log(r); // NaN at origin...
 
     return { re: R * Math.cos(Phi), im: R * Math.sin(Phi) };
 
