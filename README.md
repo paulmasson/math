@@ -20,9 +20,3 @@ Download the complete <a href="https://raw.githubusercontent.com/paulmasson/math
 <script src="math.js"></script>
 ```
 
-A free online content delivery network can also be used:
-
-```
-<script src="https://cdn.rawgit.com/paulmasson/math/master/build/math.js"></script>
-```
-
