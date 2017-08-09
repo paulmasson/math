@@ -38,6 +38,33 @@ function jacobiTheta( n, x, q ) {
 
 function sn( x, m ) {
 
-  throw( 'Waiting for elliptic integrals' );
+  var q = exp( -pi * ellipticK(1-m) / ellipticK(m) );
+
+  var t = x / jacobiTheta(3,0,q)**2;
+
+  return jacobiTheta(3,0,q) / jacobiTheta(2,0,q)
+         * jacobiTheta(1,t,q) / jacobiTheta(4,t,q);
 
 }
+
+function cn( x, m ) {
+
+  var q = exp( -pi * ellipticK(1-m) / ellipticK(m) );
+
+  var t = x / jacobiTheta(3,0,q)**2;
+
+  return jacobiTheta(4,0,q) / jacobiTheta(2,0,q)
+         * jacobiTheta(2,t,q) / jacobiTheta(4,t,q);
+
+}
+function dn( x, m ) {
+
+  var q = exp( -pi * ellipticK(1-m) / ellipticK(m) );
+
+  var t = x / jacobiTheta(3,0,q)**2;
+
+  return jacobiTheta(4,0,q) / jacobiTheta(3,0,q)
+         * jacobiTheta(3,t,q) / jacobiTheta(4,t,q);
+
+}
+
