@@ -939,7 +939,7 @@ function zeta( x ) {
 
 
 
-function ode( f, y, [x0, x1], step=.001, method='euler' ) {
+function ode( f, y, [x0, x1], step=.001, method='runge-kutta' ) {
 
   if ( f(x0,y)[0] === undefined ) {
     g = f;
