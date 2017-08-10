@@ -6,7 +6,7 @@ All mathematical functions are exposed in the global context for ease of use. Wh
 
 Complex numbers are supported as dictionaries with real and imaginary attributes. Fully complex functions include exponentials, logarithms, circular and hyperbolic functions, all implemented with built-in JavaScript functions. Also available in the entire complex plane are the gamma and beta functions, implemented with the Lanczos approximation.
 
-Hypergeometric functions <sub>0</sub>F<sub>1</sub>, <sub>1</sub>F<sub>1</sub> and <sub>2</sub>F<sub>1</sub> of a real argument are currently supported as power series. These make available Bessel *J*, *Y*, *I* and *K* functions of a real argument, as well as Airy Ai and Bi functions. Elliptic integrals and elliptic functions of a real argument are also available using Carlson symmetric integrals and Jacobi theta function power series.
+Hypergeometric functions <sub>0</sub>*F*<sub>1</sub>, <sub>1</sub>*F*<sub>1</sub> and <sub>2</sub>*F*<sub>1</sub> of a real argument are currently supported as power series. These make available Bessel *J*, *Y*, *I* and *K* functions of a real argument, as well as Airy Ai and Bi functions. Elliptic integrals and elliptic functions of a real argument are also available using Carlson symmetric integrals and Jacobi theta function power series.
 
 Basic support for integration of functions and ordinary differential equations are available for real values, as well as eigensystems of real matrices.
 
