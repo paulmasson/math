@@ -4,31 +4,25 @@
 <link rel="stylesheet" type="text/css" href="style.css">
 <style>
 
-	html, body {
-		height: 100%;
-	}
-
 	#list, #content {
 		box-sizing: border-box;
-		height: 100%;
+		position: absolute;
+		top: 0;
+		bottom: 0;
 		overflow: auto;
 		border: 1px solid black
 	}
 
 	#list {
 		width: 2.5in;
-		position: absolute;
-		top: 0in;
-		left: 0in;
+		left: 0;
 		padding: .25in;
 		border-right: none
 	}
 
 	#content {
 		width: calc(100% - 2.5in);
-		position: absolute;
-		top: 0in;
-		right: 0in;
+		right: 0;
 	}
 
 </style>
@@ -78,9 +72,7 @@
 
 </div>
 
-<div style="height: 100%">
 <iframe id="content" name="content" src="overview.html"></iframe>
-</div>
 
 </body>
 </html>
