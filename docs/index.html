@@ -4,10 +4,29 @@
 <link rel="stylesheet" type="text/css" href="style.css">
 <style>
 
-	html, body { height: 100% }
-	#list, #content { box-sizing: border-box; vertical-align:top;
-                          height: calc(100vh - 1in); overflow: auto;
-                          border: 1px solid black }
+	#list, #content {
+		box-sizing: border-box;
+		vertical-align:top;
+		height: calc(100vh - 1in);
+		overflow: auto;
+		border: 1px solid black
+	}
+
+	#list {
+		width: 2in;
+		position: absolute;
+		top: .5in;
+		left: .5in;
+		padding: .25in;
+		border-right: none
+	}
+
+	#content {
+		width: calc(100% - 3in);
+		position: absolute;
+		top: .5in;
+		right: .5in;
+	}
 
 </style>
 </head>
@@ -15,11 +34,11 @@
 <body>
 
 <div>
-<div id="list" style="width: 2in; float: left; padding: .25in; border-right: none">
+<div id="list">
 
-<p><a href="index.html#overview.html">Overview</a></p>
+<p><a href="overview.html" targent="content">Overview</a></p>
 
-<p><a href="index.html#complex.html">Complex Math</a></p>
+<p><a href="complex.html" target="content">Complex Math</a></p>
 
 <h1>Functions</h1>
 
@@ -53,8 +72,8 @@
 
 </div>
 
-<iframe id="content" name="content" src="about.html"
-        style="width: calc(100% - 2in); float: right"></iframe>
+<iframe id="content" name="content" src="overview.html"></iframe>
+
 </div>
 
 </body>
