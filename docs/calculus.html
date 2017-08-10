@@ -1,0 +1,47 @@
+<html>
+<head>
+<title>Math - Calculus</title>
+<link rel="stylesheet" type="text/css" href="style.css">
+<style></style>
+</head>
+
+<body>
+
+<br id="differentiation"/>
+<h1>Differentiation</h1>
+
+<p><b>diff( <i>f</i>, <i>x</i> )</b> &mdash; numerical derivative of a real function at <i>x</i></p>
+
+<p><b>diff( <i>f</i>, <i>x</i>, <i>n</i> )</b> &mdash; <i>n</i>th-order numerical derivative of a real function at <i>x</i></p>
+
+<p><b>D( <i>f</i>, <i>x</i> )</b> &mdash; numerical derivative of a real function at <i>x</i></p>
+
+<p><b>D( <i>f</i>, <i>x</i>, <i>n</i> )</b> &mdash; <i>n</i>th-order numerical derivative of a real function at <i>x</i></p>
+
+<br id="integration"/>
+<h1>Integration</h1>
+
+<p><b>integrate( <i>f</i>, <i>a</i>, <i>b</i> )</b> &mdash; numerical integral of a real function from <i>a</i> to <i>b</i> by an adaptive Simpson algorithm</p>
+
+<p><b>integrate( <i>f</i>, <i>a</i>, <i>b</i>, method )</b> &mdash; numerical integral of a real function from <i>a</i> to <i>b</i> by method <nobr><code>'euler-maclaurin'</code></nobr>, <code>'romberg'</code> or <nobr><code>'adaptive-simpson'</code></nobr></p>
+
+<p><b>discreteIntegral( values, step )</b> &mdash; numerical integral over discreate real values separated by step using Euler-Maclaurin summation</p>
+
+<br id="interpolation"/>
+<h1>Interpolation</h1>
+
+<p><b>polynomial( <i>x</i>, coefficients )</b> &mdash; value of polynomial at with real coefficients <i>x</i> by Horner&rsquo;s method with the coefficient of the highest power first</p>
+
+<p><b>polynomial( <i>x</i>, coefficients, <code>true</code> )</b> &mdash; value of polynomial with real coefficients and its derivative at <i>x</i> by Horner&rsquo;s method returned as <nobr><code>{ polynomial:polynomial, derivative:derivative }</code></nobr></p>
+
+<p><b>findRoot( <i>f</i>, <i>a</i>, <i>b</i> )</b> &mdash; numerical root of a real function between <i>a</i> and <i>b</i> by bisection</p>
+
+<br id="diffeq"/>
+<h1>Differential Equations</h1>
+
+<p><b>ode( <i>f</i>, <i>y</i><sub>0</sub>, [<i>x</i><sub>0</sub>,<i>x</i><sub>1</sub>] )</b> &mdash; numerical solution of the system <i>dy</i>/<i>dx</i>&nbsp;=&nbsp;<i>f</i>, <i>y</i>(0)&nbsp;=&nbsp;<i>y</i><sub>0</sub> on the specified interval. The function and initial condition should be vectorized for higher-order systems. The solution is returned as an array of arrays of data points, with the independent variable as the first item in each data point array.</p>
+
+<p><b>ode( <i>f</i>, <i>y</i><sub>0</sub>, [<i>x</i><sub>0</sub>,<i>x</i><sub>1</sub>], step, method )</b> &mdash; numerical solution of the system <i>dy</i>/<i>dx</i>&nbsp;=&nbsp;<i>f</i>, <i>y</i>(0)&nbsp;=&nbsp;<i>y</i><sub>0</sub> on the specified interval with specified step size and a method of <code>'euler'</code> or <nobr><code>'runge-kutta'</code></nobr>. The function and initial condition should be vectorized for higher-order systems. The solution is returned as an array of arrays of data points, with the independent variable as the first item in each data point array.</p>
+
+</body>
+</html>

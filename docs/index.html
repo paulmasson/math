@@ -6,26 +6,25 @@
 
 	#list, #content {
 		box-sizing: border-box;
-		vertical-align:top;
-		height: calc(100vh - 1in);
+		height: 100%;
 		overflow: auto;
 		border: 1px solid black
 	}
 
 	#list {
-		width: 2in;
+		width: 2.5in;
 		position: absolute;
-		top: .5in;
-		left: .5in;
+		top: 0in;
+		left: 0in;
 		padding: .25in;
 		border-right: none
 	}
 
 	#content {
-		width: calc(100% - 3in);
+		width: calc(100% - 2.5in);
 		position: absolute;
-		top: .5in;
-		right: .5in;
+		top: 0in;
+		right: 0in;
 	}
 
 </style>
@@ -33,10 +32,9 @@
 
 <body>
 
-<div>
 <div id="list">
 
-<p><a href="overview.html" targent="content">Overview</a></p>
+<p><a href="overview.html" target="content">Overview</a></p>
 
 <p><a href="complex.html" target="content">Complex Math</a></p>
 
@@ -52,29 +50,31 @@
 <a href="functions.html#hyperbolic" target="content">Hyperbolic</a><br/>
 <a href="functions.html#hypergeometric" target="content">Hypergeometric</a><br/>
 <a href="functions.html#logarithmic" target="content">Logarithmic</a><br/>
-<a href="functions.html#orthogonal" target="content">Orthogonal</a><br/>
+<a href="functions.html#orthogonal" target="content">Orthogonal Polys.</a><br/>
 <a href="functions.html#zeta" target="content">Zeta</a>
 </p>
 
 <h1>Calculus</h1>
 
 <p>
-<a href="calculus.html#" target="content"></a></br>
-<a href="calculus.html#" target="content"></a></br>
-<a href="calculus.html#" target="content"></a></br>
+<a href="calculus.html#differentiation" target="content">Differentiation</a></br>
+<a href="calculus.html#integration" target="content">Integration</a></br>
+<a href="calculus.html#interpolation" target="content">Interpolation</a></br>
+<a href="calculus.html#diffeq" target="content">Differential Eqs.</a></br>
 </p>
 
 <h1>Matrices</h1>
 
 <p>
-<a href="matrices.html#" target="content"></a></br>
+<a href="matrices.html#creation" target="content">Matrix Creation</a></br>
+<a href="matrices.html#basic" target="content">Basic Functions</a></br>
+<a href="matrices.html#linear" target="content">Linear Algebra</a></br>
+<a href="matrices.html#eigensystems" target="content">Eigensystems</a>
 </p>
 
 </div>
 
 <iframe id="content" name="content" src="overview.html"></iframe>
-
-</div>
 
 </body>
 </html>

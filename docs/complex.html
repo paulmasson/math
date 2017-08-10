@@ -7,19 +7,32 @@
 
 <body>
 
-<p>Complex numbers are represented by a dictionary real and imaginary attributes:</p>
+<p>Complex numbers are represented by a dictionary of real and imaginary attributes:</p>
 
-<p></p>
+<p><b>complex( <i>x</i>, <i>y</i> )</b> &mdash; returns a complex number as <code>{ re: <i>x</i>, im: <i>y</i> }</code></p>
 
-<p></p>
+<p><b>complex( <i>x</i> )</b> &mdash; returns a complex number as <code>{ re: <i>x</i>, im: 0 }</code></p>
 
-<p></p>
+<p><b>C( <i>x</i>, <i>y</i> )</b> &mdash; returns a complex number as <code>{ re: <i>x</i>, im: <i>y</i> }</code></p>
 
-<p></p>
+<p><b>C( <i>x</i> )</b> &mdash; returns a complex number as <code>{ re: <i>x</i>, im: 0 }</code></p>
 
-<p></p>
+<p>The separate attributes are accessed through their respective names:</p>
 
-<p></p>
+<pre>
+complex( <i>x</i>, <i>y</i> ).re = <i>x</i>
+complex( <i>x</i>, <i>y</i> ).im = <i>y</i>
+</pre>
+
+<p>Since JavaScript does not support operator overloading, functions are available for complex arithmetic:</p>
+
+<p><b>add( <i>x</i>, <i>y</i> )</b> &mdash; add two real or complex numbers</p>
+
+<p><b>sub( <i>x</i>, <i>y</i> )</b> &mdash; subtract two real or complex numbers</p>
+
+<p><b>mul( <i>x</i>, <i>y</i> )</b> &mdash; multiply two real or complex numbers</p>
+
+<p><b>div( <i>x</i>, <i>y</i> )</b> &mdash; divide two real or complex numbers</p>
 
 </body>
 </html>

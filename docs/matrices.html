@@ -1,0 +1,55 @@
+<html>
+<head>
+<title>Math - Functions</title>
+<link rel="stylesheet" type="text/css" href="style.css">
+<style></style>
+</head>
+
+<body>
+
+<br id="creation"/>
+<h1>Matrix Creation</h1>
+
+<p><b>vector( <i>n</i> )</b> &mdash; vector of length <i>n</i> initialized to zero</p>
+
+<p><b>vector( <i>n</i>, value )</b> &mdash; vector of length <i>n</i> initialized to a real value</p>
+
+<p><b>matrix( <i>n</i> )</b> &mdash; <i>n</i> &times; <i>n</i> matrix initialized to zero</p>
+
+<p><b>matrix( <i>n</i>, <i>m</i> )</b> &mdash; <i>n</i> &times; <i>m</i> matrix initialized to zero</p>
+
+<p><b>matrix( <i>n</i>, <i>m</i>, value )</b> &mdash; <i>n</i> &times; <i>m</i> matrix initialized to a real value</p>
+
+<p><b>identity( <i>n</i> )</b> &mdash; <i>n</i> &times; <i>n</i> real identity matrix</p>
+
+<p><b>identity( <i>n</i>, value )</b> &mdash; <i>n</i> &times; <i>n</i> real identity matrix multiplied by a real value</p>
+
+<br id="basic"/>
+<h1>Basic Functions</h1>
+
+<p><b>matrixAdd( <i>A</i>, <i>B</i> )</b> &mdash; add two real matrices</p>
+
+<p><b>matrixSub( <i>A</i>, <i>B</i> )</b> &mdash; subtract two real matrices</p>
+
+<p><b>matrixMul( <i>A</i>, <i>B</i> )</b> &mdash; multiply two real matrices</p>
+
+<p><b>transpose( <i>A</i> )</b> &mdash; transpose of a real matrix</p>
+
+<p><b>inverse( <i>A</i> )</b> &mdash; inverse of a real matrix</p>
+
+<p><b>determinant( <i>A</i> )</b> &mdash; determinant of a real matrix</p>
+
+<br id="linear"/>
+<h1>Linear Algebra</h1>
+
+<p><b>luDecomposition( <i>A</i> )</b> &mdash; LU decomposition of a real matrix returned with permutation matrix and total pivots in <nobr><code>{ L:L, U:U, P:P, pivots:pivots }</code></nobr></p>
+
+<p><b>luSolve( <i>A</i>, <i>b</i> )</b> &mdash; solution of the real system <i>Ax</i>&nbsp;=&nbsp;<i>b</i> returned as an array</p>
+
+<br id="eigensystems"/>
+<h1>Eigensystems</h1>
+
+<p><b>eigensystem( <i>A</i> )</b> &mdash; eigenvalues and column eigenvectors of a real symmetric matrix returned as arrays in <nobr><code>{ eigenvalues:eigenvalues, eigenvectors:eigenvectors }</code></nobr></p>
+
+</body>
+</html>
