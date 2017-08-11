@@ -4,13 +4,8 @@
 <link rel="stylesheet" type="text/css" href="style.css">
 <style>
 
-	html, body { height: 100%; }
-
-	* { box-sizing: border-box; }
-
 	#list, #content {
 		box-sizing: border-box;
-		height: 100%;
 		position: absolute;
 		top: 0;
 		bottom: 0;
@@ -20,6 +15,7 @@
 
 	#list {
 		width: 2.5in;
+		height: 100%;
 		left: 0;
 		padding: .25in;
 		border-right: none
@@ -27,6 +23,8 @@
 
 	#content {
 		width: calc(100% - 2.5in);
+		height: 1in;
+		min-height: 100%;
 		right: 0;
 	}
 
