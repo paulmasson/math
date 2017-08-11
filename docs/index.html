@@ -2,21 +2,19 @@
 <head>
 <title>Math</title>
 <link rel="stylesheet" type="text/css" href="style.css">
-<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 <style>
 
 	#index, #content {
 		box-sizing: border-box;
-		position: absolute;
+		height: 100%;
 		top: 0;
-		bottom: 0;
 		overflow: auto;
 		border: 1px solid black
 	}
 
 	#index {
 		width: 2.5in;
-		height: 100%;
+		position: fixed;
 		left: 0;
 		padding: .25in;
 		border-right: none
@@ -24,8 +22,7 @@
 
 	#content {
 		width: calc(100% - 2.5in);
-		height: 100px;
-		min-height: 100%;
+		position: absolute;
 		right: 0;
 	}
 
