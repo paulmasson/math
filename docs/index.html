@@ -4,7 +4,7 @@
 <link rel="stylesheet" type="text/css" href="style.css">
 <style>
 
-	#list, #content {
+	#index, iframe {
 		box-sizing: border-box;
 		position: absolute;
 		top: 0;
@@ -13,7 +13,7 @@
 		border: 1px solid black
 	}
 
-	#list {
+	#index {
 		width: 2.5in;
 		height: 100%;
 		left: 0;
@@ -21,9 +21,9 @@
 		border-right: none
 	}
 
-	#content {
+	iframe {
 		width: calc(100% - 2.5in);
-		height: 1in;
+		height: 100px;
 		min-height: 100%;
 		right: 0;
 	}
@@ -33,7 +33,7 @@
 
 <body>
 
-<div id="list">
+<div id="index">
 
 <p><a href="overview.html" target="content">Overview</a></p>
 
@@ -75,7 +75,7 @@
 
 </div>
 
-<iframe id="content" name="content" src="overview.html"></iframe>
+<iframe name="content" src="overview.html"></iframe>
 
 </body>
 </html>
