@@ -1,19 +1,18 @@
 
 // Carlson symmetric integrals
 
-function carlsonRC( x, y, tolerance=1e-10 ) {
+function carlsonRC( x, y ) {
 
   if ( x === y ) return 1 / Math.sqrt(x);
 
-  var a = Math.sqrt(x/y);
   if ( x < y )
-    return Math.acos(a) / Math.sqrt(y-x);
+    return Math.acos( Math.sqrt(x/y) ) / Math.sqrt(y-x);
   else
-    return Math.acosh(a) / Math.sqrt(x-y);
+    return Math.acosh( Math.sqrt(x/y) ) / Math.sqrt(x-y);
 
 }
 
-function carlsonRD( x, y, z, tolerance=1e-10 ) {
+function carlsonRD( x, y, z ) {
 
   return carlsonRJ( x, y, z, z );
 
@@ -66,7 +65,7 @@ function carlsonRF( x, y, z, tolerance=1e-10 ) {
 
 }
 
-function carlsonRG( x, y, z, tolerance=1e-10 ) {
+function carlsonRG( x, y, z ) {
 
   return 1;
 
