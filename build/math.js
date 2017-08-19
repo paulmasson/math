@@ -1138,10 +1138,7 @@ var D = diff;
 
 function integrate( f, a, b, method='adaptive-simpson') {
 
-  var h = ( b - a ) / 2;
-  var s = ( f(a) + f(b) ) / 2 + f( (a+b)/2 );
-
-  function nextIter() {
+  function nextEulerIteration() {
 
       h /= 2;
       var x = a + h;
@@ -1162,12 +1159,14 @@ function integrate( f, a, b, method='adaptive-simpson') {
       var tolerance = 1e-10;
       var maxIter = 50;
 
+      var h = ( b - a ) / 2;
+      var s = ( f(a) + f(b) ) / 2 + f( (a+b)/2 );
       var result = h * s;
       var previous = result;
 
       for ( var i = 0 ; i < maxIter ; i++ ) {
 
-        nextIter();
+        nextEulerIteration();
         result = h * s;
         if ( Math.abs( result - previous ) < tolerance * Math.abs(previous) ) return result;
         previous = result;
@@ -1180,6 +1179,9 @@ function integrate( f, a, b, method='adaptive-simpson') {
 
       var error = Number.MAX_VALUE;
       var maxIter = 30;
+
+      var h = ( b - a ) / 2;
+      var s = ( f(a) + f(b) ) / 2 + f( (a+b)/2 );
       var result = h * s;
 
       var d = [];
@@ -1190,7 +1192,7 @@ function integrate( f, a, b, method='adaptive-simpson') {
 
       for ( var i = 1 ; i < maxIter ; i++ ) {
 
-        nextIter();
+        nextEulerIteration();
         d[0][i] = h * s;
 
         for ( var j = 1 ; j <= i ; j++ ) {
@@ -1246,6 +1248,41 @@ function integrate( f, a, b, method='adaptive-simpson') {
       var depth = 0;
 
       return adaptiveSimpson( a, b, fa, fm, fb, s, tolerance, depth );
+
+    case 'tanh-sinh':
+
+      // based on Borwein & Bailey, Experimentation in Mathematics
+
+      var epsilon = 1e-15;
+
+      var m = 10;
+      var h = 1 / 2**m;
+      var x = [], w = [];
+
+      for ( var k = 0 ; k < 20 * 2**m ; k++ ) {
+        var t = k * h;
+        x.push( Math.tanh( Math.PI/2 * Math.sinh(t) ) );
+        w.push( Math.PI/2 * Math.cosh(t) / Math.cosh( Math.PI/2 * Math.sinh(t) )**2 );
+        if ( Math.abs(1-x[k]) < epsilon ) break;
+      }
+
+      var nt = k;
+      var sum = 0;
+
+      // rescale [a,b] to [-1,1]
+      var len = ( b - a ) / 2;
+      var mid = ( b + a ) / 2;
+
+      for ( var k = 1 ; k < m ; k++ ) {
+        for ( var i = 0 ; i < nt ; i += 2**(m-k) ) {
+          if ( i % 2**(m-k+1) !== 0 || k === 1 ) {
+            if ( i === 0 ) sum += w[0] * f( mid );
+            else sum += w[i] * ( f( mid - len*x[i] ) + f( mid + len*x[i] ) );
+          }
+        }
+      }
+
+      return 2 * len * h * sum;
 
     default:
 
