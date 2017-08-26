@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>gamma &mdash; Math</title>
+<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+
+<body>
+
+<script src="../../build/math.js"></script>
+<script src="../../../mathcell/build/mathcell.js"></script>
+
+<script src="https://cdn.rawgit.com/mathjax/MathJax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
+
+<p class="function"> gamma( <i>z</i> ) </p>
+
+<p>The gamma function of <i>z</i> in Math. Defined by</p>
+
+\[ \Gamma(z) = \int_0^\infty dt \; t^{z-1} e^{-t} \]
+
+<p>Plot on the real axis:</p>
+
+<div class="mathcell" style="height: 4in">
+<script>
+
+var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+
+var id = 'id' + document.scripts.length;
+parent.id = id;
+
+MathCell( id, [] );
+
+parent.update = function( id ) {
+
+  var p = plot( x => gamma(x), [-4.99,5,1200] );
+
+  var data = [ p ];
+
+  // additional JavaScript here
+
+  var config = { type: 'svgplot', yMin: -5, yMax: 5 };
+
+  evaluate( id, data, config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Related functions: &nbsp; <a href="beta.html">beta</a></p>
+
+<p>Function category: <a href="../functions.html#gamma">gamma functions</a></p>
+
+</body>
+</html>
