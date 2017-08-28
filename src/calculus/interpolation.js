@@ -26,7 +26,7 @@ function findRoot( f, a, b, tolerance=1e-10, method='bisect' ) {
       var fa = f(a);
       var fb = f(b);
 
-      if ( fa * f(b) >= 0 ) throw( 'Change of sign necessary for bisection' );
+      if ( fa * f(b) >= 0 ) throw 'Change of sign necessary for bisection';
 
       var root, h;
       if ( fa < 0 ) {
@@ -46,11 +46,11 @@ function findRoot( f, a, b, tolerance=1e-10, method='bisect' ) {
         if ( fmid === 0 || Math.abs(h) < tolerance ) return root;
       }
 
-      throw( 'No root found for tolerance ' + tolerance );
+      throw 'No root found for tolerance ' + tolerance;
 
     default:
 
-      throw( 'Unsupported method' );
+      throw 'Unsupported method';
 
   }
 

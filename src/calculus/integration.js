@@ -36,7 +36,7 @@ function integrate( f, a, b, method='adaptive-simpson') {
 
       }
 
-      throw( 'Maximum interations reached' );
+      throw 'Maximum interations reached';
 
     case 'romberg':
 
@@ -89,6 +89,8 @@ function integrate( f, a, b, method='adaptive-simpson') {
         var h = b - a;
         var f1 = f( a + h/4 );
         var f2 = f( b - h/4 )
+
+        if ( isNaN(f1) || isNaN(f2) ) throw 'NaN encountered in integration';
 
         var s1 = ( fa + 4*f1 + fm ) * h / 12;
         var s2 = ( fm + 4*f2 + fb ) * h / 12;
@@ -149,7 +151,7 @@ function integrate( f, a, b, method='adaptive-simpson') {
 
     default:
 
-      throw( 'Unsupported method' );
+      throw 'Unsupported method';
 
   }
 

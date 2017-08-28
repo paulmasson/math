@@ -227,7 +227,7 @@ function arccoth( x ) {
 
   if ( isComplex(x) ) {
 
-    if ( x.re === 0 && x.im === 0 ) throw( 'Indeterminate value' );
+    if ( x.re === 0 && x.im === 0 ) throw 'Indeterminate value';
 
     return arctanh( div( 1, x ) );
 
@@ -241,7 +241,7 @@ function arcsech( x ) {
 
   if ( isComplex(x) ) {
 
-    if ( x.re === 0 && x.im === 0 ) throw( 'Indeterminate value' );
+    if ( x.re === 0 && x.im === 0 ) throw 'Indeterminate value';
 
     // adjust for branch cut along negative axis
     if ( x.im === 0 ) x.im = -Number.MIN_VALUE;

@@ -62,7 +62,7 @@ function diff( f, x, n=1, method='ridders' ) {
 
     default:
 
-      throw( 'Unsupported method' );
+      throw 'Unsupported method';
 
   }
 

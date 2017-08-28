@@ -177,7 +177,7 @@ function ellipticE( x, m ) {
 
 function ellipticPi( n, x, m ) {
 
-  if ( Math.abs(n) > 1 ) throw( 'Not supported' );
+  if ( Math.abs(n) > 1 ) throw 'Index not supported';
 
   if ( arguments.length === 2 ) {
     m = x;

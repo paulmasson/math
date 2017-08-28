@@ -195,7 +195,7 @@ function jacobiTheta( n, x, q ) {
 
     default:
 
-      throw( 'Undefined Jacobi theta index' );
+      throw 'Undefined Jacobi theta index';
 
   }
 
@@ -413,7 +413,7 @@ function ellipticE( x, m ) {
 
 function ellipticPi( n, x, m ) {
 
-  if ( Math.abs(n) > 1 ) throw( 'Not supported' );
+  if ( Math.abs(n) > 1 ) throw 'Index not supported';
 
   if ( arguments.length === 2 ) {
     m = x;
@@ -468,7 +468,7 @@ function logGamma( x ) {
   if ( isComplex(x) ) {
 
     if ( Number.isInteger(x.re) && x.re <= 0 && x.im === 0 )
-      throw( 'Gamma function pole' );
+      throw 'Gamma function pole';
 
     // reflection formula
     if ( x.re < 0 ) {
@@ -485,7 +485,7 @@ function logGamma( x ) {
   } else {
 
     if ( Number.isInteger(x) && x <= 0 )
-      throw( 'Gamma function pole' ); 
+      throw 'Gamma function pole'; 
 
     var t = x + 5.24218750000000000;
     t = ( x + 0.5 ) * log(t) - t;
@@ -515,7 +515,7 @@ function beta( x, y ) {
 
 function hypergeometric0F1( a, x ) {
 
-  if ( Number.isInteger(a) && a <= 0 ) throw( 'Hypergeometric function pole' );
+  if ( Number.isInteger(a) && a <= 0 ) throw 'Hypergeometric function pole';
 
   var s = 1;
   var p = 1;
@@ -533,7 +533,7 @@ function hypergeometric0F1( a, x ) {
 
 function hypergeometric1F1( a, b, x ) {
 
-  if ( Number.isInteger(b) && b <= 0 ) throw( 'Hypergeometric function pole' );
+  if ( Number.isInteger(b) && b <= 0 ) throw 'Hypergeometric function pole';
 
   var s = 1;
   var p = 1;
@@ -552,7 +552,7 @@ function hypergeometric1F1( a, b, x ) {
 
 function hypergeometric2F1( a, b, c, x ) {
 
-  if ( Number.isInteger(c) && c <= 0 ) throw( 'Hypergeometric function pole' );
+  if ( Number.isInteger(c) && c <= 0 ) throw 'Hypergeometric function pole';
 
   if ( x === 1 ) return gamma(c) * gamma(c-a-b) / gamma(c-a) / gamma(c-b);
 
@@ -945,7 +945,7 @@ function arccoth( x ) {
 
   if ( isComplex(x) ) {
 
-    if ( x.re === 0 && x.im === 0 ) throw( 'Indeterminate value' );
+    if ( x.re === 0 && x.im === 0 ) throw 'Indeterminate value';
 
     return arctanh( div( 1, x ) );
 
@@ -959,7 +959,7 @@ function arcsech( x ) {
 
   if ( isComplex(x) ) {
 
-    if ( x.re === 0 && x.im === 0 ) throw( 'Indeterminate value' );
+    if ( x.re === 0 && x.im === 0 ) throw 'Indeterminate value';
 
     // adjust for branch cut along negative axis
     if ( x.im === 0 ) x.im = -Number.MIN_VALUE;
@@ -1054,7 +1054,7 @@ function ode( f, y, [x0, x1], step=.001, method='runge-kutta' ) {
 
     default:
 
-      throw( 'Unsupported method' );
+      throw 'Unsupported method';
 
   }
 
@@ -1127,7 +1127,7 @@ function diff( f, x, n=1, method='ridders' ) {
 
     default:
 
-      throw( 'Unsupported method' );
+      throw 'Unsupported method';
 
   }
 
@@ -1173,7 +1173,7 @@ function integrate( f, a, b, method='adaptive-simpson') {
 
       }
 
-      throw( 'Maximum interations reached' );
+      throw 'Maximum interations reached';
 
     case 'romberg':
 
@@ -1226,6 +1226,8 @@ function integrate( f, a, b, method='adaptive-simpson') {
         var h = b - a;
         var f1 = f( a + h/4 );
         var f2 = f( b - h/4 )
+
+        if ( isNaN(f1) || isNaN(f2) ) throw 'NaN encountered in integration';
 
         var s1 = ( fa + 4*f1 + fm ) * h / 12;
         var s2 = ( fm + 4*f2 + fb ) * h / 12;
@@ -1286,7 +1288,7 @@ function integrate( f, a, b, method='adaptive-simpson') {
 
     default:
 
-      throw( 'Unsupported method' );
+      throw 'Unsupported method';
 
   }
 
@@ -1333,7 +1335,7 @@ function findRoot( f, a, b, tolerance=1e-10, method='bisect' ) {
       var fa = f(a);
       var fb = f(b);
 
-      if ( fa * f(b) >= 0 ) throw( 'Change of sign necessary for bisection' );
+      if ( fa * f(b) >= 0 ) throw 'Change of sign necessary for bisection';
 
       var root, h;
       if ( fa < 0 ) {
@@ -1353,11 +1355,11 @@ function findRoot( f, a, b, tolerance=1e-10, method='bisect' ) {
         if ( fmid === 0 || Math.abs(h) < tolerance ) return root;
       }
 
-      throw( 'No root found for tolerance ' + tolerance );
+      throw 'No root found for tolerance ' + tolerance;
 
     default:
 
-      throw( 'Unsupported method' );
+      throw 'Unsupported method';
 
   }
 
@@ -1367,7 +1369,7 @@ function findRoot( f, a, b, tolerance=1e-10, method='bisect' ) {
 function eigensystem( A, symmetric=true ) {
 
   if ( symmetric ) return tridiagonalQL( tridiagonalForm(A) );
-  else throw( 'Unsupported system' );
+  else throw 'Unsupported system';
 
 }
 
@@ -1530,7 +1532,7 @@ function tridiagonalQL( tridiagonalForm ) {
       do {
 
         iter = iter + 1;
-        if ( iter > 1000 ) throw( 'Eigenvalues not converging...' );
+        if ( iter > 1000 ) throw 'Eigenvalues not converging...';
 
         // compute implicit shift
 
@@ -1641,7 +1643,7 @@ function luDecomposition( A, tolerance=1e-7 ) {
       }
     }
 
-    if ( maxValue < tolerance ) throw( 'Matrix is degenerate' );
+    if ( maxValue < tolerance ) throw 'Matrix is degenerate';
 
     if ( maxIndex !== i ) {
 
@@ -1789,7 +1791,7 @@ function transpose( A ) {
 
 function matrixAdd( A, B ) {
 
-  if ( !Array.isArray(A) && !Array.isArray(B) ) throw( 'No matrices' );
+  if ( !Array.isArray(A) && !Array.isArray(B) ) throw 'No matrices';
   if ( !Array.isArray(A) ) A = matrix( B.length, B[0].length, A );
   if ( !Array.isArray(B) ) B = matrix( A.length, A[0].length, B );
 
@@ -1805,7 +1807,7 @@ function matrixAdd( A, B ) {
 
 function matrixSub( A, B ) {
 
-  if ( !Array.isArray(A) && !Array.isArray(B) ) throw( 'No matrices' );
+  if ( !Array.isArray(A) && !Array.isArray(B) ) throw 'No matrices';
   if ( !Array.isArray(A) ) A = matrix( B.length, B[0].length, A );
   if ( !Array.isArray(B) ) B = matrix( A.length, A[0].length, B );
 
@@ -1821,7 +1823,7 @@ function matrixSub( A, B ) {
 
 function matrixMul( A, B ) {
 
-  if ( !Array.isArray(A) && !Array.isArray(B) ) throw( 'No matrices' );
+  if ( !Array.isArray(A) && !Array.isArray(B) ) throw 'No matrices';
   if ( !Array.isArray(A) ) A = identity( B.length, A );
   if ( !Array.isArray(B) ) B = identity( A[0].length, B );
   if ( A[0].length !== B.length ) throw( 'Incompatible matrices' );

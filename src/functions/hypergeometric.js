@@ -1,7 +1,7 @@
 
 function hypergeometric0F1( a, x ) {
 
-  if ( Number.isInteger(a) && a <= 0 ) throw( 'Hypergeometric function pole' );
+  if ( Number.isInteger(a) && a <= 0 ) throw 'Hypergeometric function pole';
 
   var s = 1;
   var p = 1;
@@ -19,7 +19,7 @@ function hypergeometric0F1( a, x ) {
 
 function hypergeometric1F1( a, b, x ) {
 
-  if ( Number.isInteger(b) && b <= 0 ) throw( 'Hypergeometric function pole' );
+  if ( Number.isInteger(b) && b <= 0 ) throw 'Hypergeometric function pole';
 
   var s = 1;
   var p = 1;
@@ -38,7 +38,7 @@ function hypergeometric1F1( a, b, x ) {
 
 function hypergeometric2F1( a, b, c, x ) {
 
-  if ( Number.isInteger(c) && c <= 0 ) throw( 'Hypergeometric function pole' );
+  if ( Number.isInteger(c) && c <= 0 ) throw 'Hypergeometric function pole';
 
   if ( x === 1 ) return gamma(c) * gamma(c-a-b) / gamma(c-a) / gamma(c-b);
 

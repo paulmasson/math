@@ -29,7 +29,7 @@ function jacobiTheta( n, x, q ) {
 
     default:
 
-      throw( 'Undefined Jacobi theta index' );
+      throw 'Undefined Jacobi theta index';
 
   }
 

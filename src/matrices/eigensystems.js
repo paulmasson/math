@@ -2,7 +2,7 @@
 function eigensystem( A, symmetric=true ) {
 
   if ( symmetric ) return tridiagonalQL( tridiagonalForm(A) );
-  else throw( 'Unsupported system' );
+  else throw 'Unsupported system';
 
 }
 
@@ -165,7 +165,7 @@ function tridiagonalQL( tridiagonalForm ) {
       do {
 
         iter = iter + 1;
-        if ( iter > 1000 ) throw( 'Eigenvalues not converging...' );
+        if ( iter > 1000 ) throw 'Eigenvalues not converging...';
 
         // compute implicit shift
 
