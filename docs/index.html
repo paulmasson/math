@@ -73,6 +73,8 @@
 
 </div>
 
+<iframe id="content" name="content" src="overview.html"></iframe>
+
 <script>
 
 var c = document.getElementById( 'content' );
@@ -93,10 +95,9 @@ function iPadNavigationFix() {
 
 }
 
-</script>
+c.onbeforeload = iPadNavigationFix;
 
-<iframe id="content" name="content" src="overview.html"
-                     onbeforeload="iPadNavigationFix()"></iframe>
+</script>
 
 </body>
 </html>
