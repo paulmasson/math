@@ -32,15 +32,92 @@ MathCell( id, [] );
 
 parent.update = function( id ) {
 
-  var p = plot( x => gamma(x), [-4.99,5,1200] );
-
-  var data = [ p ];
-
-  // additional JavaScript here
+  var p = plot( x => gamma(x), [-4.999,5,1200] );
 
   var config = { type: 'svgplot', yMin: -5, yMax: 5 };
 
-  evaluate( id, data, config );
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Plot on the imaginary axis:</p>
+
+<div class="mathcell" style="height: 4in">
+<script>
+
+var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+
+var id = 'id' + document.scripts.length;
+parent.id = id;
+
+MathCell( id, [] );
+
+parent.update = function( id ) {
+
+  var p = plot( x => gamma( complex(0,x) ).im, [-5,5] );
+
+  var config = { type: 'svgplot', yMin: -1, yMax: 1 };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Real part in the complex plane:</p>
+
+<div class="mathcell" style="width: 6in; height: 6in">
+<script>
+
+var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+
+var id = 'id' + document.scripts.length;
+parent.id = id;
+
+MathCell( id, [] );
+
+parent.update = function( id ) {
+
+  var p = parametric( (x,y) => gamma( complex(x,y) ).re, [-4.99,4.99,151], [-4.99,4.99,151] );
+
+  var config = { type: 'threejs', zMin: -5, zMax: 5 };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Imaginary part in the complex plane:</p>
+
+<div class="mathcell" style="width: 6in; height: 6in">
+<script>
+
+var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+
+var id = 'id' + document.scripts.length;
+parent.id = id;
+
+MathCell( id, [] );
+
+parent.update = function( id ) {
+
+  var p = parametric( (x,y) => gamma( complex(x,y) ).im, [-4.99,4.99,151], [-4.99,4.99,151] );
+
+  var config = { type: 'threejs', zMin: -5, zMax: 5 };
+
+  evaluate( id, [ p ], config );
 
 }
 
