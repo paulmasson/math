@@ -78,19 +78,22 @@
 
 <script>
 
+var c = document.getElementById( 'content' );
+window.addEventListener( 'hashchange', c.contentWindow.onhashchange );
+
 function iPadNavigationFix() {
 
   if ( /(iPad|iPhone|iPod)/g.test( navigator.userAgent ) ) {
 
-    var c = document.getElementById( 'content' );
-    window.scrollTo(0,0);
-    c.src = c.contentWindow.location.href;
+    c.onhashchange = function() {
+      window.scrollTo(0,0);
+      c.src = c.contentWindow.location.href;
+    }
 
   }
 
 }
 
-window.addEventListener( 'hashchange', iPadNavigationFix );
 
 </script>
 
