@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>beta &mdash; Math</title>
+<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+
+<body>
+
+<script src="../../build/math.js"></script>
+<script src="../../../mathcell/build/mathcell.js"></script>
+
+<script src="https://cdn.rawgit.com/mathjax/MathJax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
+
+<p class="function"> beta( <i>z</i>, <i>w</i> ) </p>
+
+<p>The beta function of <i>z</i> and <i>w</i> in Math. Defined by</p>
+
+\[ \operatorname{B} (z,w) = \int_0^1 dt \; t^{z-1} (1-t)^{w-1} \]
+
+<p>Relation to <a href="gamma.html">gamma</a>:</p>
+
+\[ \operatorname{B} (z,w) = \frac{ \Gamma(z) \Gamma(w) }{ \Gamma(z+w) } \]
+
+<p>Real part in the real plane:</p>
+
+<div class="mathcell" style="width: 6in; height: 6in">
+<script>
+
+var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+
+var id = 'id' + document.scripts.length;
+parent.id = id;
+
+MathCell( id, [] );
+
+parent.update = function( id ) {
+
+  var p = parametric( (x,y) => gamma(x,y), [-4.99,4.99,151], [-4.99,4.99,151] );
+
+  var config = { type: 'threejs', zMin: -5, zMax: 5 };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Related functions: &nbsp; <a href="gamma.html">gamma</a></p>
+
+<p>Function category: <a href="../functions.html#gamma">gamma functions</a></p>
+
+</body>
+</html>
