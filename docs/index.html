@@ -85,7 +85,7 @@ function iPadNavigationFix() {
 
   if ( /(iPad|iPhone|iPod)/g.test( navigator.userAgent ) ) {
 
-    c.onhashchange = function() {
+    c.contentWindow.onhashchange = function() {
       window.scrollTo(0,0);
       c.src = c.contentWindow.location.href;
     }
