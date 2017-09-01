@@ -86,7 +86,7 @@ function iPadNavigationFix() {
 
     c.contentWindow.onhashchange = function() {
       window.scrollTo(0,0);
-      c.src = c.contentWindow.location.href;
+      c.contentWindow.location.href = c.contentWindow.location.href;
     }
 
     c.contentWindow.onhashchange();
