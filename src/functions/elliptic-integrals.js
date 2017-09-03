@@ -24,7 +24,7 @@ function carlsonRF( x, y, z, tolerance=1e-10 ) {
   if ( x === z ) return carlsonRC( y, x );
   if ( x === y ) return carlsonRC( z, x );
 
-  // adapted from mpmath
+  // adapted from mpmath / elliptic.py
 
   var xm = x;
   var ym = y;
@@ -73,7 +73,7 @@ function carlsonRG( x, y, z ) {
 
 function carlsonRJ( x, y, z, p, tolerance=1e-10 ) {
 
-  // adapted from mpmath
+  // adapted from mpmath / elliptic.py
 
   var xm = x;
   var ym = y;
