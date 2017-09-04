@@ -1328,24 +1328,24 @@ function spline( points, value='function' ) {
   c[ points.length - 1 ] = 0;
 
   var A = matrix( points.length - 2 );
-  var B = vector( points.length - 2 );
+  var y = vector( points.length - 2 );
 
   function h( i ) { return points[i+1][0] - points[i][0]; }
 
-  for ( var i = 0 ; i < points.length - 2 ; i++ ) {
+  for ( var i = 0 ; i < A.length ; i++ ) {
     A[i][i] = 2 * ( h(i) + h(i+1) );
-    B[i] = 3 * ( a[i+2] - a[i+1] ) / h(i+1) - 3 * ( a[i+1] - a[i] ) / h(i);
+    y[i] = 3 * ( a[i+2] - a[i+1] ) / h(i+1) - 3 * ( a[i+1] - a[i] ) / h(i);
   }
-  for ( var i = 1 ; i < points.length - 2 ; i++ ) {
+  for ( var i = 1 ; i < A.length ; i++ ) {
     A[i][i-1] = h(i); 
     A[i-1][i] = h(i); 
   }
 
-  var C = luSolve( A, B );
+  var x = luSolve( A, y );
 
-  for ( var i = 1 ; i < points.length - 1 ; i++ ) c[i] = C[i-1];
+  for ( var i = 0 ; i < x.length ; i++ ) c[i+1] = x[i];
 
-  for ( var i = 0 ; i < points.length - 1 ; i++ ) {
+  for ( var i = 0 ; i < c.length - 1 ; i++ ) {
     b[i] = ( a[i+1] - a[i] ) / h(i) - ( c[i+1] + 2*c[i] ) * h(i) / 3;
     d[i] = ( c[i+1] - c[i] ) / 3 / h(i);
   }
@@ -1388,7 +1388,20 @@ function spline( points, value='function' ) {
       return function( x ) {
 
         var sum = 0;
-        throw 'Not yet supported';
+
+        function F( x, i ) {
+          var xi = points[i][0];
+          return a[i] * ( x - xi ) + b[i] * ( x - xi )**2 / 2
+                   + c[i] * ( x - xi )**3 / 3 + d[i] * ( x - xi )**4 / 4;
+        }
+
+        for ( var i = 0 ; i < points.length - 1 ; i++ )
+          if ( x < points[i+1][0] ) {
+            sum += F( x, i ) - F( points[i][0], i );
+            break;
+          } else sum += F( points[i+1][0], i ) - F( points[i][0], i );
+
+        return sum;
 
       }
 
