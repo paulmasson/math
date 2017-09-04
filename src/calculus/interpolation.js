@@ -57,63 +57,87 @@ function findRoot( f, a, b, tolerance=1e-10, method='bisect' ) {
 }
 
 
-function spline( points, type='default' ) {
+function spline( points, value='function' ) {
 
-  if ( points.length < 3 ) throw 'Need at least three points for cubic spline';
+  // adapted from gsl / cspline.c and reference therein
 
   var a = [], b = [], c = [], d = [];
 
-  switch( type ) {
+  for ( var i = 0 ; i < points.length ; i++ ) a[i] = points[i][1];
 
-    case 'default':
+  c[0] = 0;
+  c[ points.length - 1 ] = 0;
 
-      // adapted from gsl / cspline.c and reference therein
+  var A = matrix( points.length - 2 );
+  var B = vector( points.length - 2 );
 
-      for ( var i = 0 ; i < points.length ; i++ ) a[i] = points[i][1];
+  function h( i ) { return points[i+1][0] - points[i][0]; }
 
-      c[0] = 0;
-      c[ points.length - 1 ] = 0;
-
-      var A = matrix( points.length - 2 );
-      var B = vector( points.length - 2 );
-
-      function h( i ) { return points[i+1][0] - points[i][0]; }
-
-      for ( var i = 0 ; i < points.length - 2 ; i++ ) {
-        A[i][i] = 2 * ( h(i) + h(i+1) );
-        B[i] = 3 * ( a[i+2] - a[i+1] ) / h(i+1) - 3 * ( a[i+1] - a[i] ) / h(i);
-      }
-      for ( var i = 1 ; i < points.length - 2 ; i++ ) {
-        A[i][i-1] = h(i); 
-        A[i-1][i] = h(i); 
-      }
-
-      var C = luSolve( A, B );
-
-      for ( var i = 1 ; i < points.length - 1 ; i++ ) c[i] = C[i-1];
-
-      for ( var i = 0 ; i < points.length - 1 ; i++ ) {
-        b[i] = ( a[i+1] - a[i] ) / h(i) - ( c[i+1] + 2*c[i] ) * h(i) / 3;
-        d[i] = ( c[i+1] - c[i] ) / 3 / h(i);
-      }
-
+  for ( var i = 0 ; i < points.length - 2 ; i++ ) {
+    A[i][i] = 2 * ( h(i) + h(i+1) );
+    B[i] = 3 * ( a[i+2] - a[i+1] ) / h(i+1) - 3 * ( a[i+1] - a[i] ) / h(i);
+  }
+  for ( var i = 1 ; i < points.length - 2 ; i++ ) {
+    A[i][i-1] = h(i); 
+    A[i-1][i] = h(i); 
   }
 
-  function f( x ) {
+  var C = luSolve( A, B );
 
-    for ( var i = 0 ; i < points.length ; i++ )
-      if ( x === points[i][0] ) return points[i][1];
+  for ( var i = 1 ; i < points.length - 1 ; i++ ) c[i] = C[i-1];
 
-    for ( var i = 0 ; i < points.length - 1 ; i++ )
-      if ( x > points[i][0] && x < points[i+1][0] ) {
-        var xi = points[i][0];
-        return a[i] + b[i] * ( x - xi )
-               + c[i] * ( x - xi )**2 + d[i] * ( x - xi )**3;
-      }
-
+  for ( var i = 0 ; i < points.length - 1 ; i++ ) {
+    b[i] = ( a[i+1] - a[i] ) / h(i) - ( c[i+1] + 2*c[i] ) * h(i) / 3;
+    d[i] = ( c[i+1] - c[i] ) / 3 / h(i);
   }
 
-  return f;
+  switch( value ) {
+
+    case 'function':
+
+      return function( x ) {
+
+        for ( var i = 0 ; i < points.length ; i++ )
+          if ( x === points[i][0] ) return a[i];
+
+        for ( var i = 0 ; i < points.length - 1 ; i++ )
+          if ( x > points[i][0] && x < points[i+1][0] ) {
+            var xi = points[i][0];
+            return a[i] + b[i] * ( x - xi )
+                   + c[i] * ( x - xi )**2 + d[i] * ( x - xi )**3;
+          }
+
+      }
+
+    case 'derivative':
+
+      return function( x ) {
+
+        for ( var i = 0 ; i < points.length ; i++ )
+          if ( x === points[i][0] ) return b[i];
+
+        for ( var i = 0 ; i < points.length - 1 ; i++ )
+          if ( x > points[i][0] && x < points[i+1][0] ) {
+            var xi = points[i][0];
+            return b[i] + 2 * c[i] * ( x - xi ) + 3 * d[i] * ( x - xi )**2;
+          }
+
+      }
+
+    case 'integral':
+
+      return function( x ) {
+
+        var sum = 0;
+        throw 'Not yet supported';
+
+      }
+
+    default:
+
+      throw 'Unsupported value';
+
+  }
 
 }
 
