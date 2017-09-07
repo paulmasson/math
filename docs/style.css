@@ -1,7 +1,9 @@
 
 body {
 
-	margin: .5in;
+	margin: auto;
+	padding: .5in;
+	max-width: 7in;
 	text-align: justify;
 
 }
