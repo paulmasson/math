@@ -10,7 +10,7 @@ Hypergeometric functions <sub>0</sub>*F*<sub>1</sub>, <sub>1</sub>*F*<sub>1</sub
 
 Integration of functions and ordinary differential equations is available for real values, as well as eigensystems of real symmetric matrices, root finding and cubic splines.
 
-This library and [MathCell](https://github.com/paulmasson/mathcell) power the pure JavaScript interactive elements of [Analytic Physics](http://analyticphysics.com).
+This library and [MathCell](https://github.com/paulmasson/mathcell) power the interactive elements of [Analytic Physics](http://analyticphysics.com).
 
 ### Usage ###
 
