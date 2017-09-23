@@ -29,14 +29,14 @@
 
 var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
 
-var id = 'id' + document.scripts.length;
+var id = generateId();
 parent.id = id;
 
 MathCell( id, [] );
 
 parent.update = function( id ) {
 
-  var p = parametric( (x,y) => gamma(x,y), [-4.99,4.99,151], [-4.99,4.99,151] );
+  var p = parametric( (x,y) => beta(x,y), [-4.99,5], [-4.99,5], 'rgb(0,127,255)' );
 
   var config = { type: 'threejs', zMin: -5, zMax: 5 };
 
