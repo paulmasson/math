@@ -25,14 +25,14 @@
 
 var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
 
-var id = 'id' + document.scripts.length;
+var id = generateId();
 parent.id = id;
 
 MathCell( id, [] );
 
 parent.update = function( id ) {
 
-  var p = plot( x => gamma(x), [-4.999,5,1200] );
+  var p = plot( x => gamma(x), [-4.999,5,1200], 'rgb(0,127,255)' );
 
   var config = { type: 'svgplot', yMin: -5, yMax: 5 };
 
@@ -52,14 +52,14 @@ parent.update( id );
 
 var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
 
-var id = 'id' + document.scripts.length;
+var id = generateId();
 parent.id = id;
 
 MathCell( id, [] );
 
 parent.update = function( id ) {
 
-  var p = plot( x => gamma( complex(0,x) ).im, [-5,5] );
+  var p = plot( x => gamma( complex(0,x) ).im, [-5,5], 'rgb(0,127,255)' );
 
   var config = { type: 'svgplot', yMin: -1, yMax: 1 };
 
@@ -79,14 +79,15 @@ parent.update( id );
 
 var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
 
-var id = 'id' + document.scripts.length;
+var id = generateId();
 parent.id = id;
 
 MathCell( id, [] );
 
 parent.update = function( id ) {
 
-  var p = parametric( (x,y) => gamma( complex(x,y) ).re, [-4.99,4.99,151], [-4.99,4.99,151] );
+  var p = parametric( (x,y) => gamma( complex(x,y) ).re, [-4.99,4.99,151], [-4.99,4.99,151],
+                      'rgb(0,127,255)' );
 
   var config = { type: 'threejs', zMin: -5, zMax: 5 };
 
@@ -106,14 +107,15 @@ parent.update( id );
 
 var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
 
-var id = 'id' + document.scripts.length;
+var id = generateId();
 parent.id = id;
 
 MathCell( id, [] );
 
 parent.update = function( id ) {
 
-  var p = parametric( (x,y) => gamma( complex(x,y) ).im, [-4.99,4.99,151], [-4.99,4.99,151] );
+  var p = parametric( (x,y) => gamma( complex(x,y) ).im, [-4.99,4.99,151], [-4.99,4.99,151],
+                      'rgb(0,127,255)' );
 
   var config = { type: 'threejs', zMin: -5, zMax: 5 };
 
