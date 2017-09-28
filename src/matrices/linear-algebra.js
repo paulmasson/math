@@ -54,7 +54,7 @@ function luDecomposition( A, tolerance=1e-7 ) {
   for ( var i = 0 ; i < size ; i++ )
     for ( var j = i ; j < size ; j++ ) U[i][j] = LU[i][j];
 
-  return { L:L, U:U, P:P, pivots:pivots };
+  return { L: L, U: U, P: P, pivots: pivots };
 
 }
 

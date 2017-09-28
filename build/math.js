@@ -1270,7 +1270,7 @@ function polynomial( x, coefficients, derivative=false ) {
     p = coefficients[i] + p * x;
   }
 
-  if ( derivative ) return { polynomial:p, derivative:q };
+  if ( derivative ) return { polynomial: p, derivative: q };
   else return p;
 
 }
@@ -1530,7 +1530,7 @@ function tridiagonalForm( A ) {
   V[n-1][n-1] = 1;
   e[0] = 0;
 
-  return { diagonal:d, offDiagonal:e, eigenvectors:V };
+  return { diagonal: d, offDiagonal: e, eigenvectors: V };
 
 }
 
@@ -1661,7 +1661,7 @@ function tridiagonalQL( tridiagonalForm ) {
     }
   }
 
-  return { eigenvalues:d, eigenvectors:V };
+  return { eigenvalues: d, eigenvectors: V };
 
 }
 
@@ -1726,7 +1726,7 @@ function luDecomposition( A, tolerance=1e-7 ) {
   for ( var i = 0 ; i < size ; i++ )
     for ( var j = i ; j < size ; j++ ) U[i][j] = LU[i][j];
 
-  return { L:L, U:U, P:P, pivots:pivots };
+  return { L: L, U: U, P: P, pivots: pivots };
 
 }
 

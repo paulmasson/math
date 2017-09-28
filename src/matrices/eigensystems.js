@@ -113,7 +113,7 @@ function tridiagonalForm( A ) {
   V[n-1][n-1] = 1;
   e[0] = 0;
 
-  return { diagonal:d, offDiagonal:e, eigenvectors:V };
+  return { diagonal: d, offDiagonal: e, eigenvectors: V };
 
 }
 
@@ -244,7 +244,7 @@ function tridiagonalQL( tridiagonalForm ) {
     }
   }
 
-  return { eigenvalues:d, eigenvectors:V };
+  return { eigenvalues: d, eigenvectors: V };
 
 }
 

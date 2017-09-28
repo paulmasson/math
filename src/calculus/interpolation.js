@@ -11,7 +11,7 @@ function polynomial( x, coefficients, derivative=false ) {
     p = coefficients[i] + p * x;
   }
 
-  if ( derivative ) return { polynomial:p, derivative:q };
+  if ( derivative ) return { polynomial: p, derivative: q };
   else return p;
 
 }
