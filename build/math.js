@@ -223,6 +223,7 @@ function cn( x, m ) {
          * jacobiTheta(2,t,q) / jacobiTheta(4,t,q);
 
 }
+
 function dn( x, m ) {
 
   var q = exp( -pi * ellipticK(1-m) / ellipticK(m) );
@@ -231,6 +232,16 @@ function dn( x, m ) {
 
   return jacobiTheta(4,0,q) / jacobiTheta(3,0,q)
          * jacobiTheta(3,t,q) / jacobiTheta(4,t,q);
+
+}
+
+function am( x, m ) {
+
+  var K = ellipticK(m);
+  var n = Math.floor( x / 2 / K );
+  x = x - 2 * n * K;
+
+  return Math.atan2( sn(x,m), cn(x,m) ) + n * pi;
 
 }
 
