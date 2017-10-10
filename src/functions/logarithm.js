@@ -18,7 +18,7 @@ function log( x, base ) {
     var r = sqrt( x.re * x.re + x.im * x.im );
     var phi = Math.atan2( x.im, x.re );
 
-    return { re: log(r,base), im: log(e,base) * phi };
+    return { re: log(r,base), im: log(Math.E,base) * phi };
 
   } else if ( x < 0 ) return log( complex(x), base );
 
