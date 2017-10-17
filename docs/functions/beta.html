@@ -36,7 +36,7 @@ MathCell( id, [] );
 
 parent.update = function( id ) {
 
-  var p = parametric( (x,y) => beta(x,y), [-4.99,5], [-4.99,5], 'rgb(0,127,255)' );
+  var p = parametric( (x,y) => [x,y,beta(x,y)], [-4.99,5], [-4.99,5], 'rgb(0,127,255)' );
 
   var config = { type: 'threejs', zMin: -5, zMax: 5 };
 

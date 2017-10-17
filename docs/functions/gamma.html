@@ -86,7 +86,7 @@ MathCell( id, [] );
 
 parent.update = function( id ) {
 
-  var p = parametric( (x,y) => gamma( complex(x,y) ).re, [-4.99,4.99,151], [-4.99,4.99,151],
+  var p = parametric( (x,y) => [x,y,gamma( complex(x,y) ).re], [-4.99,4.99,151], [-4.99,4.99,151],
                       'rgb(0,127,255)' );
 
   var config = { type: 'threejs', zMin: -5, zMax: 5 };
@@ -114,7 +114,7 @@ MathCell( id, [] );
 
 parent.update = function( id ) {
 
-  var p = parametric( (x,y) => gamma( complex(x,y) ).im, [-4.99,4.99,151], [-4.99,4.99,151],
+  var p = parametric( (x,y) => [x,y,gamma( complex(x,y) ).im], [-4.99,4.99,151], [-4.99,4.99,151],
                       'rgb(0,127,255)' );
 
   var config = { type: 'threejs', zMin: -5, zMax: 5 };
