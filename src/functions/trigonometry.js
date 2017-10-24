@@ -142,8 +142,8 @@ function cosh( x ) {
 
   if ( isComplex(x) )
 
-    return { re: Math.cos(x.re) * Math.cosh(x.im),
-             im: Math.sin(x.re) * Math.sinh(x.im) };
+    return { re: Math.cosh(x.re) * Math.cos(x.im),
+             im: Math.sinh(x.re) * Math.sin(x.im) };
 
   else return Math.cosh(x);
 
