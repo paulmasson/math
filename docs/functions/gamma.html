@@ -32,7 +32,7 @@ MathCell( id, [] );
 
 parent.update = function( id ) {
 
-  var p = plot( x => gamma(x), [-4.999,5,1200], 'rgb(0,127,255)' );
+  var p = plot( x => gamma(x), [-4.999,5,1200] );
 
   var config = { type: 'svgplot', yMin: -5, yMax: 5 };
 
@@ -59,7 +59,7 @@ MathCell( id, [] );
 
 parent.update = function( id ) {
 
-  var p = plot( x => gamma( complex(0,x) ).im, [-5,5], 'rgb(0,127,255)' );
+  var p = plot( x => gamma( complex(0,x) ).im, [-5,5] );
 
   var config = { type: 'svgplot', yMin: -1, yMax: 1 };
 
@@ -86,8 +86,7 @@ MathCell( id, [] );
 
 parent.update = function( id ) {
 
-  var p = parametric( (x,y) => [x,y,gamma( complex(x,y) ).re], [-4.99,4.99,151], [-4.99,4.99,151],
-                      'rgb(0,127,255)' );
+  var p = parametric( (x,y) => [x,y,gamma( complex(x,y) ).re], [-4.999,4.999,151], [-4.999,4.999,151] );
 
   var config = { type: 'threejs', zMin: -5, zMax: 5 };
 
@@ -114,8 +113,7 @@ MathCell( id, [] );
 
 parent.update = function( id ) {
 
-  var p = parametric( (x,y) => [x,y,gamma( complex(x,y) ).im], [-4.99,4.99,151], [-4.99,4.99,151],
-                      'rgb(0,127,255)' );
+  var p = parametric( (x,y) => [x,y,gamma( complex(x,y) ).im], [-4.999,4.999,151], [-4.999,4.999,151] );
 
   var config = { type: 'threejs', zMin: -5, zMax: 5 };
 
@@ -128,7 +126,7 @@ parent.update( id );
 </script>
 </div>
 
-<p>Related functions: &nbsp; <a href="beta.html">beta</a></p>
+<p>Related functions: <a href="beta.html">beta</a></p>
 
 <p>Function category: <a href="../functions.html#gamma">gamma functions</a></p>
 

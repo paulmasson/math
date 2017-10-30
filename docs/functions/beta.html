@@ -36,7 +36,7 @@ MathCell( id, [] );
 
 parent.update = function( id ) {
 
-  var p = parametric( (x,y) => [x,y,beta(x,y)], [-4.99,5], [-4.99,5], 'rgb(0,127,255)' );
+  var p = parametric( (x,y) => [x,y,beta(x,y)], [-4.999,5], [-4.999,5] );
 
   var config = { type: 'threejs', zMin: -5, zMax: 5 };
 
@@ -49,7 +49,7 @@ parent.update( id );
 </script>
 </div>
 
-<p>Related functions: &nbsp; <a href="gamma.html">gamma</a></p>
+<p>Related functions: <a href="gamma.html">gamma</a></p>
 
 <p>Function category: <a href="../functions.html#gamma">gamma functions</a></p>
 
