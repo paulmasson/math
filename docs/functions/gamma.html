@@ -18,7 +18,7 @@
 
 \[ \Gamma(z) = \int_0^\infty dt \; t^{z-1} e^{-t} \]
 
-<p>Plot on the real axis:</p>
+<p>Real part on the real axis:</p>
 
 <div class="mathcell" style="height: 4in">
 <script>
@@ -45,7 +45,34 @@ parent.update( id );
 </script>
 </div>
 
-<p>Plot on the imaginary axis:</p>
+<p>Real part on the imaginary axis:</p>
+
+<div class="mathcell" style="height: 4in">
+<script>
+
+var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [] );
+
+parent.update = function( id ) {
+
+  var p = plot( x => gamma( complex(0,x) ).re, [-5,5] );
+
+  var config = { type: 'svgplot' };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Imaginary part on the imaginary axis:</p>
 
 <div class="mathcell" style="height: 4in">
 <script>
@@ -126,7 +153,7 @@ parent.update( id );
 </script>
 </div>
 
-<p>Related functions: <a href="beta.html">beta</a></p>
+<p>Related functions: &nbsp; <a href="beta.html">beta</a></p>
 
 <p>Function category: <a href="../functions.html#gamma">gamma functions</a></p>
 
