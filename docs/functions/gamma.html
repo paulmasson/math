@@ -99,7 +99,19 @@ parent.update( id );
 </script>
 </div>
 
-<p>Real part in the complex plane:</p>
+<script>
+
+function phase( z ) {
+
+  var p = arg(z) / pi / 2;
+  if ( p < 0 ) p += 1;
+  return p;
+
+}
+
+</script>
+
+<p>Real part on the complex plane:</p>
 
 <div class="mathcell" style="width: 6in; height: 6in">
 <script>
@@ -113,7 +125,8 @@ MathCell( id, [] );
 
 parent.update = function( id ) {
 
-  var p = parametric( (x,y) => [x,y,gamma( complex(x,y) ).re], [-4.999,4.999,151], [-4.999,4.999,151] );
+  var p = parametric( (x,y) => [x,y,gamma( complex(x,y) ).re], [-4.999,4.999,151], [-4.999,4.999,151],
+                      { colormap: (x,y) => phase( gamma( complex(x,y) ) ) } );
 
   var config = { type: 'threejs', zMin: -5, zMax: 5 };
 
@@ -126,7 +139,7 @@ parent.update( id );
 </script>
 </div>
 
-<p>Imaginary part in the complex plane:</p>
+<p>Imaginary part on the complex plane:</p>
 
 <div class="mathcell" style="width: 6in; height: 6in">
 <script>
@@ -140,9 +153,38 @@ MathCell( id, [] );
 
 parent.update = function( id ) {
 
-  var p = parametric( (x,y) => [x,y,gamma( complex(x,y) ).im], [-4.999,4.999,151], [-4.999,4.999,151] );
+  var p = parametric( (x,y) => [x,y,gamma( complex(x,y) ).im], [-4.999,4.999,151], [-4.999,4.999,151],
+                      { colormap: (x,y) => phase( gamma( complex(x,y) ) ) } );
 
   var config = { type: 'threejs', zMin: -5, zMax: 5 };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Absolute value on the complex plane:</p>
+
+<div class="mathcell" style="width: 6in; height: 6in">
+<script>
+
+var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [] );
+
+parent.update = function( id ) {
+
+  var p = parametric( (x,y) => [x,y,abs(gamma( complex(x,y) ))], [-4.999,4.999,151], [-4.999,4.999,151],
+                      { colormap: (x,y) => phase( gamma( complex(x,y) ) ) } );
+
+  var config = { type: 'threejs', zMax: 5 };
 
   evaluate( id, [ p ], config );
 
