@@ -8,10 +8,27 @@ function complex( x, y ) {
 
 var C = complex;
 
-// arrays of length greater than two are true for this test
+// arrays of length two or greater are true for this test
 // need a fast way to distinguish between array and dictionary
 
 var isComplex = isNaN;
+
+
+function abs( x ) {
+
+  if ( !isComplex(x) ) x = complex(x,0);
+
+  return Math.sqrt( x.re * x.re + x.im * x.im );
+
+}
+
+function arg( x ) {
+
+  if ( !isComplex(x) ) x = complex(x,0);
+
+  return Math.atan2( x.im, x.re );
+
+}
 
 
 // JavaScript does not yet support operator overloading
