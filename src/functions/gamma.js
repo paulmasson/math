@@ -48,8 +48,7 @@ function logGamma( x ) {
 
   } else {
 
-    if ( Number.isInteger(x) && x <= 0 )
-      throw 'Gamma function pole'; 
+    if ( Number.isInteger(x) && x <= 0 ) throw 'Gamma function pole'; 
 
     var t = x + 5.24218750000000000;
     t = ( x + 0.5 ) * log(t) - t;
