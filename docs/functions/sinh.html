@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>cos &mdash; Math</title>
+<title>sinh &mdash; Math</title>
 <link rel="stylesheet" type="text/css" href="../style.css">
 </head>
 
@@ -12,11 +12,11 @@
 
 <script src="https://cdn.rawgit.com/mathjax/MathJax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
 
-<p class="function"> cos( <i>z</i> ) </p>
+<p class="function"> sinh( <i>z</i> ) </p>
 
-<p>The cosine of <i>z</i> in Math. Defined by</p>
+<p>The hyperbolic sine of <i>z</i> in Math. Defined by</p>
 
-\[ \cos z = \frac{ e^{iz} + e^{-iz} }{ 2 } \]
+\[ \sinh z = \frac{ e^{z} - e^{-z} }{ 2 } \]
 
 <p>Real part on the real axis:</p>
 
@@ -32,9 +32,9 @@ MathCell( id, [] );
 
 parent.update = function( id ) {
 
-  var p = plot( x => cos(x), [-2*pi,2*pi] );
+  var p = plot( x => sinh(x), [-2*pi,2*pi] );
 
-  var config = { type: 'svgplot', yMin: -1 };
+  var config = { type: 'svgplot', yMin: -100, yMax: 100 };
 
   evaluate( id, [ p ], config );
 
@@ -45,7 +45,7 @@ parent.update( id );
 </script>
 </div>
 
-<p>Real part on the imaginary axis:</p>
+<p>Imaginary part on the imaginary axis:</p>
 
 <div class="mathcell" style="height: 4in">
 <script>
@@ -59,9 +59,9 @@ MathCell( id, [] );
 
 parent.update = function( id ) {
 
-  var p = plot( x => cos( complex(0,x) ).re, [-2*pi,2*pi] );
+  var p = plot( x => sinh( complex(0,x) ).im, [-2*pi,2*pi] );
 
-  var config = { type: 'svgplot', yMax: 100, includeOrigin: true };
+  var config = { type: 'svgplot' };
 
   evaluate( id, [ p ], config );
 
@@ -98,8 +98,8 @@ MathCell( id, [] );
 
 parent.update = function( id ) {
 
-  var p = parametric( (x,y) => [x,y,cos( complex(x,y) ).re], [-5,5,150], [-5,5,150],
-                      { colormap: (x,y) => phase( cos( complex(x,y) ) ) } );
+  var p = parametric( (x,y) => [x,y,sinh( complex(x,y) ).re], [-5,5,150], [-5,5,150],
+                      { colormap: (x,y) => phase( sinh( complex(x,y) ) ) } );
 
   var config = { type: 'threejs', zMin: -5, zMax: 5 };
 
@@ -126,8 +126,8 @@ MathCell( id, [] );
 
 parent.update = function( id ) {
 
-  var p = parametric( (x,y) => [x,y,cos( complex(x,y) ).im], [-5,5,150], [-5,5,150],
-                      { colormap: (x,y) => phase( cos( complex(x,y) ) ) } );
+  var p = parametric( (x,y) => [x,y,sinh( complex(x,y) ).im], [-5,5,150], [-5,5,150],
+                      { colormap: (x,y) => phase( sinh( complex(x,y) ) ) } );
 
   var config = { type: 'threejs', zMin: -5, zMax: 5 };
 
@@ -154,8 +154,8 @@ MathCell( id, [] );
 
 parent.update = function( id ) {
 
-  var p = parametric( (x,y) => [x,y,abs(cos( complex(x,y) ))], [-5,5,150], [-5,5,150],
-                      { colormap: (x,y) => phase( cos( complex(x,y) ) ) } );
+  var p = parametric( (x,y) => [x,y,abs(sinh( complex(x,y) ))], [-5,5,150], [-5,5,150],
+                      { colormap: (x,y) => phase( sinh( complex(x,y) ) ) } );
 
   var config = { type: 'threejs', zMax: 8 };
 
@@ -168,9 +168,9 @@ parent.update( id );
 </script>
 </div>
 
-<p>Related functions: &nbsp; <a href="sin.html">sin</a> &nbsp; <a href="sec.html">sec</a> &nbsp; <a href="arccos.html">arccos</a></p>
+<p>Related functions: &nbsp; <a href="cosh.html">cosh</a> &nbsp; <a href="csch.html">csch</a> &nbsp; <a href="arcsinh.html">arcsinh</a></p>
 
-<p>Function category: <a href="../functions.html#circular">circular functions</a></p>
+<p>Function category: <a href="../functions.html#hyperbolic">hyperbolic functions</a></p>
 
 </body>
 </html>
