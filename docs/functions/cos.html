@@ -98,7 +98,7 @@ MathCell( id, [] );
 
 parent.update = function( id ) {
 
-  var p = parametric( (x,y) => [x,y,cos( complex(x,y) ).re], [-5,5,150], [-5,5,150],
+  var p = parametric( (x,y) => [ x, y, cos( complex(x,y) ).re ], [-5,5,150], [-5,5,150],
                       { colormap: (x,y) => phase( cos( complex(x,y) ) ) } );
 
   var config = { type: 'threejs', zMin: -5, zMax: 5 };
@@ -126,7 +126,7 @@ MathCell( id, [] );
 
 parent.update = function( id ) {
 
-  var p = parametric( (x,y) => [x,y,cos( complex(x,y) ).im], [-5,5,150], [-5,5,150],
+  var p = parametric( (x,y) => [ x, y, cos( complex(x,y) ).im ], [-5,5,150], [-5,5,150],
                       { colormap: (x,y) => phase( cos( complex(x,y) ) ) } );
 
   var config = { type: 'threejs', zMin: -5, zMax: 5 };
@@ -154,7 +154,7 @@ MathCell( id, [] );
 
 parent.update = function( id ) {
 
-  var p = parametric( (x,y) => [x,y,abs(cos( complex(x,y) ))], [-5,5,150], [-5,5,150],
+  var p = parametric( (x,y) => [ x, y, abs( cos( complex(x,y) ) ) ], [-5,5,150], [-5,5,150],
                       { colormap: (x,y) => phase( cos( complex(x,y) ) ) } );
 
   var config = { type: 'threejs', zMax: 8 };
