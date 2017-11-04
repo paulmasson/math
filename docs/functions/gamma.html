@@ -184,7 +184,7 @@ parent.update = function( id ) {
   var p = parametric( (x,y) => [x,y,abs(gamma( complex(x,y) ))], [-4.999,4.999,151], [-4.999,4.999,151],
                       { colormap: (x,y) => phase( gamma( complex(x,y) ) ) } );
 
-  var config = { type: 'threejs', zMax: 5 };
+  var config = { type: 'threejs', zMax: 8 };
 
   evaluate( id, [ p ], config );
 
