@@ -598,6 +598,9 @@ function hypergeometric1F1( a, b, x, tolerance=1e-10 ) {
     if ( Number.isInteger(b.re) && b.re <= 0 && b.im === 0 )
       throw 'Hypergeometric function pole';
 
+    // Kummer transformation
+    if ( x.re < 0 ) return mul( exp(x), hypergeometric1F1( sub(b,a), b, mul(x,-1) ) );
+
     var s = complex(1);
     var p = complex(1);
     var i = 1;
@@ -616,6 +619,9 @@ function hypergeometric1F1( a, b, x, tolerance=1e-10 ) {
   } else {
 
     if ( Number.isInteger(b) && b <= 0 ) throw 'Hypergeometric function pole';
+
+    // Kummer transformation
+    if ( x < 0 ) return exp(x) * hypergeometric1F1( b-a, b, -x );
 
     var s = 1;
     var p = 1;
