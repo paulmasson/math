@@ -108,8 +108,9 @@ function pow( x, y ) {
 
     return { re: R * Math.cos(Phi), im: R * Math.sin(Phi) };
 
-  } else return x**y;
+  } else if ( x < 0 ) return pow( complex(x), y );
 
+  else return x**y;
 
 }
 
