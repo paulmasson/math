@@ -1,27 +1,58 @@
 
 function besselJ( n, x ) {
 
-  return (x/2)**n * hypergeometric0F1( n+1, -.25*x**2 ) / gamma(n+1);
+  if ( isComplex(n) || isComplex(x) ) {
+
+    if ( !isComplex(n) ) n = complex(n,0);
+    if ( !isComplex(x) ) x = complex(x,0);
+
+    var product = div( pow( div(x,2), n ), gamma( add(n,1) ) );
+    return mul( product, hypergeometric0F1( add(n,1), mul(-.25, pow(x,2) ) ) );
+
+  } else return (x/2)**n * hypergeometric0F1( n+1, -.25*x**2 ) / gamma(n+1);
 
 }
 
 function besselY( n, x ) {
 
-  return ( besselJ(n,x) * cos(n*pi) - besselJ(-n,x) ) / sin(n*pi);
+  if ( isComplex(n) || isComplex(x) ) {
+
+    if ( !isComplex(n) ) n = complex(n,0);
+    if ( !isComplex(x) ) x = complex(x,0);
+
+    var sum = sub( mul( besselJ(n,x), cos( mul(n,pi) ) ), besselJ( mul(-1,n), x ) );
+    return div( sum, sin( mul(n,pi) ) );
+
+  } else return ( besselJ(n,x) * cos(n*pi) - besselJ(-n,x) ) / sin(n*pi);
 
 
 }
 
 function besselI( n, x ) {
 
-  return (x/2)**n * hypergeometric0F1( n+1, .25*x**2 ) / gamma(n+1);
+  if ( isComplex(n) || isComplex(x) ) {
+
+    if ( !isComplex(n) ) n = complex(n,0);
+    if ( !isComplex(x) ) x = complex(x,0);
+
+    var product = div( pow( div(x,2), n ), gamma( add(n,1) ) );
+    return mul( product, hypergeometric0F1( add(n,1), mul(.25, pow(x,2) ) ) );
+
+  } else return (x/2)**n * hypergeometric0F1( n+1, .25*x**2 ) / gamma(n+1);
 
 }
 
 function besselK( n, x ) {
 
-  return pi/2 * ( besselI(-n,x) - besselI(n,x) ) / sin(n*pi);
+  if ( isComplex(n) || isComplex(x) ) {
 
+    if ( !isComplex(n) ) n = complex(n,0);
+    if ( !isComplex(x) ) x = complex(x,0);
+
+    var product = div( pi/2, sin( mul(n,pi) ) );
+    return mul( product, sub( besselI( mul(-1,n), x ), besselI(n,x) ) );
+
+  } else return pi/2 * ( besselI(-n,x) - besselI(n,x) ) / sin(n*pi);
 
 }
 
