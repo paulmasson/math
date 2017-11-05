@@ -1,21 +1,24 @@
 
-function hypergeometric0F1( a, x ) {
+function hypergeometric0F1( a, x, tolerance=1e-10 ) {
 
   if ( isComplex(a) || isComplex(x) ) {
-
-    if ( Number.isInteger(a.re) && a.re <= 0 && a.im === 0 )
-      throw 'Hypergeometric function pole';
 
     if ( !isComplex(a) ) a = complex(a,0);
     if ( !isComplex(x) ) x = complex(x,0);
 
+    if ( Number.isInteger(a.re) && a.re <= 0 && a.im === 0 )
+      throw 'Hypergeometric function pole';
+
     var s = complex(1);
     var p = complex(1);
+    var i = 1;
 
-    for ( var i = 1 ; i < 100 ; i++ ) {
+    while ( Math.abs(p.re) > tolerance * Math.abs(s.re)
+            || Math.abs(p.im) > tolerance * Math.abs(s.im) ) {
       p = mul( p, div( div( x, a ), i ) );
       s = add( s, p );
       a = add( a, 1 );
+      i++;
     }
 
     return s;
@@ -26,11 +29,13 @@ function hypergeometric0F1( a, x ) {
 
     var s = 1;
     var p = 1;
+    var i = 1;
 
-    for ( var i = 1 ; i < 100 ; i++ ) {
+    while ( Math.abs(p) > tolerance * Math.abs(s) ) {
       p *= x / a / i;
       s += p;
       a++;
+      i++;
     }
 
     return s;
@@ -40,25 +45,28 @@ function hypergeometric0F1( a, x ) {
 }
 
 
-function hypergeometric1F1( a, b, x ) {
+function hypergeometric1F1( a, b, x, tolerance=1e-10 ) {
 
   if ( isComplex(a) || isComplex(b) || isComplex(x) ) {
-
-    if ( Number.isInteger(b.re) && b.re <= 0 && b.im === 0 )
-      throw 'Hypergeometric function pole';
 
     if ( !isComplex(a) ) a = complex(a,0);
     if ( !isComplex(b) ) b = complex(b,0);
     if ( !isComplex(x) ) x = complex(x,0);
 
+    if ( Number.isInteger(b.re) && b.re <= 0 && b.im === 0 )
+      throw 'Hypergeometric function pole';
+
     var s = complex(1);
     var p = complex(1);
+    var i = 1;
 
-    for ( var i = 1 ; i < 100 ; i++ ) {
+    while ( Math.abs(p.re) > tolerance * Math.abs(s.re)
+            || Math.abs(p.im) > tolerance * Math.abs(s.im) ) {
       p = mul( p, div( div( mul( x, a ), b ), i ) );
       s = add( s, p );
       a = add( a, 1 );
       b = add( b, 1 );
+      i++;
     }
 
     return s;
@@ -69,12 +77,14 @@ function hypergeometric1F1( a, b, x ) {
 
     var s = 1;
     var p = 1;
+    var i = 1;
 
-    for ( var i = 1 ; i < 100 ; i++ ) {
+    while ( Math.abs(p) > tolerance * Math.abs(s) ) {
       p *= x * a / b / i;
       s += p;
       a++;
       b++;
+      i++;
     }
 
     return s;
@@ -84,27 +94,30 @@ function hypergeometric1F1( a, b, x ) {
 }
 
 
-function hypergeometric2F1( a, b, c, x ) {
+function hypergeometric2F1( a, b, c, x, tolerance=1e-10 ) {
 
   if ( isComplex(a) || isComplex(b) || isComplex(c) || isComplex(x) ) {
-
-    if ( Number.isInteger(c.re) && c.re <= 0 && c.im === 0 )
-      throw 'Hypergeometric function pole';
 
     if ( !isComplex(a) ) a = complex(a,0);
     if ( !isComplex(b) ) b = complex(b,0);
     if ( !isComplex(c) ) c = complex(c,0);
     if ( !isComplex(x) ) x = complex(x,0);
 
+    if ( Number.isInteger(c.re) && c.re <= 0 && c.im === 0 )
+      throw 'Hypergeometric function pole';
+
     var s = complex(1);
     var p = complex(1);
+    var i = 1;
 
-    for ( var i = 1 ; i < 1000 ; i++ ) {
+    while ( Math.abs(p.re) > tolerance * Math.abs(s.re)
+            || Math.abs(p.im) > tolerance * Math.abs(s.im) ) {
       p = mul( p, div( div( mul( mul( x, a ), b ), c ), i ) );
       s = add( s, p );
       a = add( a, 1 );
       b = add( b, 1 );
       c = add( c, 1 );
+      i++;
     }
 
     return s;
@@ -117,13 +130,15 @@ function hypergeometric2F1( a, b, c, x ) {
 
     var s = 1;
     var p = 1;
+    var i = 1;
 
-    for ( var i = 1 ; i < 1000 ; i++ ) {
+    while ( Math.abs(p) > tolerance * Math.abs(s) ) {
       p *= x * a * b / c / i;
       s += p;
       a++;
       b++;
       c++;
+      i++;
     }
 
     return s;
