@@ -121,7 +121,9 @@ function sqrt( x ) {
 
     return { re: R * Math.cos(Phi), im: R * Math.sin(Phi) };
 
-  } else return Math.sqrt(x);
+  } else if ( x < 0 ) return sqrt( complex(x) );
+
+  else return Math.sqrt(x);
 
 }
 
