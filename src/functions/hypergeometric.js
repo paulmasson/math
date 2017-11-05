@@ -94,6 +94,50 @@ function hypergeometric1F1( a, b, x, tolerance=1e-10 ) {
 }
 
 
+function hypergeometric2F0( a, b, x, tolerance=1e-10 ) {
+
+  if ( isComplex(a) || isComplex(b) || isComplex(x) ) {
+
+    if ( !isComplex(a) ) a = complex(a,0);
+    if ( !isComplex(b) ) b = complex(b,0);
+    if ( !isComplex(x) ) x = complex(x,0);
+
+    var s = complex(1);
+    var p = complex(1);
+    var i = 1;
+
+    while ( Math.abs(p.re) > tolerance * Math.abs(s.re)
+            || Math.abs(p.im) > tolerance * Math.abs(s.im) ) {
+      p = mul( p, div( mul( mul( x, a ), b ), i ) );
+      s = add( s, p );
+      a = add( a, 1 );
+      b = add( b, 1 );
+      i++;
+    }
+
+    return s;
+
+  } else {
+
+    var s = 1;
+    var p = 1;
+    var i = 1;
+
+    while ( Math.abs(p) > tolerance * Math.abs(s) ) {
+      p *= x * a * b / i;
+      s += p;
+      a++;
+      b++;
+      i++;
+    }
+
+    return s;
+
+  }
+
+}
+
+
 function hypergeometric2F1( a, b, c, x, tolerance=1e-10 ) {
 
   if ( isComplex(a) || isComplex(b) || isComplex(c) || isComplex(x) ) {
