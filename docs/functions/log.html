@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>log &mdash; Math</title>
+<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+
+<body>
+
+<script src="../../build/math.js"></script>
+<script src="../../../mathcell/build/mathcell.js"></script>
+
+<script src="https://cdn.rawgit.com/mathjax/MathJax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
+
+<p class="function"> log( <i>z</i> ) </p>
+
+<p>The logarithm of <i>z</i> in Math. The inverse of <a href="exp.html">exp</a>. Defined by</p>
+
+\[ e^{\log z} = z \]
+
+<p>Real part on the real axis:</p>
+
+<div class="mathcell" style="height: 4in">
+<script>
+
+var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [] );
+
+parent.update = function( id ) {
+
+  var p = plot( x => log( complex(x) ).re, [-5,5] );
+
+  var config = { type: 'svgplot' };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Imaginary part on the real axis:</p>
+
+<div class="mathcell" style="height: 4in">
+<script>
+
+var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [] );
+
+parent.update = function( id ) {
+
+  var p = plot( x => log( complex(x) ).im, [-5,5] );
+
+  var config = { type: 'svgplot' };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Real part on the imaginary axis:</p>
+
+<div class="mathcell" style="height: 4in">
+<script>
+
+var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [] );
+
+parent.update = function( id ) {
+
+  var p = plot( x => log( complex(0,x) ).re, [-5,5] );
+
+  var config = { type: 'svgplot' };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Imaginary part on the imaginary axis:</p>
+
+<div class="mathcell" style="height: 4in">
+<script>
+
+var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [] );
+
+parent.update = function( id ) {
+
+  var p = plot( x => log( complex(0,x) ).im, [-5,5] );
+
+  var config = { type: 'svgplot' };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<script>
+
+function phase( z ) {
+
+  var p = arg(z) / pi / 2;
+  if ( p < 0 ) p += 1;
+  return p;
+
+}
+
+</script>
+
+<p>Real part on the complex plane:</p>
+
+<div class="mathcell" style="width: 6in; height: 6in">
+<script>
+
+var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [] );
+
+parent.update = function( id ) {
+
+  var p = parametric( (x,y) => [ x, y, log( complex(x,y) ).re ], [-5,5,151], [-5,5,151],
+                      { colormap: (x,y) => phase( log( complex(x,y) ) ) } );
+
+  var config = { type: 'threejs', zMin: -5, zMax: 5 };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Imaginary part on the complex plane:</p>
+
+<div class="mathcell" style="width: 6in; height: 6in">
+<script>
+
+var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [] );
+
+parent.update = function( id ) {
+
+  var p = parametric( (x,y) => [ x, y, log( complex(x,y) ).im ], [-5,5,151], [-5,5,151],
+                      { colormap: (x,y) => phase( log( complex(x,y) ) ) } );
+
+  var config = { type: 'threejs', zMin: -5, zMax: 5 };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Absolute value on the complex plane:</p>
+
+<div class="mathcell" style="width: 6in; height: 6in">
+<script>
+
+var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [] );
+
+parent.update = function( id ) {
+
+  var p = parametric( (x,y) => [ x, y, abs( log( complex(x,y) ) ) ], [-5,5,151], [-5,5,151],
+                      { colormap: (x,y) => phase( log( complex(x,y) ) ) } );
+
+  var config = { type: 'threejs', zMax: 8 };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Related functions: &nbsp; <a href="exp.html">exp</a></p>
+
+<p>Function category: <a href="../functions.html#logaritymic">logarithmic functions</a></p>
+
+</body>
+</html>
