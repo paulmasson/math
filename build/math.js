@@ -21,7 +21,13 @@ function abs( x ) {
 
   if ( !isComplex(x) ) x = complex(x,0);
 
-  return Math.sqrt( x.re * x.re + x.im * x.im );
+  if ( Math.abs(x.re) < Math.abs(x.im) )
+
+    return Math.abs(x.im) * Math.sqrt( 1 + ( x.re / x.im )**2 );
+
+  else
+
+    return Math.abs(x.re) * Math.sqrt( 1 + ( x.im / x.re )**2 );
 
 }
 
