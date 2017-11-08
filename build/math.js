@@ -542,7 +542,15 @@ function logGamma( x ) {
     t = sub( mul( add( x, 0.5 ), log(t)), t );
     var s = 0.999999999999997092;
     for ( var j = 0 ; j < 14 ; j++ ) s = add( s, div( c[j], add( x, j+1 ) ) );
-    return add( t, log( mul( 2.5066282746310005, div( s, x ) ) ) );
+    var u = add( t, log( mul( 2.5066282746310005, div( s, x ) ) ) );
+
+    // adjustment to keep imaginary part on same sheet
+    if ( s.re < 0 ) {
+      if( x.im < 0 && div(s,x).im < 0 ) u = add( u, complex(0,2*pi) );
+      if( x.im > 0 && div(s,x).im > 0 ) u = add( u, complex(0,-2*pi) );
+    }
+
+    return u;
 
   } else {
 
