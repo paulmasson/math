@@ -82,9 +82,19 @@ function div( x, y ) {
     if ( !isComplex(x) ) x = complex(x,0);
     if ( !isComplex(y) ) y = complex(y,0);
 
-    var ySq = y.re * y.re + y.im * y.im;
-    return { re: ( x.re * y.re + x.im * y.im ) / ySq,
-             im: ( x.im * y.re - x.re * y.im ) / ySq };
+    if ( Math.abs(y.re) < Math.abs(y.im) ) {
+
+      var f = y.re / y.im;
+      return { re: ( x.re * f + x.im ) / ( y.re * f + y.im ),
+               im: ( x.im * f - x.re ) / ( y.re * f + y.im ) };
+
+    } else {
+
+      var f = y.im / y.re;
+      return { re: ( x.re + x.im * f ) / ( y.re + y.im * f ),
+               im: ( x.im - x.re * f ) / ( y.re + y.im * f ) };
+
+    }
 
   } else return x / y;
 
