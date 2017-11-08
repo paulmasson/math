@@ -34,10 +34,12 @@ function logGamma( x ) {
     if ( Number.isInteger(x.re) && x.re <= 0 && x.im === 0 )
       throw 'Gamma function pole';
 
-    // reflection formula
+    // reflection formula with modified Hare correction to imaginary part
     if ( x.re < 0 ) {
-      var y = mul( -1, x );
-      return sub( log( div( -pi, mul( y, sin( mul(pi,y) ) ) ) ), logGamma(y) );
+      var t = sub( log( div( pi, sin( mul(pi,x) ) ) ), logGamma( sub(1,x) ) );
+      var s = x.im < 0 ? -1 : 1;
+      var k = Math.ceil( x.re/2 - 3/4 );
+      return add( t, complex( 0, 2*s*k*pi ) );
     }
 
     var t = add( x, 5.24218750000000000 );

@@ -32,7 +32,7 @@ parent.update = function( id ) {
 
   var p = plot( x => logGamma( complex(x) ).re, [-4.999,5,1200] );
 
-  var config = { type: 'svgplot', yMax: 5 };
+  var config = { type: 'svgplot' };
 
   evaluate( id, [ p ], config );
 
@@ -57,9 +57,9 @@ MathCell( id, [] );
 
 parent.update = function( id ) {
 
-  var p = plot( x => logGamma( complex(x) ).im, [-4.999,5,1200] );
+  var p = plot( x => logGamma( complex(x) ).im, [-4.999,5] );
 
-  var config = { type: 'svgplot', yMin: -5, yMax: 5 };
+  var config = { type: 'svgplot' };
 
   evaluate( id, [ p ], config );
 
@@ -181,7 +181,7 @@ parent.update = function( id ) {
   var p = parametric( (x,y) => [ x, y, logGamma( complex(x,y) ).im ], [-4.999,4.999,151], [-4.999,4.999,151],
                       { colormap: (x,y) => phase( logGamma( complex(x,y) ) ) } );
 
-  var config = { type: 'threejs', zMin: -5, zMax: 5 };
+  var config = { type: 'threejs', zMin: -10, zMax: 10, aspectRatio: [1,1,.5] };
 
   evaluate( id, [ p ], config );
 
