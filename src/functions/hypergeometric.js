@@ -1,6 +1,8 @@
 
 function hypergeometric0F1( a, x, tolerance=1e-10 ) {
 
+  var useAsymptotic = 100;
+
   if ( isComplex(a) || isComplex(x) ) {
 
     if ( !isComplex(a) ) a = complex(a,0);
@@ -8,6 +10,23 @@ function hypergeometric0F1( a, x, tolerance=1e-10 ) {
 
     if ( Number.isInteger(a.re) && a.re <= 0 && a.im === 0 )
       throw 'Hypergeometric function pole';
+
+    if ( abs(x) > useAsymptotic ) {
+
+      var b = sub( mul(2,a), 1 ); // do first
+      var a = sub( a, 1/2 );
+      var x = mul( 4, sqrt(x) );
+
+      // copied from hypergeometric1F1
+      var t1 = div( mul( gamma(b), pow( mul(-1,x), mul(-1,a) ) ), gamma( sub(b,a) ) );
+      t1 = mul( t1, hypergeometric2F0( a, add( sub(a,b), 1 ), div(-1,x) ) );
+
+      var t2 = div( mul( gamma(b), mul( pow( x, sub(a,b) ), exp( x ) ) ), gamma(a) );
+      t2 = mul( t2, hypergeometric2F0( sub(b,a), sub(1,a), div(1,x) ) );
+
+      return mul( exp( div(x,-2) ), add( t1, t2 ) );
+
+    }
 
     var s = complex(1);
     var p = complex(1);
@@ -26,6 +45,8 @@ function hypergeometric0F1( a, x, tolerance=1e-10 ) {
   } else {
 
     if ( Number.isInteger(a) && a <= 0 ) throw 'Hypergeometric function pole';
+
+    if ( Math.abs(x) > useAsymptotic ) return hypergeometric0F1( a, complex(x) ).re;
 
     var s = 1;
     var p = 1;
@@ -47,6 +68,8 @@ function hypergeometric0F1( a, x, tolerance=1e-10 ) {
 
 function hypergeometric1F1( a, b, x, tolerance=1e-10 ) {
 
+  var useAsymptotic = 30;
+
   if ( isComplex(a) || isComplex(b) || isComplex(x) ) {
 
     if ( !isComplex(a) ) a = complex(a,0);
@@ -58,6 +81,18 @@ function hypergeometric1F1( a, b, x, tolerance=1e-10 ) {
 
     // Kummer transformation
     if ( x.re < 0 ) return mul( exp(x), hypergeometric1F1( sub(b,a), b, mul(x,-1) ) );
+
+    if ( abs(x) > useAsymptotic ) {
+
+      var t1 = div( mul( gamma(b), pow( mul(-1,x), mul(-1,a) ) ), gamma( sub(b,a) ) );
+      t1 = mul( t1, hypergeometric2F0( a, add( sub(a,b), 1 ), div(-1,x) ) );
+
+      var t2 = div( mul( gamma(b), mul( pow( x, sub(a,b) ), exp( x ) ) ), gamma(a) );
+      t2 = mul( t2, hypergeometric2F0( sub(b,a), sub(1,a), div(1,x) ) );
+
+      return add( t1, t2 );
+
+    }
 
     var s = complex(1);
     var p = complex(1);
@@ -80,6 +115,8 @@ function hypergeometric1F1( a, b, x, tolerance=1e-10 ) {
 
     // Kummer transformation
     if ( x < 0 ) return exp(x) * hypergeometric1F1( b-a, b, -x );
+
+    if ( Math.abs(x) > useAsymptotic ) return hypergeometric1F1( a, b, complex(x) ).re;
 
     var s = 1;
     var p = 1;
@@ -119,6 +156,7 @@ function hypergeometric2F0( a, b, x, tolerance=1e-10 ) {
       a = add( a, 1 );
       b = add( b, 1 );
       i++;
+      if ( i > 20 ) break; // prevent runaway sum
     }
 
     return s;
@@ -146,6 +184,7 @@ function hypergeometric2F0( a, b, x, tolerance=1e-10 ) {
 
 function hypergeometric2F1( a, b, c, x, tolerance=1e-10 ) {
 
+  if ( abs(x) >= 1 ) throw 'Not yet implemented'
 
   if ( isComplex(a) || isComplex(b) || isComplex(c) || isComplex(x) ) {
 
