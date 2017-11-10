@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>sech &mdash; Math</title>
+<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+
+<body>
+
+<script src="../../build/math.js"></script>
+<script src="../../../mathcell/build/mathcell.js"></script>
+
+<script src="https://cdn.rawgit.com/mathjax/MathJax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
+
+<p class="function"> sech( <i>z</i> ) </p>
+
+<p>The hyperbolic secant of <i>z</i> in Math. Defined by</p>
+
+\[ \operatorname{sech} z = \frac{ 1 }{ \cosh z } \]
+
+<p>Real part on the real axis:</p>
+
+<div class="mathcell" style="height: 4in">
+<script>
+
+var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [] );
+
+parent.update = function( id ) {
+
+  var p = plot( x => sech(x), [-2*pi,2*pi] );
+
+  var config = { type: 'svgplot', yMax: 1, includeOrigin: true };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Real part on the imaginary axis:</p>
+
+<div class="mathcell" style="height: 4in">
+<script>
+
+var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [] );
+
+parent.update = function( id ) {
+
+  var p = plot( x => sech( complex(0,x) ).re, [-2*pi,2*pi] );
+
+  var config = { type: 'svgplot', yMin: -5, yMax: 5, includeVerticals: false };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<script>
+
+function phase( z ) {
+
+  var p = arg(z) / pi / 2;
+  if ( p < 0 ) p += 1;
+  return p;
+
+}
+
+</script>
+
+<p>Real part on the complex plane:</p>
+
+<div class="mathcell" style="width: 6in; height: 6in">
+<script>
+
+var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [] );
+
+parent.update = function( id ) {
+
+  var p = parametric( (x,y) => [ x, y, sech( complex(x,y) ).re ], [-5,5,150], [-5,5,150],
+                      { colormap: (x,y) => phase( sech( complex(x,y) ) ) } );
+
+  var config = { type: 'threejs', zMin: -5, zMax: 5 };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Imaginary part on the complex plane:</p>
+
+<div class="mathcell" style="width: 6in; height: 6in">
+<script>
+
+var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [] );
+
+parent.update = function( id ) {
+
+  var p = parametric( (x,y) => [ x, y, sech( complex(x,y) ).im ], [-5,5,150], [-5,5,150],
+                      { colormap: (x,y) => phase( sech( complex(x,y) ) ) } );
+
+  var config = { type: 'threejs', zMin: -5, zMax: 5 };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Absolute value on the complex plane:</p>
+
+<div class="mathcell" style="width: 6in; height: 6in">
+<script>
+
+var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [] );
+
+parent.update = function( id ) {
+
+  var p = parametric( (x,y) => [ x, y, abs( sech( complex(x,y) ) ) ], [-5,5,150], [-5,5,150],
+                      { colormap: (x,y) => phase( sech( complex(x,y) ) ) } );
+
+  var config = { type: 'threejs', zMax: 8 };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Related functions: <a href="cosh.html">cosh</a> &nbsp; <a href="arcsech.html">arcsech</a></p>
+
+<p>Function category: <a href="../functions.html#hyperbolic">hyperbolic functions</a></p>
+
+</body>
+</html>
