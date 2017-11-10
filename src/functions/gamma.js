@@ -38,7 +38,8 @@ function logGamma( x ) {
     if ( x.re < 0 ) {
       var t = sub( log( div( pi, sin( mul(pi,x) ) ) ), logGamma( sub(1,x) ) );
       var s = x.im < 0 ? -1 : 1;
-      var k = Math.ceil( x.re/2 - 3/4 );
+      var d = x.im === 0 ? 1/4 : 0;
+      var k = Math.ceil( x.re/2 - 3/4 + d );
       return add( t, complex( 0, 2*s*k*pi ) );
     }
 
