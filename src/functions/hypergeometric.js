@@ -146,6 +146,7 @@ function hypergeometric2F0( a, b, x, tolerance=1e-10 ) {
 
 function hypergeometric2F1( a, b, c, x, tolerance=1e-10 ) {
 
+
   if ( isComplex(a) || isComplex(b) || isComplex(c) || isComplex(x) ) {
 
     if ( !isComplex(a) ) a = complex(a,0);
