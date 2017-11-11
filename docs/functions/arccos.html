@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>arccos &mdash; Math</title>
+<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+
+<body>
+
+<script src="../../build/math.js"></script>
+<script src="../../../mathcell/build/mathcell.js"></script>
+<script src="../plot.js"></script>
+
+<script src="https://cdn.rawgit.com/mathjax/MathJax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
+
+<p class="function"> arccos( <i>z</i> ) </p>
+
+<p>The inverse cosine of <i>z</i> in Math. Defined by</p>
+
+\[ \arccos ( \cos z ) = z \]
+
+<p>Real part on the real axis:</p>
+
+<div class="mathcell" style="height: 4in">
+<script>
+
+var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [] );
+
+parent.update = function( id ) {
+
+  var p = plot( x => arccos( complex(x) ).re, [-5,5] );
+
+  var config = { type: 'svgplot' };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Imaginary part on the real axis:</p>
+
+<div class="mathcell" style="height: 4in">
+<script>
+
+var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [] );
+
+parent.update = function( id ) {
+
+  var p = plot( x => arccos( complex(x) ).im, [-5,5] );
+
+  var config = { type: 'svgplot' };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Real part on the imaginary axis is \( \frac{\pi}{2} \)</p>
+
+<p>Imaginary part on the imaginary axis:</p>
+
+<div class="mathcell" style="height: 4in">
+<script>
+
+var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [] );
+
+parent.update = function( id ) {
+
+  var p = plot( x => arccos( complex(0,x) ).im, [-5,5] );
+
+  var config = { type: 'svgplot' };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Real part on the complex plane:</p>
+
+<div class="mathcell" style="width: 6in; height: 6in">
+<script>
+
+var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [] );
+
+parent.update = function( id ) {
+
+  var p = parametric( (x,y) => [ x, y, arccos( complex(x,y) ).re ], [-5,5,150], [-5,5,150],
+                      { colormap: (x,y) => phase( arccos( complex(x,y) ) ) } );
+
+  var config = { type: 'threejs' };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Imaginary part on the complex plane:</p>
+
+<div class="mathcell" style="width: 6in; height: 6in">
+<script>
+
+var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [] );
+
+parent.update = function( id ) {
+
+  var p = parametric( (x,y) => [ x, y, arccos( complex(x,y) ).im ], [-5,5,150], [-5,5,150],
+                      { colormap: (x,y) => phase( arccos( complex(x,y) ) ) } );
+
+  var config = { type: 'threejs' };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Absolute value on the complex plane:</p>
+
+<div class="mathcell" style="width: 6in; height: 6in">
+<script>
+
+var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [] );
+
+parent.update = function( id ) {
+
+  var p = parametric( (x,y) => [ x, y, abs( arccos( complex(x,y) ) ) ], [-5,5,150], [-5,5,150],
+                      { colormap: (x,y) => phase( arccos( complex(x,y) ) ) } );
+
+  var config = { type: 'threejs' };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Related functions: &nbsp; <a href="cos.html">cos</a></p>
+
+<p>Function category: <a href="../functions.html#circular">circular functions</a></p>
+
+</body>
+</html>
