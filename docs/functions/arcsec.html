@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>arcsec &mdash; Math</title>
+<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+
+<body>
+
+<script src="../../build/math.js"></script>
+<script src="../../../mathcell/build/mathcell.js"></script>
+<script src="../plot.js"></script>
+
+<script src="https://cdn.rawgit.com/mathjax/MathJax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
+
+<p class="function"> arcsec( <i>z</i> ) </p>
+
+<p>The inverse secant of <i>z</i> in Math. Defined by</p>
+
+\[ \operatorname{arcsec} ( \sec z ) = z \]
+
+<p>Real part on the real axis:</p>
+
+<div class="mathcell" style="height: 4in">
+<script>
+
+var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [] );
+
+parent.update = function( id ) {
+
+  var p = plot( x => arcsec( complex(x) ).re, [-5,5] );
+
+  var config = { type: 'svgplot' };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Imaginary part on the real axis:</p>
+
+<div class="mathcell" style="height: 4in">
+<script>
+
+var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [] );
+
+parent.update = function( id ) {
+
+  var p1 = plot( x => arcsec( complex(x) ).im, [-5,-.01] );
+  var p2 = plot( x => arcsec( complex(x) ).im, [.01,5] );
+
+  var config = { type: 'svgplot' };
+
+  evaluate( id, [ p1, p2 ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Real part on the imaginary axis is \( \frac{\pi}{2} \) .</p>
+
+<p>Imaginary part on the imaginary axis:</p>
+
+<div class="mathcell" style="height: 4in">
+<script>
+
+var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [] );
+
+parent.update = function( id ) {
+
+  var p1 = plot( x => arcsec( complex(0,x) ).im, [-5,-.01] );
+  var p2 = plot( x => arcsec( complex(0,x) ).im, [0.01,5] );
+
+  var config = { type: 'svgplot' };
+
+  evaluate( id, [ p1, p2 ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Real part on the complex plane:</p>
+
+<div class="mathcell" style="width: 6in; height: 6in">
+<script>
+
+var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [] );
+
+parent.update = function( id ) {
+
+  var p = parametric( (x,y) => [ x, y, arcsec( complex(x,y) ).re ], [-5,5,151], [-5,5,151],
+                      { colormap: (x,y) => phase( arcsec( complex(x,y) ) ) } );
+
+  var config = { type: 'threejs' };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Imaginary part on the complex plane:</p>
+
+<div class="mathcell" style="width: 6in; height: 6in">
+<script>
+
+var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [] );
+
+parent.update = function( id ) {
+
+  var p = parametric( (x,y) => [ x, y, arcsec( complex(x,y) ).im ], [-5,5,151], [-5,5,151],
+                      { colormap: (x,y) => phase( arcsec( complex(x,y) ) ) } );
+
+  var config = { type: 'threejs' };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Absolute value on the complex plane:</p>
+
+<div class="mathcell" style="width: 6in; height: 6in">
+<script>
+
+var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [] );
+
+parent.update = function( id ) {
+
+  var p = parametric( (x,y) => [ x, y, abs( arcsec( complex(x,y) ) ) ], [-5,5,151], [-5,5,151],
+                      { colormap: (x,y) => phase( arcsec( complex(x,y) ) ) } );
+
+  var config = { type: 'threejs' };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Related functions: &nbsp; <a href="sec.html">sec</a> &nbsp; <a href="arccsc.html">arccsc</a></p>
+
+<p>Function category: <a href="../functions.html#circular">circular functions</a></p>
+
+</body>
+</html>
