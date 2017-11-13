@@ -186,7 +186,7 @@ function hypergeometric2F0( a, b, x, tolerance=1e-10 ) {
 
 function hypergeometric2F1( a, b, c, x, tolerance=1e-10 ) {
 
-  if ( abs(x) >= 1 ) throw 'Not yet implemented'
+  if ( abs(x) > 1 ) throw 'Not yet implemented'
 
   if ( isComplex(a) || isComplex(b) || isComplex(c) || isComplex(x) ) {
 
