@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>besselJ &mdash; Math</title>
+<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+
+<body>
+
+<script src="../../build/math.js"></script>
+<script src="../../../mathcell/build/mathcell.js"></script>
+<script src="../plot.js"></script>
+
+<script src="https://cdn.rawgit.com/mathjax/MathJax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
+
+<p class="function"> besselJ( <i>n</i>, <i>z</i> ) </p>
+
+<p>The Bessel function of the first kind of <i>z</i> in Math. A solution of the differential equation</p>
+
+\[ \frac{d^2 f}{dz^2} + \frac{1}{z} \frac{df}{dz} + \left[ 1 - \frac{n^2}{z^2} \right] f = 0 \]
+
+<p>The second linearly independent solution of this equation for integer order is <a href="besselY.html">besselY</a>.</p>
+
+<p>Real part on the real axis:</p>
+
+<div class="mathcell" style="height: 4.5in">
+<script>
+
+var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [ { type: 'slider', min: -10, max: 10, default: 0,
+                                  label: 'n', name: 'n' } ] );
+
+parent.update = function( id ) {
+
+  var n = +document.getElementById( id + 'n' ).value;
+
+  var p = plot( x => besselJ( n, complex(x) ).re, [-10,10] );
+
+  var config = { type: 'svgplot', yMin: -1.5, yMax: 1.5 };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Imaginary part on the real axis:</p>
+
+<div class="mathcell" style="height: 4.5in">
+<script>
+
+var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [ { type: 'slider', min: -10, max: 10, default: 0,
+                                  label: 'n', name: 'n' } ] );
+
+parent.update = function( id ) {
+
+  var n = +document.getElementById( id + 'n' ).value;
+
+  var p = plot( x => besselJ( n, complex(x) ).im, [-10,10] );
+
+  var config = { type: 'svgplot', yMin: -1.5, yMax: 1.5 };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Real part on the imaginary axis:</p>
+
+<div class="mathcell" style="height: 4.5in">
+<script>
+
+var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [ { type: 'slider', min: -10, max: 10, default: 0,
+                                  label: 'n', name: 'n' } ] );
+
+parent.update = function( id ) {
+
+  var n = +document.getElementById( id + 'n' ).value;
+
+  var p = plot( x => besselJ( n, complex(0,x) ).re, [-10,10] );
+
+  var config = { type: 'svgplot', yMin: -1.5, yMax: 1.5 };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Imaginary part on the imaginary axis:</p>
+
+<div class="mathcell" style="height: 4.5in">
+<script>
+
+var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [ { type: 'slider', min: -10, max: 10, default: 0,
+                                  label: 'n', name: 'n' } ] );
+
+parent.update = function( id ) {
+
+  var n = +document.getElementById( id + 'n' ).value;
+
+  var p = plot( x => besselJ( n, complex(0,x) ).im, [-10,10] );
+
+  var config = { type: 'svgplot', yMin: -1.5, yMax: 1.5 };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Real part on the complex plane:</p>
+
+<div class="mathcell" style="width: 6in; height: 6.5in">
+<script>
+
+var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [ { type: 'slider', min: -10, max: 10, default: 0,
+                                  label: 'n', name: 'n' } ] );
+
+parent.update = function( id ) {
+
+  var n = +document.getElementById( id + 'n' ).value;
+
+  var p = parametric( (x,y) => [ x, y, besselJ( n, complex(x,y) ).re ], [-8,8,151], [-8,8,151],
+                      { colormap: (x,y) => phase( besselJ( n, complex(x,y) ) ) } );
+
+  var config = { type: 'threejs', zMin: -5, zMax: 5 };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Imaginary part on the complex plane:</p>
+
+<div class="mathcell" style="width: 6in; height: 6in">
+<script>
+
+var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [ { type: 'slider', min: -10, max: 10, default: 0,
+                                  label: 'n', name: 'n' } ] );
+
+parent.update = function( id ) {
+
+  var n = +document.getElementById( id + 'n' ).value;
+
+  var p = parametric( (x,y) => [ x, y, besselJ( n, complex(x,y) ).im ], [-8,8,151], [-8,8,151],
+                      { colormap: (x,y) => phase( besselJ( n, complex(x,y) ) ) } );
+
+  var config = { type: 'threejs', zMin: -5, zMax: 5 };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Absolute value on the complex plane:</p>
+
+<div class="mathcell" style="width: 6in; height: 6in">
+<script>
+
+var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [ { type: 'slider', min: -10, max: 10, default: 0,
+                                  label: 'n', name: 'n' } ] );
+
+parent.update = function( id ) {
+
+  var n = +document.getElementById( id + 'n' ).value;
+
+  var p = parametric( (x,y) => [ x, y, abs( besselJ( n, complex(x,y) ) ) ], [-8,8,151], [-8,8,151],
+                      { colormap: (x,y) => phase( besselJ( n, complex(x,y) ) ) } );
+
+  var config = { type: 'threejs', zMax: 8 };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Related functions: &nbsp; <a href="besselY.html">besselY</a></p>
+
+<p>Function category: <a href="../functions.html#bessel">Bessel functions</a></p>
+
+</body>
+</html>
