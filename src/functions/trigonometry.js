@@ -244,7 +244,7 @@ function arcsech( x ) {
     if ( x.re === 0 && x.im === 0 ) throw 'Indeterminate value';
 
     // adjust for branch cut along negative axis
-    if ( x.im === 0 ) x.im = -Number.MIN_VALUE;
+    if ( x.im === 0 ) x.im = -1e-300;
 
     return arccosh( div( 1, x ) );
 
