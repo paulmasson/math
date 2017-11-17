@@ -158,7 +158,7 @@ parent.update = function( id ) {
 
   var n = +document.getElementById( id + 'n' ).value;
 
-  var p = parametric( (x,y) => [ x, y, besselJ( n, complex(x,y) ).re ], [-8,8,151], [-8,8,151],
+  var p = parametric( (x,y) => [ x, y, besselJ( n, complex(x,y) ).re ], [-8,8,150], [-8,8,150],
                       { colormap: (x,y) => phase( besselJ( n, complex(x,y) ) ) } );
 
   var config = { type: 'threejs', zMin: -5, zMax: 5 };
@@ -189,7 +189,7 @@ parent.update = function( id ) {
 
   var n = +document.getElementById( id + 'n' ).value;
 
-  var p = parametric( (x,y) => [ x, y, besselJ( n, complex(x,y) ).im ], [-8,8,151], [-8,8,151],
+  var p = parametric( (x,y) => [ x, y, besselJ( n, complex(x,y) ).im ], [-8,8,150], [-8,8,150],
                       { colormap: (x,y) => phase( besselJ( n, complex(x,y) ) ) } );
 
   var config = { type: 'threejs', zMin: -5, zMax: 5 };
@@ -220,7 +220,7 @@ parent.update = function( id ) {
 
   var n = +document.getElementById( id + 'n' ).value;
 
-  var p = parametric( (x,y) => [ x, y, abs( besselJ( n, complex(x,y) ) ) ], [-8,8,151], [-8,8,151],
+  var p = parametric( (x,y) => [ x, y, abs( besselJ( n, complex(x,y) ) ) ], [-8,8,150], [-8,8,150],
                       { colormap: (x,y) => phase( besselJ( n, complex(x,y) ) ) } );
 
   var config = { type: 'threejs', zMax: 8 };
