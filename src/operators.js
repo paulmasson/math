@@ -113,11 +113,16 @@ function pow( x, y ) {
     if ( !isComplex(x) ) x = complex(x,0);
     if ( !isComplex(y) ) y = complex(y,0);
 
+    if ( x.re === 0 && x.im === 0 && ( y.re !== 0 || y.im !== 0 ) )
+      return complex(0);
+    if ( x.re === 0 && x.im === 0 && y.re === 0 && y.im === 0 )
+      return complex(1);
+
     var r = Math.sqrt( x.re * x.re + x.im * x.im );
     var phi = Math.atan2( x.im, x.re );
 
     var R = r**y.re * Math.exp( -phi * y.im );
-    var Phi = phi * y.re + y.im * Math.log(r); // NaN at origin...
+    var Phi = phi * y.re + y.im * Math.log(r);
 
     return { re: R * Math.cos(Phi), im: R * Math.sin(Phi) };
 
