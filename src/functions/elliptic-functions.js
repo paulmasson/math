@@ -36,9 +36,20 @@ function jacobiTheta( n, x, q ) {
 }
 
 
+function ellipticNome( m ) {
+
+  if ( m >= 1 ) throw 'Unsupported elliptic parameter';
+
+  if ( m < 0 ) return -exp( -pi * ellipticK( 1/(1-m) ) / ellipticK( m/(m-1) ) );
+
+  return exp( -pi * ellipticK(1-m) / ellipticK(m) );
+
+}
+
+
 function sn( x, m ) {
 
-  var q = exp( -pi * ellipticK(1-m) / ellipticK(m) );
+  var q = ellipticNome(m);
 
   var t = x / jacobiTheta(3,0,q)**2;
 
@@ -49,7 +60,7 @@ function sn( x, m ) {
 
 function cn( x, m ) {
 
-  var q = exp( -pi * ellipticK(1-m) / ellipticK(m) );
+  var q = ellipticNome(m);
 
   var t = x / jacobiTheta(3,0,q)**2;
 
@@ -60,7 +71,7 @@ function cn( x, m ) {
 
 function dn( x, m ) {
 
-  var q = exp( -pi * ellipticK(1-m) / ellipticK(m) );
+  var q = ellipticNome(m);
 
   var t = x / jacobiTheta(3,0,q)**2;
 
