@@ -170,16 +170,29 @@ function besselJ( n, x ) {
 
 function besselY( n, x ) {
 
+  // mpmath displaces integer arguments to avoid poles
+  // displacement value is dependent on transition to asymptotic
+  //   hypergeometric solution, where lose a few digits of precision
+
+  var displacement = 1e-7;
+
   if ( isComplex(n) || isComplex(x) ) {
 
     if ( !isComplex(n) ) n = complex(n,0);
     if ( !isComplex(x) ) x = complex(x,0);
 
+    if ( Number.isInteger(n.re) ) n = add( n, displacement );
+
     var sum = sub( mul( besselJ(n,x), cos( mul(n,pi) ) ), besselJ( mul(-1,n), x ) );
     return div( sum, sin( mul(n,pi) ) );
 
-  } else return ( besselJ(n,x) * cos(n*pi) - besselJ(-n,x) ) / sin(n*pi);
+  } else {
 
+    if ( Number.isInteger(n) ) n += displacement;
+
+    return ( besselJ(n,x) * cos(n*pi) - besselJ(-n,x) ) / sin(n*pi);
+
+  }
 
 }
 
