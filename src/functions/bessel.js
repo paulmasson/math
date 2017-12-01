@@ -57,15 +57,34 @@ function besselI( n, x ) {
 
 function besselK( n, x ) {
 
+  var useAsymptotic = 10;
+
   if ( isComplex(n) || isComplex(x) ) {
 
     if ( !isComplex(n) ) n = complex(n,0);
     if ( !isComplex(x) ) x = complex(x,0);
 
+    // asymptotic form as per Johansson
+    if ( abs(x) > useAsymptotic ) {
+
+      var t1 = mul( sqrt( div( pi/2, x ) ), exp( mul(-1,x) ) );
+      var t2 = hypergeometric2F0( add(n,.5), sub(.5,n), div( -1, mul(2,x) ) );
+
+      return mul( t1, t2 );
+
+    }
+
     var product = div( pi/2, sin( mul(n,pi) ) );
     return mul( product, sub( besselI( mul(-1,n), x ), besselI(n,x) ) );
 
-  } else return pi/2 * ( besselI(-n,x) - besselI(n,x) ) / sin(n*pi);
+  } else {
+
+    if ( x > useAsymptotic )
+      return sqrt(pi/2/x) * exp(-x) * hypergeometric2F0( n+.5, .5-n, -1/2/x );
+
+    return pi/2 * ( besselI(-n,x) - besselI(n,x) ) / sin(n*pi);
+
+  }
 
 }
 
