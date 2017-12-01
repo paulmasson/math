@@ -47,6 +47,7 @@ function hypergeometric0F1( a, x, tolerance=1e-10 ) {
 
     if ( Number.isInteger(a) && a <= 0 ) throw 'Hypergeometric function pole';
 
+    // asymptotic form is complex
     if ( Math.abs(x) > useAsymptotic ) return hypergeometric0F1( a, complex(x) ).re;
 
     var s = 1;
@@ -118,6 +119,7 @@ function hypergeometric1F1( a, b, x, tolerance=1e-10 ) {
     // Kummer transformation
     if ( x < 0 ) return exp(x) * hypergeometric1F1( b-a, b, -x );
 
+    // asymptotic form is complex
     if ( Math.abs(x) > useAsymptotic ) return hypergeometric1F1( a, b, complex(x) ).re;
 
     var s = 1;
