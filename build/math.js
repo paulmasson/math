@@ -116,10 +116,12 @@ function pow( x, y ) {
     if ( !isComplex(x) ) x = complex(x,0);
     if ( !isComplex(y) ) y = complex(y,0);
 
-    if ( x.re === 0 && x.im === 0 && ( y.re !== 0 || y.im !== 0 ) )
+    if ( x.re === 0 && x.im === 0 && y.re > 0 )
       return complex(0);
     if ( x.re === 0 && x.im === 0 && y.re === 0 && y.im === 0 )
       return complex(1);
+    if ( x.re === 0 && x.im === 0 && y.re < 0 )
+      throw 'Power singularity';
 
     var r = Math.sqrt( x.re * x.re + x.im * x.im );
     var phi = Math.atan2( x.im, x.re );
