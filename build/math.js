@@ -909,7 +909,7 @@ function exp( x ) {
     return { re: Math.exp(x.re) * Math.cos(x.im),
              im: Math.exp(x.re) * Math.sin(x.im) };
 
-  else return Math.exp(x);
+  return Math.exp(x);
 
 }
 
@@ -923,11 +923,13 @@ function log( x, base ) {
 
     return { re: log(r,base), im: log(Math.E,base) * phi };
 
-  } else if ( x < 0 ) return log( complex(x), base );
+  }
 
-  else if ( base === undefined ) return Math.log(x);
+  if ( x < 0 ) return log( complex(x), base );
 
-  else return Math.log(x) / Math.log(base);
+  if ( base === undefined ) return Math.log(x);
+
+  return Math.log(x) / Math.log(base);
 
 }
 
