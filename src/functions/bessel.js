@@ -55,10 +55,17 @@ function besselI( n, x ) {
     if ( !isComplex(n) ) n = complex(n,0);
     if ( !isComplex(x) ) x = complex(x,0);
 
+    if ( Number.isInteger(n.re) && n.re < 0 && n.im === 0 )
+      return besselI( mul(-1,n), x );
+
     var product = div( pow( div(x,2), n ), gamma( add(n,1) ) );
     return mul( product, hypergeometric0F1( add(n,1), mul(.25, pow(x,2) ) ) );
 
-  } else return (x/2)**n * hypergeometric0F1( n+1, .25*x**2 ) / gamma(n+1);
+  }
+
+  if ( Number.isInteger(n) && n < 0 ) return besselI( -n, x );
+
+  return (x/2)**n * hypergeometric0F1( n+1, .25*x**2 ) / gamma(n+1);
 
 }
 
