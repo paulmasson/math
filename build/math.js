@@ -163,16 +163,23 @@ function besselJ( n, x ) {
     if ( !isComplex(n) ) n = complex(n,0);
     if ( !isComplex(x) ) x = complex(x,0);
 
+    if ( Number.isInteger(n.re) && n.re < 0 && n.im === 0 )
+      return mul( pow(-1,n), besselJ( mul(-1,n), x ) );
+
     var product = div( pow( div(x,2), n ), gamma( add(n,1) ) );
     return mul( product, hypergeometric0F1( add(n,1), mul(-.25, pow(x,2) ) ) );
 
-  } else return (x/2)**n * hypergeometric0F1( n+1, -.25*x**2 ) / gamma(n+1);
+  } 
+
+  if ( Number.isInteger(n) && n < 0 ) return (-1)**n * besselJ( -n, x );
+
+  return (x/2)**n * hypergeometric0F1( n+1, -.25*x**2 ) / gamma(n+1);
 
 }
 
 function besselY( n, x ) {
 
-  // mpmath displaces integer arguments to avoid poles
+  // mpmath displaces integer orders to avoid poles
   // displacement value is dependent on transition to asymptotic
   //   hypergeometric solution, where lose a few digits of precision
 
@@ -697,6 +704,7 @@ function hypergeometric0F1( a, x, tolerance=1e-10 ) {
 
     if ( Number.isInteger(a) && a <= 0 ) throw 'Hypergeometric function pole';
 
+    // asymptotic form is complex
     if ( Math.abs(x) > useAsymptotic ) return hypergeometric0F1( a, complex(x) ).re;
 
     var s = 1;
@@ -768,6 +776,7 @@ function hypergeometric1F1( a, b, x, tolerance=1e-10 ) {
     // Kummer transformation
     if ( x < 0 ) return exp(x) * hypergeometric1F1( b-a, b, -x );
 
+    // asymptotic form is complex
     if ( Math.abs(x) > useAsymptotic ) return hypergeometric1F1( a, b, complex(x) ).re;
 
     var s = 1;
