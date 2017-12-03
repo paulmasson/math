@@ -179,29 +179,26 @@ function besselJ( n, x ) {
 
 function besselY( n, x ) {
 
-  // mpmath displaces integer orders to avoid poles
-  // displacement value is dependent on transition to asymptotic
-  //   hypergeometric solution, where lose a few digits of precision
-
-  var displacement = 1e-7;
+  // for averaging over integer orders until write code for limit
+  var delta = 1e-5;
 
   if ( isComplex(n) || isComplex(x) ) {
 
     if ( !isComplex(n) ) n = complex(n,0);
     if ( !isComplex(x) ) x = complex(x,0);
 
-    if ( Number.isInteger(n.re) ) n = add( n, displacement );
+    if ( Number.isInteger(n.re) && n.im === 0 )
+      return div( add( besselY( n.re + delta, x ), besselY( n.re - delta, x ) ), 2 );
 
     var sum = sub( mul( besselJ(n,x), cos( mul(n,pi) ) ), besselJ( mul(-1,n), x ) );
     return div( sum, sin( mul(n,pi) ) );
 
-  } else {
+  }
 
-    if ( Number.isInteger(n) ) n += displacement;
+    if ( Number.isInteger(n) )
+      return ( besselY( n + delta, x ) + besselY( n - delta, x ) ) / 2;
 
     return ( besselJ(n,x) * cos(n*pi) - besselJ(-n,x) ) / sin(n*pi);
-
-  }
 
 }
 
@@ -228,7 +225,10 @@ function besselI( n, x ) {
 
 function besselK( n, x ) {
 
-  var useAsymptotic = 10;
+  var useAsymptotic = 5;
+
+  // for averaging over integer orders until write code for limit
+  var delta = 1e-5;
 
   if ( isComplex(n) || isComplex(x) ) {
 
@@ -245,17 +245,21 @@ function besselK( n, x ) {
 
     }
 
+    if ( Number.isInteger(n.re) && n.im === 0 )
+      return div( add( besselK( n.re + delta, x ), besselK( n.re - delta, x ) ), 2 );
+
     var product = div( pi/2, sin( mul(n,pi) ) );
     return mul( product, sub( besselI( mul(-1,n), x ), besselI(n,x) ) );
 
-  } else {
-
-    if ( x > useAsymptotic )
-      return sqrt(pi/2/x) * exp(-x) * hypergeometric2F0( n+.5, .5-n, -1/2/x );
-
-    return pi/2 * ( besselI(-n,x) - besselI(n,x) ) / sin(n*pi);
-
   }
+
+  if ( x > useAsymptotic )
+    return sqrt(pi/2/x) * exp(-x) * hypergeometric2F0( n+.5, .5-n, -1/2/x );
+
+  if ( Number.isInteger(n) )
+    return ( besselK( n + delta, x ) + besselK( n - delta, x ) ) / 2;
+
+  return pi/2 * ( besselI(-n,x) - besselI(n,x) ) / sin(n*pi);
 
 }
 
