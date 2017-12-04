@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>besselY &mdash; Math</title>
+<title>besselK &mdash; Math</title>
 <link rel="stylesheet" type="text/css" href="../style.css">
 </head>
 
@@ -13,13 +13,13 @@
 
 <script src="https://cdn.rawgit.com/mathjax/MathJax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
 
-<p class="function"> besselY( <i>n</i>, <i>z</i> ) </p>
+<p class="function"> besselK( <i>n</i>, <i>z</i> ) </p>
 
-<p>The Bessel function of the second kind of <i>z</i> in Math. A solution of the differential equation</p>
+<p>The modified Bessel function of the second kind of <i>z</i> in Math. A solution of the differential equation</p>
 
-\[ \frac{d^2 f}{dz^2} + \frac{1}{z} \frac{df}{dz} + \left[ 1 - \frac{n^2}{z^2} \right] f = 0 \]
+\[ \frac{d^2 f}{dz^2} + \frac{1}{z} \frac{df}{dz} - \left[ 1 + \frac{n^2}{z^2} \right] f = 0 \]
 
-<p>The second linearly independent solution of this equation for integer order is <a href="besselJ.html">besselJ</a>.</p>
+<p>The second linearly independent solution of this equation for integer order is <a href="besselI.html">besselI</a>.</p>
 
 <p>Real part on the real axis:</p>
 
@@ -38,8 +38,8 @@ parent.update = function( id ) {
 
   var n = +document.getElementById( id + 'n' ).value;
 
-  var p1 = plot( x => besselY( n, complex(x) ).re, [-20,-.01] );
-  var p2 = plot( x => besselY( n, complex(x) ).re, [.01,20] );
+  var p1 = plot( x => besselK( n, complex(x) ).re, [-20,-.01] );
+  var p2 = plot( x => besselK( n, complex(x) ).re, [.01,20] );
 
   var config = { type: 'svgplot', yMin: -3, yMax: 3 };
 
@@ -69,7 +69,7 @@ parent.update = function( id ) {
 
   var n = +document.getElementById( id + 'n' ).value;
 
-  var p = plot( x => besselY( n, complex(x) ).im, [-20,20] );
+  var p = plot( x => besselK( n, complex(x) ).im, [-20,20] );
 
   var config = { type: 'svgplot', yMin: -3, yMax: 3 };
 
@@ -99,8 +99,8 @@ parent.update = function( id ) {
 
   var n = +document.getElementById( id + 'n' ).value;
 
-  var p1 = plot( x => besselY( n, complex(0,x) ).re, [-20,-.01] );
-  var p2 = plot( x => besselY( n, complex(0,x) ).re, [.01,20] );
+  var p1 = plot( x => besselK( n, complex(0,x) ).re, [-20,-.01] );
+  var p2 = plot( x => besselK( n, complex(0,x) ).re, [.01,20] );
 
   var config = { type: 'svgplot', yMin: -3, yMax: 3 };
 
@@ -130,7 +130,7 @@ parent.update = function( id ) {
 
   var n = +document.getElementById( id + 'n' ).value;
 
-  var p = plot( x => besselY( n, complex(0,x) ).im, [-20,20] );
+  var p = plot( x => besselK( n, complex(0,x) ).im, [-20,20] );
 
   var config = { type: 'svgplot', yMin: -3, yMax: 3 };
 
@@ -160,8 +160,8 @@ parent.update = function( id ) {
 
   var n = +document.getElementById( id + 'n' ).value;
 
-  var p = parametric( (x,y) => [ x, y, besselY( n, complex(x,y) ).re ], [-8,8,121], [-8,8,121],
-                      { colormap: (x,y) => phase( besselY( n, complex(x,y) ) ) } );
+  var p = parametric( (x,y) => [ x, y, besselK( n, complex(x,y) ).re ], [-8,8,121], [-8,8,121],
+                      { colormap: (x,y) => phase( besselK( n, complex(x,y) ) ) } );
 
   var config = { type: 'threejs', zMin: -5, zMax: 5 };
 
@@ -191,8 +191,8 @@ parent.update = function( id ) {
 
   var n = +document.getElementById( id + 'n' ).value;
 
-  var p = parametric( (x,y) => [ x, y, besselY( n, complex(x,y) ).im ], [-8,8,121], [-8,8,121],
-                      { colormap: (x,y) => phase( besselY( n, complex(x,y) ) ) } );
+  var p = parametric( (x,y) => [ x, y, besselK( n, complex(x,y) ).im ], [-8,8,121], [-8,8,121],
+                      { colormap: (x,y) => phase( besselK( n, complex(x,y) ) ) } );
 
   var config = { type: 'threejs', zMin: -5, zMax: 5 };
 
@@ -222,8 +222,8 @@ parent.update = function( id ) {
 
   var n = +document.getElementById( id + 'n' ).value;
 
-  var p = parametric( (x,y) => [ x, y, abs( besselY( n, complex(x,y) ) ) ], [-8,8,121], [-8,8,121],
-                      { colormap: (x,y) => phase( besselY( n, complex(x,y) ) ) } );
+  var p = parametric( (x,y) => [ x, y, abs( besselK( n, complex(x,y) ) ) ], [-8,8,121], [-8,8,121],
+                      { colormap: (x,y) => phase( besselK( n, complex(x,y) ) ) } );
 
   var config = { type: 'threejs', zMax: 8 };
 
@@ -236,7 +236,7 @@ parent.update( id );
 </script>
 </div>
 
-<p>Related functions: &nbsp; <a href="besselJ.html">besselJ</a></p>
+<p>Related functions: &nbsp; <a href="besselI.html">besselI</a></p>
 
 <p>Function category: <a href="../functions.html#bessel">Bessel functions</a></p>
 
