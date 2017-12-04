@@ -16,6 +16,8 @@ function besselJ( n, x ) {
 
   if ( Number.isInteger(n) && n < 0 ) return (-1)**n * besselJ( -n, x );
 
+  if ( !Number.isInteger(n) && x < 0 ) return besselJ( n, complex(x) );
+
   return (x/2)**n * hypergeometric0F1( n+1, -.25*x**2 ) / gamma(n+1);
 
 }
@@ -61,6 +63,8 @@ function besselI( n, x ) {
   }
 
   if ( Number.isInteger(n) && n < 0 ) return besselI( -n, x );
+
+  if ( !Number.isInteger(n) && x < 0 ) return besselI( n, complex(x) );
 
   return (x/2)**n * hypergeometric0F1( n+1, .25*x**2 ) / gamma(n+1);
 
