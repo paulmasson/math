@@ -38,8 +38,8 @@ parent.update = function( id ) {
 
   var n = +document.getElementById( id + 'n' ).value;
 
-  var p1 = plot( x => besselK( n, complex(x) ).re, [-20,-.01] );
-  var p2 = plot( x => besselK( n, complex(x) ).re, [.01,20] );
+  var p1 = plot( x => besselK( n, complex(x) ).re, [-10,-.01] );
+  var p2 = plot( x => besselK( n, complex(x) ).re, [.01,10] );
 
   var config = { type: 'svgplot', yMin: -3, yMax: 3 };
 
@@ -69,9 +69,9 @@ parent.update = function( id ) {
 
   var n = +document.getElementById( id + 'n' ).value;
 
-  var p = plot( x => besselK( n, complex(x) ).im, [-20,20] );
+  var p = plot( x => besselK( n, complex(x) ).im, [-10,10] );
 
-  var config = { type: 'svgplot', yMin: -3, yMax: 3 };
+  var config = { type: 'svgplot', yMin: -5, yMax: 5 };
 
   evaluate( id, [ p ], config );
 
