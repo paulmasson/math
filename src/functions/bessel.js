@@ -40,10 +40,12 @@ function besselY( n, x ) {
 
   }
 
-    if ( Number.isInteger(n) )
-      return ( besselY( n + delta, x ) + besselY( n - delta, x ) ) / 2;
+  if ( x < 0 ) return besselY( n, complex(x) );
 
-    return ( besselJ(n,x) * cos(n*pi) - besselJ(-n,x) ) / sin(n*pi);
+  if ( Number.isInteger(n) )
+    return ( besselY( n + delta, x ) + besselY( n - delta, x ) ) / 2;
+
+  return ( besselJ(n,x) * cos(n*pi) - besselJ(-n,x) ) / sin(n*pi);
 
 }
 
@@ -102,6 +104,8 @@ function besselK( n, x ) {
 
   if ( x > useAsymptotic )
     return sqrt(pi/2/x) * exp(-x) * hypergeometric2F0( n+.5, .5-n, -1/2/x );
+
+  if ( x < 0 ) return besselK( n, complex(x) );
 
   if ( Number.isInteger(n) )
     return ( besselK( n + delta, x ) + besselK( n - delta, x ) ) / 2;
