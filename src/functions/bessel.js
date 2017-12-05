@@ -74,7 +74,7 @@ function besselI( n, x ) {
 
 function besselK( n, x ) {
 
-  var useAsymptotic = 5;
+  var useAsymptotic = 15;
 
   // for averaging over integer orders until write code for limit
   var delta = 1e-5;
@@ -111,6 +111,18 @@ function besselK( n, x ) {
     return ( besselK( n + delta, x ) + besselK( n - delta, x ) ) / 2;
 
   return pi/2 * ( besselI(-n,x) - besselI(n,x) ) / sin(n*pi);
+
+}
+
+function hankel1( n, x ) {
+
+  return add( besselJ(n,x), mul( complex(0,1), besselY(n,x) ) );
+
+}
+
+function hankel2( n, x ) {
+
+  return sub( besselJ(n,x), mul( complex(0,1), besselY(n,x) ) );
 
 }
 

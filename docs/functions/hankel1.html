@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>hankel1 &mdash; Math</title>
+<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+
+<body>
+
+<script src="../../build/math.js"></script>
+<script src="../../../mathcell/build/mathcell.js"></script>
+<script src="../plot.js"></script>
+
+<script src="https://cdn.rawgit.com/mathjax/MathJax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
+
+<p class="function"> hankel1( <i>n</i>, <i>z</i> ) </p>
+
+<p>The Hankel function of the first kind of <i>z</i> in Math. Defined in terms of Bessel functions by</p>
+
+\[ H_n(z) = J_n(z) + i Y_n(z) \]
+
+<p>Real part on the real axis:</p>
+
+<div class="mathcell" style="height: 4.5in">
+<script>
+
+var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [ { type: 'slider', min: -10, max: 10, default: 0,
+                                  label: 'n', name: 'n' } ] );
+
+parent.update = function( id ) {
+
+  var n = +document.getElementById( id + 'n' ).value;
+
+  var p = plot( x => hankel1( n, complex(x) ).re, [-10,10] );
+
+  var config = { type: 'svgplot', yMin: -1.5, yMax: 1.5 };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Imaginary part on the real axis:</p>
+
+<div class="mathcell" style="height: 4.5in">
+<script>
+
+var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [ { type: 'slider', min: -10, max: 10, default: 0,
+                                  label: 'n', name: 'n' } ] );
+
+parent.update = function( id ) {
+
+  var n = +document.getElementById( id + 'n' ).value;
+
+  var p = plot( x => hankel1( n, complex(x) ).im, [-10,10] );
+
+  var config = { type: 'svgplot', yMin: -1.5, yMax: 1.5 };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Real part on the imaginary axis:</p>
+
+<div class="mathcell" style="height: 4.5in">
+<script>
+
+var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [ { type: 'slider', min: -10, max: 10, default: 0,
+                                  label: 'n', name: 'n' } ] );
+
+parent.update = function( id ) {
+
+  var n = +document.getElementById( id + 'n' ).value;
+
+  var p = plot( x => hankel1( n, complex(0,x) ).re, [-10,10] );
+
+  var config = { type: 'svgplot', yMin: -1.5, yMax: 1.5 };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Imaginary part on the imaginary axis:</p>
+
+<div class="mathcell" style="height: 4.5in">
+<script>
+
+var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [ { type: 'slider', min: -10, max: 10, default: 0,
+                                  label: 'n', name: 'n' } ] );
+
+parent.update = function( id ) {
+
+  var n = +document.getElementById( id + 'n' ).value;
+
+  var p = plot( x => hankel1( n, complex(0,x) ).im, [-10,10] );
+
+  var config = { type: 'svgplot', yMin: -1.5, yMax: 1.5 };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Real part on the complex plane:</p>
+
+<div class="mathcell" style="width: 6in; height: 6.5in">
+<script>
+
+var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [ { type: 'slider', min: -10, max: 10, default: 0,
+                                  label: 'n', name: 'n' } ] );
+
+parent.update = function( id ) {
+
+  var n = +document.getElementById( id + 'n' ).value;
+
+  var p = parametric( (x,y) => [ x, y, hankel1( n, complex(x,y) ).re ], [-8,8,121], [-8,8,121],
+                      { colormap: (x,y) => phase( hankel1( n, complex(x,y) ) ) } );
+
+  var config = { type: 'threejs', zMin: -5, zMax: 5 };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Imaginary part on the complex plane:</p>
+
+<div class="mathcell" style="width: 6in; height: 6in">
+<script>
+
+var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [ { type: 'slider', min: -10, max: 10, default: 0,
+                                  label: 'n', name: 'n' } ] );
+
+parent.update = function( id ) {
+
+  var n = +document.getElementById( id + 'n' ).value;
+
+  var p = parametric( (x,y) => [ x, y, hankel1( n, complex(x,y) ).im ], [-8,8,121], [-8,8,121],
+                      { colormap: (x,y) => phase( hankel1( n, complex(x,y) ) ) } );
+
+  var config = { type: 'threejs', zMin: -5, zMax: 5 };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Absolute value on the complex plane:</p>
+
+<div class="mathcell" style="width: 6in; height: 6in">
+<script>
+
+var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [ { type: 'slider', min: -10, max: 10, default: 0,
+                                  label: 'n', name: 'n' } ] );
+
+parent.update = function( id ) {
+
+  var n = +document.getElementById( id + 'n' ).value;
+
+  var p = parametric( (x,y) => [ x, y, abs( hankel1( n, complex(x,y) ) ) ], [-8,8,121], [-8,8,121],
+                      { colormap: (x,y) => phase( hankel1( n, complex(x,y) ) ) } );
+
+  var config = { type: 'threejs', zMax: 8 };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Related functions: &nbsp; <a href="hankel2.html">hankel2</a></p>
+
+<p>Function category: <a href="../functions.html#bessel">Bessel functions</a></p>
+
+</body>
+</html>
