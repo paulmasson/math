@@ -231,7 +231,7 @@ function besselI( n, x ) {
 
 function besselK( n, x ) {
 
-  var useAsymptotic = 15;
+  var useAsymptotic = 5;
 
   // for averaging over integer orders until write code for limit
   var delta = 1e-5;
@@ -831,6 +831,8 @@ function hypergeometric1F1( a, b, x, tolerance=1e-10 ) {
 
 function hypergeometric2F0( a, b, x, tolerance=1e-10 ) {
 
+  var terms = 50;
+
   if ( isComplex(a) || isComplex(b) || isComplex(x) ) {
 
     if ( !isComplex(a) ) a = complex(a,0);
@@ -849,7 +851,7 @@ function hypergeometric2F0( a, b, x, tolerance=1e-10 ) {
 
       if ( abs(p) > abs(pLast) && converging ) break; // prevent runaway sum
       if ( abs(p) < abs(pLast) ) converging = true;
-      if ( i > 20 ) throw 'Not converging after 20 terms';
+      if ( i > terms ) throw 'Not converging after ' + terms + ' terms';
 
       s = add( s, p );
       a = add( a, 1 );
@@ -874,7 +876,7 @@ function hypergeometric2F0( a, b, x, tolerance=1e-10 ) {
 
       if ( Math.abs(p) > Math.abs(pLast) && converging ) break; // prevent runaway sum
       if ( Math.abs(p) < Math.abs(pLast) ) converging = true;
-      if ( i > 20 ) throw 'Not converging after 20 terms';
+      if ( i > terms ) throw 'Not converging after ' + terms + ' terms';
 
       s += p;
       a++;

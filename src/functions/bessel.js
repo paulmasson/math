@@ -74,7 +74,7 @@ function besselI( n, x ) {
 
 function besselK( n, x ) {
 
-  var useAsymptotic = 15;
+  var useAsymptotic = 5;
 
   // for averaging over integer orders until write code for limit
   var delta = 1e-5;
