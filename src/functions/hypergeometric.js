@@ -151,17 +151,24 @@ function hypergeometric2F0( a, b, x, tolerance=1e-10 ) {
 
     var s = complex(1);
     var p = complex(1), pLast = p;
+    var converging = false;
     var i = 1;
 
     while ( Math.abs(p.re) > tolerance * Math.abs(s.re)
             || Math.abs(p.im) > tolerance * Math.abs(s.im) ) {
+
       p = mul( p, div( mul( mul( x, a ), b ), i ) );
-      if ( abs(p) > abs(pLast) ) break; // prevent runaway sum
+
+      if ( abs(p) > abs(pLast) && converging ) break; // prevent runaway sum
+      if ( abs(p) < abs(pLast) ) converging = true;
+      if ( i > 20 ) throw 'Not converging after 20 terms';
+
       s = add( s, p );
       a = add( a, 1 );
       b = add( b, 1 );
       i++;
       pLast = p;
+
     }
 
     return s;
@@ -170,16 +177,23 @@ function hypergeometric2F0( a, b, x, tolerance=1e-10 ) {
 
     var s = 1;
     var p = 1, pLast = p;
+    var converging = false;
     var i = 1;
 
     while ( Math.abs(p) > tolerance * Math.abs(s) ) {
+
       p *= x * a * b / i;
-      if ( Math.abs(p) > Math.abs(pLast) ) break; // prevent runaway sum
+
+      if ( Math.abs(p) > Math.abs(pLast) && converging ) break; // prevent runaway sum
+      if ( Math.abs(p) < Math.abs(pLast) ) converging = true;
+      if ( i > 20 ) throw 'Not converging after 20 terms';
+
       s += p;
       a++;
       b++;
       i++;
       pLast = p;
+
     }
 
     return s;
