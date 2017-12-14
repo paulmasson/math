@@ -41,7 +41,7 @@ parent.update = function( id ) {
   var p1 = plot( x => besselY( n, complex(x) ).re, [-20,-.01] );
   var p2 = plot( x => besselY( n, complex(x) ).re, [.01,20] );
 
-  var config = { type: 'svgplot', yMin: -3, yMax: 3 };
+  var config = { type: 'svg', yMin: -3, yMax: 3 };
 
   evaluate( id, [ p1, p2 ], config );
 
@@ -71,7 +71,7 @@ parent.update = function( id ) {
 
   var p = plot( x => besselY( n, complex(x) ).im, [-20,20] );
 
-  var config = { type: 'svgplot', yMin: -3, yMax: 3 };
+  var config = { type: 'svg', yMin: -3, yMax: 3 };
 
   evaluate( id, [ p ], config );
 
@@ -102,7 +102,7 @@ parent.update = function( id ) {
   var p1 = plot( x => besselY( n, complex(0,x) ).re, [-20,-.01] );
   var p2 = plot( x => besselY( n, complex(0,x) ).re, [.01,20] );
 
-  var config = { type: 'svgplot', yMin: -3, yMax: 3 };
+  var config = { type: 'svg', yMin: -3, yMax: 3 };
 
   evaluate( id, [ p1, p2 ], config );
 
@@ -132,7 +132,7 @@ parent.update = function( id ) {
 
   var p = plot( x => besselY( n, complex(0,x) ).im, [-20,20] );
 
-  var config = { type: 'svgplot', yMin: -3, yMax: 3 };
+  var config = { type: 'svg', yMin: -3, yMax: 3 };
 
   evaluate( id, [ p ], config );
 

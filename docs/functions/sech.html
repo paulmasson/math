@@ -35,7 +35,7 @@ parent.update = function( id ) {
 
   var p = plot( x => sech(x), [-2*pi,2*pi] );
 
-  var config = { type: 'svgplot', yMax: 1, includeOrigin: true };
+  var config = { type: 'svg', yMax: 1, includeOrigin: true };
 
   evaluate( id, [ p ], config );
 
@@ -64,7 +64,7 @@ parent.update = function( id ) {
 
   var p = plot( x => sech( complex(0,x) ).re, [-2*pi,2*pi] );
 
-  var config = { type: 'svgplot', yMin: -5, yMax: 5, includeVerticals: false };
+  var config = { type: 'svg', yMin: -5, yMax: 5, includeVerticals: false };
 
   evaluate( id, [ p ], config );
 

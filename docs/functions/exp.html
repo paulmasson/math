@@ -35,7 +35,7 @@ parent.update = function( id ) {
 
   var p = plot( x => exp(x), [-5,5] );
 
-  var config = { type: 'svgplot', yMax: 100 };
+  var config = { type: 'svg', yMax: 100 };
 
   evaluate( id, [ p ], config );
 
@@ -64,7 +64,7 @@ parent.update = function( id ) {
 
   var p = plot( x => exp( complex(0,x) ).re, [-2*pi,2*pi] );
 
-  var config = { type: 'svgplot', yMin: -1 };
+  var config = { type: 'svg', yMin: -1 };
 
   evaluate( id, [ p ], config );
 
@@ -91,7 +91,7 @@ parent.update = function( id ) {
 
   var p = plot( x => exp( complex(0,x) ).im, [-2*pi,2*pi] );
 
-  var config = { type: 'svgplot' };
+  var config = { type: 'svg' };
 
   evaluate( id, [ p ], config );
 

@@ -35,7 +35,7 @@ parent.update = function( id ) {
 
   var p = plot( x => tan(x), [-2*pi,2*pi] );
 
-  var config = { type: 'svgplot', yMin: -5, yMax: 5 };
+  var config = { type: 'svg', yMin: -5, yMax: 5 };
 
   evaluate( id, [ p ], config );
 
@@ -66,7 +66,7 @@ parent.update = function( id ) {
 
   var p = plot( x => tan( complex(0,x) ).im, [-2*pi,2*pi] );
 
-  var config = { type: 'svgplot' };
+  var config = { type: 'svg' };
 
   evaluate( id, [ p ], config );
 
