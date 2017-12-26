@@ -1665,7 +1665,7 @@ function partialBell( n, k, arguments ) {
   var s = 0;
   var p = 1;
 
-  for ( var i = 1 ; i < n - k + 2 ; i++ ) {
+  for ( var i = 1 ; i <= n - k + 1 ; i++ ) {
 
     s += p * arguments[i-1] * partialBell( n-i, k-1, arguments );
     p *= ( n - i ) / i;
