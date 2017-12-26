@@ -17,6 +17,28 @@ function polynomial( x, coefficients, derivative=false ) {
 }
 
 
+function partialBell( n, k, arguments ) {
+
+  if ( n === 0 && k === 0 ) return 1;
+
+  if ( n === 0 || k === 0 ) return 0;
+
+  // evaluate recursively
+  var s = 0;
+  var p = 1;
+
+  for ( var i = 1 ; i < n - k + 2 ; i++ ) {
+
+    s += p * arguments[i-1] * partialBell( n-i, k-1, arguments );
+    p *= ( n - i ) / i;
+
+  }
+
+  return s;
+
+}
+
+
 function findRoot( f, a, b, tolerance=1e-10, method='bisect' ) {
 
   switch( method ) {
