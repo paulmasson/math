@@ -1,5 +1,8 @@
 
-function integrate( f, a, b, method='adaptive-simpson') {
+function integrate( f, interval, method='adaptive-simpson') {
+
+  var a = interval[0];
+  var b = interval[1];
 
   function nextEulerIteration() {
 

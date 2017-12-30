@@ -1465,7 +1465,10 @@ function diff( f, x, n=1, method='ridders' ) {
 var D = diff;
 
 
-function integrate( f, a, b, method='adaptive-simpson') {
+function integrate( f, interval, method='adaptive-simpson') {
+
+  var a = interval[0];
+  var b = interval[1];
 
   function nextEulerIteration() {
 
@@ -1677,7 +1680,10 @@ function partialBell( n, k, arguments ) {
 }
 
 
-function findRoot( f, a, b, tolerance=1e-10, method='bisect' ) {
+function findRoot( f, interval, tolerance=1e-10, method='bisect' ) {
+
+  var a = interval[0];
+  var b = interval[1];
 
   switch( method ) {
 
