@@ -11,10 +11,7 @@ function complex( x, y ) {
 
 var C = complex;
 
-// arrays of length two or greater are true for this test
-// need a fast way to distinguish between array and dictionary
-
-var isComplex = isNaN;
+function isComplex( x ) { return isNaN(x) && 're' in x }
 
 
 function abs( x ) {
