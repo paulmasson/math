@@ -1677,14 +1677,17 @@ function partialBell( n, k, arguments ) {
 }
 
 
-function findRoot( f, interval, tolerance=1e-10, method='bisect' ) {
+function findRoot( f, interval, options={} ) {
 
-  var a = interval[0];
-  var b = interval[1];
+  var method = 'method' in options ? options.method : 'bisect';
+  var tolerance = 'tolerance' in options ? options.tolerance : 1e-10;
 
   switch( method ) {
 
     case 'bisect':
+
+      var a = interval[0];
+      var b = interval[1];
 
       var fa = f(a);
       var fb = f(b);
@@ -1707,6 +1710,19 @@ function findRoot( f, interval, tolerance=1e-10, method='bisect' ) {
         fmid = f(mid);
         if ( fmid <= 0 ) root = mid;
         if ( fmid === 0 || Math.abs(h) < tolerance ) return root;
+      }
+
+      throw 'No root found for tolerance ' + tolerance;
+
+    case 'newton':
+
+      var root = interval;
+
+      var maxIter = 100;
+      for ( var i = 0; i < maxIter ; i++ ) {
+        var delta = f(root) / diff( f, root );
+        root -= delta;
+        if ( Math.abs(delta) < tolerance ) return root;
       }
 
       throw 'No root found for tolerance ' + tolerance;
