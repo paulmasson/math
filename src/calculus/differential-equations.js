@@ -31,16 +31,15 @@ function ode( f, y, [x0,x1], step=.001, method='runge-kutta' ) {
 
       for ( var x = x0+step ; x <= x1 ; x += step ) {
 
-        var k1 = [], k2 = [], k3 = [], k4 = [];
         var y1 = [], y2 = [], y3 = [];
 
-        for ( var i = 0 ; i < size ; i++ ) k1.push( f(x,y)[i] );
+        var k1 = f(x,y);
         for ( var i = 0 ; i < size ; i++ ) y1.push( y[i] + k1[i]*step/2 );
-        for ( var i = 0 ; i < size ; i++ ) k2.push( f( x+step/2, y1 )[i] );
+        var k2 = f( x+step/2, y1 );
         for ( var i = 0 ; i < size ; i++ ) y2.push( y[i] + k2[i]*step/2 );
-        for ( var i = 0 ; i < size ; i++ ) k3.push( f( x+step/2, y2 )[i] );
+        var k3 = f( x+step/2, y2 );
         for ( var i = 0 ; i < size ; i++ ) y3.push( y[i] + k3[i]*step );
-        for ( var i = 0 ; i < size ; i++ ) k4.push( f( x+step, y3 )[i] );
+        var k4 = f( x+step, y3 );
 
         for ( var i = 0 ; i < size ; i++ )
           y[i] += ( k1[i] + 2*k2[i] + 2*k3[i] + k4[i] ) * step / 6;
