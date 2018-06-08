@@ -17,9 +17,8 @@ function ode( f, y, [x0,x1], step=.001, method='runge-kutta' ) {
       for ( var x = x0+step ; x <= x1 ; x += step ) {
 
         var k = f(x,y);
-        for ( var i = 0 ; i < size ; i++ ) k[i] *= step;
 
-        for ( var i = 0 ; i < size ; i++ ) y[i] += k[i];
+        for ( var i = 0 ; i < size ; i++ ) y[i] += k[i] * step;
 
         points.push( [x].concat(y) );
 
