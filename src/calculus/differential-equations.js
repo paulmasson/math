@@ -3,7 +3,7 @@ function ode( f, y, [x0,x1], step=.001, method='runge-kutta' ) {
 
   if ( f(x0,y)[0] === undefined ) {
     g = f;
-    f = function(x) { return [ g(x) ]; };
+    f = function(x,y) { return [ g(x,y) ]; };
     y = [ y ];
   }
 
