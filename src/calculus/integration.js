@@ -1,5 +1,5 @@
 
-function integrate( f, interval, method='adaptive-simpson') {
+function integrate( f, interval, method='adaptive-simpson' ) {
 
   var a = interval[0];
   var b = interval[1];
@@ -151,6 +151,55 @@ function integrate( f, interval, method='adaptive-simpson') {
       }
 
       return 2 * len * h * sum;
+
+    case 'gaussian':
+
+      // based on Borwein & Bailey, Experimentation in Mathematics
+
+      var epsilon = 1e-15;
+
+      var m = 10;
+      var x = [], w = [];
+
+      var n = 3 * 2**m;
+
+      for ( var j = 1 ; j <= n/2 ; j++ ) {
+
+        var r = Math.cos( Math.PI * (j-.25) / (n+.5) );
+
+        while ( true ) {
+
+          var t1 = 1, t2 = 0;
+
+          for ( var j1 = 1 ; j1 <= n ; j1++ ) {
+            t3 = t2;
+            t2 = t1;
+            t1 = ( (2*j1-1) * r * t2 - (j1-1) * t3 ) / j1;
+          }
+
+          var t4 = n * ( r*t1 - t2 ) / ( r**2 - 1 );
+          var delta = t1 / t4;
+          r -= delta;
+
+          if ( Math.abs( delta ) < epsilon ) break;
+
+        }
+
+        x[j] = r;
+        w[j] = 2 / ( 1 - r**2 ) / t4**2
+
+      }
+
+      // rescale [a,b] to [-1,1]
+      var len = ( b - a ) / 2;
+      var mid = ( b + a ) / 2;
+
+      var sum = 0;
+
+      for ( var j = 1 ; j <= n/2 ; j++ ) 
+        sum += w[j] * ( f( mid - len*x[j] ) + f( mid + len*x[j] ) );
+
+      return len * sum;
 
     default:
 
