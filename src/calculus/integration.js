@@ -127,10 +127,10 @@ function integrate( f, interval, method='adaptive-simpson' ) {
       var h = 1 / 2**m;
       var x = [], w = [];
 
-      for ( var k = 0 ; k < 20 * 2**m ; k++ ) {
+      for ( var k = 0 ; k <= 20 * 2**m ; k++ ) {
         var t = k * h;
-        x.push( Math.tanh( Math.PI/2 * Math.sinh(t) ) );
-        w.push( Math.PI/2 * Math.cosh(t) / Math.cosh( Math.PI/2 * Math.sinh(t) )**2 );
+        x[k] = Math.tanh( Math.PI/2 * Math.sinh(t) );
+        w[k] = Math.PI/2 * Math.cosh(t) / Math.cosh( Math.PI/2 * Math.sinh(t) )**2;
         if ( Math.abs(1-x[k]) < epsilon ) break;
       }
 
@@ -141,7 +141,7 @@ function integrate( f, interval, method='adaptive-simpson' ) {
       var len = ( b - a ) / 2;
       var mid = ( b + a ) / 2;
 
-      for ( var k = 1 ; k < m ; k++ ) {
+      for ( var k = 1 ; k <= m ; k++ ) {
         for ( var i = 0 ; i < nt ; i += 2**(m-k) ) {
           if ( i % 2**(m-k+1) !== 0 || k === 1 ) {
             if ( i === 0 ) sum += w[0] * f( mid );
@@ -150,7 +150,7 @@ function integrate( f, interval, method='adaptive-simpson' ) {
         }
       }
 
-      return 2 * len * h * sum;
+      return len * h * sum;
 
     case 'gaussian':
 
