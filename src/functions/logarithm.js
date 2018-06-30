@@ -32,3 +32,12 @@ function log( x, base ) {
 
 var ln = log;
 
+
+function lambertW( x ) {
+
+  // simple inversion by root finding
+
+  return findRoot( w => w * Math.exp(w) - x, [-1,100], { tolerance: 1e-16 } );
+
+}
+
