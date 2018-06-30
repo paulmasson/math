@@ -283,6 +283,12 @@ function hankel2( n, x ) {
 
 function airyAi( x ) {
 
+  if ( isComplex(x) ) {
+
+    return mul( 1/pi, mul( sqrt( div( x, 3 ) ), besselK( 1/3, mul( 2/3, pow( x, 3/2 ) ) ) ) );
+
+  }
+
   if ( x === 0 ) return 1 / 3**(2/3) / gamma(2/3);
 
   if ( x < 0 ) return sqrt(-x) / 2 * ( besselJ( 1/3, 2/3*(-x)**(3/2) )
@@ -293,6 +299,13 @@ function airyAi( x ) {
 }
 
 function airyBi( x ) {
+
+  if ( isComplex(x) ) {
+
+    return mul( sqrt( div( x, 3 ) ), add( besselI( 1/3, mul( 2/3, pow( x, 3/2 ) ) ),
+                                          besselI( -1/3, mul( 2/3, pow( x, 3/2 ) ) ) ) );
+
+  }
 
   if ( x === 0 ) return 1 / 3**(1/6) / gamma(2/3);
 
