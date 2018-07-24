@@ -324,12 +324,14 @@ function jacobiTheta( n, x, q ) {
 
       var s = 0;
       for ( var i = 0 ; i < 100 ; i++ ) s += (-1)**i * q**(i*i+i) * sin( (2*i+1) * x );
+      if ( q < 0 ) return mul( 2 * s, pow( q, 1/4 ) );
       return 2 * q**(1/4) * s;
 
     case 2:
 
       var s = 0;
       for ( var i = 0 ; i < 100 ; i++ ) s += q**(i*i+i) * cos( (2*i+1) * x );
+      if ( q < 0 ) return mul( 2 * s, pow( q, 1/4 ) );
       return 2 * q**(1/4) * s;
 
     case 3:
