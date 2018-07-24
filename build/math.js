@@ -372,6 +372,10 @@ function sn( x, m ) {
 
   var t = x / jacobiTheta(3,0,q)**2;
 
+  if ( m < 0 )
+    return jacobiTheta(3,0,q) / jacobiTheta(4,t,q)
+           * div( jacobiTheta(1,t,q), jacobiTheta(2,0,q) ).re;
+
   return jacobiTheta(3,0,q) / jacobiTheta(2,0,q)
          * jacobiTheta(1,t,q) / jacobiTheta(4,t,q);
 
@@ -382,6 +386,10 @@ function cn( x, m ) {
   var q = ellipticNome(m);
 
   var t = x / jacobiTheta(3,0,q)**2;
+
+  if ( m < 0 )
+    return jacobiTheta(4,0,q) / jacobiTheta(4,t,q)
+           * div( jacobiTheta(2,t,q), jacobiTheta(2,0,q) ).re;
 
   return jacobiTheta(4,0,q) / jacobiTheta(2,0,q)
          * jacobiTheta(2,t,q) / jacobiTheta(4,t,q);
