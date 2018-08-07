@@ -1390,17 +1390,19 @@ function zeta( x ) {
 
     return div( div( s, -d(n) ), sub( 1, pow( 2, sub(1,x) ) ) );
 
+  } else {
+
+    // functional equation
+    if ( x < 0 ) return 2**x * pi**(x-1) * sin(pi*x/2) * gamma(1-x) * zeta(1-x);
+
+    var s = 0;
+
+    for ( var k = 0 ; k < n ; k++ )
+      s += (-1)**k * ( d(k) - d(n) ) / (k+1)**x;
+
+    return -s / d(n) / ( 1 - 2**(1-x) );
+
   }
-
-  // functional equation
-  if ( x < 0 ) return 2**x * pi**(x-1) * sin(pi*x/2) * gamma(1-x) * zeta(1-x);
-
-  var s = 0;
-
-  for ( var k = 0 ; k < n ; k++ )
-    s += (-1)**k * ( d(k) - d(n) ) / (k+1)**x;
-
-  return -s / d(n) / ( 1 - 2**(1-x) );
 
 }
 
