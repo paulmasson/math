@@ -76,6 +76,8 @@ function mul( x, y ) {
 
 }
 
+function neg( x ) { return mul( -1, x ); }
+
 function div( x, y ) {
 
   // need to handle 0/0...
@@ -102,6 +104,8 @@ function div( x, y ) {
   } else return x / y;
 
 }
+
+function inv( x ) { return div( 1, x ); }
 
 function pow( x, y ) {
 
