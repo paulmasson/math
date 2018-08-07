@@ -43,5 +43,5 @@ function zeta( x ) {
 
 }
 
-function eta( x ) { return ( 1 - 2**(1-x) ) * zeta(x); }
+function eta( x ) { return mul( zeta(x), sub( 1, pow( 2, sub(1,x) ) ) ); }
 
