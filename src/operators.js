@@ -34,9 +34,17 @@ function arg( x ) {
 }
 
 
-// JavaScript does not yet support operator overloading
+// JavaScript does not support operator overloading
 
 function add( x, y ) {
+
+  if ( arguments.length > 2 ) {
+
+    var z = add( x, y );
+    for ( var i = 2 ; i < arguments.length ; i++ ) z = add( z, arguments[i] );
+    return z; 
+
+  }
 
   if ( isComplex(x) || isComplex(y) ) {
 
@@ -63,6 +71,14 @@ function sub( x, y ) {
 }
 
 function mul( x, y ) {
+
+  if ( arguments.length > 2 ) {
+
+    var z = mul( x, y );
+    for ( var i = 2 ; i < arguments.length ; i++ ) z = mul( z, arguments[i] );
+    return z; 
+
+  }
 
   if ( isComplex(x) || isComplex(y) ) {
 
