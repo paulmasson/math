@@ -24,48 +24,89 @@ function carlsonRD( x, y, z ) {
 
 function carlsonRF( x, y, z, tolerance=1e-10 ) {
 
-  if ( y === z ) return carlsonRC( x, y );
-  if ( x === z ) return carlsonRC( y, x );
-  if ( x === y ) return carlsonRC( z, x );
+  if ( isComplex(x) || isComplex(y) || isComplex(z) ) {
 
-  // adapted from mpmath / elliptic.py
+    var xm = x;
+    var ym = y;
+    var zm = z;
 
-  var xm = x;
-  var ym = y;
-  var zm = z;
+    var Am = A0 = div( add( x, y, z ), 3 );
+    var Q = Math.pow( 3*tolerance, -1/6 )
+            * Math.max( abs( sub(A0,x) ), abs( sub(A0,y) ), abs( sub(A0,z) ) );
+    var g = .25;
+    var pow4 = 1;
+    var m = 0;
 
-  var A0 = (x + y + z) / 3;
-  var Am = A0;
-  var Q = Math.pow( 3*tolerance, -1/6 )
-          * Math.max( Math.abs(A0-x), Math.abs(A0-y), Math.abs(A0-z) );
-  var g = .25;
-  var pow4 = 1;
-  var m = 0;
+    while ( true ) {
+      var xs = sqrt(xm);
+      var ys = sqrt(ym);
+      var zs = sqrt(zm);
+      var lm = add( mul(xs,ys), mul(xs,zs), mul(ys,zs) );
+      var Am1 = mul( add(Am,lm), g );
+      xm = mul( add(xm,lm), g );
+      ym = mul( add(ym,lm), g );
+      zm = mul( add(zm,lm), g );
+      if ( pow4 * Q < abs(Am) ) break;
+      Am = Am1;
+      m += 1;
+      pow4 *= g;
+    }
 
-  while ( true ) {
-    var xs = Math.sqrt(xm);
-    var ys = Math.sqrt(ym);
-    var zs = Math.sqrt(zm);
-    var lm = xs*ys + xs*zs + ys*zs;
-    var Am1 = (Am + lm) * g;
-    xm = (xm + lm) * g;
-    ym = (ym + lm) * g;
-    zm = (zm + lm) * g;
-    if ( pow4 * Q < Math.abs(Am) ) break;
-    Am = Am1;
-    m += 1;
-    pow4 *= g;
+    var t = div( pow4, Am );
+    var X = mul( sub(A0,x), t );
+    var Y = mul( sub(A0,y), t );
+    var Z = neg( add(X,Y) );
+    var E2 = sub( mul(X,Y), mul(Z,Z) );
+    var E3 = mul(X,Y,Z);
+
+    return mul( pow( Am, -.5 ),
+             add( 9240, mul(-924,E2), mul(385,E2,E2), mul(660,E3), mul(-630,E2,E3) ), 1/9240 );
+
+  } else {
+
+    if ( y === z ) return carlsonRC( x, y );
+    if ( x === z ) return carlsonRC( y, x );
+    if ( x === y ) return carlsonRC( z, x );
+
+    // adapted from mpmath / elliptic.py
+
+    var xm = x;
+    var ym = y;
+    var zm = z;
+
+    var Am = A0 = (x + y + z) / 3;
+    var Q = Math.pow( 3*tolerance, -1/6 )
+            * Math.max( Math.abs(A0-x), Math.abs(A0-y), Math.abs(A0-z) );
+    var g = .25;
+    var pow4 = 1;
+    var m = 0;
+
+    while ( true ) {
+      var xs = Math.sqrt(xm);
+      var ys = Math.sqrt(ym);
+      var zs = Math.sqrt(zm);
+      var lm = xs*ys + xs*zs + ys*zs;
+      var Am1 = (Am + lm) * g;
+      xm = (xm + lm) * g;
+      ym = (ym + lm) * g;
+      zm = (zm + lm) * g;
+      if ( pow4 * Q < Math.abs(Am) ) break;
+      Am = Am1;
+      m += 1;
+      pow4 *= g;
+    }
+
+    var t = pow4 / Am;
+    var X = (A0-x) * t;
+    var Y = (A0-y) * t;
+    var Z = -X-Y;
+    var E2 = X*Y - Z**2;
+    var E3 = X*Y*Z;
+
+    return Math.pow( Am, -.5 )
+           * ( 9240 - 924*E2 + 385*E2**2 + 660*E3 - 630*E2*E3 ) / 9240;
+
   }
-
-  var t = pow4 / Am;
-  var X = (A0-x) * t;
-  var Y = (A0-y) * t;
-  var Z = -X-Y;
-  var E2 = X*Y - Z**2;
-  var E3 = X*Y*Z;
-
-  return Math.pow( Am, -.5 )
-         * ( 9240 - 924*E2 + 385*E2**2 + 660*E3 - 630*E2*E3 ) / 9240;
 
 }
 
