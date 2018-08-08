@@ -442,6 +442,10 @@ function am( x, m ) {
 
 function carlsonRC( x, y ) {
 
+  if ( x < 0 || y < 0 || isComplex(x) || isComplex(y) )
+
+    return div( arccos( sqrt( div(x,y) ) ), sqrt( sub(y,x) ) );
+
   if ( x === y ) return 1 / Math.sqrt(x);
 
   if ( x < y )
