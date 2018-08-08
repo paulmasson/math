@@ -604,8 +604,7 @@ function carlsonRJ( x, y, z, p, tolerance=1e-10 ) {
     var E4 = mul( add( mul(2,X,Y,Z), mul(E2,P), mul(3,P,P,P) ), P );
     var E5 = mul(X,Y,Z,P,P);
     P = add( 24024, mul(-5148,E2), mul(2457,E2,E2), mul(4004,E3), mul(-4158,E2,E3), mul(-3276,E4), mul(2772,E5) );
-    Q = 24024;
-    var v1 = mul( g**m / Q, pow( Am, -1.5 ), P );
+    var v1 = mul( g**m, pow( Am, -1.5 ), P, 1/24024 );
     var v2 = mul(6,S);
 
     return add( v1, v2 );
@@ -659,8 +658,7 @@ function carlsonRJ( x, y, z, p, tolerance=1e-10 ) {
     var E4 = ( 2*X*Y*Z + E2*P + 3*P**3 ) * P;
     var E5 = X*Y*Z*P**2;
     P = 24024 - 5148*E2 + 2457*E2**2 + 4004*E3 - 4158*E2*E3 - 3276*E4 + 2772*E5;
-    Q = 24024;
-    var v1 = g**m * Math.pow( Am, -1.5 ) * P/Q;
+    var v1 = g**m * Math.pow( Am, -1.5 ) * P / 24024;
     var v2 = 6*S;
 
     return v1 + v2;
