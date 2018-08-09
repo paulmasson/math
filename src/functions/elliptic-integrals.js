@@ -316,24 +316,42 @@ function ellipticE( x, m ) {
 
 function ellipticPi( n, x, m ) {
 
-  if ( Math.abs(n) > 1 ) throw 'Index not supported';
+//  if ( Math.abs(n) > 1 ) throw 'Index not supported';
 
   if ( arguments.length === 2 ) {
     m = x;
     x = pi / 2;
   }
 
-  var period = 0;
-  if ( Math.abs(x) > pi / 2 ) {
-    var p = Math.round( x / pi );
-    x = x - p * pi;
-    period = 2 * p * ellipticPi( n, m );
-  }
+  if ( isComplex(n) || isComplex(x) || isComplex(m) ) {
 
-  return sin(x) * carlsonRF( cos(x)**2, 1 - m * sin(x)**2, 1 )
-         + n / 3 * sin(x)**3
-           * carlsonRJ( cos(x)**2, 1 - m * sin(x)**2, 1, 1 - n * sin(x)**2 )
-         + period;
+    var period = complex(0);
+    if ( Math.abs(x.re) > pi / 2 ) {
+      var p = Math.round( x.re / pi );
+      x.re = x.re - p * pi;
+      period = mul( 2 * p, ellipticPi( n, m ) );
+    }
+
+    return add( mul( sin(x), carlsonRF( mul(cos(x),cos(x)), sub( 1, mul(m,sin(x),sin(x)) ), 1 ) ),
+                mul( 1/3, n, pow(sin(x),3),
+                  carlsonRJ( mul(cos(x),cos(x)), sub( 1, mul(m,sin(x),sin(x)) ), 1, sub( 1, mul(n,sin(x),sin(x)) ) ) ),
+                period );
+
+  } else {
+
+    var period = 0;
+    if ( Math.abs(x) > pi / 2 ) {
+      var p = Math.round( x / pi );
+      x = x - p * pi;
+      period = 2 * p * ellipticPi( n, m );
+    }
+
+    return sin(x) * carlsonRF( cos(x)**2, 1 - m * sin(x)**2, 1 )
+           + n / 3 * sin(x)**3
+             * carlsonRJ( cos(x)**2, 1 - m * sin(x)**2, 1, 1 - n * sin(x)**2 )
+           + period;
+
+  }
 
 }
 
