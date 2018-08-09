@@ -33,9 +33,9 @@ function abs( x ) {
 
 function arg( x ) {
 
-  if ( !isComplex(x) ) x = complex(x,0);
+  if ( isComplex(x) ) return Math.atan2( x.im, x.re );
 
-  return Math.atan2( x.im, x.re );
+  return Math.atan2( 0, x );
 
 }
 
