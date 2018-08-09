@@ -3,9 +3,16 @@
 
 function carlsonRC( x, y ) {
 
-  if ( x < 0 || y < 0 || isComplex(x) || isComplex(y) )
+  if ( x < 0 || y < 0 || isComplex(x) || isComplex(y) ) {
+
+    if ( !isComplex(x) ) x = complex(x,0);
+    if ( !isComplex(y) ) y = complex(y,0);
+
+    if ( x.re === y.re && x.im === y.im ) return inv( sqrt(x) );
 
     return div( arccos( sqrt( div(x,y) ) ), sqrt( sub(y,x) ) );
+
+  }
 
   if ( x === y ) return 1 / Math.sqrt(x);
 
@@ -277,16 +284,33 @@ function ellipticE( x, m ) {
     x = pi / 2;
   }
 
-  var period = 0;
-  if ( Math.abs(x) > pi / 2 ) {
-    var p = Math.round( x / pi );
-    x = x - p * pi;
-    period = 2 * p * ellipticE( m );
-  }
+  if ( isComplex(x) || isComplex(m) ) {
 
-  return sin(x) * carlsonRF( cos(x)**2, 1 - m * sin(x)**2, 1 )
-         - m / 3 * sin(x)**3 * carlsonRD( cos(x)**2, 1 - m * sin(x)**2, 1 )
-         + period;
+    var period = complex(0);
+    if ( Math.abs(x.re) > pi / 2 ) {
+      var p = Math.round( x.re / pi );
+      x.re = x.re - p * pi;
+      period = mul( 2 * p,  ellipticE( m ) );
+    }
+
+    return add( mul( sin(x), carlsonRF( mul(cos(x),cos(x)), sub( 1, mul(m,sin(x),sin(x)) ), 1 ) ),
+                mul( -1/3, m, pow(sin(x),3), carlsonRD( mul(cos(x),cos(x)), sub( 1, mul(m,sin(x),sin(x)) ), 1 ) ),
+                period );
+
+  } else {
+
+    var period = 0;
+    if ( Math.abs(x) > pi / 2 ) {
+      var p = Math.round( x / pi );
+      x = x - p * pi;
+      period = 2 * p * ellipticE( m );
+    }
+
+    return sin(x) * carlsonRF( cos(x)**2, 1 - m * sin(x)**2, 1 )
+           - m / 3 * sin(x)**3 * carlsonRD( cos(x)**2, 1 - m * sin(x)**2, 1 )
+           + period;
+
+  }
 
 }
 
