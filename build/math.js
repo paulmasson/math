@@ -16,15 +16,19 @@ function isComplex( x ) { return isNaN(x) && 're' in x }
 
 function abs( x ) {
 
-  if ( !isComplex(x) ) x = complex(x,0);
+  if ( isComplex(x) ) {
 
-  if ( Math.abs(x.re) < Math.abs(x.im) )
+    if ( Math.abs(x.re) < Math.abs(x.im) )
 
-    return Math.abs(x.im) * Math.sqrt( 1 + ( x.re / x.im )**2 );
+      return Math.abs(x.im) * Math.sqrt( 1 + ( x.re / x.im )**2 );
 
-  else
+    else
 
-    return Math.abs(x.re) * Math.sqrt( 1 + ( x.im / x.re )**2 );
+      return Math.abs(x.re) * Math.sqrt( 1 + ( x.im / x.re )**2 );
+
+  }
+
+  return Math.abs(x);
 
 }
 
