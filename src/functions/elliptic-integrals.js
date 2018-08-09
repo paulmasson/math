@@ -238,14 +238,29 @@ function ellipticF( x, m ) {
     x = pi / 2;
   }
 
-  var period = 0;
-  if ( Math.abs(x) > pi / 2 ) {
-    var p = Math.round( x / pi );
-    x = x - p * pi;
-    period = 2 * p * ellipticK( m );
-  }
+  if ( isComplex(x) || isComplex(m) ) {
 
-  return sin(x) * carlsonRF( cos(x)**2, 1 - m * sin(x)**2, 1 ) + period;
+    var period = complex(0);
+    if ( Math.abs(x.re) > pi / 2 ) {
+      var p = Math.round( x.re / pi );
+      x.re = x.re - p * pi;
+      period = mul( 2 * p, ellipticK( m ) );
+    }
+
+    return add( mul( sin(x), carlsonRF( mul(cos(x),cos(x)), sub( 1, mul(m,sin(x),sin(x)) ), 1 ) ), period );
+
+  } else {
+
+    var period = 0;
+    if ( Math.abs(x) > pi / 2 ) {
+      var p = Math.round( x / pi );
+      x = x - p * pi;
+      period = 2 * p * ellipticK( m );
+    }
+
+    return sin(x) * carlsonRF( cos(x)**2, 1 - m * sin(x)**2, 1 ) + period;
+
+  }
 
 }
 
