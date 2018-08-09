@@ -42,7 +42,7 @@ function ellipticNome( m ) {
 
   if ( isComplex(m) ) return exp( div( mul( -pi, ellipticK( sub(1,m) ) ), ellipticK(m) ) );
 
-  if ( m >= 1 ) return ellipticNome( complex(m) );
+  if ( m > 1 ) return ellipticNome( complex(m) );
 
   if ( m < 0 ) return -exp( -pi * ellipticK( 1/(1-m) ) / ellipticK( m/(m-1) ) );
 
