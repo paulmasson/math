@@ -692,6 +692,8 @@ function ellipticF( x, m ) {
 
   if ( isComplex(x) || isComplex(m) ) {
 
+    if ( !isComplex(x) ) x = complex(x,0);
+
     var period = complex(0);
     if ( Math.abs(x.re) > pi / 2 ) {
       var p = Math.round( x.re / pi );
@@ -731,6 +733,8 @@ function ellipticE( x, m ) {
 
   if ( isComplex(x) || isComplex(m) ) {
 
+    if ( !isComplex(x) ) x = complex(x,0);
+
     var period = complex(0);
     if ( Math.abs(x.re) > pi / 2 ) {
       var p = Math.round( x.re / pi );
@@ -769,6 +773,8 @@ function ellipticPi( n, x, m ) {
   }
 
   if ( isComplex(n) || isComplex(x) || isComplex(m) ) {
+
+    if ( !isComplex(x) ) x = complex(x,0);
 
     var period = complex(0);
     if ( Math.abs(x.re) > pi / 2 ) {
