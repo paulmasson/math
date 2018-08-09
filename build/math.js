@@ -18,6 +18,8 @@ function abs( x ) {
 
   if ( isComplex(x) ) {
 
+    if ( x.re === 0 && x.im === 0 ) return 0;
+
     if ( Math.abs(x.re) < Math.abs(x.im) )
 
       return Math.abs(x.im) * Math.sqrt( 1 + ( x.re / x.im )**2 );
