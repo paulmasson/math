@@ -707,6 +707,8 @@ function ellipticF( x, m ) {
 
   } else {
 
+    if ( m > 1 && x > Math.asin( 1 / Math.sqrt(m) ) ) return ellipticF( C(x), m );
+
     var period = 0;
     if ( Math.abs(x) > pi / 2 ) {
       var p = Math.round( x / pi );
@@ -750,6 +752,8 @@ function ellipticE( x, m ) {
 
   } else {
 
+    if ( m > 1 && x > Math.asin( 1 / Math.sqrt(m) ) ) return ellipticE( C(x), m );
+
     var period = 0;
     if ( Math.abs(x) > pi / 2 ) {
       var p = Math.round( x / pi );
@@ -791,6 +795,8 @@ function ellipticPi( n, x, m ) {
                 period );
 
   } else {
+
+    if ( m > 1 && x > Math.asin( 1 / Math.sqrt(m) ) ) return ellipticPi( n, C(x), m );
 
     var period = 0;
     if ( Math.abs(x) > pi / 2 ) {
