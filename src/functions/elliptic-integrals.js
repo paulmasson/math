@@ -324,8 +324,6 @@ function ellipticE( x, m ) {
 
 function ellipticPi( n, x, m ) {
 
-//  if ( Math.abs(n) > 1 ) throw 'Index not supported';
-
   if ( arguments.length === 2 ) {
     m = x;
     x = pi / 2;
@@ -348,6 +346,8 @@ function ellipticPi( n, x, m ) {
                 period );
 
   } else {
+
+    if ( n > 1 && x > Math.asin( 1 / Math.sqrt(n) ) ) return ellipticPi( n, C(x), m );
 
     if ( m > 1 && x > Math.asin( 1 / Math.sqrt(m) ) ) return ellipticPi( n, C(x), m );
 
