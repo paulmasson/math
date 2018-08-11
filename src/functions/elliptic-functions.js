@@ -1,29 +1,65 @@
 
 function jacobiTheta( n, x, q ) {
 
+  if ( abs(q) >= 1 ) throw 'Unsupported elliptic nome';
+
   switch( n ) {
 
     case 1:
 
+      if ( q < 0 || isComplex(x) || isComplex(q) ) {
+
+        var s = complex(0);
+        for ( var i = 0 ; i < 100 ; i++ )
+          s = add( s, mul( (-1)**i, pow( q, i*i+i ), sin( mul(2*i+1,x) ) ) );
+        return mul( 2, s, pow( q, 1/4 ) );
+
+      }
+
       var s = 0;
       for ( var i = 0 ; i < 100 ; i++ ) s += (-1)**i * q**(i*i+i) * sin( (2*i+1) * x );
-      if ( q < 0 ) return mul( 2 * s, pow( q, 1/4 ) );
       return 2 * q**(1/4) * s;
 
     case 2:
 
+      if ( q < 0 || isComplex(x) || isComplex(q) ) {
+
+        var s = complex(0);
+        for ( var i = 0 ; i < 100 ; i++ )
+          s = add( s, mul( pow( q, i*i+i ), cos( mul(2*i+1,x) ) ) );
+        return mul( 2, s, pow( q, 1/4 ) );
+
+      }
+
       var s = 0;
       for ( var i = 0 ; i < 100 ; i++ ) s += q**(i*i+i) * cos( (2*i+1) * x );
-      if ( q < 0 ) return mul( 2 * s, pow( q, 1/4 ) );
       return 2 * q**(1/4) * s;
 
     case 3:
+
+      if ( isComplex(x) || isComplex(q) ) {
+
+        var s = complex(0);
+        for ( var i = 1 ; i < 100 ; i++ )
+          s = add( s, mul( pow( q, i*i ), cos( mul(2*i,x) ) ) );
+        return add( 1, mul(2,s) );
+
+      }
 
       var s = 0;
       for ( var i = 1 ; i < 100 ; i++ ) s += q**(i*i) * cos( 2*i * x );
       return 1 + 2 * s;
 
     case 4:
+
+      if ( isComplex(x) || isComplex(q) ) {
+
+        var s = complex(0);
+        for ( var i = 1 ; i < 100 ; i++ )
+          s = add( s, mul( pow( neg(q), i*i ), cos( mul(2*i,x) ) ) );
+        return add( 1, mul(2,s) );
+
+      }
 
       var s = 0;
       for ( var i = 1 ; i < 100 ; i++ ) s += (-q)**(i*i) * cos( 2*i * x );
