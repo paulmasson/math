@@ -91,6 +91,15 @@ function sn( x, m ) {
 
   var q = ellipticNome(m);
 
+  if ( m > 1 || isComplex(x) || isComplex(m) ) {
+
+    var t = div( x, pow( jacobiTheta(3,0,q), 2 ) );
+
+    return mul( div( jacobiTheta(3,0,q), jacobiTheta(2,0,q) ),
+                div( jacobiTheta(1,t,q), jacobiTheta(4,t,q) ) );
+
+  }
+
   var t = x / jacobiTheta(3,0,q)**2;
 
   if ( m < 0 )
@@ -106,6 +115,15 @@ function cn( x, m ) {
 
   var q = ellipticNome(m);
 
+  if ( m > 1 || isComplex(x) || isComplex(m) ) {
+
+    var t = div( x, pow( jacobiTheta(3,0,q), 2 ) );
+
+    return mul( div( jacobiTheta(4,0,q), jacobiTheta(2,0,q) ),
+                div( jacobiTheta(2,t,q), jacobiTheta(4,t,q) ) );
+
+  }
+
   var t = x / jacobiTheta(3,0,q)**2;
 
   if ( m < 0 )
@@ -120,6 +138,15 @@ function cn( x, m ) {
 function dn( x, m ) {
 
   var q = ellipticNome(m);
+
+  if ( m > 1 || isComplex(x) || isComplex(m) ) {
+
+    var t = div( x, pow( jacobiTheta(3,0,q), 2 ) );
+
+    return mul( div( jacobiTheta(4,0,q), jacobiTheta(3,0,q) ),
+                div( jacobiTheta(3,t,q), jacobiTheta(4,t,q) ) );
+
+  }
 
   var t = x / jacobiTheta(3,0,q)**2;
 
