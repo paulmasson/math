@@ -355,7 +355,7 @@ function jacobiTheta( n, x, q ) {
         var s = complex(0);
         for ( var i = 0 ; i < 100 ; i++ )
           s = add( s, mul( (-1)**i, pow( q, i*i+i ), sin( mul(2*i+1,x) ) ) );
-        return mul( 2, s, pow( q, 1/4 ) );
+        return mul( 2, pow( q, 1/4 ), s );
 
       }
 
@@ -370,7 +370,7 @@ function jacobiTheta( n, x, q ) {
         var s = complex(0);
         for ( var i = 0 ; i < 100 ; i++ )
           s = add( s, mul( pow( q, i*i+i ), cos( mul(2*i+1,x) ) ) );
-        return mul( 2, s, pow( q, 1/4 ) );
+        return mul( 2, pow( q, 1/4 ), s );
 
       }
 
