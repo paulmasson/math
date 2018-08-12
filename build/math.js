@@ -500,11 +500,20 @@ function dn( x, m ) {
 
 function am( x, m ) {
 
-  var K = ellipticK(m);
-  var n = Math.floor( x / 2 / K );
-  x = x - 2 * n * K;
+  if ( m > 1 || isComplex(x) || isComplex(m) ) {
 
-  return Math.atan2( sn(x,m), cn(x,m) ) + n * pi;
+    return arctan( div( sn(x,m), cn(x,m) ) );
+
+  } else {
+
+    var K = ellipticK(m);
+    var n = Math.round( x / 2 / K );
+    x = x - 2 * n * K;
+
+    // arcsin faster than arctan
+    return Math.asin( sn(x,m) ) + n * pi;
+
+  }
 
 }
 
