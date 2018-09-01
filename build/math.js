@@ -887,6 +887,16 @@ function ellipticPi( n, x, m ) {
 }
 
 
+function jacobiZeta( x, m ) {
+
+  // using definition matching elliptic integrals
+  // alternate definition replaces x with am(x,m)
+
+  return sub( ellipticE( x, m ), mul( ellipticF(x,m), ellipticE(m), inv( ellipticK(m) ) ) );
+
+}
+
+
 function factorial( n ) {
 
   if ( Number.isInteger(n) && n >= 0 ) {
