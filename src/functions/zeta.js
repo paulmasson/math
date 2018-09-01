@@ -45,5 +45,5 @@ function zeta( x ) {
 
 }
 
-function eta( x ) { return mul( zeta(x), sub( 1, pow( 2, sub(1,x) ) ) ); }
+function dirichletEta( x ) { return mul( zeta(x), sub( 1, pow( 2, sub(1,x) ) ) ); }
 
