@@ -8,6 +8,8 @@ Complex numbers are supported as dictionaries with real and imaginary attributes
 
 Hypergeometric functions <sub>0</sub>*F*<sub>1</sub>, <sub>1</sub>*F*<sub>1</sub> and <sub>2</sub>*F*<sub>1</sub> of real or complex arguments are currently supported as power series. These make available Bessel *J*, *Y*, *I* and *K* functions on the complex plane, as well as Airy Ai and Bi functions and Hankel functions. Elliptic integrals and elliptic functions of real or complex arguments are available using Carlson symmetric integrals and Jacobi theta function power series.
 
+Here is the complete list of [functions](https://paulmasson.github.io/math/docs/functions.html) available in this library.
+
 Integration of functions and ordinary differential equations is available for real values, as well as eigensystems of real symmetric matrices, root finding and cubic splines.
 
 This library and [MathCell](https://github.com/paulmasson/mathcell) power the interactive elements of [Analytic Physics](http://analyticphysics.com).
