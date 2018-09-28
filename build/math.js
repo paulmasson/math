@@ -62,7 +62,9 @@ function add( x, y ) {
 
     return { re: x.re + y.re, im: x.im + y.im };
 
-  } else return x + y;
+  }
+
+  return x + y;
 
 }
 
@@ -75,7 +77,9 @@ function sub( x, y ) {
 
     return { re: x.re - y.re, im: x.im - y.im };
 
-  } else return x - y;
+  }
+
+  return x - y;
 
 }
 
@@ -97,7 +101,9 @@ function mul( x, y ) {
     return { re: x.re * y.re - x.im * y.im,
              im: x.im * y.re + x.re * y.im };
 
-  } else return x * y;
+  }
+
+  return x * y;
 
 }
 
@@ -126,7 +132,9 @@ function div( x, y ) {
 
     }
 
-  } else return x / y;
+  }
+
+  return x / y;
 
 }
 
@@ -154,9 +162,11 @@ function pow( x, y ) {
 
     return { re: R * Math.cos(Phi), im: R * Math.sin(Phi) };
 
-  } else if ( x < 0 ) return pow( complex(x), y );
+  }
 
-  else return x**y;
+  if ( x < 0 ) return pow( complex(x), y );
+
+  return x**y;
 
 }
 
@@ -171,9 +181,11 @@ function sqrt( x ) {
 
     return { re: R * Math.cos(Phi), im: R * Math.sin(Phi) };
 
-  } else if ( x < 0 ) return sqrt( complex(x) );
+  }
 
-  else return Math.sqrt(x);
+  if ( x < 0 ) return sqrt( complex(x) );
+
+  return Math.sqrt(x);
 
 }
 
