@@ -1377,7 +1377,7 @@ function sin( x ) {
     return { re: Math.sin(x.re) * Math.cosh(x.im),
              im: Math.cos(x.re) * Math.sinh(x.im) };
 
-  else return Math.sin(x);
+  return Math.sin(x);
 
 }
 
@@ -1388,7 +1388,7 @@ function cos( x ) {
     return { re: Math.cos(x.re) * Math.cosh(x.im),
              im: -Math.sin(x.re) * Math.sinh(x.im) };
 
-  else return Math.cos(x);
+  return Math.cos(x);
 
 }
 
@@ -1396,15 +1396,15 @@ function tan( x ) {
 
   if ( isComplex(x) ) return div( sin(x), cos(x) );
 
-  else return Math.tan(x);
+  return Math.tan(x);
 
  }
 
 function cot( x ) {
 
- if ( isComplex(x) ) return div( cos(x), sin(x) );
+  if ( isComplex(x) ) return div( cos(x), sin(x) );
 
-  else return 1 / Math.tan(x);
+  return 1 / Math.tan(x);
 
 }
 
@@ -1412,7 +1412,7 @@ function sec( x ) {
 
   if ( isComplex(x) ) return div( 1, cos(x) );
 
-  else return 1 / Math.cos(x);
+  return 1 / Math.cos(x);
 
 }
 
@@ -1420,7 +1420,7 @@ function csc( x ) {
 
   if ( isComplex(x) ) return div( 1, sin(x) );
 
-  else return 1 / Math.sin(x);
+  return 1 / Math.sin(x);
 
 }
 
@@ -1435,9 +1435,11 @@ function arcsin( x ) {
     s = add( mul( complex(0,1), x ), s ); 
     return mul( complex(0,-1), log( s ) );
 
-  } else if ( Math.abs(x) <= 1 ) return Math.asin(x);
+  }
 
-  else return arcsin( complex(x) );
+  if ( Math.abs(x) <= 1 ) return Math.asin(x);
+
+  return arcsin( complex(x) );
 
 }
 
@@ -1447,9 +1449,11 @@ function arccos( x ) {
 
     return sub( pi/2, arcsin(x) );
 
-  } else if ( Math.abs(x) <= 1 ) return Math.acos(x);
+  }
 
-  else return arccos( complex(x) );
+  if ( Math.abs(x) <= 1 ) return Math.acos(x);
+
+  return arccos( complex(x) );
 
 }
 
@@ -1461,7 +1465,9 @@ function arctan( x ) {
                  log( add( 1, mul( complex(0,1), x ) ) ) );
     return mul( complex(0,1/2), s );
 
-  } else return Math.atan(x);
+  }
+
+  return Math.atan(x);
 
 }
 
@@ -1469,7 +1475,7 @@ function arccot( x ) {
 
   if ( isComplex(x) ) return arctan( div( 1, x ) );
 
-  else return Math.atan( 1/x );
+  return Math.atan( 1/x );
 
 }
 
@@ -1477,9 +1483,9 @@ function arcsec( x ) {
 
   if ( isComplex(x) ) return arccos( div( 1, x ) );
 
-  else if ( Math.abs(x) >= 1 ) return Math.acos( 1/x );
+  if ( Math.abs(x) >= 1 ) return Math.acos( 1/x );
 
-  else return arcsec( complex(x) );
+  return arcsec( complex(x) );
 
 }
 
@@ -1487,9 +1493,9 @@ function arccsc( x ) {
 
   if ( isComplex(x) ) return arcsin( div( 1, x ) );
 
-  else if ( Math.abs(x) >= 1 ) return Math.asin( 1/x );
+  if ( Math.abs(x) >= 1 ) return Math.asin( 1/x );
 
-  else return arccsc( complex(x) );
+  return arccsc( complex(x) );
 
 }
 
@@ -1503,7 +1509,7 @@ function sinh( x ) {
     return { re: Math.sinh(x.re) * Math.cos(x.im),
              im: Math.cosh(x.re) * Math.sin(x.im) };
 
-  else return Math.sinh(x);
+  return Math.sinh(x);
 
 }
 
@@ -1514,7 +1520,7 @@ function cosh( x ) {
     return { re: Math.cosh(x.re) * Math.cos(x.im),
              im: Math.sinh(x.re) * Math.sin(x.im) };
 
-  else return Math.cosh(x);
+  return Math.cosh(x);
 
 }
 
@@ -1522,7 +1528,7 @@ function tanh( x ) {
 
   if ( isComplex(x) ) return div( sinh(x), cosh(x) );
 
-  else return Math.tanh(x);
+  return Math.tanh(x);
 
 }
 
@@ -1530,7 +1536,7 @@ function coth( x ) {
 
   if ( isComplex(x) ) return div( cosh(x), sinh(x) );
 
-  else return 1 / Math.tanh(x);
+  return 1 / Math.tanh(x);
 
 }
 
@@ -1538,7 +1544,7 @@ function sech( x ) {
 
   if ( isComplex(x) ) return div( 1, cosh(x) );
 
-  else return 1 / Math.cosh(x);
+  return 1 / Math.cosh(x);
 
 }
 
@@ -1546,7 +1552,7 @@ function csch( x ) {
 
   if ( isComplex(x) ) return div( 1, sinh(x) );
 
-  else return 1 / Math.sinh(x);
+  return 1 / Math.sinh(x);
 
 }
 
@@ -1561,7 +1567,9 @@ function arcsinh( x ) {
     s = add( x, s );
     return log( s );
 
-  } else return Math.asinh(x);
+  }
+
+  return Math.asinh(x);
 
 }
 
@@ -1573,9 +1581,11 @@ function arccosh( x ) {
     s = add( x, s ); 
     return log( s );
 
-  } else if ( x >= 1 ) return Math.acosh(x);
+  }
 
-  else return arccosh( complex(x) );
+  if ( x >= 1 ) return Math.acosh(x);
+
+  return arccosh( complex(x) );
 
 }
 
@@ -1586,9 +1596,11 @@ function arctanh( x ) {
     var s = sub( log( add( 1, x ) ), log( sub( 1, x ) ) );
     return mul( 1/2, s );
 
-  } else if ( Math.abs(x) <= 1 ) return Math.atanh(x);
+  }
 
-  else return arctanh( complex(x) );
+  if ( Math.abs(x) <= 1 ) return Math.atanh(x);
+
+  return arctanh( complex(x) );
 
 }
 
@@ -1600,9 +1612,11 @@ function arccoth( x ) {
 
     return arctanh( div( 1, x ) );
 
-  } else if ( Math.abs(x) > 1 ) return Math.atanh( 1/x );
+  }
 
-  else return arccoth( complex(x) );
+  if ( Math.abs(x) > 1 ) return Math.atanh( 1/x );
+
+  return arccoth( complex(x) );
 
 }
 
@@ -1617,9 +1631,11 @@ function arcsech( x ) {
 
     return arccosh( div( 1, x ) );
 
-  } else if ( x > 0 && x < 1 ) return Math.acosh( 1/x );
+  }
 
-  else return arcsech( complex(x) );
+  if ( x > 0 && x < 1 ) return Math.acosh( 1/x );
+
+  return arcsech( complex(x) );
 
 }
 
@@ -1629,7 +1645,9 @@ function arccsch( x ) {
 
     return arcsinh( div( 1, x ) );
 
-  } else return Math.asinh( 1/x );
+  }
+
+  return Math.asinh( 1/x );
 
 }
 
