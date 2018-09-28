@@ -25,16 +25,12 @@ function hermite( n, x ) {
 
   }
 
-  if ( Number.isInteger(n) && n >= 0 )
-    return polynomial( x, coefficients(n) );
+  if ( Number.isInteger(n) && n >= 0 ) return polynomial( x, coefficients(n) );
 
-  else {
+  var s = hypergeometric1F1( -n/2, 1/2, x**2 ) / gamma( (1-n)/2 )
+          - 2 * x * hypergeometric1F1( (1-n)/2, 3/2, x**2 ) / gamma( -n/2 );
 
-    var s = hypergeometric1F1( -n/2, 1/2, x**2 ) / gamma( (1-n)/2 )
-            - 2 * x * hypergeometric1F1( (1-n)/2, 3/2, x**2 ) / gamma( -n/2 );
-    return 2**n * sqrt(pi) * s;
-
-  }
+  return 2**n * sqrt(pi) * s;
 
 }
 
