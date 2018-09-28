@@ -7,7 +7,9 @@ function factorial( n ) {
     for ( var i = 2 ; i <= n ; i++ ) result *= i;
     return result;
 
-  } else return gamma( n+1 );
+  }
+
+  return gamma( n+1 );
 
 }
 
