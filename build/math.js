@@ -1299,11 +1299,34 @@ function log( x, base ) {
 var ln = log;
 
 
-function lambertW( x ) {
+function lambertW( k, x ) {
 
-  // simple inversion by root finding
+  if ( arguments.length === 1 ) {
+    x = k;
+    k = 0;
+  }
 
-  return findRoot( w => w * Math.exp(w) - x, [-1,100], { tolerance: 1e-16 } );
+  // inversion by root finding
+
+  switch ( k ) {
+
+    case 0:
+
+      if ( x < -1 / Math.exp(1) ) throw 'Unsupported lambertW argument';
+
+      return findRoot( w => w * Math.exp(w) - x, [-1,1000], { tolerance: 1e-16 } );
+
+    case -1:
+
+      if ( x < -1 / Math.exp(1) || x > 0 ) throw 'Unsupported lambertW argument';
+
+      return findRoot( w => w * Math.exp(w) - x, [-1000,-1], { tolerance: 1e-16 } );
+
+    default:
+
+      throw 'Unsupported lambertW index';
+
+  }
 
 }
 
