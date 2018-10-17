@@ -1863,6 +1863,21 @@ function integrate( f, interval, method='adaptive-simpson' ) {
   var a = interval[0];
   var b = interval[1];
 
+  if ( isComplex(a) || isComplex(b) ) {
+
+    if ( !isComplex(a) ) a = complex(a,0);
+    if ( !isComplex(b) ) b = complex(b,0);
+
+    var i1 = integrate( x => f( complex(x,a.im) ).re, [a.re,b.re], method );
+    var i2 = integrate( x => f( complex(x,a.im) ).im, [a.re,b.re], method );
+    var i3 = integrate( y => f( complex(b.re,y) ).re, [a.im,b.im], method );
+    var i4 = integrate( y => f( complex(b.re,y) ).im, [a.im,b.im], method );
+
+    return add( complex( i1 ), complex( 0, i2 ),
+                complex( 0, i3 ), complex( -i4 ) );
+
+  }
+
   function nextEulerIteration() {
 
       h /= 2;
