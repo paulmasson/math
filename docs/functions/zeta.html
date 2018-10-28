@@ -33,7 +33,7 @@ MathCell( id, [] );
 
 parent.update = function( id ) {
 
-  var p = plot( x => zeta(x), [-5,5] );
+  var p = plot( x => zeta(x), [-10,10] );
 
   var config = { type: 'svg', yMin: -5, yMax: 5 };
 
@@ -62,7 +62,7 @@ MathCell( id, [] );
 
 parent.update = function( id ) {
 
-  var p = plot( x => zeta( complex(0,x) ).re, [-5,5] );
+  var p = plot( x => zeta( complex(0,x) ).re, [-10,10] );
 
   var config = { type: 'svg' };
 
@@ -89,9 +89,9 @@ MathCell( id, [] );
 
 parent.update = function( id ) {
 
-  var p = plot( x => zeta( complex(0,x) ).im, [-5,5] );
+  var p = plot( x => zeta( complex(0,x) ).im, [-10,10] );
 
-  var config = { type: 'svg', yMin: -1, yMax: 1 };
+  var config = { type: 'svg' };
 
   evaluate( id, [ p ], config );
 
@@ -116,7 +116,7 @@ MathCell( id, [] );
 
 parent.update = function( id ) {
 
-  var p = parametric( (x,y) => [ x, y, zeta( complex(x,y) ).re ], [-5,5,101], [-5,5,101],
+  var p = parametric( (x,y) => [ x, y, zeta( complex(x,y) ).re ], [-8,8,151], [-8,8,151],
                       { colormap: (x,y) => phase( zeta( complex(x,y) ) ) } );
 
   var config = { type: 'threejs', zMin: -5, zMax: 5 };
@@ -144,7 +144,7 @@ MathCell( id, [] );
 
 parent.update = function( id ) {
 
-  var p = parametric( (x,y) => [ x, y, zeta( complex(x,y) ).im ], [-5,5,101], [-5,5,101],
+  var p = parametric( (x,y) => [ x, y, zeta( complex(x,y) ).im ], [-8,8,151], [-8,8,151],
                       { colormap: (x,y) => phase( zeta( complex(x,y) ) ) } );
 
   var config = { type: 'threejs', zMin: -5, zMax: 5 };
@@ -172,7 +172,7 @@ MathCell( id, [] );
 
 parent.update = function( id ) {
 
-  var p = parametric( (x,y) => [ x, y, abs( zeta( complex(x,y) ) ) ], [-5,5,101], [-5,5,101],
+  var p = parametric( (x,y) => [ x, y, abs( zeta( complex(x,y) ) ) ], [-8,8,151], [-8,8,151],
                       { colormap: (x,y) => phase( zeta( complex(x,y) ) ) } );
 
   var config = { type: 'threejs', zMax: 8 };
