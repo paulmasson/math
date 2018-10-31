@@ -120,8 +120,8 @@ MathCell( id, [] );
 
 parent.update = function( id ) {
 
-  var p = parametric( (x,y) => [ x, y, dirichletEta( complex(x,y) ).re ], [-8,8,101], [-8,8,101],
-                      { colormap: (x,y) => phase( dirichletEta( complex(x,y) ) ) } );
+  var p = parametric( (x,y) => [ x, y, dirichletEta( complex(x,y) ) ], [-8,8,101], [-8,8,101],
+                      { complexFunction: 're', colormap: 'complexArgument' } );
 
   var config = { type: 'threejs', zMin: -5, zMax: 5 };
 
@@ -148,8 +148,8 @@ MathCell( id, [] );
 
 parent.update = function( id ) {
 
-  var p = parametric( (x,y) => [ x, y, dirichletEta( complex(x,y) ).im ], [-8,8,101], [-8,8,101],
-                      { colormap: (x,y) => phase( dirichletEta( complex(x,y) ) ) } );
+  var p = parametric( (x,y) => [ x, y, dirichletEta( complex(x,y) ) ], [-8,8,101], [-8,8,101],
+                      { complexFunction: 'im', colormap: 'complexArgument' } );
 
   var config = { type: 'threejs', zMin: -5, zMax: 5 };
 
@@ -176,8 +176,8 @@ MathCell( id, [] );
 
 parent.update = function( id ) {
 
-  var p = parametric( (x,y) => [ x, y, abs( dirichletEta( complex(x,y) ) ) ], [-8,8,101], [-8,8,101],
-                      { colormap: (x,y) => phase( dirichletEta( complex(x,y) ) ) } );
+  var p = parametric( (x,y) => [ x, y, dirichletEta( complex(x,y) ) ], [-8,8,101], [-8,8,101],
+                      { complexFunction: 'abs', colormap: 'complexArgument' } );
 
   var config = { type: 'threejs', zMax: 8 };
 

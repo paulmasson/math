@@ -139,8 +139,8 @@ MathCell( id, [] );
 
 parent.update = function( id ) {
 
-  var p = parametric( (x,y) => [ x, y, logGamma( complex(x,y) ).re ], [-4.999,4.999,151], [-4.999,4.999,151],
-                      { colormap: (x,y) => phase( logGamma( complex(x,y) ) ) } );
+  var p = parametric( (x,y) => [ x, y, logGamma( complex(x,y) ) ], [-4.999,4.999,151], [-4.999,4.999,151],
+                      { complexFunction: 're', colormap: 'complexArgument' } );
 
   var config = { type: 'threejs', zMin: -5, zMax: 5 };
 
@@ -167,8 +167,8 @@ MathCell( id, [] );
 
 parent.update = function( id ) {
 
-  var p = parametric( (x,y) => [ x, y, logGamma( complex(x,y) ).im ], [-4.999,4.999,151], [-4.999,4.999,151],
-                      { colormap: (x,y) => phase( logGamma( complex(x,y) ) ) } );
+  var p = parametric( (x,y) => [ x, y, logGamma( complex(x,y) ) ], [-4.999,4.999,151], [-4.999,4.999,151],
+                      { complexFunction: 'im', colormap: 'complexArgument' } );
 
   var config = { type: 'threejs', zMin: -10, zMax: 10, aspectRatio: [1,1,.5] };
 
@@ -195,8 +195,8 @@ MathCell( id, [] );
 
 parent.update = function( id ) {
 
-  var p = parametric( (x,y) => [ x, y, abs( logGamma( complex(x,y) ) ) ], [-4.999,4.999,151], [-4.999,4.999,151],
-                      { colormap: (x,y) => phase( logGamma( complex(x,y) ) ) } );
+  var p = parametric( (x,y) => [ x, y, logGamma( complex(x,y) ) ], [-4.999,4.999,151], [-4.999,4.999,151],
+                      { complexFunction: 'abs', colormap: 'complexArgument' } );
 
   var config = { type: 'threejs', zMax: 8 };
 

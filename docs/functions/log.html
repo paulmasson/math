@@ -141,8 +141,8 @@ MathCell( id, [] );
 
 parent.update = function( id ) {
 
-  var p = parametric( (x,y) => [ x, y, log( complex(x,y) ).re ], [-5,5,151], [-5,5,151],
-                      { colormap: (x,y) => phase( log( complex(x,y) ) ) } );
+  var p = parametric( (x,y) => [ x, y, log( complex(x,y) ) ], [-5,5,151], [-5,5,151],
+                      { complexFunction: 're', colormap: 'complexArgument' } );
 
   var config = { type: 'threejs', zMin: -5, zMax: 5 };
 
@@ -169,8 +169,8 @@ MathCell( id, [] );
 
 parent.update = function( id ) {
 
-  var p = parametric( (x,y) => [ x, y, log( complex(x,y) ).im ], [-5,5,151], [-5,5,151],
-                      { colormap: (x,y) => phase( log( complex(x,y) ) ) } );
+  var p = parametric( (x,y) => [ x, y, log( complex(x,y) ) ], [-5,5,151], [-5,5,151],
+                      { complexFunction: 'im', colormap: 'complexArgument' } );
 
   var config = { type: 'threejs', zMin: -5, zMax: 5 };
 
@@ -197,8 +197,8 @@ MathCell( id, [] );
 
 parent.update = function( id ) {
 
-  var p = parametric( (x,y) => [ x, y, abs( log( complex(x,y) ) ) ], [-5,5,151], [-5,5,151],
-                      { colormap: (x,y) => phase( log( complex(x,y) ) ) } );
+  var p = parametric( (x,y) => [ x, y, log( complex(x,y) ) ], [-5,5,151], [-5,5,151],
+                      { complexFunction: 'abs', colormap: 'complexArgument' } );
 
   var config = { type: 'threejs', zMax: 8 };
 

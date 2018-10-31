@@ -141,8 +141,8 @@ MathCell( id, [] );
 
 parent.update = function( id ) {
 
-  var p = parametric( (x,y) => [ x, y, arccosh( complex(x,y) ).re ], [-5,5,150], [-5,5,150],
-                      { colormap: (x,y) => phase( arccosh( complex(x,y) ) ) } );
+  var p = parametric( (x,y) => [ x, y, arccosh( complex(x,y) ) ], [-5,5,150], [-5,5,150],
+                      { complexFunction: 're', colormap: 'complexArgument' } );
 
   var config = { type: 'threejs' };
 
@@ -169,8 +169,8 @@ MathCell( id, [] );
 
 parent.update = function( id ) {
 
-  var p = parametric( (x,y) => [ x, y, arccosh( complex(x,y) ).im ], [-5,5,150], [-5,5,150],
-                      { colormap: (x,y) => phase( arccosh( complex(x,y) ) ) } );
+  var p = parametric( (x,y) => [ x, y, arccosh( complex(x,y) ) ], [-5,5,150], [-5,5,150],
+                      { complexFunction: 'im', colormap: 'complexArgument' } );
 
   var config = { type: 'threejs' };
 
@@ -197,8 +197,8 @@ MathCell( id, [] );
 
 parent.update = function( id ) {
 
-  var p = parametric( (x,y) => [ x, y, abs( arccosh( complex(x,y) ) ) ], [-5,5,150], [-5,5,150],
-                      { colormap: (x,y) => phase( arccosh( complex(x,y) ) ) } );
+  var p = parametric( (x,y) => [ x, y, arccosh( complex(x,y) ) ], [-5,5,150], [-5,5,150],
+                      { complexFunction: 'abs', colormap: 'complexArgument' } );
 
   var config = { type: 'threejs' };
 

@@ -156,8 +156,8 @@ parent.update = function( id ) {
 
   var n = +document.getElementById( id + 'n' ).value;
 
-  var p = parametric( (x,y) => [ x, y, hankel2( n, complex(x,y) ).re ], [-8,8,101], [-8,8,101],
-                      { colormap: (x,y) => phase( hankel2( n, complex(x,y) ) ) } );
+  var p = parametric( (x,y) => [ x, y, hankel2( n, complex(x,y) ) ], [-8,8,101], [-8,8,101],
+                      { complexFunction: 're', colormap: 'complexArgument' } );
 
   var config = { type: 'threejs', zMin: -5, zMax: 5 };
 
@@ -187,8 +187,8 @@ parent.update = function( id ) {
 
   var n = +document.getElementById( id + 'n' ).value;
 
-  var p = parametric( (x,y) => [ x, y, hankel2( n, complex(x,y) ).im ], [-8,8,101], [-8,8,101],
-                      { colormap: (x,y) => phase( hankel2( n, complex(x,y) ) ) } );
+  var p = parametric( (x,y) => [ x, y, hankel2( n, complex(x,y) ) ], [-8,8,101], [-8,8,101],
+                      { complexFunction: 'im', colormap: 'complexArgument' } );
 
   var config = { type: 'threejs', zMin: -5, zMax: 5 };
 
@@ -218,8 +218,8 @@ parent.update = function( id ) {
 
   var n = +document.getElementById( id + 'n' ).value;
 
-  var p = parametric( (x,y) => [ x, y, abs( hankel2( n, complex(x,y) ) ) ], [-8,8,101], [-8,8,101],
-                      { colormap: (x,y) => phase( hankel2( n, complex(x,y) ) ) } );
+  var p = parametric( (x,y) => [ x, y, hankel2( n, complex(x,y) ) ], [-8,8,101], [-8,8,101],
+                      { complexFunction: 'abs', colormap: 'complexArgument' } );
 
   var config = { type: 'threejs', zMax: 8 };
 
