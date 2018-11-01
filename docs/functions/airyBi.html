@@ -36,7 +36,7 @@ parent.update = function( id ) {
 
   var p = plot( x => airyBi(x), [-10,10] );
 
-  var config = { type: 'svg', yMax: 10 };
+  var config = { type: 'svg', yMax: 5 };
 
   evaluate( id, [ p ], config );
 
@@ -142,7 +142,7 @@ MathCell( id, [] );
 
 parent.update = function( id ) {
 
-  var p = parametric( (x,y) => [ x, y, airyBi( complex(x,y) ) ], [-8,8,201], [-8,8,201],
+  var p = parametric( (x,y) => [ x, y, airyBi( complex(x,y) ) ], [-5,5,201], [-5,5,201],
                       { complexFunction: 're', colormap: 'complexArgument' } );
 
   var config = { type: 'threejs', zMin: -5, zMax: 5 };
@@ -170,7 +170,7 @@ MathCell( id, [] );
 
 parent.update = function( id ) {
 
-  var p = parametric( (x,y) => [ x, y, airyBi( complex(x,y) ) ], [-8,8,201], [-8,8,201],
+  var p = parametric( (x,y) => [ x, y, airyBi( complex(x,y) ) ], [-5,5,201], [-5,5,201],
                       { complexFunction: 'im', colormap: 'complexArgument' } );
 
   var config = { type: 'threejs', zMin: -5, zMax: 5 };
@@ -198,7 +198,7 @@ MathCell( id, [] );
 
 parent.update = function( id ) {
 
-  var p = parametric( (x,y) => [ x, y, airyBi( complex(x,y) ) ], [-8,8,201], [-8,8,201],
+  var p = parametric( (x,y) => [ x, y, airyBi( complex(x,y) ) ], [-5,5,201], [-5,5,201],
                       { complexFunction: 'abs', colormap: 'complexArgument' } );
 
   var config = { type: 'threejs', zMax: 8 };
