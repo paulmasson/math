@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>airyAi &mdash; Math</title>
+<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+
+<body>
+
+<script src="../../build/math.js"></script>
+<script src="../../../mathcell/build/mathcell.js"></script>
+
+<script src="https://cdn.rawgit.com/mathjax/MathJax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
+
+<p class="function"> airyAi( <i>z</i> ) </p>
+
+<p>The Airy function of the first kind of <i>z</i> in Math. A solution of the differential equation</p>
+
+\[ \frac{d^2 f}{dz^2} - z f = 0 \]
+
+<p>The second linearly independent solution of this equation is <a href="airyBi.html">airyBi</a>.</p>
+
+<p>Real part on the real axis:</p>
+
+<div class="mathcell" style="height: 4in">
+<script>
+
+var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [] );
+
+parent.update = function( id ) {
+
+  var p = plot( x => airyAi(x), [-10,10] );
+
+  var config = { type: 'svg' };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Imaginary part on the real axis:</p>
+
+<div class="mathcell" style="height: 4in">
+<script>
+
+var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [] );
+
+parent.update = function( id ) {
+
+  var p = plot( x => airyAi( complex(x) ).im, [-10,10] );
+
+  var config = { type: 'svg' };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Real part on the imaginary axis:</p>
+
+<div class="mathcell" style="height: 4in">
+<script>
+
+var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [] );
+
+parent.update = function( id ) {
+
+  var p = plot( x => airyAi( complex(0,x) ).re, [-10,10] );
+
+  var config = { type: 'svg', yMin: -10, yMax: 10 };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Imaginary part on the imaginary axis:</p>
+
+<div class="mathcell" style="height: 4in">
+<script>
+
+var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [] );
+
+parent.update = function( id ) {
+
+  var p = plot( x => airyAi( complex(0,x) ).im, [-10,10] );
+
+  var config = { type: 'svg', yMin: -10, yMax: 10 };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Real part on the complex plane:</p>
+
+<div class="mathcell" style="width: 6in; height: 6in">
+<script>
+
+var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [] );
+
+parent.update = function( id ) {
+
+  var p = parametric( (x,y) => [ x, y, airyAi( complex(x,y) ) ], [-8,8,201], [-8,8,201],
+                      { complexFunction: 're', colormap: 'complexArgument' } );
+
+  var config = { type: 'threejs', zMin: -5, zMax: 5 };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Imaginary part on the complex plane:</p>
+
+<div class="mathcell" style="width: 6in; height: 6in">
+<script>
+
+var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [] );
+
+parent.update = function( id ) {
+
+  var p = parametric( (x,y) => [ x, y, airyAi( complex(x,y) ) ], [-8,8,201], [-8,8,201],
+                      { complexFunction: 'im', colormap: 'complexArgument' } );
+
+  var config = { type: 'threejs', zMin: -5, zMax: 5 };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Absolute value on the complex plane:</p>
+
+<div class="mathcell" style="width: 6in; height: 6in">
+<script>
+
+var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [] );
+
+parent.update = function( id ) {
+
+  var p = parametric( (x,y) => [ x, y, airyAi( complex(x,y) ) ], [-8,8,201], [-8,8,201],
+                      { complexFunction: 'abs', colormap: 'complexArgument' } );
+
+  var config = { type: 'threejs', zMax: 8 };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Related functions: &nbsp; <a href="airyBi.html">airyBi</a></p>
+
+<p>Function category: <a href="../functions.html#zeta">Bessel functions</a></p>
+
+</body>
+</html>
