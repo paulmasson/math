@@ -142,7 +142,7 @@ MathCell( id, [] );
 
 parent.update = function( id ) {
 
-  var p = parametric( (x,y) => [ x, y, airyAi( complex(x,y) ) ], [-8,8,201], [-8,8,201],
+  var p = parametric( (x,y) => [ x, y, airyAi( complex(x,y) ) ], [-5,5,201], [-5,5,201],
                       { complexFunction: 're', colormap: 'complexArgument' } );
 
   var config = { type: 'threejs', zMin: -5, zMax: 5 };
@@ -170,7 +170,7 @@ MathCell( id, [] );
 
 parent.update = function( id ) {
 
-  var p = parametric( (x,y) => [ x, y, airyAi( complex(x,y) ) ], [-8,8,201], [-8,8,201],
+  var p = parametric( (x,y) => [ x, y, airyAi( complex(x,y) ) ], [-5,5,201], [-5,5,201],
                       { complexFunction: 'im', colormap: 'complexArgument' } );
 
   var config = { type: 'threejs', zMin: -5, zMax: 5 };
@@ -198,7 +198,7 @@ MathCell( id, [] );
 
 parent.update = function( id ) {
 
-  var p = parametric( (x,y) => [ x, y, airyAi( complex(x,y) ) ], [-8,8,201], [-8,8,201],
+  var p = parametric( (x,y) => [ x, y, airyAi( complex(x,y) ) ], [-5,5,201], [-5,5,201],
                       { complexFunction: 'abs', colormap: 'complexArgument' } );
 
   var config = { type: 'threejs', zMax: 8 };
