@@ -40,7 +40,7 @@ function lambertW( k, x ) {
     k = 0;
   }
 
-  if ( Math.abs( x + Math.exp(-1) ) < 1e-10 ) return -1;
+  if ( Math.abs( x + Math.exp(-1) ) < 1e-16 ) return -1;
 
   // inversion by root finding
 
