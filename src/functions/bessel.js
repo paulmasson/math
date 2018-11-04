@@ -3,8 +3,8 @@ function besselJ( n, x ) {
 
   if ( isComplex(n) || isComplex(x) ) {
 
-    if ( !isComplex(n) ) n = complex(n,0);
-    if ( !isComplex(x) ) x = complex(x,0);
+    if ( !isComplex(n) ) n = complex(n);
+    if ( !isComplex(x) ) x = complex(x);
 
     if ( Number.isInteger(n.re) && n.re < 0 && n.im === 0 )
       return mul( pow(-1,n), besselJ( mul(-1,n), x ) );
@@ -29,8 +29,8 @@ function besselY( n, x ) {
 
   if ( isComplex(n) || isComplex(x) ) {
 
-    if ( !isComplex(n) ) n = complex(n,0);
-    if ( !isComplex(x) ) x = complex(x,0);
+    if ( !isComplex(n) ) n = complex(n);
+    if ( !isComplex(x) ) x = complex(x);
 
     if ( Number.isInteger(n.re) && n.im === 0 )
       return div( add( besselY( n.re + delta, x ), besselY( n.re - delta, x ) ), 2 );
@@ -53,8 +53,8 @@ function besselI( n, x ) {
 
   if ( isComplex(n) || isComplex(x) ) {
 
-    if ( !isComplex(n) ) n = complex(n,0);
-    if ( !isComplex(x) ) x = complex(x,0);
+    if ( !isComplex(n) ) n = complex(n);
+    if ( !isComplex(x) ) x = complex(x);
 
     if ( Number.isInteger(n.re) && n.re < 0 && n.im === 0 )
       return besselI( mul(-1,n), x );
@@ -81,8 +81,8 @@ function besselK( n, x ) {
 
   if ( isComplex(n) || isComplex(x) ) {
 
-    if ( !isComplex(n) ) n = complex(n,0);
-    if ( !isComplex(x) ) x = complex(x,0);
+    if ( !isComplex(n) ) n = complex(n);
+    if ( !isComplex(x) ) x = complex(x);
 
     // asymptotic form as per Johansson
     if ( abs(x) > useAsymptotic ) {

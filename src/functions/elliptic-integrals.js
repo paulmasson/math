@@ -5,8 +5,8 @@ function carlsonRC( x, y ) {
 
   if ( x < 0 || y < 0 || isComplex(x) || isComplex(y) ) {
 
-    if ( !isComplex(x) ) x = complex(x,0);
-    if ( !isComplex(y) ) y = complex(y,0);
+    if ( !isComplex(x) ) x = complex(x);
+    if ( !isComplex(y) ) y = complex(y);
 
     if ( x.re === y.re && x.im === y.im ) return inv( sqrt(x) );
 
@@ -247,7 +247,7 @@ function ellipticF( x, m ) {
 
   if ( isComplex(x) || isComplex(m) ) {
 
-    if ( !isComplex(x) ) x = complex(x,0);
+    if ( !isComplex(x) ) x = complex(x);
 
     var period = complex(0);
     if ( Math.abs(x.re) > pi / 2 ) {
@@ -290,7 +290,7 @@ function ellipticE( x, m ) {
 
   if ( isComplex(x) || isComplex(m) ) {
 
-    if ( !isComplex(x) ) x = complex(x,0);
+    if ( !isComplex(x) ) x = complex(x);
 
     var period = complex(0);
     if ( Math.abs(x.re) > pi / 2 ) {
@@ -331,7 +331,7 @@ function ellipticPi( n, x, m ) {
 
   if ( isComplex(n) || isComplex(x) || isComplex(m) ) {
 
-    if ( !isComplex(x) ) x = complex(x,0);
+    if ( !isComplex(x) ) x = complex(x);
 
     var period = complex(0);
     if ( Math.abs(x.re) > pi / 2 ) {

@@ -57,8 +57,8 @@ function add( x, y ) {
 
   if ( isComplex(x) || isComplex(y) ) {
 
-    if ( !isComplex(x) ) x = complex(x,0);
-    if ( !isComplex(y) ) y = complex(y,0);
+    if ( !isComplex(x) ) x = complex(x);
+    if ( !isComplex(y) ) y = complex(y);
 
     return { re: x.re + y.re, im: x.im + y.im };
 
@@ -72,8 +72,8 @@ function sub( x, y ) {
 
   if ( isComplex(x) || isComplex(y) ) {
 
-    if ( !isComplex(x) ) x = complex(x,0);
-    if ( !isComplex(y) ) y = complex(y,0);
+    if ( !isComplex(x) ) x = complex(x);
+    if ( !isComplex(y) ) y = complex(y);
 
     return { re: x.re - y.re, im: x.im - y.im };
 
@@ -95,8 +95,8 @@ function mul( x, y ) {
 
   if ( isComplex(x) || isComplex(y) ) {
 
-    if ( !isComplex(x) ) x = complex(x,0);
-    if ( !isComplex(y) ) y = complex(y,0);
+    if ( !isComplex(x) ) x = complex(x);
+    if ( !isComplex(y) ) y = complex(y);
 
     return { re: x.re * y.re - x.im * y.im,
              im: x.im * y.re + x.re * y.im };
@@ -115,8 +115,8 @@ function div( x, y ) {
 
   if ( isComplex(x) || isComplex(y) ) {
 
-    if ( !isComplex(x) ) x = complex(x,0);
-    if ( !isComplex(y) ) y = complex(y,0);
+    if ( !isComplex(x) ) x = complex(x);
+    if ( !isComplex(y) ) y = complex(y);
 
     if ( Math.abs(y.re) < Math.abs(y.im) ) {
 
@@ -144,8 +144,8 @@ function pow( x, y ) {
 
   if ( isComplex(x) || isComplex(y) ) {
 
-    if ( !isComplex(x) ) x = complex(x,0);
-    if ( !isComplex(y) ) y = complex(y,0);
+    if ( !isComplex(x) ) x = complex(x);
+    if ( !isComplex(y) ) y = complex(y);
 
     if ( x.re === 0 && x.im === 0 && y.re > 0 )
       return complex(0);
@@ -195,8 +195,8 @@ function besselJ( n, x ) {
 
   if ( isComplex(n) || isComplex(x) ) {
 
-    if ( !isComplex(n) ) n = complex(n,0);
-    if ( !isComplex(x) ) x = complex(x,0);
+    if ( !isComplex(n) ) n = complex(n);
+    if ( !isComplex(x) ) x = complex(x);
 
     if ( Number.isInteger(n.re) && n.re < 0 && n.im === 0 )
       return mul( pow(-1,n), besselJ( mul(-1,n), x ) );
@@ -221,8 +221,8 @@ function besselY( n, x ) {
 
   if ( isComplex(n) || isComplex(x) ) {
 
-    if ( !isComplex(n) ) n = complex(n,0);
-    if ( !isComplex(x) ) x = complex(x,0);
+    if ( !isComplex(n) ) n = complex(n);
+    if ( !isComplex(x) ) x = complex(x);
 
     if ( Number.isInteger(n.re) && n.im === 0 )
       return div( add( besselY( n.re + delta, x ), besselY( n.re - delta, x ) ), 2 );
@@ -245,8 +245,8 @@ function besselI( n, x ) {
 
   if ( isComplex(n) || isComplex(x) ) {
 
-    if ( !isComplex(n) ) n = complex(n,0);
-    if ( !isComplex(x) ) x = complex(x,0);
+    if ( !isComplex(n) ) n = complex(n);
+    if ( !isComplex(x) ) x = complex(x);
 
     if ( Number.isInteger(n.re) && n.re < 0 && n.im === 0 )
       return besselI( mul(-1,n), x );
@@ -273,8 +273,8 @@ function besselK( n, x ) {
 
   if ( isComplex(n) || isComplex(x) ) {
 
-    if ( !isComplex(n) ) n = complex(n,0);
-    if ( !isComplex(x) ) x = complex(x,0);
+    if ( !isComplex(n) ) n = complex(n);
+    if ( !isComplex(x) ) x = complex(x);
 
     // asymptotic form as per Johansson
     if ( abs(x) > useAsymptotic ) {
@@ -536,8 +536,8 @@ function carlsonRC( x, y ) {
 
   if ( x < 0 || y < 0 || isComplex(x) || isComplex(y) ) {
 
-    if ( !isComplex(x) ) x = complex(x,0);
-    if ( !isComplex(y) ) y = complex(y,0);
+    if ( !isComplex(x) ) x = complex(x);
+    if ( !isComplex(y) ) y = complex(y);
 
     if ( x.re === y.re && x.im === y.im ) return inv( sqrt(x) );
 
@@ -778,7 +778,7 @@ function ellipticF( x, m ) {
 
   if ( isComplex(x) || isComplex(m) ) {
 
-    if ( !isComplex(x) ) x = complex(x,0);
+    if ( !isComplex(x) ) x = complex(x);
 
     var period = complex(0);
     if ( Math.abs(x.re) > pi / 2 ) {
@@ -821,7 +821,7 @@ function ellipticE( x, m ) {
 
   if ( isComplex(x) || isComplex(m) ) {
 
-    if ( !isComplex(x) ) x = complex(x,0);
+    if ( !isComplex(x) ) x = complex(x);
 
     var period = complex(0);
     if ( Math.abs(x.re) > pi / 2 ) {
@@ -862,7 +862,7 @@ function ellipticPi( n, x, m ) {
 
   if ( isComplex(n) || isComplex(x) || isComplex(m) ) {
 
-    if ( !isComplex(x) ) x = complex(x,0);
+    if ( !isComplex(x) ) x = complex(x);
 
     var period = complex(0);
     if ( Math.abs(x.re) > pi / 2 ) {
@@ -1009,8 +1009,8 @@ function hypergeometric0F1( a, x, tolerance=1e-10 ) {
 
   if ( isComplex(a) || isComplex(x) ) {
 
-    if ( !isComplex(a) ) a = complex(a,0);
-    if ( !isComplex(x) ) x = complex(x,0);
+    if ( !isComplex(a) ) a = complex(a);
+    if ( !isComplex(x) ) x = complex(x);
 
     if ( Number.isInteger(a.re) && a.re <= 0 && a.im === 0 )
       throw 'Hypergeometric function pole';
@@ -1078,9 +1078,9 @@ function hypergeometric1F1( a, b, x, tolerance=1e-10 ) {
 
   if ( isComplex(a) || isComplex(b) || isComplex(x) ) {
 
-    if ( !isComplex(a) ) a = complex(a,0);
-    if ( !isComplex(b) ) b = complex(b,0);
-    if ( !isComplex(x) ) x = complex(x,0);
+    if ( !isComplex(a) ) a = complex(a);
+    if ( !isComplex(b) ) b = complex(b);
+    if ( !isComplex(x) ) x = complex(x);
 
     if ( Number.isInteger(b.re) && b.re <= 0 && b.im === 0 )
       throw 'Hypergeometric function pole';
@@ -1151,9 +1151,9 @@ function hypergeometric2F0( a, b, x, tolerance=1e-10 ) {
 
   if ( isComplex(a) || isComplex(b) || isComplex(x) ) {
 
-    if ( !isComplex(a) ) a = complex(a,0);
-    if ( !isComplex(b) ) b = complex(b,0);
-    if ( !isComplex(x) ) x = complex(x,0);
+    if ( !isComplex(a) ) a = complex(a);
+    if ( !isComplex(b) ) b = complex(b);
+    if ( !isComplex(x) ) x = complex(x);
 
     var s = complex(1);
     var p = complex(1), pLast = p;
@@ -1215,10 +1215,10 @@ function hypergeometric2F1( a, b, c, x, tolerance=1e-10 ) {
 
   if ( isComplex(a) || isComplex(b) || isComplex(c) || isComplex(x) ) {
 
-    if ( !isComplex(a) ) a = complex(a,0);
-    if ( !isComplex(b) ) b = complex(b,0);
-    if ( !isComplex(c) ) c = complex(c,0);
-    if ( !isComplex(x) ) x = complex(x,0);
+    if ( !isComplex(a) ) a = complex(a);
+    if ( !isComplex(b) ) b = complex(b);
+    if ( !isComplex(c) ) c = complex(c);
+    if ( !isComplex(x) ) x = complex(x);
 
     if ( Number.isInteger(c.re) && c.re <= 0 && c.im === 0 )
       throw 'Hypergeometric function pole';

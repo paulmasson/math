@@ -5,8 +5,8 @@ function hypergeometric0F1( a, x, tolerance=1e-10 ) {
 
   if ( isComplex(a) || isComplex(x) ) {
 
-    if ( !isComplex(a) ) a = complex(a,0);
-    if ( !isComplex(x) ) x = complex(x,0);
+    if ( !isComplex(a) ) a = complex(a);
+    if ( !isComplex(x) ) x = complex(x);
 
     if ( Number.isInteger(a.re) && a.re <= 0 && a.im === 0 )
       throw 'Hypergeometric function pole';
@@ -74,9 +74,9 @@ function hypergeometric1F1( a, b, x, tolerance=1e-10 ) {
 
   if ( isComplex(a) || isComplex(b) || isComplex(x) ) {
 
-    if ( !isComplex(a) ) a = complex(a,0);
-    if ( !isComplex(b) ) b = complex(b,0);
-    if ( !isComplex(x) ) x = complex(x,0);
+    if ( !isComplex(a) ) a = complex(a);
+    if ( !isComplex(b) ) b = complex(b);
+    if ( !isComplex(x) ) x = complex(x);
 
     if ( Number.isInteger(b.re) && b.re <= 0 && b.im === 0 )
       throw 'Hypergeometric function pole';
@@ -147,9 +147,9 @@ function hypergeometric2F0( a, b, x, tolerance=1e-10 ) {
 
   if ( isComplex(a) || isComplex(b) || isComplex(x) ) {
 
-    if ( !isComplex(a) ) a = complex(a,0);
-    if ( !isComplex(b) ) b = complex(b,0);
-    if ( !isComplex(x) ) x = complex(x,0);
+    if ( !isComplex(a) ) a = complex(a);
+    if ( !isComplex(b) ) b = complex(b);
+    if ( !isComplex(x) ) x = complex(x);
 
     var s = complex(1);
     var p = complex(1), pLast = p;
@@ -211,10 +211,10 @@ function hypergeometric2F1( a, b, c, x, tolerance=1e-10 ) {
 
   if ( isComplex(a) || isComplex(b) || isComplex(c) || isComplex(x) ) {
 
-    if ( !isComplex(a) ) a = complex(a,0);
-    if ( !isComplex(b) ) b = complex(b,0);
-    if ( !isComplex(c) ) c = complex(c,0);
-    if ( !isComplex(x) ) x = complex(x,0);
+    if ( !isComplex(a) ) a = complex(a);
+    if ( !isComplex(b) ) b = complex(b);
+    if ( !isComplex(c) ) c = complex(c);
+    if ( !isComplex(x) ) x = complex(x);
 
     if ( Number.isInteger(c.re) && c.re <= 0 && c.im === 0 )
       throw 'Hypergeometric function pole';

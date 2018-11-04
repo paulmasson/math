@@ -54,8 +54,8 @@ function add( x, y ) {
 
   if ( isComplex(x) || isComplex(y) ) {
 
-    if ( !isComplex(x) ) x = complex(x,0);
-    if ( !isComplex(y) ) y = complex(y,0);
+    if ( !isComplex(x) ) x = complex(x);
+    if ( !isComplex(y) ) y = complex(y);
 
     return { re: x.re + y.re, im: x.im + y.im };
 
@@ -69,8 +69,8 @@ function sub( x, y ) {
 
   if ( isComplex(x) || isComplex(y) ) {
 
-    if ( !isComplex(x) ) x = complex(x,0);
-    if ( !isComplex(y) ) y = complex(y,0);
+    if ( !isComplex(x) ) x = complex(x);
+    if ( !isComplex(y) ) y = complex(y);
 
     return { re: x.re - y.re, im: x.im - y.im };
 
@@ -92,8 +92,8 @@ function mul( x, y ) {
 
   if ( isComplex(x) || isComplex(y) ) {
 
-    if ( !isComplex(x) ) x = complex(x,0);
-    if ( !isComplex(y) ) y = complex(y,0);
+    if ( !isComplex(x) ) x = complex(x);
+    if ( !isComplex(y) ) y = complex(y);
 
     return { re: x.re * y.re - x.im * y.im,
              im: x.im * y.re + x.re * y.im };
@@ -112,8 +112,8 @@ function div( x, y ) {
 
   if ( isComplex(x) || isComplex(y) ) {
 
-    if ( !isComplex(x) ) x = complex(x,0);
-    if ( !isComplex(y) ) y = complex(y,0);
+    if ( !isComplex(x) ) x = complex(x);
+    if ( !isComplex(y) ) y = complex(y);
 
     if ( Math.abs(y.re) < Math.abs(y.im) ) {
 
@@ -141,8 +141,8 @@ function pow( x, y ) {
 
   if ( isComplex(x) || isComplex(y) ) {
 
-    if ( !isComplex(x) ) x = complex(x,0);
-    if ( !isComplex(y) ) y = complex(y,0);
+    if ( !isComplex(x) ) x = complex(x);
+    if ( !isComplex(y) ) y = complex(y);
 
     if ( x.re === 0 && x.im === 0 && y.re > 0 )
       return complex(0);
