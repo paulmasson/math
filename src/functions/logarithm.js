@@ -15,10 +15,9 @@ function log( x, base ) {
 
   if ( isComplex(x) ) {
 
-    var r = sqrt( x.re * x.re + x.im * x.im );
-    var phi = Math.atan2( x.im, x.re );
+    if ( isComplex(base) ) return div( log(x), log(base) );
 
-    return { re: log(r,base), im: log(Math.E,base) * phi };
+    return { re: log( abs(x), base ), im: log( Math.E, base ) * arg(x) };
 
   }
 
