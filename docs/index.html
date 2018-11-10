@@ -78,27 +78,17 @@
 
 <script>
 
+// iOS not scrolling to hash on first load
 var c = document.getElementById( 'content' );
-window.addEventListener( 'hashchange', c.contentWindow.onhashchange );
 
-function iPadNavigationFix() {
+c.onload = function() {
 
-  if ( /(iPad|iPhone|iPod)/g.test( navigator.userAgent ) ) {
-
-    c.contentWindow.onhashchange = function() {
-      if ( c.src !== c.contentWindow.location.href ) {
-        window.scrollTo(0,0);
-        c.src = c.contentWindow.location.href;
-      }
-    }
-
-    c.contentWindow.onhashchange();
-
+  if ( /(iPad|iPhone|iPod)/g.test( navigator.userAgent ) && c.contentWindow.location.hash ) {
+    window.scrollTo(0,0);
+    c.src = c.contentWindow.location.href;
   }
 
 }
-
-c.onload = iPadNavigationFix;
 
 </script>
 
