@@ -1,5 +1,5 @@
 
-function jacobiTheta( n, x, q ) {
+function jacobiTheta( n, x, q, tolerance=1e-10 ) {
 
   if ( abs(q) >= 1 ) throw 'Unsupported elliptic nome';
 
@@ -10,14 +10,30 @@ function jacobiTheta( n, x, q ) {
       if ( q < 0 || isComplex(x) || isComplex(q) ) {
 
         var s = complex(0);
-        for ( var i = 0 ; i < 100 ; i++ )
-          s = add( s, mul( (-1)**i, pow( q, i*i+i ), sin( mul(2*i+1,x) ) ) );
+        var p = complex(1);
+        i = 0;
+
+        while ( Math.abs(p.re) > tolerance * Math.abs(s.re)
+              || Math.abs(p.im) > tolerance * Math.abs(s.im) ) {
+          p = mul( (-1)**i, pow( q, i*i+i ), sin( mul(2*i+1,x) ) );
+          s = add( s, p );
+          i++;
+        }
+
         return mul( 2, pow( q, 1/4 ), s );
 
       }
 
       var s = 0;
-      for ( var i = 0 ; i < 100 ; i++ ) s += (-1)**i * q**(i*i+i) * sin( (2*i+1) * x );
+      var p = 1;
+      var i = 0;
+
+      while ( Math.abs(p) > tolerance * Math.abs(s) ) {
+        p = (-1)**i * q**(i*i+i) * sin( (2*i+1) * x );
+        s += p;
+        i++;
+      }
+
       return 2 * q**(1/4) * s;
 
     case 2:
@@ -25,14 +41,30 @@ function jacobiTheta( n, x, q ) {
       if ( q < 0 || isComplex(x) || isComplex(q) ) {
 
         var s = complex(0);
-        for ( var i = 0 ; i < 100 ; i++ )
-          s = add( s, mul( pow( q, i*i+i ), cos( mul(2*i+1,x) ) ) );
+        var p = complex(1);
+        i = 0;
+
+        while ( Math.abs(p.re) > tolerance * Math.abs(s.re)
+              || Math.abs(p.im) > tolerance * Math.abs(s.im) ) {
+          p = mul( pow( q, i*i+i ), cos( mul(2*i+1,x) ) );
+          s = add( s, p );
+          i++;
+        }
+
         return mul( 2, pow( q, 1/4 ), s );
 
       }
 
       var s = 0;
-      for ( var i = 0 ; i < 100 ; i++ ) s += q**(i*i+i) * cos( (2*i+1) * x );
+      var p = 1;
+      var i = 0;
+
+      while ( Math.abs(p) > tolerance * Math.abs(s) ) {
+        p = q**(i*i+i) * cos( (2*i+1) * x );
+        s += p;
+        i++;
+      }
+
       return 2 * q**(1/4) * s;
 
     case 3:
@@ -40,14 +72,30 @@ function jacobiTheta( n, x, q ) {
       if ( isComplex(x) || isComplex(q) ) {
 
         var s = complex(0);
-        for ( var i = 1 ; i < 100 ; i++ )
-          s = add( s, mul( pow( q, i*i ), cos( mul(2*i,x) ) ) );
+        var p = complex(1);
+        i = 1;
+
+        while ( Math.abs(p.re) > tolerance * Math.abs(s.re)
+              || Math.abs(p.im) > tolerance * Math.abs(s.im) ) {
+          p = mul( pow( q, i*i ), cos( mul(2*i,x) ) );
+          s = add( s, p );
+          i++;
+        }
+
         return add( 1, mul(2,s) );
 
       }
 
       var s = 0;
-      for ( var i = 1 ; i < 100 ; i++ ) s += q**(i*i) * cos( 2*i * x );
+      var p = 1;
+      var i = 1;
+
+      while ( Math.abs(p) > tolerance * Math.abs(s) ) {
+        p = q**(i*i) * cos( 2*i * x );
+        s += p;
+        i++;
+      }
+
       return 1 + 2 * s;
 
     case 4:
@@ -55,14 +103,30 @@ function jacobiTheta( n, x, q ) {
       if ( isComplex(x) || isComplex(q) ) {
 
         var s = complex(0);
-        for ( var i = 1 ; i < 100 ; i++ )
-          s = add( s, mul( pow( neg(q), i*i ), cos( mul(2*i,x) ) ) );
+        var p = complex(1);
+        i = 1;
+
+        while ( Math.abs(p.re) > tolerance * Math.abs(s.re)
+              || Math.abs(p.im) > tolerance * Math.abs(s.im) ) {
+          p = mul( pow( neg(q), i*i ), cos( mul(2*i,x) ) );
+          s = add( s, p );
+          i++;
+        }
+
         return add( 1, mul(2,s) );
 
       }
 
       var s = 0;
-      for ( var i = 1 ; i < 100 ; i++ ) s += (-q)**(i*i) * cos( 2*i * x );
+      var p = 1;
+      var i = 1;
+
+      while ( Math.abs(p) > tolerance * Math.abs(s) ) {
+        p = (-q)**(i*i) * cos( 2*i * x );
+        s += p;
+        i++;
+      }
+
       return 1 + 2 * s;
 
     default:
