@@ -223,7 +223,30 @@ function am( x, m ) {
 
   if ( m > 1 || isComplex(x) || isComplex(m) ) {
 
-    return arctan( div( sn(x,m), cn(x,m) ) );
+    if ( !isComplex(x) ) x = complex(x);
+    if ( !isComplex(m) ) m = complex(m);
+
+    if ( m.im === 0 && m.re <= 1 ) {
+
+      var K = ellipticK( m.re );
+      var n = Math.round( x.re / 2 / K );
+      x = sub( x, 2 * n * K );
+
+      if ( m.re < 0 ) {
+
+        var Kp = ellipticK( 1 - m.re );
+        var p = Math.round( x.im / 2 / Kp.re );
+
+        // bitwise test for odd integer
+        if ( p & 1 ) return sub( n * pi, arcsin( sn(x,m) ) );
+
+      }
+
+      return add( arcsin( sn(x,m) ), n * pi );
+
+    }
+
+    return arcsin( sn(x,m) );
 
   } else {
 
@@ -231,7 +254,6 @@ function am( x, m ) {
     var n = Math.round( x / 2 / K );
     x = x - 2 * n * K;
 
-    // arcsin faster than arctan
     return Math.asin( sn(x,m) ) + n * pi;
 
   }
