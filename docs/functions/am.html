@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>am &mdash; Math</title>
+<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+
+<body>
+
+<script src="../../build/math.js"></script>
+<script src="../../../mathcell/build/mathcell.js"></script>
+
+<script src="https://cdn.jsdelivr.net/gh/mathjax/MathJax@2.7.5/MathJax.js?config=TeX-AMS_HTML"></script>
+
+<p class="function"> am( <i>z</i>, <i>m</i> ) </p>
+
+<p>The Jacobi amplitude function of <i>z</i> and parameter <i>m</i> in SageMath. Defined as the inverse of the incomplete elliptic integral of the first kind:</p>
+
+\[ u = \int_0^\phi \frac{ d \theta }{ \sqrt{ 1 - m \sin^2 \theta } } \qquad \rightarrow \qquad \operatorname{am}( u | m ) = \phi \]
+
+<p>Note that all Jacobi elliptic functions in Math use the parameter rather than the elliptic modulus <i>k</i>, which is related to the parameter by \( m = k^2 \).</p>
+
+<p>Real part on the real axis:</p>
+
+<div class="mathcell" style="height: 4.5in">
+<script>
+
+var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [ { type: 'slider', min: -10, max: 10, default: 0,
+                                  label: 'm', name: 'm' } ] );
+
+parent.update = function( id ) {
+
+  var m = +document.getElementById( id + 'm' ).value;
+
+  var p = plot( x => am( complex(x), m ).re, [-5,5] );
+
+  var config = { type: 'svg' };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Imaginary part on the real axis is zero.</p>
+
+<p>Real part on the imaginary axis is zero.</p>
+
+<p>Imaginary part on the imaginary axis:</p>
+
+<div class="mathcell" style="height: 4.5in">
+<script>
+
+var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [ { type: 'slider', min: -10, max: 10, default: 0,
+                                  label: 'm', name: 'm' } ] );
+
+parent.update = function( id ) {
+
+  var m = +document.getElementById( id + 'm' ).value;
+
+  var p = plot( x => am( complex(0,x), m ).im, [-5,5] );
+
+  var config = { type: 'svg' };
+  if ( m > 0 ) { config.yMin = -2.5; config.yMax = 2.5; }
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Real part on the complex plane:</p>
+
+<div class="mathcell" style="width: 6in; height: 6.5in">
+<script>
+
+var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [ { type: 'slider', min: -5, max: 5, default: 0,
+                                  label: 'm', name: 'm' } ] );
+
+parent.update = function( id ) {
+
+  var m = +document.getElementById( id + 'm' ).value;
+
+  var p = parametric( (x,y) => [ x, y, am( complex(x,y), m ) ], [-5,5,100], [-5,5,100],
+                      { complexFunction: 're', colormap: 'complexArgument' } );
+
+  var config = { type: 'threejs', viewpoint: [1,1,.8] };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Imaginary part on the complex plane:</p>
+
+<div class="mathcell" style="width: 6in; height: 6in">
+<script>
+
+var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [ { type: 'slider', min: -5, max: 5, default: 0,
+                                  label: 'm', name: 'm' } ] );
+
+parent.update = function( id ) {
+
+  var m = +document.getElementById( id + 'm' ).value;
+
+  var p = parametric( (x,y) => [ x, y, am( complex(x,y), m ) ], [-5,5,100], [-5,5,100],
+                      { complexFunction: 'im', colormap: 'complexArgument' } );
+
+  var config = { type: 'threejs', viewpoint: [1,1,.8] };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Absolute value on the complex plane:</p>
+
+<div class="mathcell" style="width: 6in; height: 6in">
+<script>
+
+var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [ { type: 'slider', min: -5, max: 5, default: 0,
+                                  label: 'm', name: 'm' } ] );
+
+parent.update = function( id ) {
+
+  var m = +document.getElementById( id + 'm' ).value;
+
+  var p = parametric( (x,y) => [ x, y, am( complex(x,y), m ) ], [-5,5,100], [-5,5,100],
+                      { complexFunction: 'abs', colormap: 'complexArgument' } );
+
+  var config = { type: 'threejs' };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Related functions: &nbsp; <a href="sn.html">sn</a> &nbsp; <a href="cn.html">cn</a>
+                      &nbsp; <a href="dn.html">dn</a></p>
+
+<p>Function category: <a href="../functions.html#elliptic">elliptic functions</a></p>
+
+</body>
+</html>
