@@ -3,6 +3,49 @@ function jacobiTheta( n, x, q, tolerance=1e-10 ) {
 
   if ( abs(q) >= 1 ) throw 'Unsupported elliptic nome';
 
+  var piTau = div( log(q), complex(0,1) );
+
+  var z = isComplex(x) ? x : complex(x);
+  if ( Math.abs(z.re) > Math.PI || Math.abs(z.im) > Math.abs(piTau.im) ) {
+
+    var pt = Math.round( z.im / piTau.im );
+    z = sub( z, mul( pt, piTau ) );
+
+    var p = Math.round( z.re / Math.PI );
+    z = sub( z, p * Math.PI );
+
+    if ( z.im === 0 ) z = z.re;
+    var qFactor = pt === 0 ? 1 : pow( q, -pt*pt );
+    var eFactor = pt === 0 ? 1 : exp( mul( -2 * pt, z, complex(0,1) ) );
+
+    // dlmf.nist.gov/20.2 to reduce overflow
+
+    switch( n ) {
+
+      case 1:
+
+        return mul( (-1)**(p+pt), qFactor, eFactor, jacobiTheta( 1, z, q ) );
+
+      case 2:
+
+        return mul( (-1)**p, qFactor, eFactor, jacobiTheta( 2, z, q ) );
+
+      case 3:
+
+        return mul( qFactor, eFactor, jacobiTheta( 3, z, q ) );
+
+      case 4:
+
+        return mul( (-1)**pt, qFactor, eFactor, jacobiTheta( 4, z, q ) );
+
+      default:
+
+        throw 'Undefined Jacobi theta index';
+
+    }
+
+  }
+
   switch( n ) {
 
     case 1:
