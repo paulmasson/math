@@ -3,54 +3,51 @@ function jacobiTheta( n, x, q, tolerance=1e-10 ) {
 
   if ( abs(q) >= 1 ) throw 'Unsupported elliptic nome';
 
-  var piTau = div( log(q), complex(0,1) );
+  if ( ![1,2,3,4].includes(n) ) throw 'Undefined Jacobi theta index';
 
-  var z = isComplex(x) ? x : complex(x);
-  if ( Math.abs(z.re) > Math.PI || Math.abs(z.im) > Math.abs(piTau.im) ) {
+  if ( isComplex(x) || isComplex(q) ) {
 
-    var pt = Math.round( z.im / piTau.im );
-    z = sub( z, mul( pt, piTau ) );
+    if ( !isComplex(x) ) x = complex(x);
 
-    var p = Math.round( z.re / Math.PI );
-    z = sub( z, p * Math.PI );
-
-    if ( z.im === 0 ) z = z.re;
-    var qFactor = pt === 0 ? 1 : pow( q, -pt*pt );
-    var eFactor = pt === 0 ? 1 : exp( mul( -2 * pt, z, complex(0,1) ) );
+    var piTau = div( log(q), complex(0,1) );
 
     // dlmf.nist.gov/20.2 to reduce overflow
+    if ( Math.abs(x.im) > Math.abs(piTau.im) || Math.abs(x.re) > Math.PI ) {
+
+      var pt = Math.round( x.im / piTau.im );
+      x = sub( x, mul( pt, piTau ) );
+
+      var p = Math.round( x.re / Math.PI );
+      x = sub( x, p * Math.PI );
+
+      var qFactor = pow( q, -pt*pt );
+      var eFactor = exp( mul( -2 * pt, x, complex(0,1) ) );
+
+      switch( n ) {
+
+        case 1:
+
+          return mul( (-1)**(p+pt), qFactor, eFactor, jacobiTheta( n, x, q ) );
+
+        case 2:
+
+          return mul( (-1)**p, qFactor, eFactor, jacobiTheta( n, x, q ) );
+
+        case 3:
+
+          return mul( qFactor, eFactor, jacobiTheta( n, x, q ) );
+
+        case 4:
+
+          return mul( (-1)**pt, qFactor, eFactor, jacobiTheta( n, x, q ) );
+
+      }
+
+    }
 
     switch( n ) {
 
       case 1:
-
-        return mul( (-1)**(p+pt), qFactor, eFactor, jacobiTheta( 1, z, q ) );
-
-      case 2:
-
-        return mul( (-1)**p, qFactor, eFactor, jacobiTheta( 2, z, q ) );
-
-      case 3:
-
-        return mul( qFactor, eFactor, jacobiTheta( 3, z, q ) );
-
-      case 4:
-
-        return mul( (-1)**pt, qFactor, eFactor, jacobiTheta( 4, z, q ) );
-
-      default:
-
-        throw 'Undefined Jacobi theta index';
-
-    }
-
-  }
-
-  switch( n ) {
-
-    case 1:
-
-      if ( q < 0 || isComplex(x) || isComplex(q) ) {
 
         var s = complex(0);
         var p = complex(1);
@@ -65,23 +62,7 @@ function jacobiTheta( n, x, q, tolerance=1e-10 ) {
 
         return mul( 2, pow( q, 1/4 ), s );
 
-      }
-
-      var s = 0;
-      var p = 1;
-      var i = 0;
-
-      while ( Math.abs(p) > tolerance * Math.abs(s) ) {
-        p = (-1)**i * q**(i*i+i) * sin( (2*i+1) * x );
-        s += p;
-        i++;
-      }
-
-      return 2 * q**(1/4) * s;
-
-    case 2:
-
-      if ( q < 0 || isComplex(x) || isComplex(q) ) {
+      case 2:
 
         var s = complex(0);
         var p = complex(1);
@@ -96,23 +77,7 @@ function jacobiTheta( n, x, q, tolerance=1e-10 ) {
 
         return mul( 2, pow( q, 1/4 ), s );
 
-      }
-
-      var s = 0;
-      var p = 1;
-      var i = 0;
-
-      while ( Math.abs(p) > tolerance * Math.abs(s) ) {
-        p = q**(i*i+i) * cos( (2*i+1) * x );
-        s += p;
-        i++;
-      }
-
-      return 2 * q**(1/4) * s;
-
-    case 3:
-
-      if ( isComplex(x) || isComplex(q) ) {
+      case 3:
 
         var s = complex(0);
         var p = complex(1);
@@ -127,23 +92,7 @@ function jacobiTheta( n, x, q, tolerance=1e-10 ) {
 
         return add( 1, mul(2,s) );
 
-      }
-
-      var s = 0;
-      var p = 1;
-      var i = 1;
-
-      while ( Math.abs(p) > tolerance * Math.abs(s) ) {
-        p = q**(i*i) * cos( 2*i * x );
-        s += p;
-        i++;
-      }
-
-      return 1 + 2 * s;
-
-    case 4:
-
-      if ( isComplex(x) || isComplex(q) ) {
+      case 4:
 
         var s = complex(0);
         var p = complex(1);
@@ -160,6 +109,80 @@ function jacobiTheta( n, x, q, tolerance=1e-10 ) {
 
       }
 
+  }
+
+  // dlmf.nist.gov/20.2 to reduce overflow
+  if ( Math.abs(x.re) > Math.PI ) {
+
+    var p = Math.round( x / Math.PI );
+    x = x - p * Math.PI;
+
+    switch( n ) {
+
+      case 1:
+      case 2:
+
+        return (-1)**p * jacobiTheta( n, x, q );
+
+      case 3:
+      case 4:
+
+        return jacobiTheta( n, x, q );
+
+    }
+
+  }
+
+  switch( n ) {
+
+    case 1:
+
+      if ( q < 0 ) return jacobiTheta( n, x, complex(q) );
+
+      var s = 0;
+      var p = 1;
+      var i = 0;
+
+      while ( Math.abs(p) > tolerance * Math.abs(s) ) {
+        p = (-1)**i * q**(i*i+i) * sin( (2*i+1) * x );
+        s += p;
+        i++;
+      }
+
+      return 2 * q**(1/4) * s;
+
+    case 2:
+
+      if ( q < 0 ) return jacobiTheta( n, x, complex(q) );
+
+      var s = 0;
+      var p = 1;
+      var i = 0;
+
+      while ( Math.abs(p) > tolerance * Math.abs(s) ) {
+        p = q**(i*i+i) * cos( (2*i+1) * x );
+        s += p;
+        i++;
+      }
+
+      return 2 * q**(1/4) * s;
+
+    case 3:
+
+      var s = 0;
+      var p = 1;
+      var i = 1;
+
+      while ( Math.abs(p) > tolerance * Math.abs(s) ) {
+        p = q**(i*i) * cos( 2*i * x );
+        s += p;
+        i++;
+      }
+
+      return 1 + 2 * s;
+
+    case 4:
+
       var s = 0;
       var p = 1;
       var i = 1;
@@ -171,10 +194,6 @@ function jacobiTheta( n, x, q, tolerance=1e-10 ) {
       }
 
       return 1 + 2 * s;
-
-    default:
-
-      throw 'Undefined Jacobi theta index';
 
   }
 
