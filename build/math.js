@@ -406,7 +406,7 @@ function jacobiTheta( n, x, q, tolerance=1e-10 ) {
 
         var s = complex(0);
         var p = complex(1);
-        i = 0;
+        var i = 0;
 
         while ( Math.abs(p.re) > tolerance * Math.abs(s.re)
               || Math.abs(p.im) > tolerance * Math.abs(s.im) ) {
@@ -421,7 +421,7 @@ function jacobiTheta( n, x, q, tolerance=1e-10 ) {
 
         var s = complex(0);
         var p = complex(1);
-        i = 0;
+        var i = 0;
 
         while ( Math.abs(p.re) > tolerance * Math.abs(s.re)
               || Math.abs(p.im) > tolerance * Math.abs(s.im) ) {
@@ -436,7 +436,7 @@ function jacobiTheta( n, x, q, tolerance=1e-10 ) {
 
         var s = complex(0);
         var p = complex(1);
-        i = 1;
+        var i = 1;
 
         while ( Math.abs(p.re) > tolerance * Math.abs(s.re)
               || Math.abs(p.im) > tolerance * Math.abs(s.im) ) {
@@ -451,7 +451,7 @@ function jacobiTheta( n, x, q, tolerance=1e-10 ) {
 
         var s = complex(0);
         var p = complex(1);
-        i = 1;
+        var i = 1;
 
         while ( Math.abs(p.re) > tolerance * Math.abs(s.re)
               || Math.abs(p.im) > tolerance * Math.abs(s.im) ) {
