@@ -394,7 +394,8 @@ function jacobiTheta( n, x, q, tolerance=1e-10 ) {
 
         case 4:
 
-          return mul( (-1)**pt, qFactor, eFactor, jacobiTheta( n, x, q ) );
+          // chop to remove spurious small imaginary part
+          return mul( (-1)**pt, qFactor, eFactor, chop( jacobiTheta( n, x, q ), tolerance ) );
 
       }
 
