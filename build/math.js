@@ -378,23 +378,23 @@ function jacobiTheta( n, x, q, tolerance=1e-10 ) {
       var qFactor = pow( q, -pt*pt );
       var eFactor = exp( mul( -2 * pt, x, complex(0,1) ) );
 
+      // factors can become huge, so chop spurious parts first
       switch( n ) {
 
         case 1:
 
-          return mul( (-1)**(p+pt), qFactor, eFactor, jacobiTheta( n, x, q ) );
+          return mul( (-1)**(p+pt), qFactor, eFactor, chop( jacobiTheta( n, x, q ), tolerance ) );
 
         case 2:
 
-          return mul( (-1)**p, qFactor, eFactor, jacobiTheta( n, x, q ) );
+          return mul( (-1)**p, qFactor, eFactor, chop( jacobiTheta( n, x, q ), tolerance ) );
 
         case 3:
 
-          return mul( qFactor, eFactor, jacobiTheta( n, x, q ) );
+          return mul( qFactor, eFactor, chop( jacobiTheta( n, x, q ), tolerance ) );
 
         case 4:
 
-          // chop to remove spurious small imaginary part
           return mul( (-1)**pt, qFactor, eFactor, chop( jacobiTheta( n, x, q ), tolerance ) );
 
       }
