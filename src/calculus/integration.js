@@ -6,8 +6,8 @@ function integrate( f, interval, method='adaptive-simpson' ) {
 
   if ( isComplex(a) || isComplex(b) ) {
 
-    if ( !isComplex(a) ) a = complex(a,0);
-    if ( !isComplex(b) ) b = complex(b,0);
+    if ( !isComplex(a) ) a = complex(a);
+    if ( !isComplex(b) ) b = complex(b);
 
     function lerp( t ) { return add( mul( sub(b,a), t ), a ); }
 
