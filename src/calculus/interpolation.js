@@ -79,12 +79,24 @@ function findRoot( f, interval, options={} ) {
     case 'newton':
 
       var root = interval;
-
       var maxIter = 100;
-      for ( var i = 0; i < maxIter ; i++ ) {
-        var delta = f(root) / diff( f, root );
-        root -= delta;
-        if ( Math.abs(delta) < tolerance ) return root;
+
+      if ( isComplex(root) ) {
+
+        for ( var i = 0; i < maxIter ; i++ ) {
+          var delta = div( f(root), diff( f, root ) );
+          root = sub( root, delta );
+          if ( abs(delta) < tolerance ) return root;
+        }
+
+      } else {
+
+        for ( var i = 0; i < maxIter ; i++ ) {
+          var delta = f(root) / diff( f, root );
+          root -= delta;
+          if ( Math.abs(delta) < tolerance ) return root;
+        }
+
       }
 
       throw 'No root found for tolerance ' + tolerance;

@@ -3,7 +3,7 @@ function diff( f, x, n=1, method='ridders' ) {
 
   if ( isComplex(x) ) {
 
-    if ( !f(x).re ) throw 'Function must handle complex math';
+    if ( !isComplex(f(x)) ) throw 'Function must handle complex math';
 
     function factor( t ) { return mul( x, t ); }
 
