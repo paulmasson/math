@@ -3,6 +3,8 @@ function diff( f, x, n=1, method='ridders' ) {
 
   if ( isComplex(x) ) {
 
+    if ( !f(x).re ) throw 'Function must handle complex math';
+
     function factor( t ) { return mul( x, t ); }
 
     var real = diff( t => f( factor(t) ).re, 1, n, method );

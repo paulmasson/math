@@ -1940,6 +1940,8 @@ function diff( f, x, n=1, method='ridders' ) {
 
   if ( isComplex(x) ) {
 
+    if ( !f(x).re ) throw 'Function must handle complex math';
+
     function factor( t ) { return mul( x, t ); }
 
     var real = diff( t => f( factor(t) ).re, 1, n, method );
@@ -2028,6 +2030,8 @@ function integrate( f, interval, method='adaptive-simpson' ) {
 
     if ( !isComplex(a) ) a = complex(a);
     if ( !isComplex(b) ) b = complex(b);
+
+    if ( !f(a).re || !f(b).re ) throw 'Function must handle complex math';
 
     function lerp( t ) { return add( mul( sub(b,a), t ), a ); }
 

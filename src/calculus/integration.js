@@ -9,6 +9,8 @@ function integrate( f, interval, method='adaptive-simpson' ) {
     if ( !isComplex(a) ) a = complex(a);
     if ( !isComplex(b) ) b = complex(b);
 
+    if ( !f(a).re || !f(b).re ) throw 'Function must handle complex math';
+
     function lerp( t ) { return add( mul( sub(b,a), t ), a ); }
 
     var real = integrate( t => f( lerp(t) ).re, [0,1], method );
