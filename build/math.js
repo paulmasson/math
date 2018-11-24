@@ -1940,7 +1940,7 @@ function diff( f, x, n=1, method='ridders' ) {
 
   if ( isComplex(x) ) {
 
-    if ( !f(x).re ) throw 'Function must handle complex math';
+    if ( !isComplex(f(x)) ) throw 'Function must handle complex math';
 
     function factor( t ) { return mul( x, t ); }
 
@@ -2031,7 +2031,7 @@ function integrate( f, interval, method='adaptive-simpson' ) {
     if ( !isComplex(a) ) a = complex(a);
     if ( !isComplex(b) ) b = complex(b);
 
-    if ( !f(a).re || !f(b).re ) throw 'Function must handle complex math';
+    if ( !isComplex(f(a)) || !isComplex(f(b)) ) throw 'Function must handle complex math';
 
     function lerp( t ) { return add( mul( sub(b,a), t ), a ); }
 
@@ -2341,12 +2341,24 @@ function findRoot( f, interval, options={} ) {
     case 'newton':
 
       var root = interval;
-
       var maxIter = 100;
-      for ( var i = 0; i < maxIter ; i++ ) {
-        var delta = f(root) / diff( f, root );
-        root -= delta;
-        if ( Math.abs(delta) < tolerance ) return root;
+
+      if ( isComplex(root) ) {
+
+        for ( var i = 0; i < maxIter ; i++ ) {
+          var delta = div( f(root), diff( f, root ) );
+          root = sub( root, delta );
+          if ( abs(delta) < tolerance ) return root;
+        }
+
+      } else {
+
+        for ( var i = 0; i < maxIter ; i++ ) {
+          var delta = f(root) / diff( f, root );
+          root -= delta;
+          if ( Math.abs(delta) < tolerance ) return root;
+        }
+
       }
 
       throw 'No root found for tolerance ' + tolerance;
