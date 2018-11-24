@@ -1,6 +1,17 @@
 
 function diff( f, x, n=1, method='ridders' ) {
 
+  if ( isComplex(x) ) {
+
+    function factor( t ) { return mul( x, t ); }
+
+    var real = diff( t => f( factor(t) ).re, 1, n, method );
+    var imag = diff( t => f( factor(t) ).im, 1, n, method );
+
+    return div( complex( real, imag ), x );
+
+  }
+
   // central differences have h**2 error but division
   //   by h**n increases roundoff error
   // step sizes chosen as epsilon**(1/(n+2)) to minimize error
