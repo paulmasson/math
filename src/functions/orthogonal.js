@@ -46,3 +46,15 @@ function hermite( n, x ) {
 
 }
 
+
+function laguerre( n, a, x ) {
+
+  if ( arguments.length < 3 ) {
+    x = a;
+    a = 0
+  }
+
+  return mul( binomial( add(n,a), n ), hypergeometric1F1( neg(n), add(a,1), x ) ); 
+
+}
+
