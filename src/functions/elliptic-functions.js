@@ -54,8 +54,7 @@ function jacobiTheta( n, x, q, tolerance=1e-10 ) {
         var p = complex(1);
         var i = 0;
 
-        while ( Math.abs(p.re) > tolerance * Math.abs(s.re)
-              || Math.abs(p.im) > tolerance * Math.abs(s.im) ) {
+        while ( Math.abs(p.re) > tolerance || Math.abs(p.im) > tolerance ) {
           p = mul( (-1)**i, pow( q, i*i+i ), sin( mul(2*i+1,x) ) );
           s = add( s, p );
           i++;
@@ -69,8 +68,7 @@ function jacobiTheta( n, x, q, tolerance=1e-10 ) {
         var p = complex(1);
         var i = 0;
 
-        while ( Math.abs(p.re) > tolerance * Math.abs(s.re)
-              || Math.abs(p.im) > tolerance * Math.abs(s.im) ) {
+        while ( Math.abs(p.re) > tolerance || Math.abs(p.im) > tolerance ) {
           p = mul( pow( q, i*i+i ), cos( mul(2*i+1,x) ) );
           s = add( s, p );
           i++;
@@ -84,8 +82,7 @@ function jacobiTheta( n, x, q, tolerance=1e-10 ) {
         var p = complex(1);
         var i = 1;
 
-        while ( Math.abs(p.re) > tolerance * Math.abs(s.re)
-              || Math.abs(p.im) > tolerance * Math.abs(s.im) ) {
+        while ( Math.abs(p.re) > tolerance || Math.abs(p.im) > tolerance ) {
           p = mul( pow( q, i*i ), cos( mul(2*i,x) ) );
           s = add( s, p );
           i++;
@@ -99,8 +96,7 @@ function jacobiTheta( n, x, q, tolerance=1e-10 ) {
         var p = complex(1);
         var i = 1;
 
-        while ( Math.abs(p.re) > tolerance * Math.abs(s.re)
-              || Math.abs(p.im) > tolerance * Math.abs(s.im) ) {
+        while ( Math.abs(p.re) > tolerance || Math.abs(p.im) > tolerance ) {
           p = mul( pow( neg(q), i*i ), cos( mul(2*i,x) ) );
           s = add( s, p );
           i++;
@@ -144,7 +140,7 @@ function jacobiTheta( n, x, q, tolerance=1e-10 ) {
       var p = 1;
       var i = 0;
 
-      while ( Math.abs(p) > tolerance * Math.abs(s) ) {
+      while ( Math.abs(p) > tolerance ) {
         p = (-1)**i * q**(i*i+i) * sin( (2*i+1) * x );
         s += p;
         i++;
@@ -160,7 +156,7 @@ function jacobiTheta( n, x, q, tolerance=1e-10 ) {
       var p = 1;
       var i = 0;
 
-      while ( Math.abs(p) > tolerance * Math.abs(s) ) {
+      while ( Math.abs(p) > tolerance ) {
         p = q**(i*i+i) * cos( (2*i+1) * x );
         s += p;
         i++;
@@ -174,7 +170,7 @@ function jacobiTheta( n, x, q, tolerance=1e-10 ) {
       var p = 1;
       var i = 1;
 
-      while ( Math.abs(p) > tolerance * Math.abs(s) ) {
+      while ( Math.abs(p) > tolerance ) {
         p = q**(i*i) * cos( 2*i * x );
         s += p;
         i++;
@@ -188,7 +184,7 @@ function jacobiTheta( n, x, q, tolerance=1e-10 ) {
       var p = 1;
       var i = 1;
 
-      while ( Math.abs(p) > tolerance * Math.abs(s) ) {
+      while ( Math.abs(p) > tolerance ) {
         p = (-q)**(i*i) * cos( 2*i * x );
         s += p;
         i++;
