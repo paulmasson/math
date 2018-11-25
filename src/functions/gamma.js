@@ -9,6 +9,8 @@ function factorial( n ) {
 
   }
 
+  if ( isComplex(n) ) return gamma( add(n,1) );
+
   return gamma( n+1 );
 
 }
@@ -18,6 +20,9 @@ function binomial( n, m ) {
   if ( Number.isInteger(m) && m < 0 && n >= 0 ) return 0;
 
   if ( Number.isInteger(n) && Number.isInteger(m) && n >= 0 && m > n ) return 0;
+
+  if ( isComplex(n) || isComplex(m) )
+    return div( factorial(n), mul( factorial( sub(n,m) ), factorial(m) ) );
 
   return factorial(n) / factorial(n-m) / factorial(m);
 
