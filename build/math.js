@@ -1186,8 +1186,7 @@ function hypergeometric0F1( a, x, tolerance=1e-10 ) {
     var p = complex(1);
     var i = 1;
 
-    while ( Math.abs(p.re) > tolerance * Math.abs(s.re)
-            || Math.abs(p.im) > tolerance * Math.abs(s.im) ) {
+    while ( Math.abs(p.re) > tolerance || Math.abs(p.im) > tolerance ) {
       p = mul( p, div( div( x, a ), i ) );
       s = add( s, p );
       a = add( a, 1 );
@@ -1207,7 +1206,7 @@ function hypergeometric0F1( a, x, tolerance=1e-10 ) {
     var p = 1;
     var i = 1;
 
-    while ( Math.abs(p) > tolerance * Math.abs(s) ) {
+    while ( Math.abs(p) > tolerance ) {
       p *= x / a / i;
       s += p;
       a++;
@@ -1254,8 +1253,7 @@ function hypergeometric1F1( a, b, x, tolerance=1e-10 ) {
     var p = complex(1);
     var i = 1;
 
-    while ( Math.abs(p.re) > tolerance * Math.abs(s.re)
-            || Math.abs(p.im) > tolerance * Math.abs(s.im) ) {
+    while ( Math.abs(p.re) > tolerance || Math.abs(p.im) > tolerance ) {
       p = mul( p, div( div( mul( x, a ), b ), i ) );
       s = add( s, p );
       a = add( a, 1 );
@@ -1279,7 +1277,7 @@ function hypergeometric1F1( a, b, x, tolerance=1e-10 ) {
     var p = 1;
     var i = 1;
 
-    while ( Math.abs(p) > tolerance * Math.abs(s) ) {
+    while ( Math.abs(p) > tolerance ) {
       p *= x * a / b / i;
       s += p;
       a++;
@@ -1309,8 +1307,7 @@ function hypergeometric2F0( a, b, x, tolerance=1e-10 ) {
     var converging = false;
     var i = 1;
 
-    while ( Math.abs(p.re) > tolerance * Math.abs(s.re)
-            || Math.abs(p.im) > tolerance * Math.abs(s.im) ) {
+    while ( Math.abs(p.re) > tolerance || Math.abs(p.im) > tolerance ) {
 
       p = mul( p, div( mul( mul( x, a ), b ), i ) );
 
@@ -1335,7 +1332,7 @@ function hypergeometric2F0( a, b, x, tolerance=1e-10 ) {
     var converging = false;
     var i = 1;
 
-    while ( Math.abs(p) > tolerance * Math.abs(s) ) {
+    while ( Math.abs(p) > tolerance ) {
 
       p *= x * a * b / i;
 
@@ -1376,8 +1373,7 @@ function hypergeometric2F1( a, b, c, x, tolerance=1e-10 ) {
     var p = complex(1);
     var i = 1;
 
-    while ( Math.abs(p.re) > tolerance * Math.abs(s.re)
-            || Math.abs(p.im) > tolerance * Math.abs(s.im) ) {
+    while ( Math.abs(p.re) > tolerance || Math.abs(p.im) > tolerance ) {
       p = mul( p, div( div( mul( mul( x, a ), b ), c ), i ) );
       s = add( s, p );
       a = add( a, 1 );
@@ -1398,7 +1394,7 @@ function hypergeometric2F1( a, b, c, x, tolerance=1e-10 ) {
     var p = 1;
     var i = 1;
 
-    while ( Math.abs(p) > tolerance * Math.abs(s) ) {
+    while ( Math.abs(p) > tolerance ) {
       p *= x * a * b / c / i;
       s += p;
       a++;
