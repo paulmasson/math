@@ -2303,6 +2303,8 @@ function partialBell( n, k, arguments ) {
 
 function findRoot( f, interval, options={} ) {
 
+  if ( !Array.isArray(interval) && !options.method ) options.method = 'newton';
+
   var method = 'method' in options ? options.method : 'bisect';
   var tolerance = 'tolerance' in options ? options.tolerance : 1e-10;
 
