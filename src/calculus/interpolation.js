@@ -7,8 +7,8 @@ function polynomial( x, coefficients, derivative=false ) {
   var q = 0;
 
   for ( var i = 1 ; i < coefficients.length ; i++ ) {
-    if ( derivative ) q = p + q * x;
-    p = coefficients[i] + p * x;
+    if ( derivative ) q = add( p, mul( q, x ) );
+    p = add( coefficients[i], mul( p, x ) );
   }
 
   if ( derivative ) return { polynomial: p, derivative: q };
