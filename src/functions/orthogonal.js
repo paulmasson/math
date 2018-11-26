@@ -53,6 +53,8 @@ function hermite( n, x ) {
 
 function laguerre( n, a, x ) {
 
+  // explict recursion unnecessary: hypergeometric series handles integers
+
   if ( arguments.length < 3 ) {
     x = a;
     a = 0
