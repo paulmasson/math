@@ -354,6 +354,32 @@ function airyBi( x ) {
 
 }
 
+
+function sphericalBesselJ( n, x ) {
+
+  return mul( sqrt( div( pi/2, x ) ), besselJ( add( n, 1/2 ), x ) );
+
+}
+
+function sphericalBesselY( n, x ) {
+
+  return mul( sqrt( div( pi/2, x ) ), besselY( add( n, 1/2 ), x ) );
+
+}
+
+function sphericalHankel1( n, x ) {
+
+  return add( sphericalBesselJ(n,x), mul( complex(0,1), sphericalBesselY(n,x) ) );
+
+}
+
+function sphericalHankel2( n, x ) {
+
+  return sub( sphericalBesselJ(n,x), mul( complex(0,1), sphericalBesselY(n,x) ) );
+
+}
+
+
 function jacobiTheta( n, x, q, tolerance=1e-10 ) {
 
   if ( abs(q) >= 1 ) throw 'Unsupported elliptic nome';
@@ -1555,6 +1581,8 @@ function hermite( n, x ) {
 
 
 function laguerre( n, a, x ) {
+
+  // explict recursion unnecessary: hypergeometric series handles integers
 
   if ( arguments.length < 3 ) {
     x = a;
