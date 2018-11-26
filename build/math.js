@@ -1528,9 +1528,11 @@ function hermite( n, x ) {
 
   }
 
-  if ( Number.isInteger(n) && n >= 0 ) return polynomial( x, coefficients(n) );
-
   if ( isComplex(n) || isComplex(x) ) {
+
+    if ( !isComplex(n) ) n = complex(n);
+    if ( Number.isInteger(n.re) && n.re >= 0 && n.im === 0 )
+      return polynomial( x, coefficients(n.re) );
 
     var a = div( n, -2 );
     var b = div( sub(1,n), 2 );
@@ -1541,6 +1543,8 @@ function hermite( n, x ) {
     return mul( pow(2,n), sqrt(pi), s );
 
   }
+
+  if ( Number.isInteger(n) && n >= 0 ) return polynomial( x, coefficients(n) );
 
   var s = hypergeometric1F1( -n/2, 1/2, x**2 ) / gamma( (1-n)/2 )
           - 2 * x * hypergeometric1F1( (1-n)/2, 3/2, x**2 ) / gamma( -n/2 );
@@ -2290,8 +2294,8 @@ function polynomial( x, coefficients, derivative=false ) {
   var q = 0;
 
   for ( var i = 1 ; i < coefficients.length ; i++ ) {
-    if ( derivative ) q = p + q * x;
-    p = coefficients[i] + p * x;
+    if ( derivative ) q = add( p, mul( q, x ) );
+    p = add( coefficients[i], mul( p, x ) );
   }
 
   if ( derivative ) return { polynomial: p, derivative: q };
