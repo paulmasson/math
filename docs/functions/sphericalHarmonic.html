@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>sphericalHarmonic &mdash; Math</title>
+<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+
+<body>
+
+<script src="../../build/math.js"></script>
+<script src="../../../mathcell/build/mathcell.js"></script>
+
+<script src="https://cdn.jsdelivr.net/gh/mathjax/MathJax@2.7.5/MathJax.js?config=TeX-AMS_HTML"></script>
+
+<p class="function"> sphericalHarmonic( <i>l</i>, <i>m</i>, <i>&theta;</i>, <i>&phi;</i> ) </p>
+
+<p>The spherical harmonic \( Y_l^m (\theta,\phi) \) in Math. A solution of the partial differential equation</p>
+
+\[ \frac{ 1 }{ \sin \theta } \frac{ \partial }{ \partial \theta }
+     \left( \sin \theta \frac{ \partial f }{ \partial \theta } \right)
+   + \frac{ 1 }{ \sin^2 \theta } \frac{ \partial^2 f }{ \partial \phi^2 }
+   + l(l+1) f = 0 \]
+
+<p>Related to general <a href="legendre.html">Legendre</a> polynomials by</p>
+
+\[ Y_l^m (\theta,\phi) = (-1)^m \sqrt{ \frac{ 2l+1 }{ 4\pi } \frac{ (l-m)! }{ (l+m)! } }
+                                e^{ im\phi } P_l^m (\cos\theta) \]
+
+<p>Absolute value of the real part over real space:</p>
+
+<div class="mathcell" style="width: 6in; height: 6in">
+<script>
+
+var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [ { type: 'slider', max: 10, step: 1, name: 'l', label: 'l' },
+                { type: 'slider', min: -10, max: 10, default: 0, step: 1,
+                                  name: 'm', label: 'm' } ] );
+
+parent.update = function( id ) {
+
+  var l = +document.getElementById( id + 'l' ).value;
+
+  var ms = document.getElementById( id + 'm' );
+  ms.min = -l;
+  ms.max = l;
+  document.getElementById( id + 'mBox' ).value = ms.value;
+  var m = +ms.value;
+
+  function parametrize( theta, phi ) {
+    var r = abs( sphericalHarmonic( l, m, theta, phi ).re );
+    return [ r*sin(theta)*cos(phi), r*sin(theta)*sin(phi), r*cos(theta) ];
+  }
+
+  var p = parametric( parametrize, [0,pi,100], [0,2*pi,100] );
+
+  var config = { type: 'threejs', frame: false };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Absolute value of the imaginary part over real space:</p>
+
+<div class="mathcell" style="width: 6in; height: 6in">
+<script>
+
+var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [ { type: 'slider', max: 10, step: 1, name: 'l', label: 'l' },
+                { type: 'slider', min: -10, max: 10, default: 0, step: 1,
+                                  name: 'm', label: 'm' } ] );
+
+parent.update = function( id ) {
+
+  var l = +document.getElementById( id + 'l' ).value;
+
+  var ms = document.getElementById( id + 'm' );
+  ms.min = -l;
+  ms.max = l;
+  document.getElementById( id + 'mBox' ).value = ms.value;
+  var m = +ms.value;
+
+  function parametrize( theta, phi ) {
+    var r = abs( sphericalHarmonic( l, m, theta, phi ).im );
+    return [ r*sin(theta)*cos(phi), r*sin(theta)*sin(phi), r*cos(theta) ];
+  }
+
+  var p = m === 0 ? text( 'No imaginary part', [0,0,0], { fontSize: 12 } )
+          : parametric( parametrize, [0,pi,100], [0,2*pi,100] );
+
+  var config = { type: 'threejs', frame: false };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Absolute value over real space:</p>
+
+<div class="mathcell" style="width: 6in; height: 6in">
+<script>
+
+var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [ { type: 'slider', max: 10, step: 1, name: 'l', label: 'l' },
+                { type: 'slider', min: -10, max: 10, default: 0, step: 1,
+                                  name: 'm', label: 'm' } ] );
+
+parent.update = function( id ) {
+
+  var l = +document.getElementById( id + 'l' ).value;
+
+  var ms = document.getElementById( id + 'm' );
+  ms.min = -l;
+  ms.max = l;
+  document.getElementById( id + 'mBox' ).value = ms.value;
+  var m = +ms.value;
+
+  function parametrize( theta, phi ) {
+    var r = abs( sphericalHarmonic( l, m, theta, phi ) );
+    return [ r*sin(theta)*cos(phi), r*sin(theta)*sin(phi), r*cos(theta) ];
+  }
+
+  var p = parametric( parametrize, [0,pi,100], [0,2*pi,100] );
+
+  var config = { type: 'threejs', frame: false };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Related functions: &nbsp; <a href="legendre.html">legendre</a></p>
+
+<p>Function category: <a href="../functions.html#orthogonal">orthogonal polynomials</a></p>
+
+</body>
+</html>
