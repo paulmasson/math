@@ -1096,6 +1096,27 @@ function factorial( n ) {
 
 }
 
+function factorial2( n ) {
+
+  if ( Number.isInteger(n) && n > 0 ) {
+
+    // bitwise test for odd integer, upward recursion for possible caching
+    var result = n & 1 ? 1 : 2;
+    for ( var i = result + 2 ; i <= n ; i += 2 ) result *= i;
+    return result;
+
+  }
+
+  if ( Number.isInteger(n) && n === 0 ) return 1;
+
+  var f1 = pow( 2, div(n,2) );
+  var f2 = pow( pi/2, div( sub( cos(mul(pi,n)), 1 ), 4 ) );
+  var f3 = gamma( add( div(n,2) , 1 ) );
+
+  return mul( f1, f2, f3 );
+
+}
+
 function binomial( n, m ) {
 
   if ( Number.isInteger(m) && m < 0 && n >= 0 ) return 0;
@@ -1590,6 +1611,13 @@ function laguerre( n, a, x ) {
   }
 
   return mul( binomial( add(n,a), n ), hypergeometric1F1( neg(n), add(a,1), x ) ); 
+
+}
+
+
+function sphericalHarmonic( l, m, theta, phi ) {
+
+
 
 }
 
