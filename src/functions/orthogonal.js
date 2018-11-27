@@ -64,3 +64,43 @@ function laguerre( n, a, x ) {
 
 }
 
+
+function sphericalHarmonic( l, m, theta, phi ) {
+
+  if ( Number.isInteger(l) && Number.isInteger(m) ) {
+
+    var mm = Math.abs(m);
+    if ( mm > l ) throw 'Invalid spherical harmonic indices';
+
+    var x = Math.cos(theta);
+
+    var legendre1 = (-1)**mm * Math.sqrt( (2*mm+1) / 4 / pi / factorial(2*mm) )
+                    * factorial2( 2*mm-1 ) * ( 1 - x*x )**(mm/2);
+
+    function done( value ) {
+      return mul( Math.sign(m)**m, value, exp( complex(0,m*phi) ) );
+    }
+
+    if ( mm === l ) return done( legendre1 );
+
+    var ll = mm + 1;
+    var factor1 = Math.sqrt( 2*mm+3 );
+    var legendre2 = factor1 * x * legendre1;
+
+    if ( ll === l ) return done( legendre2 );
+
+    while ( ll < l ) {
+      ll++
+      var factor2 = Math.sqrt( ( 4*ll*ll - 1 ) / ( ll*ll - mm*mm ) );
+      var legendre3 = factor2 * ( x*legendre2 - legendre1/factor1 );
+      legendre1 = legendre2;
+      legendre2 = legendre3;
+      factor1 = factor2;
+    }
+
+    return done( legendre3 );
+
+  }
+
+}
+
