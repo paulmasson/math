@@ -1615,29 +1615,38 @@ function laguerre( n, a, x ) {
 }
 
 
-function sphericalHarmonic( l, m, theta, phi ) {
+function legendreP( l, m, x, renormalized=false ) {
 
-  if ( Number.isInteger(l) && Number.isInteger(m) ) {
+  if ( arguments.length < 3 ) {
+    x = m;
+    m = 0;
+  }
+
+  if ( Number.isInteger(l) && Number.isInteger(m) && Math.abs(x) <= 1 ) {
 
     var mm = Math.abs(m);
     if ( mm > l ) throw 'Invalid spherical harmonic indices';
 
-    var x = Math.cos(theta);
+    if ( !renormalized ) {
+      var norm = 1;
+      for ( var i = l-m+1 ; i <= l+m ; i++ ) norm *= i;
+      norm = Math.sqrt( 4 * pi * norm / (2*l+1) );
+    }
 
     var legendre1 = (-1)**mm * Math.sqrt( (2*mm+1) / 4 / pi / factorial(2*mm) )
                     * factorial2( 2*mm-1 ) * ( 1 - x*x )**(mm/2);
 
-    function done( value ) {
-      return mul( Math.sign(m)**m, value, exp( complex(0,m*phi) ) );
-    }
-
-    if ( mm === l ) return done( legendre1 );
+    if ( mm === l ) 
+      if ( renormalized ) return legendre1;
+      else return norm * legendre1;
 
     var ll = mm + 1;
     var factor1 = Math.sqrt( 2*mm+3 );
     var legendre2 = factor1 * x * legendre1;
 
-    if ( ll === l ) return done( legendre2 );
+    if ( ll === l )
+      if ( renormalized ) return legendre2;
+      else return norm * legendre2;
 
     while ( ll < l ) {
       ll++
@@ -1648,9 +1657,22 @@ function sphericalHarmonic( l, m, theta, phi ) {
       factor1 = factor2;
     }
 
-    return done( legendre3 );
+    if ( renormalized ) return legendre3;
+    else return norm * legendre3;
 
   }
+
+  return mul( inv( gamma( sub(1,m) ) ),
+              pow( add(1,x), div(m,2) ), pow( sub(1,x), div(m,-2) ),
+              hypergeometric2F1( neg(l), add(l,1), sub(1,m), div(sub(1,x),2) ) );
+
+}
+
+function sphericalHarmonic( l, m, theta, phi ) {
+
+  var renormalizedLegendre = legendreP( l, m, cos(theta), true );
+
+  return mul( Math.sign(m)**m, renormalizedLegendre, exp( complex(0,m*phi) ) );
 
 }
 
