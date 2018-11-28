@@ -65,6 +65,19 @@ function laguerre( n, a, x ) {
 }
 
 
+function chebyshevT( n, x ) {
+
+  return cos( mul( n, arccos(x) ) );
+
+}
+
+function chebyshevU( n, x ) {
+
+  return div( sin( mul( add(n,1), arccos(x) ) ), sin( arccos(x) ) );
+
+}
+
+
 function legendreP( l, m, x, renormalized=false ) {
 
   if ( arguments.length < 3 ) {
