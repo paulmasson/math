@@ -42,13 +42,11 @@ MathCell( id, [ { type: 'slider', max: 10, step: 1, name: 'l', label: 'l' },
 
 parent.update = function( id ) {
 
-  var l = +document.getElementById( id + 'l' ).value;
+  var l = getVariable( id, 'l' );
 
-  var ms = document.getElementById( id + 'm' );
-  ms.min = -l;
-  ms.max = l;
-  document.getElementById( id + 'mBox' ).value = ms.value;
-  var m = +ms.value;
+  setLimit( id, 'm', 'min', -l );
+  setLimit( id, 'm', 'max', l );
+  var m = getVariable( id, 'm' );
 
   function parametrize( theta, phi ) {
     var r = abs( sphericalHarmonic( l, m, theta, phi ).re );
@@ -84,23 +82,22 @@ MathCell( id, [ { type: 'slider', max: 10, step: 1, name: 'l', label: 'l' },
 
 parent.update = function( id ) {
 
-  var l = +document.getElementById( id + 'l' ).value;
+  var l = getVariable( id, 'l' );
 
-  var ms = document.getElementById( id + 'm' );
-  ms.min = -l;
-  ms.max = l;
-  document.getElementById( id + 'mBox' ).value = ms.value;
-  var m = +ms.value;
+  setLimit( id, 'm', 'min', -l );
+  setLimit( id, 'm', 'max', l );
+  var m = getVariable( id, 'm' );
 
   function parametrize( theta, phi ) {
     var r = abs( sphericalHarmonic( l, m, theta, phi ).im );
     return [ r*sin(theta)*cos(phi), r*sin(theta)*sin(phi), r*cos(theta) ];
   }
 
-  var p = m === 0 ? text( 'No imaginary part', [0,0,0], { fontSize: 12 } )
+  var p = m === 0 ? text( 'No imaginary part of a real function', [0,0,0], { fontSize: 20 } )
           : parametric( parametrize, [0,pi,100], [0,2*pi,100] );
 
-  var config = { type: 'threejs', frame: false };
+  var config = m === 0 ? { type: 'svg', axes: false, xMin: -1, xMax: 1 }
+               : { type: 'threejs', frame: false };
 
   evaluate( id, [ p ], config );
 
@@ -127,13 +124,11 @@ MathCell( id, [ { type: 'slider', max: 10, step: 1, name: 'l', label: 'l' },
 
 parent.update = function( id ) {
 
-  var l = +document.getElementById( id + 'l' ).value;
+  var l = getVariable( id, 'l' );
 
-  var ms = document.getElementById( id + 'm' );
-  ms.min = -l;
-  ms.max = l;
-  document.getElementById( id + 'mBox' ).value = ms.value;
-  var m = +ms.value;
+  setLimit( id, 'm', 'min', -l );
+  setLimit( id, 'm', 'max', l );
+  var m = getVariable( id, 'm' );
 
   function parametrize( theta, phi ) {
     var r = abs( sphericalHarmonic( l, m, theta, phi ) );
