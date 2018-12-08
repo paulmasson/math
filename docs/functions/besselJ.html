@@ -35,7 +35,7 @@ MathCell( id, [ { type: 'slider', min: -10, max: 10, default: 0,
 
 parent.update = function( id ) {
 
-  var n = +document.getElementById( id + 'n' ).value;
+  var n = getVariable( id, 'n' );
 
   var p = plot( x => besselJ( n, complex(x) ).re, [-10,10] );
 
@@ -65,7 +65,7 @@ MathCell( id, [ { type: 'slider', min: -10, max: 10, default: 0,
 
 parent.update = function( id ) {
 
-  var n = +document.getElementById( id + 'n' ).value;
+  var n = getVariable( id, 'n' );
 
   var p = plot( x => besselJ( n, complex(x) ).im, [-10,10] );
 
@@ -95,7 +95,7 @@ MathCell( id, [ { type: 'slider', min: -10, max: 10, default: 0,
 
 parent.update = function( id ) {
 
-  var n = +document.getElementById( id + 'n' ).value;
+  var n = getVariable( id, 'n' );
 
   var p = plot( x => besselJ( n, complex(0,x) ).re, [-10,10] );
 
@@ -125,7 +125,7 @@ MathCell( id, [ { type: 'slider', min: -10, max: 10, default: 0,
 
 parent.update = function( id ) {
 
-  var n = +document.getElementById( id + 'n' ).value;
+  var n = getVariable( id, 'n' );
 
   var p = plot( x => besselJ( n, complex(0,x) ).im, [-10,10] );
 
@@ -155,7 +155,7 @@ MathCell( id, [ { type: 'slider', min: -10, max: 10, default: 0,
 
 parent.update = function( id ) {
 
-  var n = +document.getElementById( id + 'n' ).value;
+  var n = getVariable( id, 'n' );
 
   var p = parametric( (x,y) => [ x, y, besselJ( n, complex(x,y) ) ], [-8,8,201], [-8,8,201],
                       { complexFunction: 're', colormap: 'complexArgument' } );
@@ -186,7 +186,7 @@ MathCell( id, [ { type: 'slider', min: -10, max: 10, default: 0,
 
 parent.update = function( id ) {
 
-  var n = +document.getElementById( id + 'n' ).value;
+  var n = getVariable( id, 'n' );
 
   var p = parametric( (x,y) => [ x, y, besselJ( n, complex(x,y) ) ], [-8,8,201], [-8,8,201],
                       { complexFunction: 'im', colormap: 'complexArgument' } );
@@ -217,7 +217,7 @@ MathCell( id, [ { type: 'slider', min: -10, max: 10, default: 0,
 
 parent.update = function( id ) {
 
-  var n = +document.getElementById( id + 'n' ).value;
+  var n = getVariable( id, 'n' );
 
   var p = parametric( (x,y) => [ x, y, besselJ( n, complex(x,y) ) ], [-8,8,201], [-8,8,201],
                       { complexFunction: 'abs', colormap: 'complexArgument' } );

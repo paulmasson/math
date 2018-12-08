@@ -35,7 +35,7 @@ MathCell( id, [ { type: 'slider', min: -10, max: 10, default: 0,
 
 parent.update = function( id ) {
 
-  var m = +document.getElementById( id + 'm' ).value;
+  var m = getVariable( id, 'm' );
 
   var p = plot( x => cn( complex(x), m ).re, [-5,5] );
 
@@ -67,7 +67,7 @@ MathCell( id, [ { type: 'slider', min: -10, max: 10, default: 0,
 
 parent.update = function( id ) {
 
-  var m = +document.getElementById( id + 'm' ).value;
+  var m = getVariable( id, 'm' );
 
   var p = plot( x => cn( complex(0,x), m ).re, [-5,5] );
 
@@ -99,7 +99,7 @@ MathCell( id, [ { type: 'slider', min: -5, max: 5, default: 0,
 
 parent.update = function( id ) {
 
-  var m = +document.getElementById( id + 'm' ).value;
+  var m = getVariable( id, 'm' );
 
   var p = parametric( (x,y) => [ x, y, cn( complex(x,y), m ) ], [-5,5,150], [-5,5,150],
                       { complexFunction: 're', colormap: 'complexArgument' } );
@@ -130,7 +130,7 @@ MathCell( id, [ { type: 'slider', min: -5, max: 5, default: 0,
 
 parent.update = function( id ) {
 
-  var m = +document.getElementById( id + 'm' ).value;
+  var m = getVariable( id, 'm' );
 
   var p = parametric( (x,y) => [ x, y, cn( complex(x,y), m ) ], [-5,5,150], [-5,5,150],
                       { complexFunction: 'im', colormap: 'complexArgument' } );
@@ -161,7 +161,7 @@ MathCell( id, [ { type: 'slider', min: -5, max: 5, default: 0,
 
 parent.update = function( id ) {
 
-  var m = +document.getElementById( id + 'm' ).value;
+  var m = getVariable( id, 'm' );
 
   var p = parametric( (x,y) => [ x, y, cn( complex(x,y), m ) ], [-5,5,150], [-5,5,150],
                       { complexFunction: 'abs', colormap: 'complexArgument' } );
