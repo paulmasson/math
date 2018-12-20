@@ -1202,8 +1202,7 @@ function beta( x, y ) {
 
 function erf( x ) {
 
-  // integration currently has set tolerance of 1e-10
-  return mul( 2/sqrt(pi), integrate( x => exp( neg(pow(x,2)) ), [0,x] ) );
+  return mul( 2/sqrt(pi), x, hypergeometric1F1( 1/2, 3/2, neg(pow(x,2)) ) );
 
 }
 
