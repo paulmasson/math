@@ -1184,12 +1184,22 @@ function logGamma( x ) {
 
 }
 
-function gamma( x ) {
+function gamma( x, y, z ) {
+
+  if ( arguments.length === 2 ) return sub( gamma(x), gamma(x,0,y) );
+
+  if ( arguments.length === 3 ) {
+
+    if ( y !== 0 ) return sub( gamma(x,y), gamma(x,z) );
+
+    return mul( pow(z,x), inv(x), hypergeometric1F1( x, add(x,1), neg(z) ) );
+
+  }
 
   // logGamma complex on negative axis
-  if ( !isComplex(x) && x < 0 )
-    return exp( logGamma( complex(x) ) ).re;
-  else return exp( logGamma(x) );
+  if ( !isComplex(x) && x < 0 ) return exp( logGamma( complex(x) ) ).re;
+
+  return exp( logGamma(x) );
 
 }
 
