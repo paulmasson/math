@@ -1974,6 +1974,25 @@ function arccsch( x ) {
 }
 
 
+// miscellaneous
+
+function sinc( x ) {
+
+  if ( isComplex(x) ) {
+
+    if ( x.re === 0 && x.im === 0 ) return complex(1);
+
+    return div( sin(x), x );
+
+  }
+
+  if ( x === 0 ) return 1;
+
+  return Math.sin(x) / x;
+
+}
+
+
 function zeta( x ) {
 
   // Borwein algorithm
