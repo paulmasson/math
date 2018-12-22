@@ -51,5 +51,20 @@
 
 <p><b>ode( <i>f</i>, <i>y</i><sub>0</sub>, [<i>x</i><sub>0</sub>,<i>x</i><sub>1</sub>], step, method )</b> &mdash; numerical solution of the system <i>dy</i>/<i>dx</i>&nbsp;=&nbsp;<i>f</i>(<i>x</i>,<i>y</i>), <i>y</i>(0)&nbsp;=&nbsp;<i>y</i><sub>0</sub> on the specified interval with specified step size and a method of <code>'euler'</code> or <nobr><code>'runge-kutta'</code></nobr>. The function and initial condition should be vectorized for higher-order systems. The solution is returned as an array of arrays of data points, with the independent variable as the first item in each data point array.</p>
 
+<br id="transformation"/>
+<h1>Transformation</h1>
+
+<p><b>fourierSineCoefficient( <i>f</i>, <i>n</i> )</b> &mdash; Fourier sine coefficient of index <i>n</i> of a continuous real function on the interval [0,2&pi;]</p>
+
+<p><b>fourierSineCoefficient( <i>f</i>, <i>n</i>, period )</b> &mdash; Fourier sine coefficient of index <i>n</i> of a continuous real function on the interval [0,period]</p>
+
+<p><b>fourierSineCoefficient( points, <i>n</i> )</b> &mdash; Fourier sine coefficient of index <i>n</i> of an array of discrete two-dimensional points</p>
+
+<p><b>fourierCosineCoefficient( <i>f</i>, <i>n</i> )</b> &mdash; Fourier cosine coefficient of index <i>n</i> of a continuous real function on the interval [0,2&pi;]</p>
+
+<p><b>fourierCosineCoefficient( <i>f</i>, <i>n</i>, period )</b> &mdash; Fourier cosine coefficient of index <i>n</i> of a continuous real function on the interval [0,period]</p>
+
+<p><b>fourierCosineCoefficient( points, <i>n</i> )</b> &mdash; Fourier cosine coefficient of index <i>n</i> of an array of discrete two-dimensional points</p>
+
 </body>
 </html>
