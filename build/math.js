@@ -2212,7 +2212,7 @@ function diff( f, x, n=1, method='ridders' ) {
 var D = diff;
 
 
-function integrate( f, interval, method='adaptive-simpson' ) {
+function integrate( f, interval, method='adaptive-simpson', tolerance=1e-10 ) {
 
   var a = interval[0];
   var b = interval[1];
@@ -2251,7 +2251,6 @@ function integrate( f, interval, method='adaptive-simpson' ) {
 
       // Euler-Maclaurin summation formula
 
-      var tolerance = 1e-10;
       var maxIter = 50;
 
       var h = ( b - a ) / 2;
@@ -2313,7 +2312,6 @@ function integrate( f, interval, method='adaptive-simpson' ) {
 
       // algorithm by Charles Collins
 
-      var tolerance = 1e-8;
       var maxIter = 50;
 
       function adaptiveSimpson( a, b, fa, fm, fb, s, tolerance, depth ) {
@@ -2350,8 +2348,6 @@ function integrate( f, interval, method='adaptive-simpson' ) {
 
       // based on Borwein & Bailey, Experimentation in Mathematics
 
-      var epsilon = 1e-15;
-
       var m = 10;
       var h = 1 / 2**m;
       var x = [], w = [];
@@ -2360,7 +2356,7 @@ function integrate( f, interval, method='adaptive-simpson' ) {
         var t = k * h;
         x[k] = Math.tanh( Math.PI/2 * Math.sinh(t) );
         w[k] = Math.PI/2 * Math.cosh(t) / Math.cosh( Math.PI/2 * Math.sinh(t) )**2;
-        if ( Math.abs(1-x[k]) < epsilon ) break;
+        if ( Math.abs(1-x[k]) < tolerance ) break;
       }
 
       var nt = k;
@@ -2385,8 +2381,6 @@ function integrate( f, interval, method='adaptive-simpson' ) {
 
       // based on Borwein & Bailey, Experimentation in Mathematics
 
-      var epsilon = 1e-15;
-
       var m = 10;
       var x = [], w = [];
 
@@ -2410,7 +2404,7 @@ function integrate( f, interval, method='adaptive-simpson' ) {
           var delta = t1 / t4;
           r -= delta;
 
-          if ( Math.abs( delta ) < epsilon ) break;
+          if ( Math.abs( delta ) < tolerance ) break;
 
         }
 
