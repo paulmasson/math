@@ -8,7 +8,7 @@ function complex( x, y ) {
 
 var C = complex;
 
-function isComplex( x ) { return typeof(x) === 'object' && 're' in x }
+function isComplex( x ) { return typeof x === 'object' && 're' in x }
 
 
 function abs( x ) {
