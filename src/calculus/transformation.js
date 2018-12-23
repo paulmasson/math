@@ -3,6 +3,8 @@ function fourierSineCoefficient( f, n, period ) {
 
   if ( !Number.isInteger(n) ) throw 'Nonintegral Fourier index';
 
+  if ( n === 0 ) return 0;
+
   if ( typeof f === 'function' ) {
 
     var T = period || 2*pi;
