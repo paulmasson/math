@@ -2703,6 +2703,14 @@ function fourierCosineCoefficient( f, n, period ) {
 
     var s = 0, N = f.length;
 
+    if ( n === 0 ) {
+
+      for ( var i = 0 ; i < N ; i++ ) s += f[i][1];
+
+      return s / N;
+
+    }
+
     for ( var i = 0 ; i < N ; i++ ) s += f[i][1] * cos( 2*n*pi*i/N );
 
     return 2 * s / N;
