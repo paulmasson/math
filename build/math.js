@@ -2094,6 +2094,23 @@ function zeta( x ) {
 function dirichletEta( x ) { return mul( zeta(x), sub( 1, pow( 2, sub(1,x) ) ) ); }
 
 
+function bernoulli( n ) {
+
+  if ( !Number.isInteger(n) ) throw 'Noninteger argument for Bernoulli number';
+
+  if ( n < 0 ) throw 'Unsupported argument for Bernoulli number';
+
+  if ( n === 0 ) return 1;
+
+  if ( n === 1 ) return -.5;
+
+  if ( n & 1 ) return 0;
+
+  return (-1)**(n/2+1) * 2 * factorial(n) * zeta(n) / (2*pi)**n;
+
+}
+
+
 function ode( f, y, [x0,x1], step=.001, method='runge-kutta' ) {
 
   if ( f(x0,y)[0] === undefined ) {
