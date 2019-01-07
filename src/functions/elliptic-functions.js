@@ -319,3 +319,32 @@ function am( x, m ) {
 
 }
 
+
+function weierstrassP( x, g2, g3 ) {
+
+  if ( !isComplex(x) ) x = complex(x);
+
+  function cubicTrigSolution( p, q, n ) {
+
+    // p, q both negative in defining cubic
+
+    return mul( 2/sqrt(3), sqrt(p),
+                cos( sub( div( arccos( mul( 3*sqrt(3)/2, q, pow(p,-3/2) ) ), 3 ),
+                          2*pi*n/3 ) ) );
+  }
+
+  g2 = div( g2, 4 );
+  g3 = div( g3, 4 );
+
+  var e1 = cubicTrigSolution( g2, g3, 0 );
+  var e2 = cubicTrigSolution( g2, g3, 1 );
+  var e3 = cubicTrigSolution( g2, g3, 2 );
+
+  // Whittaker & Watson, Section 22.351
+
+  var m = div( sub(e2,e3), sub(e1,e3) );
+
+  return add( e3, mul( sub(e1,e3), pow( sn( mul( x, sqrt(sub(e1,e3)) ), m ), -2 ) ) );
+
+}
+
