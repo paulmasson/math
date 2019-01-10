@@ -60,7 +60,7 @@ function bernoulli( n ) {
 
   if ( n & 1 ) return 0;
 
-  return (-1)**(n/2+1) * 2 * factorial(n) * zeta(n) / (2*pi)**n;
+  return (-1)**(n+1) * n * zeta(-n+1);
 
 }
 
