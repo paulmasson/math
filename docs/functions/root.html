@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>root &mdash; Math</title>
+<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+
+<body>
+
+<script src="../../build/math.js"></script>
+<script src="../../../mathcell/build/mathcell.js"></script>
+
+<p class="function"> root( <i>z</i>, <i>n</i> ) </p>
+
+<p>The <i>n</i>th root of <i>z</i> in Math. The inverse of <a href="pow.html">pow</a>.</p>
+
+<p>Real part on the real axis:</p>
+
+<div class="mathcell" style="height: 4.5in">
+<script>
+
+var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [ { type: 'slider', min: -10, max: 10, default: 0,
+                                  label: 'n', name: 'n' } ] );
+
+parent.update = function( id ) {
+
+  var n = getVariable( id, 'n' );
+
+  var p1 = plot( x => root( complex(x), n ).re, [-5,-.01] );
+  var p2 = plot( x => root( complex(x), n ).re, [.01,5] );
+
+  var config = { type: 'svg', yMin: -2, yMax: 2 };
+
+  evaluate( id, [ p1, p2 ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Imaginary part on the real axis:</p>
+
+<div class="mathcell" style="height: 4.5in">
+<script>
+
+var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [ { type: 'slider', min: -10, max: 10, default: 0,
+                                  label: 'n', name: 'n' } ] );
+
+parent.update = function( id ) {
+
+  var n = getVariable( id, 'n' );
+
+  var p1 = plot( x => root( complex(x), n ).im, [-5,-.01] );
+  var p2 = plot( x => root( complex(x), n ).im, [.01,5] );
+
+  var config = { type: 'svg', yMin: -2, yMax: 2 };
+
+  evaluate( id, [ p1, p2 ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Real part on the imaginary axis:</p>
+
+<div class="mathcell" style="height: 4.5in">
+<script>
+
+var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [ { type: 'slider', min: -10, max: 10, default: 0,
+                                  label: 'n', name: 'n' } ] );
+
+parent.update = function( id ) {
+
+  var n = getVariable( id, 'n' );
+
+  var p1 = plot( x => root( complex(0,x), n ).re, [-5,-.01] );
+  var p2 = plot( x => root( complex(0,x), n ).re, [.01,5] );
+
+  var config = { type: 'svg', yMin: -2, yMax: 2 };
+
+  evaluate( id, [ p1, p2 ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Imaginary part on the imaginary axis:</p>
+
+<div class="mathcell" style="height: 4.5in">
+<script>
+
+var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [ { type: 'slider', min: -10, max: 10, default: 0,
+                                  label: 'n', name: 'n' } ] );
+
+parent.update = function( id ) {
+
+  var n = getVariable( id, 'n' );
+
+  var p1 = plot( x => root( complex(0,x), n ).im, [-5,-.01] );
+  var p2 = plot( x => root( complex(0,x), n ).im, [.01,5] );
+
+  var config = { type: 'svg', yMin: -2, yMax: 2 };
+
+  evaluate( id, [ p1, p2 ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Real part on the complex plane:</p>
+
+<div class="mathcell" style="width: 6in; height: 6.5in">
+<script>
+
+var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [ { type: 'slider', min: -10, max: 10, default: 0,
+                                  label: 'n', name: 'n' } ] );
+
+parent.update = function( id ) {
+
+  var n = getVariable( id, 'n' );
+
+  var p = parametric( (x,y) => [ x, y, root( complex(x,y), n ) ], [-5,5,151], [-5,5,151],
+                      { complexFunction: 're', colormap: 'complexArgument' } );
+
+  var config = { type: 'threejs', zMin: -2.5, zMax: 2.5 };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Imaginary part on the complex plane:</p>
+
+<div class="mathcell" style="width: 6in; height: 6.5in">
+<script>
+
+var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [ { type: 'slider', min: -10, max: 10, default: 0,
+                                  label: 'n', name: 'n' } ] );
+
+parent.update = function( id ) {
+
+  var n = getVariable( id, 'n' );
+
+  var p = parametric( (x,y) => [ x, y, root( complex(x,y), n ) ], [-5,5,151], [-5,5,151],
+                      { complexFunction: 'im', colormap: 'complexArgument' } );
+
+  var config = { type: 'threejs', zMin: -2.5, zMax: 2.5 };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Absolute value on the complex plane:</p>
+
+<div class="mathcell" style="width: 6in; height: 6.5in">
+<script>
+
+var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [ { type: 'slider', min: -10, max: 10, default: 0,
+                                  label: 'n', name: 'n' } ] );
+
+parent.update = function( id ) {
+
+  var n = getVariable( id, 'n' );
+
+  var p = parametric( (x,y) => [ x, y, root( complex(x,y), n ) ], [-5,5,151], [-5,5,151],
+                      { complexFunction: 'abs', colormap: 'complexArgument' } );
+
+  var config = { type: 'threejs', zMin: 0, zMax: 2.5, aspectRatio: [1,1,2] };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Related functions: &nbsp; <a href="pow.html">pow</a> &nbsp; <a href="sqrt.html">sqrt</a></p>
+
+<p>Function category: <a href="../functions.html#basic">basic functions</a></p>
+
+</body>
+</html>
