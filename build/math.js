@@ -2049,18 +2049,14 @@ function zeta( x ) {
 
   // Borwein algorithm
 
-  var n = 14; // from error bound for tolerance of 1e-10 
+  var tolerance = 1e-10;
 
-  function d( k ) {
+  var n = Math.max( 14, Math.ceil( log( 2 / abs(gamma(x)) / tolerance ) / log( 3 + sqrt(8) ) ) );
 
-    var d = 0;
-
-    for ( var i = 0 ; i <= k ; i++ )
-      d += 4**i * factorial( n+i-1 ) / factorial( n-i ) / factorial( 2*i );
-
-    return n * d;
-
-  }
+  var d = [ 1 ];
+  for ( var i = 1 ; i <= n ; i++ )
+    // order of multiplication reduces overflow, but factorial overflows at 171
+    d.push( d[i-1] + n * factorial( n+i-1 ) / factorial( n-i ) / factorial( 2*i ) * 4**i );
 
   if ( isComplex(x) ) {
 
@@ -2071,9 +2067,9 @@ function zeta( x ) {
     var s = complex(0);
 
     for ( var k = 0 ; k < n ; k++ )
-      s = add( s, div( (-1)**k * ( d(k) - d(n) ), pow( k+1, x ) ) );
+      s = add( s, div( (-1)**k * ( d[k] - d[n] ), pow( k+1, x ) ) );
 
-    return div( div( s, -d(n) ), sub( 1, pow( 2, sub(1,x) ) ) );
+    return div( div( s, -d[n] ), sub( 1, pow( 2, sub(1,x) ) ) );
 
   } else {
 
@@ -2083,9 +2079,9 @@ function zeta( x ) {
     var s = 0;
 
     for ( var k = 0 ; k < n ; k++ )
-      s += (-1)**k * ( d(k) - d(n) ) / (k+1)**x;
+      s += (-1)**k * ( d[k] - d[n] ) / (k+1)**x;
 
-    return -s / d(n) / ( 1 - 2**(1-x) );
+    return -s / d[n] / ( 1 - 2**(1-x) );
 
   }
 
