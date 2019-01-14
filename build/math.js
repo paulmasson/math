@@ -2050,8 +2050,10 @@ function zeta( x ) {
   // Borwein algorithm
 
   var tolerance = 1e-10;
+  var n = 14; // from error bound for tolerance
 
-  var n = Math.max( 14, Math.ceil( log( 2 / abs(gamma(x)) / tolerance ) / log( 3 + sqrt(8) ) ) );
+  if ( isComplex(x) && x.im !== 0 )
+    n = Math.max( n, Math.ceil( log( 2 / abs(gamma(x)) / tolerance ) / log( 3 + sqrt(8) ) ) );
 
   var d = [ 1 ];
   for ( var i = 1 ; i <= n ; i++ )
