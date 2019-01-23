@@ -1,5 +1,5 @@
 
-function fourierSineCoefficient( f, n, period ) {
+function fourierSinCoefficient( f, n, period ) {
 
   if ( !Number.isInteger(n) ) throw 'Nonintegral Fourier index';
 
@@ -27,7 +27,7 @@ function fourierSineCoefficient( f, n, period ) {
 
 }
 
-function fourierCosineCoefficient( f, n, period ) {
+function fourierCosCoefficient( f, n, period ) {
 
   if ( !Number.isInteger(n) ) throw 'Nonintegral Fourier index';
 
