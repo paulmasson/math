@@ -1,7 +1,7 @@
 
 function diff( f, x, n=1, method='ridders' ) {
 
-  if ( isComplex(x) ) {
+  if ( isComplex(x) || isComplex(f(x)) ) {
 
     if ( !isComplex(f(x)) ) throw 'Function must handle complex math';
 
@@ -80,4 +80,21 @@ function diff( f, x, n=1, method='ridders' ) {
 }
 
 var D = diff;
+
+
+function gradient( f, vector ) {
+
+  if ( f.length !== vector.length ) throw 'Gradient vector length differs from function';
+
+  var result = [];
+
+  for ( var i = 0 ; i < vector.length ; i++ )
+   result.push( diff( x => {
+     var a = [].concat(vector);
+     a[i] = x;
+     return f.apply( null, a ); }, vector[i] ) );
+
+  return result;
+
+}
 
