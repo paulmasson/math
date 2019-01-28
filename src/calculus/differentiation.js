@@ -5,10 +5,8 @@ function diff( f, x, n=1, method='ridders' ) {
 
     if ( !isComplex(f(x)) ) throw 'Function must handle complex math';
 
-    function factor( t ) { return mul( x, t ); }
-
-    var real = diff( t => f( factor(t) ).re, 1, n, method );
-    var imag = diff( t => f( factor(t) ).im, 1, n, method );
+    var real = diff( t => f( mul(x,t) ).re, 1, n, method );
+    var imag = diff( t => f( mul(x,t) ).im, 1, n, method );
 
     return div( complex( real, imag ), x );
 
