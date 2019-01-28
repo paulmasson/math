@@ -88,11 +88,13 @@ function gradient( f, vector ) {
 
   var result = [];
 
-  for ( var i = 0 ; i < vector.length ; i++ )
-   result.push( diff( x => {
-     var a = [].concat(vector);
-     a[i] = x;
-     return f.apply( null, a ); }, vector[i] ) );
+  for ( var i = 0 ; i < vector.length ; i++ ) {
+
+    var a = [].concat( vector );
+
+    result.push( diff( x => { a[i] = x; return f.apply( null, a ); }, a[i] ) );
+
+  }
 
   return result;
 
