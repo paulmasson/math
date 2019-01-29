@@ -82,15 +82,15 @@ function diff( f, x, n=1, method='ridders' ) {
 var D = diff;
 
 
-function gradient( f, vector ) {
+function gradient( f, point ) {
 
-  if ( f.length !== vector.length ) throw 'Gradient vector length differs from function';
+  if ( f.length !== point.length ) throw 'Gradient point length differs from function';
 
   var result = [];
 
-  for ( var i = 0 ; i < vector.length ; i++ ) {
+  for ( var i = 0 ; i < point.length ; i++ ) {
 
-    var a = [].concat( vector );
+    var a = [].concat( point );
 
     result.push( diff( x => { a[i] = x; return f.apply( null, a ); }, a[i] ) );
 
