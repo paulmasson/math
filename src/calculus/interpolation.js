@@ -112,6 +112,34 @@ function findRoot( f, interval, options={} ) {
 }
 
 
+function findRoots( f, point, tolerance=1e-10 ) {
+
+  if ( f.length !== point.length ) throw 'Mismatch between equations and starting point for root';
+
+  var maxIter = 100;
+
+  for ( var i = 0; i < maxIter ; i++ ) {
+
+    var J = [], F = [];
+
+    for ( var j = 0 ; j < point.length ; j++ ) {
+      J.push( gradient( f[j], point ) );
+      F.push( f[j].apply( null, point ) );
+    }
+
+    var delta = luSolve( J, F );
+
+    for ( var j = 0 ; j < point.length ; j++ ) point[j] -= delta[j];
+
+    if ( delta.every( d => Math.abs(d) < tolerance ) ) return point;
+
+  }
+
+  throw 'No root found for tolerance ' + tolerance;
+
+}
+
+
 function spline( points, value='function' ) {
 
   // adapted from gsl / cspline.c and reference therein
