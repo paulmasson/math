@@ -1,5 +1,5 @@
 
-function luDecomposition( A, tolerance=1e-7 ) {
+function luDecomposition( A, tolerance=1e-10 ) {
 
   var size = A.length;
   var LU = [];

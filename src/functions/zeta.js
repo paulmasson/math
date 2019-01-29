@@ -1,9 +1,8 @@
 
-function zeta( x ) {
+function zeta( x, tolerance=1e-10 ) {
 
   // Borwein algorithm
 
-  var tolerance = 1e-10;
   var n = 14; // from error bound for tolerance
 
   if ( isComplex(x) && x.im !== 0 )

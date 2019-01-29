@@ -32,14 +32,14 @@ function log( x, base ) {
 var ln = log;
 
 
-function lambertW( k, x ) {
+function lambertW( k, x, tolerance=1e-10 ) {
 
   if ( arguments.length === 1 ) {
     x = k;
     k = 0;
   }
 
-  if ( Math.abs( x + Math.exp(-1) ) < 1e-16 ) return -1;
+  if ( Math.abs( x + Math.exp(-1) ) < tolerance ) return -1;
 
   // inversion by root finding
 
@@ -49,13 +49,13 @@ function lambertW( k, x ) {
 
       if ( x < -Math.exp(-1) ) throw 'Unsupported lambertW argument';
 
-      return findRoot( w => w * Math.exp(w) - x, [-1,1000], { tolerance: 1e-16 } );
+      return findRoot( w => w * Math.exp(w) - x, [-1,1000], { tolerance: tolerance } );
 
     case -1:
 
       if ( x < -Math.exp(-1) || x > 0 ) throw 'Unsupported lambertW argument';
 
-      return findRoot( w => w * Math.exp(w) - x, [-1000,-1], { tolerance: 1e-16 } );
+      return findRoot( w => w * Math.exp(w) - x, [-1000,-1], { tolerance: tolerance } );
 
     default:
 

@@ -1543,14 +1543,14 @@ function log( x, base ) {
 var ln = log;
 
 
-function lambertW( k, x ) {
+function lambertW( k, x, tolerance=1e-10 ) {
 
   if ( arguments.length === 1 ) {
     x = k;
     k = 0;
   }
 
-  if ( Math.abs( x + Math.exp(-1) ) < 1e-16 ) return -1;
+  if ( Math.abs( x + Math.exp(-1) ) < tolerance ) return -1;
 
   // inversion by root finding
 
@@ -1560,13 +1560,13 @@ function lambertW( k, x ) {
 
       if ( x < -Math.exp(-1) ) throw 'Unsupported lambertW argument';
 
-      return findRoot( w => w * Math.exp(w) - x, [-1,1000], { tolerance: 1e-16 } );
+      return findRoot( w => w * Math.exp(w) - x, [-1,1000], { tolerance: tolerance } );
 
     case -1:
 
       if ( x < -Math.exp(-1) || x > 0 ) throw 'Unsupported lambertW argument';
 
-      return findRoot( w => w * Math.exp(w) - x, [-1000,-1], { tolerance: 1e-16 } );
+      return findRoot( w => w * Math.exp(w) - x, [-1000,-1], { tolerance: tolerance } );
 
     default:
 
@@ -2045,11 +2045,10 @@ function sinc( x ) {
 }
 
 
-function zeta( x ) {
+function zeta( x, tolerance=1e-10 ) {
 
   // Borwein algorithm
 
-  var tolerance = 1e-10;
   var n = 14; // from error bound for tolerance
 
   if ( isComplex(x) && x.im !== 0 )
@@ -3040,7 +3039,7 @@ function hessenbergForm( A ) {
 }
 
 
-function luDecomposition( A, tolerance=1e-7 ) {
+function luDecomposition( A, tolerance=1e-10 ) {
 
   var size = A.length;
   var LU = [];
