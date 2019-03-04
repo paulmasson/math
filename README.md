@@ -10,7 +10,7 @@ Hypergeometric functions <sub>0</sub>*F*<sub>1</sub>, <sub>1</sub>*F*<sub>1</sub
 
 Here is the complete list of mathematical [functions](https://paulmasson.github.io/math/docs/functions.html) available in this library.
 
-Integration of functions and ordinary differential equations is available for real values, as well as eigensystems of real symmetric matrices, root finding and cubic splines.
+Supported operations include numerical differentiation and integration of complex functions, integration of ordinary differential equations for real values, eigensystems of real symmetric matrices, real or complex root finding and real cubic splines.
 
 This library and [MathCell](https://github.com/paulmasson/mathcell) power the interactive elements of [Analytic Physics](http://analyticphysics.com).
 
