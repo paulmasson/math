@@ -737,6 +737,23 @@ function weierstrassP( x, g2, g3 ) {
 
 }
 
+function weierstrassPPrime( x, g2, g3 ) {
+
+  if ( !isComplex(x) ) x = complex(x);
+
+  var [ e1, e2, e3 ] = weierstrassRoots( g2, g3 );
+
+  // Whittaker & Watson, Section 22.351
+
+  var m = div( sub(e2,e3), sub(e1,e3) );
+
+  var argument = mul( x, sqrt(sub(e1,e3)) );
+
+  return mul( -2, pow( sub(e1,e3), 3/2 ), cn( argument, m ), dn( argument, m ),
+              pow( sn( argument, m ), -3 ) );
+
+}
+
 
 // Carlson symmetric integrals
 
