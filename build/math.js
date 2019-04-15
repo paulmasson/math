@@ -701,9 +701,7 @@ function am( x, m ) {
 }
 
 
-function weierstrassP( x, g2, g3 ) {
-
-  if ( !isComplex(x) ) x = complex(x);
+function weierstrassRoots( g2, g3 ) {
 
   function cubicTrigSolution( p, q, n ) {
 
@@ -720,6 +718,16 @@ function weierstrassP( x, g2, g3 ) {
   var e1 = cubicTrigSolution( g2, g3, 0 );
   var e2 = cubicTrigSolution( g2, g3, 1 );
   var e3 = cubicTrigSolution( g2, g3, 2 );
+
+  return [ e1, e2, e3 ];
+
+}
+
+function weierstrassP( x, g2, g3 ) {
+
+  if ( !isComplex(x) ) x = complex(x);
+
+  var [ e1, e2, e3 ] = weierstrassRoots( g2, g3 );
 
   // Whittaker & Watson, Section 22.351
 
