@@ -342,6 +342,20 @@ function weierstrassRoots( g2, g3 ) {
 
 }
 
+function weierstrassHalfPeriods( g2, g3 ) {
+
+  var [ e1, e2, e3 ] = weierstrassRoots( g2, g3 );
+
+  var w1 = inverseWeierstrassP( e1, g2, g3 );
+  var w2 = inverseWeierstrassP( e2, g2, g3 );
+  var w3 = inverseWeierstrassP( e3, g2, g3 );
+
+  return [ w1, w2, w3 ];
+
+}
+
+
+
 function weierstrassP( x, g2, g3 ) {
 
   if ( !isComplex(x) ) x = complex(x);
