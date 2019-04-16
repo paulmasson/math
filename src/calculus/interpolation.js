@@ -237,5 +237,3 @@ function spline( points, value='function' ) {
 
 }
 
-
-
