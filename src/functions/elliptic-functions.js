@@ -393,7 +393,7 @@ function inverseWeierstrassP( x, g2, g3 ) {
 
   var [ e1, e2, e3 ] = weierstrassRoots( g2, g3 );
 
-  // Johannson arxiv.org/pdf/1806.06725.pdf p.17
+  // Johansson arxiv.org/pdf/1806.06725.pdf p.17
 
   return carlsonRF( sub(x,e1), sub(x,e2), sub(x,e3) );
 
