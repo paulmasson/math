@@ -393,6 +393,7 @@ function inverseWeierstrassP( x, g2, g3 ) {
   var [ e1, e2, e3 ] = weierstrassRoots( g2, g3 );
 
   // Johansson arxiv.org/pdf/1806.06725.pdf p.17
+  // sign of imaginary part on real axis differs from Mathematica
 
   return carlsonRF( sub(x,e1), sub(x,e2), sub(x,e3) );
 
