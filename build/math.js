@@ -190,7 +190,6 @@ function sqrt( x ) {
 }
 
 
-
 function besselJ( n, x ) {
 
   if ( isComplex(n) || isComplex(x) ) {
@@ -728,10 +727,9 @@ function weierstrassHalfPeriods( g2, g3 ) {
   var [ e1, e2, e3 ] = weierstrassRoots( g2, g3 );
 
   var w1 = inverseWeierstrassP( e1, g2, g3 );
-  var w2 = inverseWeierstrassP( e2, g2, g3 );
   var w3 = inverseWeierstrassP( e3, g2, g3 );
 
-  return [ w1, w2, w3 ];
+  return [ w1, w3 ];
 
 }
 
@@ -774,7 +772,7 @@ function inverseWeierstrassP( x, g2, g3 ) {
 
   var [ e1, e2, e3 ] = weierstrassRoots( g2, g3 );
 
-  // Johannson arxiv.org/pdf/1806.06725.pdf p.17
+  // Johansson arxiv.org/pdf/1806.06725.pdf p.17
 
   return carlsonRF( sub(x,e1), sub(x,e2), sub(x,e3) );
 
@@ -2794,8 +2792,6 @@ function spline( points, value='function' ) {
   }
 
 }
-
-
 
 
 function fourierSinCoefficient( f, n, period ) {
