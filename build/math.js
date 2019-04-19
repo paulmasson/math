@@ -733,6 +733,26 @@ function weierstrassHalfPeriods( g2, g3 ) {
 
 }
 
+function weierstrassInvariants( w1, w3 ) {
+
+  // en.wikipedia.org/wiki/Weierstrass's_elliptic_functions
+  // modified for input of half periods
+
+  var q = exp( mul( complex(0,1), pi, div(w3,w1) ) );
+
+  var a = jacobiTheta( 2, 0, q );
+  var b = jacobiTheta( 3, 0, q );
+
+  var g2 = mul( 4/3*pi**4, pow( mul(2,w1), -4 ),
+                add( pow(a,8), mul( -1, pow(a,4), pow(b,4) ), pow(b,8) ) );
+
+  var g3 = mul( 8/27*pi**6, pow( mul(2,w1), -6 ),
+                add( pow(a,12), mul( -3/2, pow(a,8), pow(b,4) ),
+                                mul( -3/2, pow(a,4), pow(b,8) ), pow(b,12) ) );
+
+  return [ g2, g3 ];
+
+}
 
 
 function weierstrassP( x, g2, g3 ) {
@@ -773,6 +793,7 @@ function inverseWeierstrassP( x, g2, g3 ) {
   var [ e1, e2, e3 ] = weierstrassRoots( g2, g3 );
 
   // Johansson arxiv.org/pdf/1806.06725.pdf p.17
+  // sign of imaginary part on real axis differs from Mathematica
 
   return carlsonRF( sub(x,e1), sub(x,e2), sub(x,e3) );
 
