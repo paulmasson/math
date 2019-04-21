@@ -355,10 +355,23 @@ function weierstrassHalfPeriods( g2, g3 ) {
 
 function weierstrassInvariants( w1, w3 ) {
 
+  if ( !isComplex(w1) ) w1 = complex(w1);
+  if ( !isComplex(w3) ) w3 = complex(w3);
+
+  // order half periods by complex slope
+  if ( w3.im/w3.re < w1.im/w1.re ) [ w1, w3 ] = [ w3, w1 ];
+
+  var ratio =  div( w3, w1 ), conjugate;
+
+  if ( ratio.im < 0 ) {
+    ratio.im = -ratio.im;
+    conjugate = true;
+  }
+
+  var q = exp( mul( complex(0,1), pi, ratio ) );
+
   // en.wikipedia.org/wiki/Weierstrass's_elliptic_functions
   // modified for input of half periods
-
-  var q = exp( mul( complex(0,1), pi, div(w3,w1) ) );
 
   var a = jacobiTheta( 2, 0, q );
   var b = jacobiTheta( 3, 0, q );
@@ -369,6 +382,11 @@ function weierstrassInvariants( w1, w3 ) {
   var g3 = mul( 8/27*pi**6, pow( mul(2,w1), -6 ),
                 add( pow(a,12), mul( -3/2, pow(a,8), pow(b,4) ),
                                 mul( -3/2, pow(a,4), pow(b,8) ), pow(b,12) ) );
+
+  if ( conjugate ) {
+    g2.im = -g2.im;
+    g3.im = -g3.im;
+  }
 
   return [ g2, g3 ];
 
