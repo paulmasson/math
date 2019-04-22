@@ -6,11 +6,11 @@ All mathematical functions are exposed in the global context for ease of use. Wh
 
 Complex numbers are supported as dictionaries with real and imaginary attributes. Fully complex functions include exponentials, logarithms, circular and hyperbolic functions, all implemented with built-in JavaScript functions. Also available on the entire complex plane are the gamma and beta functions, implemented with the Lanczos approximation.
 
-Hypergeometric functions <sub>0</sub>*F*<sub>1</sub>, <sub>1</sub>*F*<sub>1</sub> and <sub>2</sub>*F*<sub>1</sub> of real or complex arguments are currently supported as power series. These make available Bessel *J*, *Y*, *I* and *K* functions on the complex plane, as well as Airy Ai and Bi functions and Hankel functions. Elliptic integrals and elliptic functions of real or complex arguments are available using Carlson symmetric integrals and Jacobi theta function power series. Hermite, Laguerre, Legendre and Chebyshev polynomials as well as spherical harmonics are supported.
+Hypergeometric functions <sub>0</sub>*F*<sub>1</sub>, <sub>1</sub>*F*<sub>1</sub> and <sub>2</sub>*F*<sub>1</sub> of real or complex arguments are currently supported as power series. These make available Bessel *J*, *Y*, *I* and *K* functions on the complex plane, as well as Airy Ai and Bi functions and Hankel functions. Elliptic integrals and elliptic functions of real or complex arguments are available using Carlson symmetric integrals and Jacobi theta function power series. Weierstrass elliptic functions and related support functions are available. Hermite, Laguerre, Legendre and Chebyshev polynomials as well as spherical harmonics are supported.
 
 Here is the complete list of mathematical [functions](https://paulmasson.github.io/math/docs/functions.html) available in this library.
 
-Supported operations include numerical differentiation and integration of complex functions, integration of ordinary differential equations for real values, eigensystems of real symmetric matrices, real or complex root finding and real cubic splines.
+Supported operations include numerical differentiation and integration of complex functions, integration of ordinary differential equations for real values, eigensystems of real symmetric matrices, real or complex root finding, multiple real root finding, real cubic splines and Fourier analysis.
 
 This library and [MathCell](https://github.com/paulmasson/mathcell) power the interactive elements of [Analytic Physics](http://analyticphysics.com).
 
