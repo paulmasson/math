@@ -2612,7 +2612,7 @@ function polynomial( x, coefficients, derivative=false ) {
 }
 
 
-function partialBell( n, k, arguments ) {
+function partialBell( n, k, argumentArray ) {
 
   if ( n === 0 && k === 0 ) return 1;
 
@@ -2624,7 +2624,7 @@ function partialBell( n, k, arguments ) {
 
   for ( var i = 1 ; i <= n - k + 1 ; i++ ) {
 
-    s += p * arguments[i-1] * partialBell( n-i, k-1, arguments );
+    s += p * argumentArray[i-1] * partialBell( n-i, k-1, argumentArray );
     p *= ( n - i ) / i;
 
   }
