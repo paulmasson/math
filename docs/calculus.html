@@ -25,7 +25,15 @@
 
 <p><b>integrate( <i>f</i>, [<i>a</i>,<i>b</i>] )</b> &mdash; numerical integral of a real or complex function on the interval [<i>a</i>,<i>b</i>] by an adaptive Simpson algorithm</p>
 
-<p><b>integrate( <i>f</i>, [<i>a</i>,<i>b</i>], method )</b> &mdash; numerical integral of a real or complex function on the interval [<i>a</i>,<i>b</i>] by method <nobr><code>'euler-maclaurin'</code></nobr>, <code>'romberg'</code>, <nobr><code>'adaptive-simpson'</code></nobr>, <nobr><code>'tanh-sinh'</code></nobr> or <code>'gaussian'</code></p>
+<p><b>integrate( <i>f</i>, [<i>a</i>,<i>b</i>], options )</b> &mdash; numerical integral of a real or complex function on the interval [<i>a</i>,<i>b</i>]; options include</p>
+
+<table style="margin-left: 1in"><tr><td style="width: 1.5in">
+  <code>method</code></td><td>one of <nobr><code>'euler-maclaurin'</code></nobr>, <code>'romberg'</code>, <nobr><code>'adaptive-simpson'</code></nobr>, <nobr><code>'tanh-sinh'</code></nobr> or <code>'gaussian'</code>; default <nobr><code>'adaptive-simpson'</code></nobr>
+</td></tr><tr><td>
+  <code>tolerance</code></td><td>default 10<sup>&minus;10</sup>
+</td></tr><tr><td>
+  <code>avoidEndpoints</code></td><td>set to <code>true</code> to displace endpoints by <code>tolerance</code>
+</td></tr></table>
 
 <p><b>discreteIntegral( values, step )</b> &mdash; numerical integral over discrete real values separated by step using Euler-Maclaurin summation</p>
 
