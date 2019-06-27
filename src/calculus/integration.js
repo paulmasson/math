@@ -1,5 +1,8 @@
 
-function integrate( f, interval, method='adaptive-simpson', tolerance=1e-10 ) {
+function integrate( f, interval, options={} ) {
+
+  var method = 'method' in options ? options.method : 'adaptive-simpson';
+  var tolerance = 'tolerance' in options ? options.tolerance : 1e-10;
 
   var a = interval[0];
   var b = interval[1];
@@ -13,12 +16,16 @@ function integrate( f, interval, method='adaptive-simpson', tolerance=1e-10 ) {
 
     function lerp( t ) { return add( mul( sub(b,a), t ), a ); }
 
-    var real = integrate( t => f( lerp(t) ).re, [0,1], method );
-    var imag = integrate( t => f( lerp(t) ).im, [0,1], method );
+    var real = integrate( t => f( lerp(t) ).re, [0,1], options );
+    var imag = integrate( t => f( lerp(t) ).im, [0,1], options );
 
     return mul( sub(b,a), complex( real, imag ) );
 
   }
+
+  if ( options.avoidEndpoints )
+    if ( a < b ) { a += tolerance; b -= tolerance; }
+    else { a -= tolerance; b += tolerance; }
 
   function nextEulerIteration() {
 

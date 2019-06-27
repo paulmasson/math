@@ -9,7 +9,7 @@ function fourierSinCoefficient( f, n, period ) {
 
     var T = period || 2*pi;
 
-    return 2/T * integrate( t => f(t) * sin( 2*n*pi/T * t ), [0,T], 'tanh-sinh' );
+    return 2/T * integrate( t => f(t) * sin( 2*n*pi/T * t ), [0,T], { method: 'tanh-sinh' } );
 
   }
 
@@ -35,9 +35,9 @@ function fourierCosCoefficient( f, n, period ) {
 
     var T = period || 2*pi;
 
-    if ( n === 0 ) return 1/T * integrate( t => f(t), [0,T], 'tanh-sinh' );
+    if ( n === 0 ) return 1/T * integrate( t => f(t), [0,T], { method: 'tanh-sinh' } );
 
-    return 2/T * integrate( t => f(t) * cos( 2*n*pi/T * t ), [0,T], 'tanh-sinh' );
+    return 2/T * integrate( t => f(t) * cos( 2*n*pi/T * t ), [0,T], { method: 'tanh-sinh' } );
 
   }
 
