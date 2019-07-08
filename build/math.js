@@ -322,7 +322,7 @@ function airyAi( x ) {
 
   if ( isComplex(x) ) {
 
-    return mul( 1/pi, mul( sqrt( div( x, 3 ) ), besselK( 1/3, mul( 2/3, pow( x, 3/2 ) ) ) ) );
+    return mul( 1/pi, sqrt( div( x, 3 ) ), besselK( 1/3, mul( 2/3, pow( x, 3/2 ) ) ) );
 
   }
 
@@ -332,6 +332,12 @@ function airyAi( x ) {
                                        - besselY( 1/3, 2/3*(-x)**(3/2) ) / sqrt(3) );
 
   return 1/pi * sqrt(x/3) * besselK( 1/3, 2/3*x**(3/2) );
+
+}
+
+function airyAiPrime( x ) {
+
+  return mul( -1/pi/sqrt(3), x, besselK( 2/3, mul( 2/3, pow( x, 3/2 ) ) ) );
 
 }
 
@@ -350,6 +356,13 @@ function airyBi( x ) {
                                         + besselY( 1/3, 2/3*(-x)**(3/2) ) );
 
   return sqrt(x/3) * ( besselI( 1/3, 2/3*x**(3/2) ) + besselI( -1/3, 2/3*x**(3/2) ) );
+
+}
+
+function airyBiPrime( x ) {
+
+  return mul( 1/sqrt(3), x, add( besselI( 2/3, mul( 2/3, pow( x, 3/2 ) ) ),
+                                 besselI( -2/3, mul( 2/3, pow( x, 3/2 ) ) ) ) );
 
 }
 
