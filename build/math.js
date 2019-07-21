@@ -164,7 +164,7 @@ function pow( x, y ) {
 
   }
 
-  if ( x < 0 ) return pow( complex(x), y );
+  if ( x < 0 && !Number.isInteger(y) ) return pow( complex(x), y );
 
   return x**y;
 
