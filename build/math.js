@@ -369,13 +369,13 @@ function airyBiPrime( x ) {
 
 function sphericalBesselJ( n, x ) {
 
-  return mul( sqrt( div( pi/2, x ) ), besselJ( add( n, 1/2 ), x ) );
+  return mul( div( sqrt(pi/2), sqrt(x) ), besselJ( add( n, 1/2 ), x ) );
 
 }
 
 function sphericalBesselY( n, x ) {
 
-  return mul( sqrt( div( pi/2, x ) ), besselY( add( n, 1/2 ), x ) );
+  return mul( div( sqrt(pi/2), sqrt(x) ), besselY( add( n, 1/2 ), x ) );
 
 }
 
