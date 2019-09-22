@@ -3,7 +3,7 @@ function diff( f, x, n=1, method='ridders' ) {
 
   if ( isComplex(x) || isComplex(f(x)) ) {
 
-    if ( !isComplex(f(x)) ) throw 'Function must handle complex math';
+    if ( !isComplex(f(x)) ) throw Error( 'Function must handle complex math' );
 
     var real = diff( t => f( mul(x,t) ).re, 1, n, method );
     var imag = diff( t => f( mul(x,t) ).im, 1, n, method );
@@ -73,7 +73,7 @@ function diff( f, x, n=1, method='ridders' ) {
 
     default:
 
-      throw 'Unsupported method';
+      throw Error( 'Unsupported differentiation method' );
 
   }
 
@@ -84,7 +84,7 @@ var D = diff;
 
 function gradient( f, point ) {
 
-  if ( f.length !== point.length ) throw 'Gradient point length differs from function';
+  if ( f.length !== point.length ) throw Error( 'Gradient point length differs from function' );
 
   var result = [];
 

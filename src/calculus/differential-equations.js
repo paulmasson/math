@@ -51,7 +51,7 @@ function ode( f, y, [x0,x1], step=.001, method='runge-kutta' ) {
 
     default:
 
-      throw 'Unsupported method';
+      throw Error( 'Unsupported differential equation solver method' );
 
   }
 

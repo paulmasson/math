@@ -64,7 +64,7 @@ function logGamma( x ) {
   if ( isComplex(x) ) {
 
     if ( Number.isInteger(x.re) && x.re <= 0 && x.im === 0 )
-      throw 'Gamma function pole';
+      throw Error( 'Gamma function pole' );
 
     // reflection formula with modified Hare correction to imaginary part
     if ( x.re < 0 ) {
@@ -91,7 +91,7 @@ function logGamma( x ) {
 
   } else {
 
-    if ( Number.isInteger(x) && x <= 0 ) throw 'Gamma function pole'; 
+    if ( Number.isInteger(x) && x <= 0 ) throw Error( 'Gamma function pole' ); 
 
     var t = x + 5.24218750000000000;
     t = ( x + 0.5 ) * log(t) - t;

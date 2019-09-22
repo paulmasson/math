@@ -12,7 +12,7 @@ function integrate( f, interval, options={} ) {
     if ( !isComplex(a) ) a = complex(a);
     if ( !isComplex(b) ) b = complex(b);
 
-    if ( !isComplex(f(a)) || !isComplex(f(b)) ) throw 'Function must handle complex math';
+    if ( !isComplex(f(a)) || !isComplex(f(b)) ) throw Error( 'Function must handle complex math' );
 
     function lerp( t ) { return add( mul( sub(b,a), t ), a ); }
 
@@ -61,7 +61,7 @@ function integrate( f, interval, options={} ) {
 
       }
 
-      throw 'Maximum interations reached';
+      throw Error( 'Maximum interations reached' );
 
     case 'romberg':
 
@@ -114,7 +114,7 @@ function integrate( f, interval, options={} ) {
         var f1 = f( a + h/4 );
         var f2 = f( b - h/4 )
 
-        if ( isNaN(f1) || isNaN(f2) ) throw 'NaN encountered in integration';
+        if ( isNaN(f1) || isNaN(f2) ) throw Error( 'NaN encountered in integration' );
 
         var s1 = ( fa + 4*f1 + fm ) * h / 12;
         var s2 = ( fm + 4*f2 + fb ) * h / 12;
@@ -220,7 +220,7 @@ function integrate( f, interval, options={} ) {
 
     default:
 
-      throw 'Unsupported method';
+      throw Error( 'Unsupported integration method' );
 
   }
 

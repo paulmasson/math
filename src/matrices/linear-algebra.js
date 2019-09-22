@@ -21,7 +21,7 @@ function luDecomposition( A, tolerance=1e-10 ) {
       }
     }
 
-    if ( maxValue < tolerance ) throw 'Matrix is degenerate';
+    if ( maxValue < tolerance ) throw Error( 'Matrix is degenerate' );
 
     if ( maxIndex !== i ) {
 

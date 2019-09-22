@@ -88,7 +88,7 @@ function legendreP( l, m, x, renormalized=false ) {
   if ( Number.isInteger(l) && Number.isInteger(m) && Math.abs(x) <= 1 ) {
 
     var mm = Math.abs(m);
-    if ( mm > l ) throw 'Invalid spherical harmonic indices';
+    if ( mm > l ) throw Error( 'Invalid spherical harmonic indices' );
 
     if ( !renormalized ) {
       var norm = 1;

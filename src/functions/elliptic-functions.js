@@ -1,9 +1,9 @@
 
 function jacobiTheta( n, x, q, tolerance=1e-10 ) {
 
-  if ( abs(q) >= 1 ) throw 'Unsupported elliptic nome';
+  if ( abs(q) >= 1 ) throw Error( 'Unsupported elliptic nome' );
 
-  if ( ![1,2,3,4].includes(n) ) throw 'Undefined Jacobi theta index';
+  if ( ![1,2,3,4].includes(n) ) throw Error( 'Undefined Jacobi theta index' );
 
   if ( isComplex(x) || isComplex(q) ) {
 

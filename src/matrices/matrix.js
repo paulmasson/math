@@ -45,7 +45,7 @@ function transpose( A ) {
 
 function matrixAdd( A, B ) {
 
-  if ( !Array.isArray(A) && !Array.isArray(B) ) throw 'No matrices';
+  if ( !Array.isArray(A) && !Array.isArray(B) ) throw Error( 'No matrices to add' );
   if ( !Array.isArray(A) ) A = matrix( B.length, B[0].length, A );
   if ( !Array.isArray(B) ) B = matrix( A.length, A[0].length, B );
 
@@ -61,7 +61,7 @@ function matrixAdd( A, B ) {
 
 function matrixSub( A, B ) {
 
-  if ( !Array.isArray(A) && !Array.isArray(B) ) throw 'No matrices';
+  if ( !Array.isArray(A) && !Array.isArray(B) ) throw Error( 'No matrices to subtract' );
   if ( !Array.isArray(A) ) A = matrix( B.length, B[0].length, A );
   if ( !Array.isArray(B) ) B = matrix( A.length, A[0].length, B );
 
@@ -77,10 +77,10 @@ function matrixSub( A, B ) {
 
 function matrixMul( A, B ) {
 
-  if ( !Array.isArray(A) && !Array.isArray(B) ) throw 'No matrices';
+  if ( !Array.isArray(A) && !Array.isArray(B) ) throw Error( 'No matrices to multiply' );
   if ( !Array.isArray(A) ) A = identity( B.length, A );
   if ( !Array.isArray(B) ) B = identity( A[0].length, B );
-  if ( A[0].length !== B.length ) throw( 'Incompatible matrices' );
+  if ( A[0].length !== B.length ) throw Error( 'Incompatible matrices to multiply' );
 
   var C = matrix( A.length, B[0].length, 0 );
 

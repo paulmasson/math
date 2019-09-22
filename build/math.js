@@ -152,7 +152,7 @@ function pow( x, y ) {
     if ( x.re === 0 && x.im === 0 && y.re === 0 && y.im === 0 )
       return complex(1);
     if ( x.re === 0 && x.im === 0 && y.re < 0 )
-      throw 'Power singularity';
+      throw Error( 'Power singularity' );
 
     var r = Math.sqrt( x.re * x.re + x.im * x.im );
     var phi = Math.atan2( x.im, x.re );
@@ -394,9 +394,9 @@ function sphericalHankel2( n, x ) {
 
 function jacobiTheta( n, x, q, tolerance=1e-10 ) {
 
-  if ( abs(q) >= 1 ) throw 'Unsupported elliptic nome';
+  if ( abs(q) >= 1 ) throw Error( 'Unsupported elliptic nome' );
 
-  if ( ![1,2,3,4].includes(n) ) throw 'Undefined Jacobi theta index';
+  if ( ![1,2,3,4].includes(n) ) throw Error( 'Undefined Jacobi theta index' );
 
   if ( isComplex(x) || isComplex(q) ) {
 
@@ -1275,7 +1275,7 @@ function logGamma( x ) {
   if ( isComplex(x) ) {
 
     if ( Number.isInteger(x.re) && x.re <= 0 && x.im === 0 )
-      throw 'Gamma function pole';
+      throw Error( 'Gamma function pole' );
 
     // reflection formula with modified Hare correction to imaginary part
     if ( x.re < 0 ) {
@@ -1302,7 +1302,7 @@ function logGamma( x ) {
 
   } else {
 
-    if ( Number.isInteger(x) && x <= 0 ) throw 'Gamma function pole'; 
+    if ( Number.isInteger(x) && x <= 0 ) throw Error( 'Gamma function pole' ); 
 
     var t = x + 5.24218750000000000;
     t = ( x + 0.5 ) * log(t) - t;
@@ -1363,7 +1363,7 @@ function hypergeometric0F1( a, x, tolerance=1e-10 ) {
     if ( !isComplex(x) ) x = complex(x);
 
     if ( Number.isInteger(a.re) && a.re <= 0 && a.im === 0 )
-      throw 'Hypergeometric function pole';
+      throw Error( 'Hypergeometric function pole' );
 
     // asymptotic form as per Johansson
     if ( abs(x) > useAsymptotic ) {
@@ -1398,7 +1398,7 @@ function hypergeometric0F1( a, x, tolerance=1e-10 ) {
 
   } else {
 
-    if ( Number.isInteger(a) && a <= 0 ) throw 'Hypergeometric function pole';
+    if ( Number.isInteger(a) && a <= 0 ) throw Error( 'Hypergeometric function pole' );
 
     // asymptotic form is complex
     if ( Math.abs(x) > useAsymptotic ) return hypergeometric0F1( a, complex(x) ).re;
@@ -1432,7 +1432,7 @@ function hypergeometric1F1( a, b, x, tolerance=1e-10 ) {
     if ( !isComplex(x) ) x = complex(x);
 
     if ( Number.isInteger(b.re) && b.re <= 0 && b.im === 0 )
-      throw 'Hypergeometric function pole';
+      throw Error( 'Hypergeometric function pole' );
 
     // Kummer transformation
     if ( x.re < 0 ) return mul( exp(x), hypergeometric1F1( sub(b,a), b, mul(x,-1) ) );
@@ -1466,7 +1466,7 @@ function hypergeometric1F1( a, b, x, tolerance=1e-10 ) {
 
   } else {
 
-    if ( Number.isInteger(b) && b <= 0 ) throw 'Hypergeometric function pole';
+    if ( Number.isInteger(b) && b <= 0 ) throw Error( 'Hypergeometric function pole' );
 
     // Kummer transformation
     if ( x < 0 ) return exp(x) * hypergeometric1F1( b-a, b, -x );
@@ -1514,7 +1514,7 @@ function hypergeometric2F0( a, b, x, tolerance=1e-10 ) {
 
       if ( abs(p) > abs(pLast) && converging ) break; // prevent runaway sum
       if ( abs(p) < abs(pLast) ) converging = true;
-      if ( i > terms ) throw 'Not converging after ' + terms + ' terms';
+      if ( i > terms ) throw Error( 'Not converging after ' + terms + ' terms' );
 
       s = add( s, p );
       a = add( a, 1 );
@@ -1539,7 +1539,7 @@ function hypergeometric2F0( a, b, x, tolerance=1e-10 ) {
 
       if ( Math.abs(p) > Math.abs(pLast) && converging ) break; // prevent runaway sum
       if ( Math.abs(p) < Math.abs(pLast) ) converging = true;
-      if ( i > terms ) throw 'Not converging after ' + terms + ' terms';
+      if ( i > terms ) throw Error( 'Not converging after ' + terms + ' terms' );
 
       s += p;
       a++;
@@ -1632,7 +1632,7 @@ function hypergeometric2F1( a, b, c, x, tolerance=1e-10 ) {
     if ( !isComplex(x) ) x = complex(x);
 
     if ( Number.isInteger(c.re) && c.re <= 0 && c.im === 0 )
-      throw 'Hypergeometric function pole';
+      throw Error( 'Hypergeometric function pole' );
 
     var s = complex(1);
     var p = complex(1);
@@ -1651,7 +1651,7 @@ function hypergeometric2F1( a, b, c, x, tolerance=1e-10 ) {
 
   } else {
 
-    if ( Number.isInteger(c) && c <= 0 ) throw 'Hypergeometric function pole';
+    if ( Number.isInteger(c) && c <= 0 ) throw Error( 'Hypergeometric function pole' );
 
     if ( x === 1 ) return gamma(c) * gamma(c-a-b) / gamma(c-a) / gamma(c-b);
 
@@ -1723,19 +1723,19 @@ function lambertW( k, x, tolerance=1e-10 ) {
 
     case 0:
 
-      if ( x < -Math.exp(-1) ) throw 'Unsupported lambertW argument';
+      if ( x < -Math.exp(-1) ) throw Error( 'Unsupported lambertW argument' );
 
       return findRoot( w => w * Math.exp(w) - x, [-1,1000], { tolerance: tolerance } );
 
     case -1:
 
-      if ( x < -Math.exp(-1) || x > 0 ) throw 'Unsupported lambertW argument';
+      if ( x < -Math.exp(-1) || x > 0 ) throw Error( 'Unsupported lambertW argument' );
 
       return findRoot( w => w * Math.exp(w) - x, [-1000,-1], { tolerance: tolerance } );
 
     default:
 
-      throw 'Unsupported lambertW index';
+      throw Error( 'Unsupported lambertW index' );
 
   }
 
@@ -1855,7 +1855,7 @@ function legendreP( l, m, x, renormalized=false ) {
   if ( Number.isInteger(l) && Number.isInteger(m) && Math.abs(x) <= 1 ) {
 
     var mm = Math.abs(m);
-    if ( mm > l ) throw 'Invalid spherical harmonic indices';
+    if ( mm > l ) throw Error( 'Invalid spherical harmonic indices' );
 
     if ( !renormalized ) {
       var norm = 1;
@@ -2147,7 +2147,7 @@ function arccoth( x ) {
 
   if ( isComplex(x) ) {
 
-    if ( x.re === 0 && x.im === 0 ) throw 'Indeterminate value';
+    if ( x.re === 0 && x.im === 0 ) throw Error( 'Indeterminate arccoth value' );
 
     return arctanh( div( 1, x ) );
 
@@ -2163,7 +2163,7 @@ function arcsech( x ) {
 
   if ( isComplex(x) ) {
 
-    if ( x.re === 0 && x.im === 0 ) throw 'Indeterminate value';
+    if ( x.re === 0 && x.im === 0 ) throw Error( 'Indeterminate arcsech value' );
 
     // adjust for branch cut along negative axis
     if ( x.im === 0 ) x.im = -1e-300;
@@ -2258,9 +2258,9 @@ function dirichletEta( x ) { return mul( zeta(x), sub( 1, pow( 2, sub(1,x) ) ) )
 
 function bernoulli( n ) {
 
-  if ( !Number.isInteger(n) ) throw 'Noninteger argument for Bernoulli number';
+  if ( !Number.isInteger(n) ) throw Error( 'Noninteger argument for Bernoulli number' );
 
-  if ( n < 0 ) throw 'Unsupported argument for Bernoulli number';
+  if ( n < 0 ) throw Error( 'Unsupported argument for Bernoulli number' );
 
   if ( n === 0 ) return 1;
 
@@ -2325,7 +2325,7 @@ function ode( f, y, [x0,x1], step=.001, method='runge-kutta' ) {
 
     default:
 
-      throw 'Unsupported method';
+      throw Error( 'Unsupported differential equation solver method' );
 
   }
 
@@ -2339,7 +2339,7 @@ function diff( f, x, n=1, method='ridders' ) {
 
   if ( isComplex(x) || isComplex(f(x)) ) {
 
-    if ( !isComplex(f(x)) ) throw 'Function must handle complex math';
+    if ( !isComplex(f(x)) ) throw Error( 'Function must handle complex math' );
 
     var real = diff( t => f( mul(x,t) ).re, 1, n, method );
     var imag = diff( t => f( mul(x,t) ).im, 1, n, method );
@@ -2409,7 +2409,7 @@ function diff( f, x, n=1, method='ridders' ) {
 
     default:
 
-      throw 'Unsupported method';
+      throw Error( 'Unsupported differentiation method' );
 
   }
 
@@ -2420,7 +2420,7 @@ var D = diff;
 
 function gradient( f, point ) {
 
-  if ( f.length !== point.length ) throw 'Gradient point length differs from function';
+  if ( f.length !== point.length ) throw Error( 'Gradient point length differs from function' );
 
   var result = [];
 
@@ -2450,7 +2450,7 @@ function integrate( f, interval, options={} ) {
     if ( !isComplex(a) ) a = complex(a);
     if ( !isComplex(b) ) b = complex(b);
 
-    if ( !isComplex(f(a)) || !isComplex(f(b)) ) throw 'Function must handle complex math';
+    if ( !isComplex(f(a)) || !isComplex(f(b)) ) throw Error( 'Function must handle complex math' );
 
     function lerp( t ) { return add( mul( sub(b,a), t ), a ); }
 
@@ -2499,7 +2499,7 @@ function integrate( f, interval, options={} ) {
 
       }
 
-      throw 'Maximum interations reached';
+      throw Error( 'Maximum interations reached' );
 
     case 'romberg':
 
@@ -2552,7 +2552,7 @@ function integrate( f, interval, options={} ) {
         var f1 = f( a + h/4 );
         var f2 = f( b - h/4 )
 
-        if ( isNaN(f1) || isNaN(f2) ) throw 'NaN encountered in integration';
+        if ( isNaN(f1) || isNaN(f2) ) throw Error( 'NaN encountered in integration' );
 
         var s1 = ( fa + 4*f1 + fm ) * h / 12;
         var s2 = ( fm + 4*f2 + fb ) * h / 12;
@@ -2658,7 +2658,7 @@ function integrate( f, interval, options={} ) {
 
     default:
 
-      throw 'Unsupported method';
+      throw Error( 'Unsupported integration method' );
 
   }
 
@@ -2735,7 +2735,7 @@ function findRoot( f, interval, options={} ) {
       var fa = f(a);
       var fb = f(b);
 
-      if ( fa * f(b) >= 0 ) throw 'Change of sign necessary for bisection';
+      if ( fa * f(b) >= 0 ) throw Error( 'Change of sign necessary for bisection' );
 
       var root, h;
       if ( fa < 0 ) {
@@ -2755,7 +2755,7 @@ function findRoot( f, interval, options={} ) {
         if ( fmid === 0 || Math.abs(h) < tolerance ) return root;
       }
 
-      throw 'No root found for tolerance ' + tolerance;
+      throw Error( 'No root found for tolerance ' + tolerance );
 
     case 'newton':
 
@@ -2780,11 +2780,11 @@ function findRoot( f, interval, options={} ) {
 
       }
 
-      throw 'No root found for tolerance ' + tolerance;
+      throw Error( 'No root found for tolerance ' + tolerance );
 
     default:
 
-      throw 'Unsupported method';
+      throw Error( 'Unsupported root finding method' );
 
   }
 
@@ -2793,7 +2793,7 @@ function findRoot( f, interval, options={} ) {
 
 function findRoots( f, point, tolerance=1e-10 ) {
 
-  if ( f.length !== point.length ) throw 'Mismatch between equations and starting point for root';
+  if ( f.length !== point.length ) throw Error( 'Mismatch between equations and starting point for root' );
 
   var maxIter = 100;
 
@@ -2814,7 +2814,7 @@ function findRoots( f, point, tolerance=1e-10 ) {
 
   }
 
-  throw 'No root found for tolerance ' + tolerance;
+  throw Error( 'No root found for tolerance ' + tolerance );
 
 }
 
@@ -2910,7 +2910,7 @@ function spline( points, value='function' ) {
 
     default:
 
-      throw 'Unsupported value';
+      throw Error( 'Unsupported spline value' );
 
   }
 
@@ -2919,7 +2919,7 @@ function spline( points, value='function' ) {
 
 function fourierSinCoefficient( f, n, period ) {
 
-  if ( !Number.isInteger(n) ) throw 'Nonintegral Fourier index';
+  if ( !Number.isInteger(n) ) throw Error( 'Nonintegral Fourier index' );
 
   if ( n === 0 ) return 0;
 
@@ -2941,13 +2941,13 @@ function fourierSinCoefficient( f, n, period ) {
 
   }
 
-  throw 'Unsupported Fourier input';
+  throw Error( 'Unsupported Fourier input' );
 
 }
 
 function fourierCosCoefficient( f, n, period ) {
 
-  if ( !Number.isInteger(n) ) throw 'Nonintegral Fourier index';
+  if ( !Number.isInteger(n) ) throw Error( 'Nonintegral Fourier index' );
 
   if ( typeof f === 'function' ) {
 
@@ -2977,7 +2977,7 @@ function fourierCosCoefficient( f, n, period ) {
 
   }
 
-  throw 'Unsupported Fourier input';
+  throw Error( 'Unsupported Fourier input' );
 
 }
 
@@ -2985,7 +2985,7 @@ function fourierCosCoefficient( f, n, period ) {
 function eigensystem( A, symmetric=true ) {
 
   if ( symmetric ) return tridiagonalQL( tridiagonalForm(A) );
-  else throw 'Unsupported system';
+  else throw Error( 'Unsupported eigensystem' );
 
 }
 
@@ -3148,7 +3148,7 @@ function tridiagonalQL( tridiagonalForm ) {
       do {
 
         iter = iter + 1;
-        if ( iter > 1000 ) throw 'Eigenvalues not converging...';
+        if ( iter > 1000 ) throw Error( 'Eigenvalues not converging...' );
 
         // compute implicit shift
 
@@ -3259,7 +3259,7 @@ function luDecomposition( A, tolerance=1e-10 ) {
       }
     }
 
-    if ( maxValue < tolerance ) throw 'Matrix is degenerate';
+    if ( maxValue < tolerance ) throw Error( 'Matrix is degenerate' );
 
     if ( maxIndex !== i ) {
 
@@ -3407,7 +3407,7 @@ function transpose( A ) {
 
 function matrixAdd( A, B ) {
 
-  if ( !Array.isArray(A) && !Array.isArray(B) ) throw 'No matrices';
+  if ( !Array.isArray(A) && !Array.isArray(B) ) throw Error( 'No matrices to add' );
   if ( !Array.isArray(A) ) A = matrix( B.length, B[0].length, A );
   if ( !Array.isArray(B) ) B = matrix( A.length, A[0].length, B );
 
@@ -3423,7 +3423,7 @@ function matrixAdd( A, B ) {
 
 function matrixSub( A, B ) {
 
-  if ( !Array.isArray(A) && !Array.isArray(B) ) throw 'No matrices';
+  if ( !Array.isArray(A) && !Array.isArray(B) ) throw Error( 'No matrices to subtract' );
   if ( !Array.isArray(A) ) A = matrix( B.length, B[0].length, A );
   if ( !Array.isArray(B) ) B = matrix( A.length, A[0].length, B );
 
@@ -3439,10 +3439,10 @@ function matrixSub( A, B ) {
 
 function matrixMul( A, B ) {
 
-  if ( !Array.isArray(A) && !Array.isArray(B) ) throw 'No matrices';
+  if ( !Array.isArray(A) && !Array.isArray(B) ) throw Error( 'No matrices to multiply' );
   if ( !Array.isArray(A) ) A = identity( B.length, A );
   if ( !Array.isArray(B) ) B = identity( A[0].length, B );
-  if ( A[0].length !== B.length ) throw( 'Incompatible matrices' );
+  if ( A[0].length !== B.length ) throw Error( 'Incompatible matrices to multiply' );
 
   var C = matrix( A.length, B[0].length, 0 );
 

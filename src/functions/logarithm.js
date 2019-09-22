@@ -47,19 +47,19 @@ function lambertW( k, x, tolerance=1e-10 ) {
 
     case 0:
 
-      if ( x < -Math.exp(-1) ) throw 'Unsupported lambertW argument';
+      if ( x < -Math.exp(-1) ) throw Error( 'Unsupported lambertW argument' );
 
       return findRoot( w => w * Math.exp(w) - x, [-1,1000], { tolerance: tolerance } );
 
     case -1:
 
-      if ( x < -Math.exp(-1) || x > 0 ) throw 'Unsupported lambertW argument';
+      if ( x < -Math.exp(-1) || x > 0 ) throw Error( 'Unsupported lambertW argument' );
 
       return findRoot( w => w * Math.exp(w) - x, [-1000,-1], { tolerance: tolerance } );
 
     default:
 
-      throw 'Unsupported lambertW index';
+      throw Error( 'Unsupported lambertW index' );
 
   }
 

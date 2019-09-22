@@ -149,7 +149,7 @@ function pow( x, y ) {
     if ( x.re === 0 && x.im === 0 && y.re === 0 && y.im === 0 )
       return complex(1);
     if ( x.re === 0 && x.im === 0 && y.re < 0 )
-      throw 'Power singularity';
+      throw Error( 'Power singularity' );
 
     var r = Math.sqrt( x.re * x.re + x.im * x.im );
     var phi = Math.atan2( x.im, x.re );

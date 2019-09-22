@@ -9,7 +9,7 @@ function hypergeometric0F1( a, x, tolerance=1e-10 ) {
     if ( !isComplex(x) ) x = complex(x);
 
     if ( Number.isInteger(a.re) && a.re <= 0 && a.im === 0 )
-      throw 'Hypergeometric function pole';
+      throw Error( 'Hypergeometric function pole' );
 
     // asymptotic form as per Johansson
     if ( abs(x) > useAsymptotic ) {
@@ -44,7 +44,7 @@ function hypergeometric0F1( a, x, tolerance=1e-10 ) {
 
   } else {
 
-    if ( Number.isInteger(a) && a <= 0 ) throw 'Hypergeometric function pole';
+    if ( Number.isInteger(a) && a <= 0 ) throw Error( 'Hypergeometric function pole' );
 
     // asymptotic form is complex
     if ( Math.abs(x) > useAsymptotic ) return hypergeometric0F1( a, complex(x) ).re;
@@ -78,7 +78,7 @@ function hypergeometric1F1( a, b, x, tolerance=1e-10 ) {
     if ( !isComplex(x) ) x = complex(x);
 
     if ( Number.isInteger(b.re) && b.re <= 0 && b.im === 0 )
-      throw 'Hypergeometric function pole';
+      throw Error( 'Hypergeometric function pole' );
 
     // Kummer transformation
     if ( x.re < 0 ) return mul( exp(x), hypergeometric1F1( sub(b,a), b, mul(x,-1) ) );
@@ -112,7 +112,7 @@ function hypergeometric1F1( a, b, x, tolerance=1e-10 ) {
 
   } else {
 
-    if ( Number.isInteger(b) && b <= 0 ) throw 'Hypergeometric function pole';
+    if ( Number.isInteger(b) && b <= 0 ) throw Error( 'Hypergeometric function pole' );
 
     // Kummer transformation
     if ( x < 0 ) return exp(x) * hypergeometric1F1( b-a, b, -x );
@@ -160,7 +160,7 @@ function hypergeometric2F0( a, b, x, tolerance=1e-10 ) {
 
       if ( abs(p) > abs(pLast) && converging ) break; // prevent runaway sum
       if ( abs(p) < abs(pLast) ) converging = true;
-      if ( i > terms ) throw 'Not converging after ' + terms + ' terms';
+      if ( i > terms ) throw Error( 'Not converging after ' + terms + ' terms' );
 
       s = add( s, p );
       a = add( a, 1 );
@@ -185,7 +185,7 @@ function hypergeometric2F0( a, b, x, tolerance=1e-10 ) {
 
       if ( Math.abs(p) > Math.abs(pLast) && converging ) break; // prevent runaway sum
       if ( Math.abs(p) < Math.abs(pLast) ) converging = true;
-      if ( i > terms ) throw 'Not converging after ' + terms + ' terms';
+      if ( i > terms ) throw Error( 'Not converging after ' + terms + ' terms' );
 
       s += p;
       a++;
@@ -278,7 +278,7 @@ function hypergeometric2F1( a, b, c, x, tolerance=1e-10 ) {
     if ( !isComplex(x) ) x = complex(x);
 
     if ( Number.isInteger(c.re) && c.re <= 0 && c.im === 0 )
-      throw 'Hypergeometric function pole';
+      throw Error( 'Hypergeometric function pole' );
 
     var s = complex(1);
     var p = complex(1);
@@ -297,7 +297,7 @@ function hypergeometric2F1( a, b, c, x, tolerance=1e-10 ) {
 
   } else {
 
-    if ( Number.isInteger(c) && c <= 0 ) throw 'Hypergeometric function pole';
+    if ( Number.isInteger(c) && c <= 0 ) throw Error( 'Hypergeometric function pole' );
 
     if ( x === 1 ) return gamma(c) * gamma(c-a-b) / gamma(c-a) / gamma(c-b);
 

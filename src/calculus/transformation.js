@@ -1,7 +1,7 @@
 
 function fourierSinCoefficient( f, n, period ) {
 
-  if ( !Number.isInteger(n) ) throw 'Nonintegral Fourier index';
+  if ( !Number.isInteger(n) ) throw Error( 'Nonintegral Fourier index' );
 
   if ( n === 0 ) return 0;
 
@@ -23,13 +23,13 @@ function fourierSinCoefficient( f, n, period ) {
 
   }
 
-  throw 'Unsupported Fourier input';
+  throw Error( 'Unsupported Fourier input' );
 
 }
 
 function fourierCosCoefficient( f, n, period ) {
 
-  if ( !Number.isInteger(n) ) throw 'Nonintegral Fourier index';
+  if ( !Number.isInteger(n) ) throw Error( 'Nonintegral Fourier index' );
 
   if ( typeof f === 'function' ) {
 
@@ -59,7 +59,7 @@ function fourierCosCoefficient( f, n, period ) {
 
   }
 
-  throw 'Unsupported Fourier input';
+  throw Error( 'Unsupported Fourier input' );
 
 }
 

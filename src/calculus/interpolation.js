@@ -56,7 +56,7 @@ function findRoot( f, interval, options={} ) {
       var fa = f(a);
       var fb = f(b);
 
-      if ( fa * f(b) >= 0 ) throw 'Change of sign necessary for bisection';
+      if ( fa * f(b) >= 0 ) throw Error( 'Change of sign necessary for bisection' );
 
       var root, h;
       if ( fa < 0 ) {
@@ -76,7 +76,7 @@ function findRoot( f, interval, options={} ) {
         if ( fmid === 0 || Math.abs(h) < tolerance ) return root;
       }
 
-      throw 'No root found for tolerance ' + tolerance;
+      throw Error( 'No root found for tolerance ' + tolerance );
 
     case 'newton':
 
@@ -101,11 +101,11 @@ function findRoot( f, interval, options={} ) {
 
       }
 
-      throw 'No root found for tolerance ' + tolerance;
+      throw Error( 'No root found for tolerance ' + tolerance );
 
     default:
 
-      throw 'Unsupported method';
+      throw Error( 'Unsupported root finding method' );
 
   }
 
@@ -114,7 +114,7 @@ function findRoot( f, interval, options={} ) {
 
 function findRoots( f, point, tolerance=1e-10 ) {
 
-  if ( f.length !== point.length ) throw 'Mismatch between equations and starting point for root';
+  if ( f.length !== point.length ) throw Error( 'Mismatch between equations and starting point for root' );
 
   var maxIter = 100;
 
@@ -135,7 +135,7 @@ function findRoots( f, point, tolerance=1e-10 ) {
 
   }
 
-  throw 'No root found for tolerance ' + tolerance;
+  throw Error( 'No root found for tolerance ' + tolerance );
 
 }
 
@@ -231,7 +231,7 @@ function spline( points, value='function' ) {
 
     default:
 
-      throw 'Unsupported value';
+      throw Error( 'Unsupported spline value' );
 
   }
 

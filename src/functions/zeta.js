@@ -47,9 +47,9 @@ function dirichletEta( x ) { return mul( zeta(x), sub( 1, pow( 2, sub(1,x) ) ) )
 
 function bernoulli( n ) {
 
-  if ( !Number.isInteger(n) ) throw 'Noninteger argument for Bernoulli number';
+  if ( !Number.isInteger(n) ) throw Error( 'Noninteger argument for Bernoulli number' );
 
-  if ( n < 0 ) throw 'Unsupported argument for Bernoulli number';
+  if ( n < 0 ) throw Error( 'Unsupported argument for Bernoulli number' );
 
   if ( n === 0 ) return 1;
 
