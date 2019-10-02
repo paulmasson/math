@@ -205,7 +205,7 @@ function hypergeometric2F0( a, b, x, tolerance=1e-10 ) {
 function hypergeometric2F1( a, b, c, x, tolerance=1e-10 ) {
 
   // choose smallest absolute value of transformed argument
-  // transformations from https://dlmf.nist.gov/15.8
+  // transformations from dlmf.nist.gov/15.8
 
   var absArray = [ abs(x), abs(div(x,sub(x,1))), abs(inv(x)),
                    abs(inv(sub(1,x))), abs(sub(1,x)), abs(sub(1,inv(x))) ];
