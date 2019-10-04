@@ -140,7 +140,7 @@ function findRoots( f, point, tolerance=1e-10 ) {
 }
 
 
-function spline( points, value='function' ) {
+function spline( points, value='function', tolerance=1e-10 ) {
 
   // adapted from gsl / cspline.c and reference therein
 
@@ -201,6 +201,9 @@ function spline( points, value='function' ) {
 
         if ( x < points[0][0] || x > points[points.length-1][0] )
           throw Error( 'Argument outside spline input domain' );
+
+        // method does not define b[points.length-1] so fudge endpoint
+        if ( x === points[points.length-1][0] ) x -= tolerance;
 
         for ( var i = 0 ; i < points.length ; i++ )
           if ( x === points[i][0] ) return b[i];
