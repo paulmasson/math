@@ -180,6 +180,9 @@ function spline( points, value='function' ) {
 
       return function( x ) {
 
+        if ( x < points[0][0] || x > points[points.length-1][0] )
+          throw Error( 'Argument outside spline input domain' );
+
         for ( var i = 0 ; i < points.length ; i++ )
           if ( x === points[i][0] ) return a[i];
 
@@ -196,6 +199,9 @@ function spline( points, value='function' ) {
 
       return function( x ) {
 
+        if ( x < points[0][0] || x > points[points.length-1][0] )
+          throw Error( 'Argument outside spline input domain' );
+
         for ( var i = 0 ; i < points.length ; i++ )
           if ( x === points[i][0] ) return b[i];
 
@@ -210,6 +216,9 @@ function spline( points, value='function' ) {
     case 'integral':
 
       return function( x ) {
+
+        if ( x < points[0][0] || x > points[points.length-1][0] )
+          throw Error( 'Argument outside spline input domain' );
 
         var sum = 0;
 
