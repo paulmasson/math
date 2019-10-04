@@ -1559,7 +1559,7 @@ function hypergeometric2F0( a, b, x, tolerance=1e-10 ) {
 function hypergeometric2F1( a, b, c, x, tolerance=1e-10 ) {
 
   // choose smallest absolute value of transformed argument
-  // transformations from https://dlmf.nist.gov/15.8
+  // transformations from dlmf.nist.gov/15.8
 
   var absArray = [ abs(x), abs(div(x,sub(x,1))), abs(inv(x)),
                    abs(inv(sub(1,x))), abs(sub(1,x)), abs(sub(1,inv(x))) ];
@@ -2819,7 +2819,7 @@ function findRoots( f, point, tolerance=1e-10 ) {
 }
 
 
-function spline( points, value='function' ) {
+function spline( points, value='function', tolerance=1e-10 ) {
 
   // adapted from gsl / cspline.c and reference therein
 
@@ -2859,6 +2859,9 @@ function spline( points, value='function' ) {
 
       return function( x ) {
 
+        if ( x < points[0][0] || x > points[points.length-1][0] )
+          throw Error( 'Argument outside spline input domain' );
+
         for ( var i = 0 ; i < points.length ; i++ )
           if ( x === points[i][0] ) return a[i];
 
@@ -2875,6 +2878,12 @@ function spline( points, value='function' ) {
 
       return function( x ) {
 
+        if ( x < points[0][0] || x > points[points.length-1][0] )
+          throw Error( 'Argument outside spline input domain' );
+
+        // method does not define b[points.length-1] so fudge endpoint
+        if ( x === points[points.length-1][0] ) x -= tolerance;
+
         for ( var i = 0 ; i < points.length ; i++ )
           if ( x === points[i][0] ) return b[i];
 
@@ -2889,6 +2898,9 @@ function spline( points, value='function' ) {
     case 'integral':
 
       return function( x ) {
+
+        if ( x < points[0][0] || x > points[points.length-1][0] )
+          throw Error( 'Argument outside spline input domain' );
 
         var sum = 0;
 
