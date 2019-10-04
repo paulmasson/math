@@ -213,6 +213,29 @@ function besselJ( n, x ) {
 
 }
 
+function besselJZero( n, m, derivative=false ) {
+
+  if ( n < 0 ) throw Error( 'Negative order for Bessel zero' );
+  if ( !Number.isInteger(m) ) throw Error( 'Nonintegral index for Bessel zero' );
+
+  // approximations from dlmf.nist.gov/10.21#vi
+
+  if ( derivative ) {
+
+    var b = ( m + n/2 - 3/4 ) * pi;
+
+    return findRoot( x => diff( x => besselJ(n,x), x ), b );
+
+  } else {
+
+    var a = ( m + n/2 - 1/4 ) * pi;
+
+    return findRoot( x => besselJ(n,x), a );
+
+  }
+
+}
+
 function besselY( n, x ) {
 
   // for averaging over integer orders until write code for limit
