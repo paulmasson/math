@@ -11,8 +11,26 @@ function complex( x, y ) {
 
 var C = complex;
 
-function isComplex( x ) { return typeof x === 'object' && 're' in x }
+function isComplex( x ) { return typeof x === 'object' && 're' in x; }
 
+
+function re( x ) {
+
+  if ( isComplex(x) ) return x.re;
+  return x;
+
+}
+
+var real = re;
+
+function im( x ) {
+
+  if ( isComplex(x) ) return x.im;
+  return 0;
+
+}
+
+var imag = im;
 
 function abs( x ) {
 
