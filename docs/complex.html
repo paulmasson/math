@@ -17,14 +17,24 @@
 
 <p><b>C( <i>x</i> )</b> &mdash; returns a complex number as <code>{ re: <i>x</i>, im: 0 }</code></p>
 
-<p>The separate attributes are accessed through their respective names:</p>
+<br><p>The separate attributes can be accessed through their respective names,</p>
 
 <pre>
 complex( <i>x</i>, <i>y</i> ).re = <i>x</i>
 complex( <i>x</i>, <i>y</i> ).im = <i>y</i>
 </pre>
 
-<p>Since JavaScript does not support operator overloading, functions are available for complex arithmetic:</p>
+<p>or with convenience functions:</p>
+
+<p><b>re( <i>x</i> )</b> &mdash; real part of a real or complex number</p>
+
+<p><b>real( <i>x</i> )</b> &mdash; real part of a real or complex number</p>
+
+<p><b>im( <i>x</i> )</b> &mdash; imaginary part of a real or complex number</p>
+
+<p><b>imag( <i>x</i> )</b> &mdash; imaginary part of a real or complex number</p>
+
+<br><p>Since JavaScript does not support operator overloading, functions are available for complex arithmetic:</p>
 
 <p><b>add( <i>x</i>, <i>y</i> )</b> &mdash; add two real or complex numbers</p>
 
