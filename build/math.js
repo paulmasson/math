@@ -266,6 +266,32 @@ function besselY( n, x ) {
 
 }
 
+function besselYZero( n, m, derivative=false ) {
+
+  if ( n < 0 ) throw Error( 'Negative order for Bessel zero' );
+  if ( !Number.isInteger(m) ) throw Error( 'Nonintegral index for Bessel zero' );
+
+  // approximations from dlmf.nist.gov/10.21#vi
+  var delta = .9 * pi/2;
+
+  if ( derivative ) {
+
+    var b = ( m + n/2 - 1/4 ) * pi;
+    var e = b - ( 4*n**2 + 3 ) / ( 8*b );
+
+    return findRoot( x => diff( x => besselY(n,x), x ), [ e-delta, e+delta ] );
+
+  } else {
+
+    var a = ( m + n/2 - 3/4 ) * pi;
+    var e = a - ( 4*n**2 - 1 ) / ( 8*a );
+
+    return findRoot( x => besselY(n,x), [ e-delta, e+delta ] );
+
+  }
+
+}
+
 function besselI( n, x ) {
 
   if ( isComplex(n) || isComplex(x) ) {
