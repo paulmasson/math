@@ -1836,6 +1836,24 @@ function kronecker( i, j ) {
 }
 
 
+function piecewise() {
+
+  var pieces = arguments;
+
+  return function( x ) {
+
+    for ( var i = 0 ; i < pieces.length ; i++ ) {
+      var domain = pieces[i][1];
+      if ( x >= domain[0] && x <= domain[1] ) return pieces[i][0](x);
+    }
+
+    return 0;
+
+  }
+
+}
+
+
 function hermite( n, x ) {
 
   function coefficients( n ) {
