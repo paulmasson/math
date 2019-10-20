@@ -337,9 +337,6 @@ function besselK( n, x ) {
 
   var useAsymptotic = 5;
 
-  // for averaging over integer orders until write code for limit
-  var delta = 1e-5;
-
   if ( isComplex(n) || isComplex(x) ) {
 
     if ( !isComplex(n) ) n = complex(n);
@@ -355,8 +352,10 @@ function besselK( n, x ) {
 
     }
 
+    // based on dlmf.nist.gov/10.2#E3
     if ( Number.isInteger(n.re) && n.im === 0 )
-      return div( add( besselK( n.re + delta, x ), besselK( n.re - delta, x ) ), 2 );
+      return mul( pow(-1,add(n,1)), 1/2,
+                  add( diff( n => besselI(n,x), n ), diff( n => besselI(n,x), neg(n) ) ) );
 
     var product = div( pi/2, sin( mul(n,pi) ) );
     return mul( product, sub( besselI( mul(-1,n), x ), besselI(n,x) ) );
@@ -368,8 +367,9 @@ function besselK( n, x ) {
 
   if ( x < 0 ) return besselK( n, complex(x) );
 
+  // based on dlmf.nist.gov/10.2#E3
   if ( Number.isInteger(n) )
-    return ( besselK( n + delta, x ) + besselK( n - delta, x ) ) / 2;
+    return (-1)**(n+1)/2 * ( diff( n => besselI(n,x), n ) + diff( n => besselI(n,x), -n ) );
 
   return pi/2 * ( besselI(-n,x) - besselI(n,x) ) / sin(n*pi);
 
