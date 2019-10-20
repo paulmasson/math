@@ -50,16 +50,15 @@ function besselJZero( n, m, derivative=false ) {
 
 function besselY( n, x ) {
 
-  // for averaging over integer orders until write code for limit
-  var delta = 1e-5;
-
   if ( isComplex(n) || isComplex(x) ) {
 
     if ( !isComplex(n) ) n = complex(n);
     if ( !isComplex(x) ) x = complex(x);
 
+    // dlmf.nist.gov/10.2#E3
     if ( Number.isInteger(n.re) && n.im === 0 )
-      return div( add( besselY( n.re + delta, x ), besselY( n.re - delta, x ) ), 2 );
+      return div( add( diff( n => besselJ(n,x), n ),
+                       mul( pow(-1,n), diff( n => besselJ(n,x), neg(n) ) ) ), pi );
 
     var sum = sub( mul( besselJ(n,x), cos( mul(n,pi) ) ), besselJ( mul(-1,n), x ) );
     return div( sum, sin( mul(n,pi) ) );
@@ -68,8 +67,9 @@ function besselY( n, x ) {
 
   if ( x < 0 ) return besselY( n, complex(x) );
 
+  // dlmf.nist.gov/10.2#E3
   if ( Number.isInteger(n) )
-    return ( besselY( n + delta, x ) + besselY( n - delta, x ) ) / 2;
+    return ( diff( n => besselJ(n,x), n ) + (-1)**n * diff( n => besselJ(n,x), -n ) ) / pi;
 
   return ( besselJ(n,x) * cos(n*pi) - besselJ(-n,x) ) / sin(n*pi);
 
