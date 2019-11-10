@@ -90,7 +90,7 @@ function gradient( f, point ) {
 
   for ( var i = 0 ; i < point.length ; i++ ) {
 
-    var a = [].concat( point );
+    var a = point.slice();
 
     result.push( diff( x => { a[i] = x; return f.apply( null, a ); }, a[i] ) );
 
