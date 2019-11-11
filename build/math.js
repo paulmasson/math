@@ -2532,7 +2532,7 @@ function findExtremum( f, point, options={} ) {
   var tolerance = 'tolerance' in options ? options.tolerance : 1e-10;
 
   var maxIter = 1e4;
-  var gamma = 1 * sign;
+  var gamma = .01 * sign;
   var grad, step, test;
 
   for ( var i = 0 ; i < maxIter ; i++ ) {
