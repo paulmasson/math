@@ -2524,6 +2524,38 @@ function gradient( f, point ) {
 
 }
 
+function findExtremum( f, point, options={} ) {
+
+  if ( !Array.isArray(point) ) point = [ point ];
+
+  var sign = options.findMaximum ? 1 : -1;
+  var tolerance = 'tolerance' in options ? options.tolerance : 1e-10;
+
+  var maxIter = 1e4;
+  var gamma = 1 * sign;
+  var grad, step, test;
+
+  for ( var i = 0 ; i < maxIter ; i++ ) {
+
+    grad = gradient( f, point );
+    test = true;
+
+    for ( var j = 0 ; j < point.length ; j++ ) {
+      step = gamma * grad[j];
+      point[j] += step;
+      test = test && step < tolerance;
+    }
+
+    if ( test )
+     if ( point.length === 1 ) return point[0];
+     else return point;
+
+  }
+
+  throw Error( 'No extremum found for tolerance ' + tolerance );
+
+}
+
 
 function integrate( f, interval, options={} ) {
 
