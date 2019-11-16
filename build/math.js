@@ -2363,6 +2363,12 @@ function bernoulli( n ) {
 
 function ode( f, y, [x0,x1], step=.001, method='runge-kutta' ) {
 
+  if ( x1 < x0 ) {
+    function compare( x ) { return x >= x1; };
+    step *= -1;
+  } else
+    function compare( x ) { return x <= x1; };
+
   if ( f(x0,y)[0] === undefined ) {
     g = f;
     f = function(x,y) { return [ g(x,y) ]; };
@@ -2376,7 +2382,7 @@ function ode( f, y, [x0,x1], step=.001, method='runge-kutta' ) {
 
     case 'euler':
 
-      for ( var x = x0+step ; x <= x1 ; x += step ) {
+      for ( var x = x0+step ; compare(x) ; x += step ) {
 
         var k = f(x,y);
 
@@ -2390,7 +2396,7 @@ function ode( f, y, [x0,x1], step=.001, method='runge-kutta' ) {
 
     case 'runge-kutta':
 
-      for ( var x = x0+step ; x <= x1 ; x += step ) {
+      for ( var x = x0+step ; compare(x) ; x += step ) {
 
         var y1 = [], y2 = [], y3 = [];
 
