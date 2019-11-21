@@ -1,11 +1,8 @@
 
-function integrate( f, interval, options={} ) {
+function integrate( f, [a,b], options={} ) {
 
   var method = 'method' in options ? options.method : 'adaptive-simpson';
   var tolerance = 'tolerance' in options ? options.tolerance : 1e-10;
-
-  var a = interval[0];
-  var b = interval[1];
 
   if ( isComplex(a) || isComplex(b) ) {
 
