@@ -129,12 +129,12 @@ function neg( x ) { return mul( -1, x ); }
 
 function div( x, y ) {
 
-  // need to handle 0/0...
-
   if ( isComplex(x) || isComplex(y) ) {
 
     if ( !isComplex(x) ) x = complex(x);
     if ( !isComplex(y) ) y = complex(y);
+
+    if ( y.re === 0 && y.im === 0 ) throw Error( 'Division by zero' );
 
     if ( Math.abs(y.re) < Math.abs(y.im) ) {
 
@@ -151,6 +151,8 @@ function div( x, y ) {
     }
 
   }
+
+  if ( y === 0 ) throw Error( 'Division by zero' );
 
   return x / y;
 
@@ -181,6 +183,8 @@ function pow( x, y ) {
     return { re: R * Math.cos(Phi), im: R * Math.sin(Phi) };
 
   }
+
+  if ( x === 0 && y < 0 ) throw Error( 'Power singularity' );
 
   if ( x < 0 && !Number.isInteger(y) ) return pow( complex(x), y );
 
