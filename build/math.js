@@ -1632,73 +1632,77 @@ function hypergeometric2F0( a, b, x, tolerance=1e-10 ) {
 
 function hypergeometric2F1( a, b, c, x, tolerance=1e-10 ) {
 
-  // choose smallest absolute value of transformed argument
-  // transformations from dlmf.nist.gov/15.8
-
-  var absArray = [ abs(x), abs(div(x,sub(x,1))), abs(inv(x)),
-                   abs(inv(sub(1,x))), abs(sub(1,x)), abs(sub(1,inv(x))) ];
-
-  var index = absArray.indexOf( Math.min.apply( null, absArray ) );
-
-  switch( index ) {
-
-    case 1:
-
-      return mul( pow( sub(1,x), neg(a) ), hypergeometric2F1( a, sub(c,b), c, div(x,sub(x,1)) ) );
-
-    case 2:
-
-      var factor = div( sin( mul( pi, sub(b,a) ) ), mul( pi, gamma(c) ) );
-
-      var t1 = mul( div( pow( neg(x), neg(a) ), mul( gamma(b), gamma(sub(c,a)), gamma(add(a,neg(b),1)) ) ),
-                    hypergeometric2F1( a, add(a,neg(c),1), add(a,neg(b),1), inv(x) ) );
-
-      var t2 = mul( div( pow( neg(x), neg(b) ), mul( gamma(a), gamma(sub(c,b)), gamma(add(b,neg(a),1)) ) ),
-                    hypergeometric2F1( b, add(b,neg(c),1), add(b,neg(a),1), inv(x) ) );
-
-      return div( sub( t1, t2 ), factor );
-
-    case 3:
-
-      var factor = div( sin( mul( pi, sub(b,a) ) ), mul( pi, gamma(c) ) );
-
-      var t1 = mul( div( pow( sub(1,x), neg(a) ), mul( gamma(b), gamma(sub(c,a)), gamma(add(a,neg(b),1)) ) ),
-                    hypergeometric2F1( a, sub(c,b), add(a,neg(b),1), inv(sub(1,x)) ) );
-
-      var t2 = mul( div( pow( sub(1,x), neg(b) ), mul( gamma(a), gamma(sub(c,b)), gamma(add(b,neg(a),1)) ) ),
-                    hypergeometric2F1( b, sub(c,a), add(b,neg(a),1), inv(sub(1,x)) ) );
-
-      return div( sub( t1, t2 ), factor );
-
-    case 4:
-
-      var factor = div( sin( mul( pi, sub(c,add(a,b)) ) ), mul( pi, gamma(c) ) );
-
-      var t1 = mul( inv( mul( gamma(sub(c,a)), gamma(sub(c,b)), gamma(add(a,b,neg(c),1)) ) ),
-                    hypergeometric2F1( a, b, add(a,b,neg(c),1), sub(1,x) ) );
-
-      var t2 = mul( div( pow( sub(1,x), sub(c,add(a,b)) ),
-                         mul( gamma(a), gamma(b), gamma(add(c,neg(a),neg(b),1)) ) ),
-                    hypergeometric2F1( sub(c,a), sub(c,b), add(c,neg(a),neg(b),1), sub(1,x) ) );
-
-      return div( sub( t1, t2 ), factor );
-
-    case 5:
-
-      var factor = div( sin( mul( pi, sub(c,add(a,b)) ) ), mul( pi, gamma(c) ) );
-
-      var t1 = mul( div( pow( x, neg(a) ), mul( gamma(sub(c,a)), gamma(sub(c,b)), gamma(add(a,b,neg(c),1)) ) ),
-                    hypergeometric2F1( a, add(a,neg(c),1), add(a,b,neg(c),1), sub(1,inv(x)) ) );
-
-      var t2 = mul( div( mul( pow( sub(1,x), sub(c,add(a,b)) ), pow( x, sub(a,c) ) ),
-                         mul( gamma(a), gamma(b), gamma(add(c,neg(a),neg(b),1)) ) ),
-                    hypergeometric2F1( sub(c,a), sub(1,a), add(c,neg(a),neg(b),1), sub(1,inv(x)) ) );
-
-      return div( sub( t1, t2 ), factor );
-
-  }
-
   if ( isComplex(a) || isComplex(b) || isComplex(c) || isComplex(x) ) {
+
+    // choose smallest absolute value of transformed argument
+    // transformations from dlmf.nist.gov/15.8
+
+    var absArray = [ abs(x), abs(div(x,sub(x,1))), abs(inv(x)),
+                     abs(inv(sub(1,x))), abs(sub(1,x)), abs(sub(1,inv(x))) ];
+
+    var index = absArray.indexOf( Math.min.apply( null, absArray ) );
+
+    switch( index ) {
+
+      case 0:
+
+        break;
+
+      case 1:
+
+        return mul( pow( sub(1,x), neg(a) ), hypergeometric2F1( a, sub(c,b), c, div(x,sub(x,1)) ) );
+
+      case 2:
+
+        var factor = div( sin( mul( pi, sub(b,a) ) ), mul( pi, gamma(c) ) );
+
+        var t1 = mul( div( pow( neg(x), neg(a) ), mul( gamma(b), gamma(sub(c,a)), gamma(add(a,neg(b),1)) ) ),
+                      hypergeometric2F1( a, add(a,neg(c),1), add(a,neg(b),1), inv(x) ) );
+
+        var t2 = mul( div( pow( neg(x), neg(b) ), mul( gamma(a), gamma(sub(c,b)), gamma(add(b,neg(a),1)) ) ),
+                      hypergeometric2F1( b, add(b,neg(c),1), add(b,neg(a),1), inv(x) ) );
+
+        return div( sub( t1, t2 ), factor );
+
+      case 3:
+
+        var factor = div( sin( mul( pi, sub(b,a) ) ), mul( pi, gamma(c) ) );
+
+        var t1 = mul( div( pow( sub(1,x), neg(a) ), mul( gamma(b), gamma(sub(c,a)), gamma(add(a,neg(b),1)) ) ),
+                      hypergeometric2F1( a, sub(c,b), add(a,neg(b),1), inv(sub(1,x)) ) );
+
+        var t2 = mul( div( pow( sub(1,x), neg(b) ), mul( gamma(a), gamma(sub(c,b)), gamma(add(b,neg(a),1)) ) ),
+                      hypergeometric2F1( b, sub(c,a), add(b,neg(a),1), inv(sub(1,x)) ) );
+
+        return div( sub( t1, t2 ), factor );
+
+      case 4:
+
+        var factor = div( sin( mul( pi, sub(c,add(a,b)) ) ), mul( pi, gamma(c) ) );
+
+        var t1 = mul( inv( mul( gamma(sub(c,a)), gamma(sub(c,b)), gamma(add(a,b,neg(c),1)) ) ),
+                      hypergeometric2F1( a, b, add(a,b,neg(c),1), sub(1,x) ) );
+
+        var t2 = mul( div( pow( sub(1,x), sub(c,add(a,b)) ),
+                           mul( gamma(a), gamma(b), gamma(add(c,neg(a),neg(b),1)) ) ),
+                      hypergeometric2F1( sub(c,a), sub(c,b), add(c,neg(a),neg(b),1), sub(1,x) ) );
+
+        return div( sub( t1, t2 ), factor );
+
+      case 5:
+
+        var factor = div( sin( mul( pi, sub(c,add(a,b)) ) ), mul( pi, gamma(c) ) );
+
+        var t1 = mul( div( pow( x, neg(a) ), mul( gamma(sub(c,a)), gamma(sub(c,b)), gamma(add(a,b,neg(c),1)) ) ),
+                      hypergeometric2F1( a, add(a,neg(c),1), add(a,b,neg(c),1), sub(1,inv(x)) ) );
+
+        var t2 = mul( div( mul( pow( sub(1,x), sub(c,add(a,b)) ), pow( x, sub(a,c) ) ),
+                           mul( gamma(a), gamma(b), gamma(add(c,neg(a),neg(b),1)) ) ),
+                      hypergeometric2F1( sub(c,a), sub(1,a), add(c,neg(a),neg(b),1), sub(1,inv(x)) ) );
+
+        return div( sub( t1, t2 ), factor );
+
+    }
 
     if ( !isComplex(a) ) a = complex(a);
     if ( !isComplex(b) ) b = complex(b);
@@ -1724,6 +1728,8 @@ function hypergeometric2F1( a, b, c, x, tolerance=1e-10 ) {
     return s;
 
   } else {
+
+    if ( x > 1 || x < 0 ) throw Error( 'Unsupported real hypergeometric argument' );
 
     if ( Number.isInteger(c) && c <= 0 ) throw Error( 'Hypergeometric function pole' );
 
