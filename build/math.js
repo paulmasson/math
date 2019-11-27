@@ -2445,6 +2445,13 @@ function diff( f, x, n=1, method='ridders' ) {
 
     if ( !isComplex(f(x)) ) throw Error( 'Function must handle complex math' );
 
+    // average over origin to avoid roundoff errors
+    // better way to reuse code for real differentiation?
+    var delta = 1e-5;
+    if ( abs(x) < delta )
+      return div( add( diff( f, complex(delta), n, method ),
+                       diff( f, neg(complex(delta)), n, method ) ), 2 );
+
     var real = diff( t => f( mul(x,t) ).re, 1, n, method );
     var imag = diff( t => f( mul(x,t) ).im, 1, n, method );
 
