@@ -301,11 +301,24 @@ function hypergeometric2F1( a, b, c, x, tolerance=1e-10 ) {
 
   } else {
 
-    if ( x > 1 || x < 0 ) throw Error( 'Unsupported real hypergeometric argument' );
-
     if ( Number.isInteger(c) && c <= 0 ) throw Error( 'Hypergeometric function pole' );
 
+    // transformation from dlmf.nist.gov/15.8
+    if ( x < -1 ) {
+
+      var factor = sin( pi*(b-a) ) / pi / gamma(c);
+      var t1 = (-x)**(-a) / gamma(b) / gamma(c-a) / gamma(a-b+1) * hypergeometric2F1( a, a-c+1, a-b+1, 1/x );
+      var t2 = (-x)**(-b) / gamma(a) / gamma(c-b) / gamma(b-a+1) * hypergeometric2F1( b, b-c+1, b-a+1, 1/x );
+
+      return ( t1 - t2 ) / factor;
+
+    }
+
+    if ( x === -1 ) throw Error( 'Unsupported real hypergeometric argument' );
+
     if ( x === 1 ) return gamma(c) * gamma(c-a-b) / gamma(c-a) / gamma(c-b);
+
+    if ( x > 1 ) return hypergeometric2F1( a, b, c, complex(x) );
 
     var s = 1;
     var p = 1;
