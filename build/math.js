@@ -575,28 +575,6 @@ function jacobiTheta( n, x, q, tolerance=1e-10 ) {
 
   }
 
-  // dlmf.nist.gov/20.2 to reduce overflow
-  if ( Math.abs(x.re) > Math.PI ) {
-
-    var p = Math.trunc( x / Math.PI );
-    x = x - p * Math.PI;
-
-    switch( n ) {
-
-      case 1:
-      case 2:
-
-        return (-1)**p * jacobiTheta( n, x, q );
-
-      case 3:
-      case 4:
-
-        return jacobiTheta( n, x, q );
-
-    }
-
-  }
-
   switch( n ) {
 
     case 1:
