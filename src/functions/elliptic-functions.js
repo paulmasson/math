@@ -198,6 +198,7 @@ function sn( x, m ) {
     // use fixed number to avoid evaluating elliptic integrals
     if ( x.im > 10 ) {
 
+      // periods 4K, 2iK'
       var p1 = mul( 4, ellipticK(m) );
       var p2 = mul( complex(0,2), ellipticK( sub(1,m) ) );
 
@@ -238,6 +239,7 @@ function cn( x, m ) {
     // use fixed number to avoid evaluating elliptic integrals
     if ( x.im > 10 ) {
 
+      // periods 4K, 2K + 2iK'
       var p1 = mul( 4, ellipticK(m) );
       var p2 = add( div(p1,2), mul( complex(0,2), ellipticK( sub(1,m) ) ) );
 
@@ -278,6 +280,7 @@ function dn( x, m ) {
     // use fixed number to avoid evaluating elliptic integrals
     if ( x.im > 10 ) {
 
+      // periods 2K, 4iK'
       var p1 = mul( 2, ellipticK(m) );
       var p2 = mul( complex(0,4), ellipticK( sub(1,m) ) );
 
