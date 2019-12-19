@@ -194,6 +194,9 @@ function sn( x, m ) {
 
   if ( m > 1 || isComplex(x) || isComplex(m) ) {
 
+    // dlmf.nist.gov/22.17#i
+    if ( abs(m) > 1 ) return mul( inv(sqrt(m)), sn( mul(sqrt(m),x), inv(m) ) ); 
+
     // reduce existing complex argument by larger complex period
     // use fixed number to avoid evaluating elliptic integrals
     if ( x.im > 10 ) {
@@ -235,6 +238,9 @@ function cn( x, m ) {
 
   if ( m > 1 || isComplex(x) || isComplex(m) ) {
 
+    // dlmf.nist.gov/22.17#i
+    if ( abs(m) > 1 ) return dn( mul(sqrt(m),x), inv(m) ); 
+
     // reduce existing complex argument by larger complex period
     // use fixed number to avoid evaluating elliptic integrals
     if ( x.im > 10 ) {
@@ -275,6 +281,9 @@ function dn( x, m ) {
   var q = ellipticNome(m);
 
   if ( m > 1 || isComplex(x) || isComplex(m) ) {
+
+    // dlmf.nist.gov/22.17#i
+    if ( abs(m) > 1 ) return cn( mul(sqrt(m),x), inv(m) ); 
 
     // reduce existing complex argument by larger complex period
     // use fixed number to avoid evaluating elliptic integrals
