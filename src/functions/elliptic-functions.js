@@ -274,6 +274,18 @@ function dn( x, m ) {
 
   if ( m > 1 || isComplex(x) || isComplex(m) ) {
 
+    // reduce existing complex argument by larger complex period
+    // use fixed number to avoid evaluating elliptic integrals
+    if ( x.im > 10 ) {
+
+      var p1 = mul( 2, ellipticK(m) );
+      var p2 = mul( complex(0,4), ellipticK( sub(1,m) ) );
+
+      if ( p1.im > p2.im ) x = sub( x, mul( Math.trunc( x.im / p1.im ), p1 ) );
+      else x = sub( x, mul( Math.trunc( x.im / p2.im ), p2 ) );
+
+      }
+
     var t = div( x, pow( jacobiTheta(3,0,q), 2 ) );
 
     return mul( div( jacobiTheta(4,0,q), jacobiTheta(3,0,q) ),
