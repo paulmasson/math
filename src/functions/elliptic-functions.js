@@ -213,6 +213,10 @@ function sn( x, m ) {
 
   }
 
+  // dlmf.nist.gov/22.5#ii
+  if ( m === 0 ) return sin(x);
+  if ( m === 1 ) return tanh(x);
+
   var t = x / jacobiTheta(3,0,q)**2;
 
   if ( m < 0 )
@@ -237,6 +241,10 @@ function cn( x, m ) {
 
   }
 
+  // dlmf.nist.gov/22.5#ii
+  if ( m === 0 ) return cos(x);
+  if ( m === 1 ) return sech(x);
+
   var t = x / jacobiTheta(3,0,q)**2;
 
   if ( m < 0 )
@@ -260,6 +268,10 @@ function dn( x, m ) {
                 div( jacobiTheta(3,t,q), jacobiTheta(4,t,q) ) );
 
   }
+
+  // dlmf.nist.gov/22.5#ii
+  if ( m === 0 ) return 1;
+  if ( m === 1 ) return sech(x);
 
   var t = x / jacobiTheta(3,0,q)**2;
 
