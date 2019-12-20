@@ -202,8 +202,6 @@ function fundamentalParallelogram( x, p1, p2 ) {
 
 function sn( x, m ) {
 
-  var q = ellipticNome(m);
-
   if ( m > 1 || isComplex(x) || isComplex(m) ) {
 
     if ( !isComplex(m) ) m = complex(m);
@@ -217,6 +215,7 @@ function sn( x, m ) {
 
     x = fundamentalParallelogram( x, p1, p2 );
 
+    var q = ellipticNome(m);
     var t = div( x, pow( jacobiTheta(3,0,q), 2 ) );
 
     return mul( div( jacobiTheta(3,0,q), jacobiTheta(2,0,q) ),
@@ -228,6 +227,7 @@ function sn( x, m ) {
   if ( m === 0 ) return sin(x);
   if ( m === 1 ) return tanh(x);
 
+  var q = ellipticNome(m);
   var t = x / jacobiTheta(3,0,q)**2;
 
   if ( m < 0 )
@@ -240,8 +240,6 @@ function sn( x, m ) {
 }
 
 function cn( x, m ) {
-
-  var q = ellipticNome(m);
 
   if ( m > 1 || isComplex(x) || isComplex(m) ) {
 
@@ -256,6 +254,7 @@ function cn( x, m ) {
 
     x = fundamentalParallelogram( x, p1, p2 );
 
+    var q = ellipticNome(m);
     var t = div( x, pow( jacobiTheta(3,0,q), 2 ) );
 
     return mul( div( jacobiTheta(4,0,q), jacobiTheta(2,0,q) ),
@@ -267,6 +266,7 @@ function cn( x, m ) {
   if ( m === 0 ) return cos(x);
   if ( m === 1 ) return sech(x);
 
+  var q = ellipticNome(m);
   var t = x / jacobiTheta(3,0,q)**2;
 
   if ( m < 0 )
@@ -279,8 +279,6 @@ function cn( x, m ) {
 }
 
 function dn( x, m ) {
-
-  var q = ellipticNome(m);
 
   if ( m > 1 || isComplex(x) || isComplex(m) ) {
 
@@ -295,6 +293,7 @@ function dn( x, m ) {
 
     x = fundamentalParallelogram( x, p1, p2 );
 
+    var q = ellipticNome(m);
     var t = div( x, pow( jacobiTheta(3,0,q), 2 ) );
 
     return mul( div( jacobiTheta(4,0,q), jacobiTheta(3,0,q) ),
@@ -306,6 +305,7 @@ function dn( x, m ) {
   if ( m === 0 ) return 1;
   if ( m === 1 ) return sech(x);
 
+  var q = ellipticNome(m);
   var t = x / jacobiTheta(3,0,q)**2;
 
   return jacobiTheta(4,0,q) / jacobiTheta(3,0,q)
