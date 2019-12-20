@@ -481,10 +481,11 @@ function jacobiTheta( n, x, q, tolerance=1e-10 ) {
     // dlmf.nist.gov/20.2 to reduce overflow
     if ( Math.abs(x.im) > Math.abs(piTau.im) || Math.abs(x.re) > Math.PI ) {
 
-      var pt = Math.trunc( x.im / piTau.im );
+      // use floor for consistency with fundamentalParallelogram()
+      var pt = Math.floor( x.im / piTau.im );
       x = sub( x, mul( pt, piTau ) );
 
-      var p = Math.trunc( x.re / Math.PI );
+      var p = Math.floor( x.re / Math.PI );
       x = sub( x, p * Math.PI );
 
       var qFactor = pow( q, -pt*pt );
