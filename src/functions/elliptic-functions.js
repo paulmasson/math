@@ -187,6 +187,17 @@ function ellipticNome( m ) {
 
 }
 
+function fundamentalParallelogram( x, p1, p2 ) {
+
+  // x = m p1 + n p2, solve for m, n
+
+  var m = ( x.re * p2.im - x.im * p2.re ) / ( p1.re * p2.im - p1.im * p2.re );
+  var n = ( x.im * p1.re - x.re * p1.im ) / ( p1.re * p2.im - p1.im * p2.re );
+
+  return add( x, mul( -Math.floor(m), p1 ), mul( -Math.floor(n), p2 ) );
+
+}
+
 
 function sn( x, m ) {
 
@@ -194,21 +205,16 @@ function sn( x, m ) {
 
   if ( m > 1 || isComplex(x) || isComplex(m) ) {
 
+    if ( !isComplex(m) ) m = complex(m);
+
     // dlmf.nist.gov/22.17#i
     if ( abs(m) > 1 ) return mul( inv(sqrt(m)), sn( mul(sqrt(m),x), inv(m) ) ); 
 
-    // reduce existing complex argument by larger complex period
-    // use fixed number to avoid evaluating elliptic integrals
-    if ( x.im > 10 ) {
+    // periods 4K, 2iK'
+    var p1 = mul( 4, ellipticK(m) );
+    var p2 = mul( complex(0,2), ellipticK( sub(1,m) ) );
 
-      // periods 4K, 2iK'
-      var p1 = mul( 4, ellipticK(m) );
-      var p2 = mul( complex(0,2), ellipticK( sub(1,m) ) );
-
-      if ( p1.im > p2.im ) x = sub( x, mul( Math.trunc( x.im / p1.im ), p1 ) );
-      else x = sub( x, mul( Math.trunc( x.im / p2.im ), p2 ) );
-
-      }
+    x = fundamentalParallelogram( x, p1, p2 );
 
     var t = div( x, pow( jacobiTheta(3,0,q), 2 ) );
 
@@ -238,21 +244,16 @@ function cn( x, m ) {
 
   if ( m > 1 || isComplex(x) || isComplex(m) ) {
 
+    if ( !isComplex(m) ) m = complex(m);
+
     // dlmf.nist.gov/22.17#i
     if ( abs(m) > 1 ) return dn( mul(sqrt(m),x), inv(m) ); 
 
-    // reduce existing complex argument by larger complex period
-    // use fixed number to avoid evaluating elliptic integrals
-    if ( x.im > 10 ) {
+    // periods 4K, 2K + 2iK'
+    var p1 = mul( 4, ellipticK(m) );
+    var p2 = add( div(p1,2), mul( complex(0,2), ellipticK( sub(1,m) ) ) );
 
-      // periods 4K, 2K + 2iK'
-      var p1 = mul( 4, ellipticK(m) );
-      var p2 = add( div(p1,2), mul( complex(0,2), ellipticK( sub(1,m) ) ) );
-
-      if ( p1.im > p2.im ) x = sub( x, mul( Math.trunc( x.im / p1.im ), p1 ) );
-      else x = sub( x, mul( Math.trunc( x.im / p2.im ), p2 ) );
-
-      }
+    x = fundamentalParallelogram( x, p1, p2 );
 
     var t = div( x, pow( jacobiTheta(3,0,q), 2 ) );
 
@@ -282,21 +283,16 @@ function dn( x, m ) {
 
   if ( m > 1 || isComplex(x) || isComplex(m) ) {
 
+    if ( !isComplex(m) ) m = complex(m);
+
     // dlmf.nist.gov/22.17#i
     if ( abs(m) > 1 ) return cn( mul(sqrt(m),x), inv(m) ); 
 
-    // reduce existing complex argument by larger complex period
-    // use fixed number to avoid evaluating elliptic integrals
-    if ( x.im > 10 ) {
+    // periods 2K, 4iK'
+    var p1 = mul( 2, ellipticK(m) );
+    var p2 = mul( complex(0,4), ellipticK( sub(1,m) ) );
 
-      // periods 2K, 4iK'
-      var p1 = mul( 2, ellipticK(m) );
-      var p2 = mul( complex(0,4), ellipticK( sub(1,m) ) );
-
-      if ( p1.im > p2.im ) x = sub( x, mul( Math.trunc( x.im / p1.im ), p1 ) );
-      else x = sub( x, mul( Math.trunc( x.im / p2.im ), p2 ) );
-
-      }
+    x = fundamentalParallelogram( x, p1, p2 );
 
     var t = div( x, pow( jacobiTheta(3,0,q), 2 ) );
 
