@@ -206,7 +206,7 @@ function sn( x, m ) {
 
     if ( !isComplex(m) ) m = complex(m);
 
-    // dlmf.nist.gov/22.17#i
+    // dlmf.nist.gov/22.17
     if ( abs(m) > 1 ) return mul( inv(sqrt(m)), sn( mul(sqrt(m),x), inv(m) ) ); 
 
     // periods 4K, 2iK'
@@ -245,7 +245,7 @@ function cn( x, m ) {
 
     if ( !isComplex(m) ) m = complex(m);
 
-    // dlmf.nist.gov/22.17#i
+    // dlmf.nist.gov/22.17
     if ( abs(m) > 1 ) return dn( mul(sqrt(m),x), inv(m) ); 
 
     // periods 4K, 2K + 2iK'
@@ -284,7 +284,7 @@ function dn( x, m ) {
 
     if ( !isComplex(m) ) m = complex(m);
 
-    // dlmf.nist.gov/22.17#i
+    // dlmf.nist.gov/22.17
     if ( abs(m) > 1 ) return cn( mul(sqrt(m),x), inv(m) ); 
 
     // periods 2K, 4iK'
