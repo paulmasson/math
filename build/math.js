@@ -671,7 +671,7 @@ function sn( x, m ) {
 
   if ( m > 1 || isComplex(x) || isComplex(m) ) {
 
-    if ( !isComplex(m) ) m = complex(m);
+    if ( !isComplex(m) ) m = complex(m); // ensure K complex
 
     // dlmf.nist.gov/22.17
     if ( abs(m) > 1 ) return mul( inv(sqrt(m)), sn( mul(sqrt(m),x), inv(m) ) ); 
@@ -710,7 +710,7 @@ function cn( x, m ) {
 
   if ( m > 1 || isComplex(x) || isComplex(m) ) {
 
-    if ( !isComplex(m) ) m = complex(m);
+    if ( !isComplex(m) ) m = complex(m); // ensure K complex
 
     // dlmf.nist.gov/22.17
     if ( abs(m) > 1 ) return dn( mul(sqrt(m),x), inv(m) ); 
@@ -749,7 +749,7 @@ function dn( x, m ) {
 
   if ( m > 1 || isComplex(x) || isComplex(m) ) {
 
-    if ( !isComplex(m) ) m = complex(m);
+    if ( !isComplex(m) ) m = complex(m); // ensure K complex
 
     // dlmf.nist.gov/22.17
     if ( abs(m) > 1 ) return cn( mul(sqrt(m),x), inv(m) ); 
@@ -1608,10 +1608,6 @@ function hypergeometric2F0( a, b, x, tolerance=1e-10 ) {
 
   if ( isComplex(a) || isComplex(b) || isComplex(x) ) {
 
-    if ( !isComplex(a) ) a = complex(a);
-    if ( !isComplex(b) ) b = complex(b);
-    if ( !isComplex(x) ) x = complex(x);
-
     var s = complex(1);
     var p = complex(1), pLast = p;
     var converging = false;
@@ -1619,7 +1615,7 @@ function hypergeometric2F0( a, b, x, tolerance=1e-10 ) {
 
     while ( Math.abs(p.re) > tolerance || Math.abs(p.im) > tolerance ) {
 
-      p = mul( p, div( mul( mul( x, a ), b ), i ) );
+      p = mul( p, x, a, b, 1/i );
 
       if ( abs(p) > abs(pLast) && converging ) break; // prevent runaway sum
       if ( abs(p) < abs(pLast) ) converging = true;
