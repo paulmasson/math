@@ -1536,7 +1536,6 @@ function hypergeometric1F1( a, b, x, tolerance=1e-10 ) {
 
   if ( isComplex(a) || isComplex(b) || isComplex(x) ) {
 
-    if ( !isComplex(a) ) a = complex(a);
     if ( !isComplex(b) ) b = complex(b);
     if ( !isComplex(x) ) x = complex(x);
 
@@ -1544,15 +1543,15 @@ function hypergeometric1F1( a, b, x, tolerance=1e-10 ) {
       throw Error( 'Hypergeometric function pole' );
 
     // Kummer transformation
-    if ( x.re < 0 ) return mul( exp(x), hypergeometric1F1( sub(b,a), b, mul(x,-1) ) );
+    if ( x.re < 0 ) return mul( exp(x), hypergeometric1F1( sub(b,a), b, neg(x) ) );
 
     // asymptotic form as per Johansson arxiv.org/abs/1606.06977
     if ( abs(x) > useAsymptotic ) {
 
-      var t1 = div( mul( gamma(b), pow( mul(-1,x), mul(-1,a) ) ), gamma( sub(b,a) ) );
-      t1 = mul( t1, hypergeometric2F0( a, add( sub(a,b), 1 ), div(-1,x) ) );
+      var t1 = mul( gamma(b), pow( neg(x), neg(a) ), inv( gamma(sub(b,a)) ) );
+      t1 = mul( t1, hypergeometric2F0( a, add(a,neg(b),1), div(-1,x) ) );
 
-      var t2 = div( mul( gamma(b), mul( pow( x, sub(a,b) ), exp( x ) ) ), gamma(a) );
+      var t2 = mul( gamma(b), pow( x, sub(a,b) ), exp(x), inv( gamma(a) ) );
       t2 = mul( t2, hypergeometric2F0( sub(b,a), sub(1,a), div(1,x) ) );
 
       return add( t1, t2 );
@@ -1564,7 +1563,7 @@ function hypergeometric1F1( a, b, x, tolerance=1e-10 ) {
     var i = 1;
 
     while ( Math.abs(p.re) > tolerance || Math.abs(p.im) > tolerance ) {
-      p = mul( p, div( div( mul( x, a ), b ), i ) );
+      p = mul( p, x, a, inv(b), 1/i );
       s = add( s, p );
       a = add( a, 1 );
       b = add( b, 1 );
