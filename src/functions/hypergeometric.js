@@ -207,10 +207,11 @@ function hypergeometric2F1( a, b, c, x, tolerance=1e-10 ) {
   if ( isComplex(a) || isComplex(b) || isComplex(c) || isComplex(x) ) {
 
     // choose smallest absolute value of transformed argument
-    // transformations from dlmf.nist.gov/15.8
+    // transformations from Abramowitz & Stegun p.559
+    // fewer operations compared to dlmf.nist.gov/15.8
 
-    var absArray = [ abs(x), abs(div(x,sub(x,1))), abs(inv(x)),
-                     abs(inv(sub(1,x))), abs(sub(1,x)), abs(sub(1,inv(x))) ];
+    var absArray = [ abs(x), abs(div(x,sub(x,1))), abs(sub(1,x)),
+                     abs(inv(x)), abs(inv(sub(1,x))), abs(sub(1,inv(x))) ];
 
     var index = absArray.indexOf( Math.min.apply( null, absArray ) );
 
@@ -226,53 +227,51 @@ function hypergeometric2F1( a, b, c, x, tolerance=1e-10 ) {
 
       case 2:
 
-        var factor = div( sin( mul( pi, sub(b,a) ) ), mul( pi, gamma(c) ) );
+        var t1 = mul( gamma(c), gamma( sub(c,add(a,b)) ), 
+                      inv( gamma(sub(c,a)) ), inv( gamma(sub(c,b)) ),
+                      hypergeometric2F1( a, b, add(a,b,neg(c),1), sub(1,x) ) );
 
-        var t1 = mul( div( pow( neg(x), neg(a) ), mul( gamma(b), gamma(sub(c,a)), gamma(add(a,neg(b),1)) ) ),
-                      hypergeometric2F1( a, add(a,neg(c),1), add(a,neg(b),1), inv(x) ) );
+        var t2 = mul( pow( sub(1,x), sub(c,add(a,b)) ),
+                      gamma(c), gamma( sub(add(a,b),c) ), inv( gamma(a) ), inv( gamma(b) ),
+                      hypergeometric2F1( sub(c,a), sub(c,b), add(c,neg(a),neg(b),1), sub(1,x) ) );
 
-        var t2 = mul( div( pow( neg(x), neg(b) ), mul( gamma(a), gamma(sub(c,b)), gamma(add(b,neg(a),1)) ) ),
-                      hypergeometric2F1( b, add(b,neg(c),1), add(b,neg(a),1), inv(x) ) );
-
-        return div( sub( t1, t2 ), factor );
+        return add( t1, t2 );
 
       case 3:
 
-        var factor = div( sin( mul( pi, sub(b,a) ) ), mul( pi, gamma(c) ) );
+        var t1 = mul( gamma(c), gamma(sub(b,a)), inv( gamma(b) ),
+                      inv( gamma(sub(c,a)) ), pow( neg(x), neg(a) ),
+                      hypergeometric2F1( a, add(1,neg(c),a), add(1,neg(b),a), inv(x) ) );
 
-        var t1 = mul( div( pow( sub(1,x), neg(a) ), mul( gamma(b), gamma(sub(c,a)), gamma(add(a,neg(b),1)) ) ),
-                      hypergeometric2F1( a, sub(c,b), add(a,neg(b),1), inv(sub(1,x)) ) );
+        var t2 = mul( gamma(c), gamma(sub(a,b)), inv( gamma(a) ),
+                      inv( gamma(sub(c,b)) ), pow( neg(x), neg(b) ),
+                      hypergeometric2F1( b, add(1,neg(c),b), add(1,neg(a),b), inv(x) ) );
 
-        var t2 = mul( div( pow( sub(1,x), neg(b) ), mul( gamma(a), gamma(sub(c,b)), gamma(add(b,neg(a),1)) ) ),
-                      hypergeometric2F1( b, sub(c,a), add(b,neg(a),1), inv(sub(1,x)) ) );
-
-        return div( sub( t1, t2 ), factor );
+        return add( t1, t2 );
 
       case 4:
 
-        var factor = div( sin( mul( pi, sub(c,add(a,b)) ) ), mul( pi, gamma(c) ) );
+        var t1 = mul( pow( sub(1,x), neg(a) ), gamma(c), gamma(sub(b,a)),
+                      inv( gamma(b) ), inv( gamma(sub(c,a)) ),
+                      hypergeometric2F1( a, sub(c,b), add(a,neg(b),1), inv(sub(1,x)) ) );
 
-        var t1 = mul( inv( mul( gamma(sub(c,a)), gamma(sub(c,b)), gamma(add(a,b,neg(c),1)) ) ),
-                      hypergeometric2F1( a, b, add(a,b,neg(c),1), sub(1,x) ) );
+        var t2 = mul( pow( sub(1,x), neg(b) ), gamma(c), gamma(sub(a,b)),
+                      inv( gamma(a) ), inv( gamma(sub(c,b)) ),
+                      hypergeometric2F1( b, sub(c,a), add(b,neg(a),1), inv(sub(1,x)) ) );
 
-        var t2 = mul( div( pow( sub(1,x), sub(c,add(a,b)) ),
-                           mul( gamma(a), gamma(b), gamma(add(c,neg(a),neg(b),1)) ) ),
-                      hypergeometric2F1( sub(c,a), sub(c,b), add(c,neg(a),neg(b),1), sub(1,x) ) );
-
-        return div( sub( t1, t2 ), factor );
+        return add( t1, t2 );
 
       case 5:
 
-        var factor = div( sin( mul( pi, sub(c,add(a,b)) ) ), mul( pi, gamma(c) ) );
-
-        var t1 = mul( div( pow( x, neg(a) ), mul( gamma(sub(c,a)), gamma(sub(c,b)), gamma(add(a,b,neg(c),1)) ) ),
+        var t1 = mul( gamma(c), gamma( sub(c,add(a,b)) ), inv( gamma(sub(c,a)) ),
+                      inv( gamma(sub(c,b)) ), pow( x, neg(a) ),
                       hypergeometric2F1( a, add(a,neg(c),1), add(a,b,neg(c),1), sub(1,inv(x)) ) );
 
-        var t2 = mul( div( mul( pow( sub(1,x), sub(c,add(a,b)) ), pow( x, sub(a,c) ) ),
-                           mul( gamma(a), gamma(b), gamma(add(c,neg(a),neg(b),1)) ) ),
+        var t2 = mul( gamma(c), gamma( sub(add(a,b),c) ), inv( gamma(a) ), inv( gamma(b) ),
+                      pow( sub(1,x), sub(c,add(a,b)) ), pow( x, sub(a,c) ),
                       hypergeometric2F1( sub(c,a), sub(1,a), add(c,neg(a),neg(b),1), sub(1,inv(x)) ) );
 
-        return div( sub( t1, t2 ), factor );
+        return add( t1, t2 );
 
     }
 
@@ -303,14 +302,15 @@ function hypergeometric2F1( a, b, c, x, tolerance=1e-10 ) {
 
     if ( Number.isInteger(c) && c <= 0 ) throw Error( 'Hypergeometric function pole' );
 
-    // transformation from dlmf.nist.gov/15.8
+    // transformation from Abramowitz & Stegun p.559
     if ( x < -1 ) {
 
-      var factor = sin( pi*(b-a) ) / pi / gamma(c);
-      var t1 = (-x)**(-a) / gamma(b) / gamma(c-a) / gamma(a-b+1) * hypergeometric2F1( a, a-c+1, a-b+1, 1/x );
-      var t2 = (-x)**(-b) / gamma(a) / gamma(c-b) / gamma(b-a+1) * hypergeometric2F1( b, b-c+1, b-a+1, 1/x );
+      var t1 = gamma(c) * gamma(b-a) / gamma(b) / gamma(c-a)
+                 * (-x)**(-a) * hypergeometric2F1( a, 1-c+a, 1-b+a, 1/x );
+      var t2 = gamma(c) * gamma(a-b) / gamma(a) / gamma(c-b)
+                 * (-x)**(-b) * hypergeometric2F1( b, 1-c+b, 1-a+b, 1/x );
 
-      return ( t1 - t2 ) / factor;
+      return t1 + t2;
 
     }
 
