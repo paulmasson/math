@@ -1803,6 +1803,49 @@ function hypergeometric2F1( a, b, c, x, tolerance=1e-10 ) {
 }
 
 
+function hypergeometricPFQ( A, B, x, tolerance=1e-10 ) {
+
+  var complexArg = false;
+  A.forEach( a => complexArg = complexArg || isComplex(a) );
+  B.forEach( b => complexArg = complexArg || isComplex(b) );
+
+  if ( complexArg || isComplex(x) ) {
+
+    var s = complex(1);
+    var p = complex(1);
+    var i = 1;
+
+    while ( Math.abs(p.re) > tolerance || Math.abs(p.im) > tolerance ) {
+      p = mul( p, x, A.reduce( (x,y) => mul(x,y) ), inv( B.reduce( (x,y) => mul(x,y) ) ), 1/i );
+      s = add( s, p );
+      A.forEach( (e,i,a) => a[i] = add( a[i], 1 ) );
+      B.forEach( (e,i,a) => a[i] = add( a[i], 1 ) );
+      i++;
+    }
+
+    return s;
+
+  } else {
+
+    var s = 1;
+    var p = 1;
+    var i = 1;
+
+    while ( Math.abs(p) > tolerance ) {
+      p *= x * A.reduce( (x,y) => x*y ) / B.reduce( (x,y) => x*y ) / i;
+      s += p;
+      A.forEach( (e,i,a) => a[i]++ );
+      B.forEach( (e,i,a) => a[i]++ );
+      i++;
+    }
+
+    return s;
+
+  }
+
+}
+
+
 function exp( x ) {
 
   if ( isComplex(x) )
