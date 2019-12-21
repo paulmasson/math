@@ -6,7 +6,6 @@ function hypergeometric0F1( a, x, tolerance=1e-10 ) {
   if ( isComplex(a) || isComplex(x) ) {
 
     if ( !isComplex(a) ) a = complex(a);
-    if ( !isComplex(x) ) x = complex(x);
 
     if ( Number.isInteger(a.re) && a.re <= 0 && a.im === 0 )
       throw Error( 'Hypergeometric function pole' );
@@ -14,15 +13,16 @@ function hypergeometric0F1( a, x, tolerance=1e-10 ) {
     // asymptotic form as per Johansson arxiv.org/abs/1606.06977
     if ( abs(x) > useAsymptotic ) {
 
-      var b = sub( mul(2,a), 1 ); // do first
-      var a = sub( a, 1/2 );
-      var x = mul( 4, sqrt(x) );
+      // transform variables for convenience
+      var b = sub( mul(2,a), 1 );
+      a = sub( a, 1/2 );
+      x = mul( 4, sqrt(x) );
 
       // copied from hypergeometric1F1
-      var t1 = div( mul( gamma(b), pow( mul(-1,x), mul(-1,a) ) ), gamma( sub(b,a) ) );
-      t1 = mul( t1, hypergeometric2F0( a, add( sub(a,b), 1 ), div(-1,x) ) );
+      var t1 = mul( gamma(b), pow( neg(x), neg(a) ), inv( gamma(sub(b,a)) ) );
+      t1 = mul( t1, hypergeometric2F0( a, add(a,neg(b),1), div(-1,x) ) );
 
-      var t2 = div( mul( gamma(b), mul( pow( x, sub(a,b) ), exp( x ) ) ), gamma(a) );
+      var t2 = mul( gamma(b), pow( x, sub(a,b) ), exp(x), inv( gamma(a) ) );
       t2 = mul( t2, hypergeometric2F0( sub(b,a), sub(1,a), div(1,x) ) );
 
       return mul( exp( div(x,-2) ), add( t1, t2 ) );
@@ -34,7 +34,7 @@ function hypergeometric0F1( a, x, tolerance=1e-10 ) {
     var i = 1;
 
     while ( Math.abs(p.re) > tolerance || Math.abs(p.im) > tolerance ) {
-      p = mul( p, div( div( x, a ), i ) );
+      p = mul( p, x, inv(a), 1/i );
       s = add( s, p );
       a = add( a, 1 );
       i++;
