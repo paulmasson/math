@@ -11,7 +11,7 @@ function hypergeometric0F1( a, x, tolerance=1e-10 ) {
     if ( Number.isInteger(a.re) && a.re <= 0 && a.im === 0 )
       throw Error( 'Hypergeometric function pole' );
 
-    // asymptotic form as per Johansson
+    // asymptotic form as per Johansson arxiv.org/abs/1606.06977
     if ( abs(x) > useAsymptotic ) {
 
       var b = sub( mul(2,a), 1 ); // do first
@@ -83,7 +83,7 @@ function hypergeometric1F1( a, b, x, tolerance=1e-10 ) {
     // Kummer transformation
     if ( x.re < 0 ) return mul( exp(x), hypergeometric1F1( sub(b,a), b, mul(x,-1) ) );
 
-    // asymptotic form as per Johansson
+    // asymptotic form as per Johansson arxiv.org/abs/1606.06977
     if ( abs(x) > useAsymptotic ) {
 
       var t1 = div( mul( gamma(b), pow( mul(-1,x), mul(-1,a) ) ), gamma( sub(b,a) ) );
