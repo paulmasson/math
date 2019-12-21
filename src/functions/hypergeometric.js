@@ -275,10 +275,7 @@ function hypergeometric2F1( a, b, c, x, tolerance=1e-10 ) {
 
     }
 
-    if ( !isComplex(a) ) a = complex(a);
-    if ( !isComplex(b) ) b = complex(b);
     if ( !isComplex(c) ) c = complex(c);
-    if ( !isComplex(x) ) x = complex(x);
 
     if ( Number.isInteger(c.re) && c.re <= 0 && c.im === 0 )
       throw Error( 'Hypergeometric function pole' );
@@ -288,7 +285,7 @@ function hypergeometric2F1( a, b, c, x, tolerance=1e-10 ) {
     var i = 1;
 
     while ( Math.abs(p.re) > tolerance || Math.abs(p.im) > tolerance ) {
-      p = mul( p, div( div( mul( mul( x, a ), b ), c ), i ) );
+      p = mul( p, x, a, b, inv(c), 1/i );
       s = add( s, p );
       a = add( a, 1 );
       b = add( b, 1 );
