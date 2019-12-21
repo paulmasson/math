@@ -204,7 +204,7 @@ function sn( x, m ) {
 
   if ( m > 1 || isComplex(x) || isComplex(m) ) {
 
-    if ( !isComplex(m) ) m = complex(m);
+    if ( !isComplex(m) ) m = complex(m); // ensure K complex
 
     // dlmf.nist.gov/22.17
     if ( abs(m) > 1 ) return mul( inv(sqrt(m)), sn( mul(sqrt(m),x), inv(m) ) ); 
@@ -243,7 +243,7 @@ function cn( x, m ) {
 
   if ( m > 1 || isComplex(x) || isComplex(m) ) {
 
-    if ( !isComplex(m) ) m = complex(m);
+    if ( !isComplex(m) ) m = complex(m); // ensure K complex
 
     // dlmf.nist.gov/22.17
     if ( abs(m) > 1 ) return dn( mul(sqrt(m),x), inv(m) ); 
@@ -282,7 +282,7 @@ function dn( x, m ) {
 
   if ( m > 1 || isComplex(x) || isComplex(m) ) {
 
-    if ( !isComplex(m) ) m = complex(m);
+    if ( !isComplex(m) ) m = complex(m); // ensure K complex
 
     // dlmf.nist.gov/22.17
     if ( abs(m) > 1 ) return cn( mul(sqrt(m),x), inv(m) ); 
