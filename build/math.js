@@ -466,6 +466,26 @@ function sphericalHankel2( n, x ) {
 }
 
 
+function struveH( n, x ) {
+
+  // can also evaluate from hypergeometric0F1
+  // could use to test hypergeometricPFQ
+
+  return mul( pow( x, add(n,1) ), inv( mul( pow(2,n), sqrt(pi), gamma( add(n,3/2) ) ) ),
+              hypergeometricPFQ( [ 1 ], [ 3/2, add(n,3/2) ], mul( -1/4, pow(x,2) ) ) );
+
+}
+
+function struveL( n, x ) {
+
+  // one sign different from struveH
+
+  return mul( pow( x, add(n,1) ), inv( mul( pow(2,n), sqrt(pi), gamma( add(n,3/2) ) ) ),
+              hypergeometricPFQ( [ 1 ], [ 3/2, add(n,3/2) ], mul( 1/4, pow(x,2) ) ) );
+
+}
+
+
 function jacobiTheta( n, x, q, tolerance=1e-10 ) {
 
   if ( abs(q) >= 1 ) throw Error( 'Unsupported elliptic nome' );
