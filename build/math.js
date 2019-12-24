@@ -217,7 +217,6 @@ function besselJ( n, x ) {
   if ( isComplex(n) || isComplex(x) ) {
 
     if ( !isComplex(n) ) n = complex(n);
-    if ( !isComplex(x) ) x = complex(x);
 
     if ( Number.isInteger(n.re) && n.re < 0 && n.im === 0 )
       return mul( pow(-1,n), besselJ( mul(-1,n), x ) );
@@ -266,7 +265,6 @@ function besselY( n, x ) {
   if ( isComplex(n) || isComplex(x) ) {
 
     if ( !isComplex(n) ) n = complex(n);
-    if ( !isComplex(x) ) x = complex(x);
 
     // dlmf.nist.gov/10.2#E3
     if ( Number.isInteger(n.re) && n.im === 0 )
@@ -319,7 +317,6 @@ function besselI( n, x ) {
   if ( isComplex(n) || isComplex(x) ) {
 
     if ( !isComplex(n) ) n = complex(n);
-    if ( !isComplex(x) ) x = complex(x);
 
     if ( Number.isInteger(n.re) && n.re < 0 && n.im === 0 )
       return besselI( mul(-1,n), x );
@@ -344,7 +341,6 @@ function besselK( n, x ) {
   if ( isComplex(n) || isComplex(x) ) {
 
     if ( !isComplex(n) ) n = complex(n);
-    if ( !isComplex(x) ) x = complex(x);
 
     // asymptotic form as per Johansson
     if ( abs(x) > useAsymptotic ) {
