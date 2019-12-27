@@ -1,4 +1,66 @@
 
+// accessing array only slightly slower than local variables
+// for loops faster than forEach or reduce
+
+function hypergeometricSeries( A, B, x, complexArguments=false, tolerance=1e-10 ) {
+
+  if ( complexArguments ) {
+
+    var s = complex(1);
+    var p = complex(1);
+    var i = 1;
+
+    while ( Math.abs(p.re) > tolerance || Math.abs(p.im) > tolerance ) {
+
+      for ( var j = 0 ; j < A.length ; j++ ) {
+        p = mul( p, A[j] );
+        A[j] = add( A[j], 1 );
+      }
+
+      for ( var j = 0 ; j < B.length ; j++ ) {
+        p = div( p, B[j] );
+        B[j] = add( B[j], 1 );
+      }
+
+      p = mul( p, x, 1/i );
+      s = add( s, p );
+      i++;
+
+    }
+
+    return s;
+
+  } else {
+
+    var s = 1;
+    var p = 1;
+    var i = 1;
+
+    while ( Math.abs(p) > tolerance ) {
+
+      for ( var j = 0 ; j < A.length ; j++ ) {
+        p *= A[j];
+        A[j]++;
+      }
+
+      for ( var j = 0 ; j < B.length ; j++ ) {
+        p /= B[j];
+        B[j]++;
+      }
+
+      p *= x / i;
+      s += p;
+      i++;
+
+    }
+
+    return s;
+
+  }
+
+}
+
+
 function hypergeometric0F1( a, x, tolerance=1e-10 ) {
 
   var useAsymptotic = 100;
