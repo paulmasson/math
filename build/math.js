@@ -496,7 +496,7 @@ function jacobiTheta( n, x, q, tolerance=1e-10 ) {
     // dlmf.nist.gov/20.2 to reduce overflow
     if ( Math.abs(x.im) > Math.abs(piTau.im) || Math.abs(x.re) > Math.PI ) {
 
-      // use floor for consistency with fundamentalParallelogram()
+      // use floor for consistency with fundamentalParallelogram
       var pt = Math.floor( x.im / piTau.im );
       x = sub( x, mul( pt, piTau ) );
 
@@ -1874,45 +1874,19 @@ function hypergeometric2F1( a, b, c, x, tolerance=1e-10 ) {
 }
 
 
-function hypergeometricPFQ( A, B, x, tolerance=1e-10 ) {
+function hypergeometricPFQ( A, B, x ) {
 
-  var complexArg = false;
-  A.forEach( a => complexArg = complexArg || isComplex(a) );
-  B.forEach( b => complexArg = complexArg || isComplex(b) );
+  // dlmf.nist.gov/16.11 for general transformations
+  if ( abs(x) > 1 ) throw Error( 'Unsupported general hypergeometric argument' );
 
-  if ( complexArg || isComplex(x) ) {
+  // check for complex parameters
+  var cp = false;
+  A.forEach( a => cp = cp || isComplex(a) );
+  B.forEach( b => cp = cp || isComplex(b) );
 
-    var s = complex(1);
-    var p = complex(1);
-    var i = 1;
+  if ( cp || isComplex(x) ) return hypergeometricSeries( A, B, x, true );
 
-    while ( Math.abs(p.re) > tolerance || Math.abs(p.im) > tolerance ) {
-      p = mul( p, x, A.reduce( (x,y) => mul(x,y) ), inv( B.reduce( (x,y) => mul(x,y) ) ), 1/i );
-      s = add( s, p );
-      A.forEach( (e,i,a) => a[i] = add( a[i], 1 ) );
-      B.forEach( (e,i,a) => a[i] = add( a[i], 1 ) );
-      i++;
-    }
-
-    return s;
-
-  } else {
-
-    var s = 1;
-    var p = 1;
-    var i = 1;
-
-    while ( Math.abs(p) > tolerance ) {
-      p *= x * A.reduce( (x,y) => x*y ) / B.reduce( (x,y) => x*y ) / i;
-      s += p;
-      A.forEach( (e,i,a) => a[i]++ );
-      B.forEach( (e,i,a) => a[i]++ );
-      i++;
-    }
-
-    return s;
-
-  }
+  return hypergeometricSeries( A, B, x );
 
 }
 
