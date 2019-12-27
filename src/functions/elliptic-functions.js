@@ -107,69 +107,71 @@ function jacobiTheta( n, x, q, tolerance=1e-10 ) {
 
       }
 
-  }
+  } else {
 
-  switch( n ) {
+    switch( n ) {
 
-    case 1:
+      case 1:
 
-      if ( q < 0 ) return jacobiTheta( n, x, complex(q) );
+        if ( q < 0 ) return jacobiTheta( n, x, complex(q) );
 
-      var s = 0;
-      var p = 1;
-      var i = 0;
+        var s = 0;
+        var p = 1;
+        var i = 0;
 
-      while ( Math.abs(p) > tolerance ) {
-        p = (-1)**i * q**(i*i+i) * sin( (2*i+1) * x );
-        s += p;
-        i++;
-      }
+        while ( Math.abs(p) > tolerance ) {
+          p = (-1)**i * q**(i*i+i) * sin( (2*i+1) * x );
+          s += p;
+          i++;
+        }
 
-      return 2 * q**(1/4) * s;
+        return 2 * q**(1/4) * s;
 
-    case 2:
+      case 2:
 
-      if ( q < 0 ) return jacobiTheta( n, x, complex(q) );
+        if ( q < 0 ) return jacobiTheta( n, x, complex(q) );
 
-      var s = 0;
-      var p = 1;
-      var i = 0;
+        var s = 0;
+        var p = 1;
+        var i = 0;
 
-      while ( Math.abs(p) > tolerance ) {
-        p = q**(i*i+i) * cos( (2*i+1) * x );
-        s += p;
-        i++;
-      }
+        while ( Math.abs(p) > tolerance ) {
+          p = q**(i*i+i) * cos( (2*i+1) * x );
+          s += p;
+          i++;
+        }
 
-      return 2 * q**(1/4) * s;
+        return 2 * q**(1/4) * s;
 
-    case 3:
+      case 3:
 
-      var s = 0;
-      var p = 1;
-      var i = 1;
+        var s = 0;
+        var p = 1;
+        var i = 1;
 
-      while ( Math.abs(p) > tolerance ) {
-        p = q**(i*i) * cos( 2*i * x );
-        s += p;
-        i++;
-      }
+        while ( Math.abs(p) > tolerance ) {
+          p = q**(i*i) * cos( 2*i * x );
+          s += p;
+          i++;
+        }
 
-      return 1 + 2 * s;
+        return 1 + 2 * s;
 
-    case 4:
+      case 4:
 
-      var s = 0;
-      var p = 1;
-      var i = 1;
+        var s = 0;
+        var p = 1;
+        var i = 1;
 
-      while ( Math.abs(p) > tolerance ) {
-        p = (-q)**(i*i) * cos( 2*i * x );
-        s += p;
-        i++;
-      }
+        while ( Math.abs(p) > tolerance ) {
+          p = (-q)**(i*i) * cos( 2*i * x );
+          s += p;
+          i++;
+        }
 
-      return 1 + 2 * s;
+        return 1 + 2 * s;
+
+    }
 
   }
 
