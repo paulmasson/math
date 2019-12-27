@@ -16,10 +16,9 @@ function carlsonRC( x, y ) {
 
   if ( x === y ) return 1 / Math.sqrt(x);
 
-  if ( x < y )
-    return Math.acos( Math.sqrt(x/y) ) / Math.sqrt(y-x);
-  else
-    return Math.acosh( Math.sqrt(x/y) ) / Math.sqrt(x-y);
+  if ( x < y ) return Math.acos( Math.sqrt(x/y) ) / Math.sqrt(y-x);
+
+  return Math.acosh( Math.sqrt(x/y) ) / Math.sqrt(x-y);
 
 }
 
@@ -119,7 +118,7 @@ function carlsonRF( x, y, z, tolerance=1e-10 ) {
 
 function carlsonRG( x, y, z ) {
 
-  return 1;
+  throw Error( 'Carlson RG not implemented' );
 
 }
 
@@ -342,7 +341,8 @@ function ellipticPi( n, x, m ) {
 
     return add( mul( sin(x), carlsonRF( mul(cos(x),cos(x)), sub( 1, mul(m,sin(x),sin(x)) ), 1 ) ),
                 mul( 1/3, n, pow(sin(x),3),
-                  carlsonRJ( mul(cos(x),cos(x)), sub( 1, mul(m,sin(x),sin(x)) ), 1, sub( 1, mul(n,sin(x),sin(x)) ) ) ),
+                  carlsonRJ( mul(cos(x),cos(x)), sub( 1, mul(m,sin(x),sin(x)) ), 1,
+                                 sub( 1, mul(n,sin(x),sin(x)) ) ) ),
                 period );
 
   } else {
