@@ -251,10 +251,8 @@ function sphericalHankel2( n, x ) {
 
 function struveH( n, x ) {
 
-  // could use to test hypergeometricPFQ
-
   return mul( pow( x, add(n,1) ), inv( mul( pow(2,n), sqrt(pi), gamma( add(n,3/2) ) ) ),
-              hypergeometricPFQ( [ 1 ], [ 3/2, add(n,3/2) ], mul( -1/4, pow(x,2) ) ) );
+              hypergeometric1F2( 1, 3/2, add(n,3/2), mul( -1/4, pow(x,2) ) ) );
 
 }
 
@@ -263,7 +261,7 @@ function struveL( n, x ) {
   // one sign different from struveH
 
   return mul( pow( x, add(n,1) ), inv( mul( pow(2,n), sqrt(pi), gamma( add(n,3/2) ) ) ),
-              hypergeometricPFQ( [ 1 ], [ 3/2, add(n,3/2) ], mul( 1/4, pow(x,2) ) ) );
+              hypergeometric1F2( 1, 3/2, add(n,3/2), mul( 1/4, pow(x,2) ) ) );
 
 }
 

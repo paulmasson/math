@@ -394,10 +394,25 @@ function hypergeometric2F1( a, b, c, x, tolerance=1e-10 ) {
 }
 
 
+function hypergeometric1F2( a, b, c, x ) {
+
+  var useAsymptotic = 50;
+
+  if ( isComplex(a) || isComplex(b) || isComplex(c) || isComplex(x) ) {
+
+  return hypergeometricSeries( [a], [b,c], x, true );
+
+  }
+
+  return hypergeometricSeries( [a], [b,c], x );
+
+}
+
+
 function hypergeometricPFQ( A, B, x ) {
 
   // dlmf.nist.gov/16.11 for general transformations
-  if ( abs(x) > 1 ) throw Error( 'Unsupported general hypergeometric argument' );
+  if ( abs(x) > 1 ) throw Error( 'General hypergeometric argument currently restricted' );
 
   // check for complex parameters
   var cp = false;
