@@ -141,3 +141,9 @@ function erfc( x ) {
 
 }
 
+function erfi( x ) {
+
+  return mul( 2/sqrt(pi), x, hypergeometric1F1( 1/2, 3/2, pow(x,2) ) );
+
+}
+

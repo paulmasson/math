@@ -1476,6 +1476,12 @@ function erfc( x ) {
 
 }
 
+function erfi( x ) {
+
+  return mul( 2/sqrt(pi), x, hypergeometric1F1( 1/2, 3/2, pow(x,2) ) );
+
+}
+
 
 // accessing array only slightly slower than local variables
 // for loops faster than forEach or reduce
