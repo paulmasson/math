@@ -1874,15 +1874,67 @@ function hypergeometric2F1( a, b, c, x, tolerance=1e-10 ) {
 
 function hypergeometric1F2( a, b, c, x ) {
 
-  var useAsymptotic = 50;
+  var useAsymptotic = 200;
 
   if ( isComplex(a) || isComplex(b) || isComplex(c) || isComplex(x) ) {
 
-  return hypergeometricSeries( [a], [b,c], x, true );
+    // functions.wolfram.com/HypergeometricFunctions/Hypergeometric1F2/06/02/03/
+
+    if ( abs(x) > useAsymptotic ) {
+
+      var p = div( add( a, neg(b), neg(c), 1/2 ), 2 );
+
+      var ck = [ 1, add( mul( add(mul(3,a),b,c,-2), sub(a,add(b,c)), 1/2 ), mul(2,b,c), -3/8 ),
+
+                 add( mul( pow( add( mul( add(mul(3,a),b,c,-2), sub(a,add(b,c)), 1/4 ), mul(b,c), -3/16 ), 2 ), 2 ),
+                      mul( -1, sub(mul(2,a),3), b, c ),
+                      mul( add( mul(-8,pow(a,2)), mul(11,a), b, c, -2 ), sub(a,add(b,c)), 1/4 ),
+                      -3/16 ) ];
+
+      function w( k ) { return mul( 1/2**k, ck[k], pow(neg(x),-k/2) ); }
+
+      var u1 = exp( mul( complex(0,1), add( mul(pi,p), mul(2,sqrt(neg(x))) ) ) );
+      var u2 = exp( mul( complex(0,-1), add( mul(pi,p), mul(2,sqrt(neg(x))) ) ) );
+
+      var s = add( mul( u1, add( 1, mul(complex(0,-1),w(1)), neg(w(2)) ) ),
+                   mul( u2, add( 1, mul(complex(0,1),w(1)), neg(w(2)) ) ) );
+      var k = 3, wLast = w(2);
+
+      while ( abs(wLast) > abs(w(k)) ) {
+
+        ck.push( sub( mul( add( 3*k**2, mul(add(mul(-6,a),mul(2,b),mul(2,c),-4),k),
+                                mul(3,pow(a,2)), neg(pow(sub(b,c),2)), neg(mul(2,a,add(b,c,-2))), 1/4 ),
+                            1/(2*k), ck[k-1] ),
+                      mul( add(k,neg(a),b,neg(c),-1/2), add(k,neg(a),neg(b),c,-1/2),
+                           add(k,neg(a),b,c,-5/2), ck[k-2] ) ) );
+
+        s = add( s, mul( u1, pow(complex(0,-1),k), w(k) ),
+                    mul( u2, pow(complex(0,1),k), w(k) ) );
+
+        wLast = w(k);
+        k++;
+
+      }
+
+      var t1 = mul( 1/(2*sqrt(pi)), inv(gamma(a)), pow(neg(x),p), s );
+
+      var t2 = mul( inv(gamma(sub(b,a))), inv(gamma(sub(c,a))), pow(neg(x),neg(a)),
+                    hypergeometricPFQ( [a,add(a,neg(b),1),add(a,neg(c),1)], [], inv(x), true ) );
+
+      return mul( gamma(b), gamma(c), add( t1, t2 ) );
+
+    }
+
+    return hypergeometricSeries( [a], [b,c], x, true );
+
+  } else {
+
+    // asymptotic form is complex
+    if ( Math.abs(x) > useAsymptotic ) return hypergeometric1F2( a, b, c, complex(x) ).re;
+
+    return hypergeometricSeries( [a], [b,c], x );
 
   }
-
-  return hypergeometricSeries( [a], [b,c], x );
 
 }
 
