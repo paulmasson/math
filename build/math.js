@@ -1942,6 +1942,10 @@ function hypergeometric1F2( a, b, c, x ) {
 function hypergeometricPFQ( A, B, x ) {
 
   // dlmf.nist.gov/16.11 for general transformations
+
+  // for B.length > A.length terms can get very large
+  // roundoff errors for formally convergent series
+
   if ( abs(x) > 1 ) throw Error( 'General hypergeometric argument currently restricted' );
 
   // check for complex parameters
