@@ -1457,7 +1457,11 @@ function gamma( x, y, z ) {
 
 }
 
-function beta( x, y ) {
+function beta( x, y, z ) {
+
+  if ( arguments.length === 3 )
+
+    return mul( pow(x,y), inv(y), hypergeometric2F1( y, sub(1,z), add(y,1), x ) );
 
   return div( mul( gamma(x), gamma(y) ), gamma( add(x,y) ) ); 
 
