@@ -153,7 +153,11 @@ function fresnelS( x ) {
   var m1 = hypergeometric1F1( 1/2, 3/2, mul( complex(0,pi/2), pow(x,2) ) );
   var m2 = hypergeometric1F1( 1/2, 3/2, mul( complex(0,-pi/2), pow(x,2) ) );
 
-  return mul( x, sub( m1, m2 ), complex(0,-1/2) );
+  var result = mul( x, sub( m1, m2 ), complex(0,-1/2) );
+
+  if ( isComplex(x) ) return result;
+
+  return result.re;
 
 }
 
@@ -162,7 +166,11 @@ function fresnelC( x ) {
   var m1 = hypergeometric1F1( 1/2, 3/2, mul( complex(0,pi/2), pow(x,2) ) );
   var m2 = hypergeometric1F1( 1/2, 3/2, mul( complex(0,-pi/2), pow(x,2) ) );
 
-  return mul( x, add( t1, t2 ), 1/2 );
+  var result = mul( x, add( m1, m2 ), 1/2 );
+
+  if ( isComplex(x) ) return result;
+
+  return result.re;
 
 }
 
