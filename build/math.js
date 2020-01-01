@@ -1,6 +1,8 @@
 
 var pi = Math.PI;
 
+var eulerGamma = .5772156649015329;
+
 
 function complex( x, y ) {
 
@@ -12,6 +14,14 @@ function complex( x, y ) {
 var C = complex;
 
 function isComplex( x ) { return typeof x === 'object' && 're' in x; }
+
+
+function isZero( x ) {
+
+  if ( isComplex(x) ) return x.re === 0 && x.im === 0;
+  return x === 0;
+
+}
 
 
 function re( x ) {
@@ -3070,7 +3080,8 @@ function polynomial( x, coefficients, derivative=false ) {
   }
 
   if ( derivative ) return { polynomial: p, derivative: q };
-  else return p;
+
+  return p;
 
 }
 

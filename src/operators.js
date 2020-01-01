@@ -11,6 +11,14 @@ var C = complex;
 function isComplex( x ) { return typeof x === 'object' && 're' in x; }
 
 
+function isZero( x ) {
+
+  if ( isComplex(x) ) return x.re === 0 && x.im === 0;
+  return x === 0;
+
+}
+
+
 function re( x ) {
 
   if ( isComplex(x) ) return x.re;

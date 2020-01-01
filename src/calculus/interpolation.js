@@ -12,7 +12,8 @@ function polynomial( x, coefficients, derivative=false ) {
   }
 
   if ( derivative ) return { polynomial: p, derivative: q };
-  else return p;
+
+  return p;
 
 }
 
