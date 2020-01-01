@@ -1470,7 +1470,7 @@ function beta( x, y, z ) {
 
 function erf( x ) {
 
-  return mul( 2/sqrt(pi), x, hypergeometric1F1( 1/2, 3/2, neg(pow(x,2)) ) );
+  return mul( 2/sqrt(pi), x, hypergeometric1F1( .5, 1.5, neg(pow(x,2)) ) );
 
 }
 
@@ -1482,17 +1482,17 @@ function erfc( x ) {
 
 function erfi( x ) {
 
-  return mul( 2/sqrt(pi), x, hypergeometric1F1( 1/2, 3/2, pow(x,2) ) );
+  return mul( 2/sqrt(pi), x, hypergeometric1F1( .5, 1.5, pow(x,2) ) );
 
 }
 
 
 function fresnelS( x ) {
 
-  var m1 = hypergeometric1F1( 1/2, 3/2, mul( complex(0,pi/2), pow(x,2) ) );
-  var m2 = hypergeometric1F1( 1/2, 3/2, mul( complex(0,-pi/2), pow(x,2) ) );
+  var m1 = hypergeometric1F1( .5, 1.5, mul( complex(0,pi/2), pow(x,2) ) );
+  var m2 = hypergeometric1F1( .5, 1.5, mul( complex(0,-pi/2), pow(x,2) ) );
 
-  var result = mul( x, sub( m1, m2 ), complex(0,-1/2) );
+  var result = mul( x, sub( m1, m2 ), complex(0,-.5) );
 
   if ( isComplex(x) ) return result;
 
@@ -1502,10 +1502,10 @@ function fresnelS( x ) {
 
 function fresnelC( x ) {
 
-  var m1 = hypergeometric1F1( 1/2, 3/2, mul( complex(0,pi/2), pow(x,2) ) );
-  var m2 = hypergeometric1F1( 1/2, 3/2, mul( complex(0,-pi/2), pow(x,2) ) );
+  var m1 = hypergeometric1F1( .5, 1.5, mul( complex(0,pi/2), pow(x,2) ) );
+  var m2 = hypergeometric1F1( .5, 1.5, mul( complex(0,-pi/2), pow(x,2) ) );
 
-  var result = mul( x, add( m1, m2 ), 1/2 );
+  var result = mul( x, add( m1, m2 ), .5 );
 
   if ( isComplex(x) ) return result;
 
