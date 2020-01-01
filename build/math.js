@@ -1391,7 +1391,7 @@ function binomial( n, m ) {
 function logGamma( x ) {
 
   var c = [ 57.1562356658629235, -59.5979603554754912, 14.1360979747417471,
-            -0.491913816097620199, .339946499848118887e-4, .465236289270485756e-4,
+            -.491913816097620199, .339946499848118887e-4, .465236289270485756e-4,
             -.983744753048795646e-4, .158088703224912494e-3, -.210264441724104883e-3,
             .217439618115212643e-3, -.164318106536763890e-3, .844182239838527433e-4,
             -.261908384015814087e-4, .368991826595316234e-5 ];
@@ -1411,8 +1411,8 @@ function logGamma( x ) {
     }
 
     var t = add( x, 5.24218750000000000 );
-    t = sub( mul( add( x, 0.5 ), log(t)), t );
-    var s = 0.999999999999997092;
+    t = sub( mul( add( x, .5 ), log(t)), t );
+    var s = .999999999999997092;
     for ( var j = 0 ; j < 14 ; j++ ) s = add( s, div( c[j], add( x, j+1 ) ) );
     var u = add( t, log( mul( 2.5066282746310005, div( s, x ) ) ) );
 
@@ -1429,8 +1429,8 @@ function logGamma( x ) {
     if ( Number.isInteger(x) && x <= 0 ) throw Error( 'Gamma function pole' ); 
 
     var t = x + 5.24218750000000000;
-    t = ( x + 0.5 ) * log(t) - t;
-    var s = 0.999999999999997092;
+    t = ( x + .5 ) * log(t) - t;
+    var s = .999999999999997092;
     for ( var j = 0 ; j < 14 ; j++ ) s += c[j] / (x+j+1);
     return t + log( 2.5066282746310005 * s / x );
 
@@ -1512,6 +1512,7 @@ function fresnelC( x ) {
   return result.re;
 
 }
+
 
 
 // accessing array only slightly slower than local variables
