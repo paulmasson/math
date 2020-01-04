@@ -250,7 +250,7 @@ function besselJZero( n, m, derivative=false ) {
   if ( !Number.isInteger(m) ) throw Error( 'Nonintegral index for Bessel zero' );
 
   // approximations from dlmf.nist.gov/10.21#vi
-  var delta = .9 * pi/2;
+  var delta = pi/4;
 
   if ( derivative ) {
 
@@ -302,7 +302,7 @@ function besselYZero( n, m, derivative=false ) {
   if ( !Number.isInteger(m) ) throw Error( 'Nonintegral index for Bessel zero' );
 
   // approximations from dlmf.nist.gov/10.21#vi
-  var delta = .9 * pi/2;
+  var delta = pi/4;
 
   if ( derivative ) {
 
