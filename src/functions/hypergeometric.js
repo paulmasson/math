@@ -370,7 +370,9 @@ function hypergeometric2F1( a, b, c, x, tolerance=1e-10 ) {
 
     if ( x === -1 ) throw Error( 'Unsupported real hypergeometric argument' );
 
-    if ( x === 1 ) return gamma(c) * gamma(c-a-b) / gamma(c-a) / gamma(c-b);
+    if ( x === 1 )
+      if ( c - a - b > 0 ) return gamma(c) * gamma(c-a-b) / gamma(c-a) / gamma(c-b);
+      else throw Error( 'Divergent Gauss hypergeometric function' );
 
     if ( x > 1 ) return hypergeometric2F1( a, b, c, complex(x) );
 
