@@ -31,10 +31,13 @@ function besselJZero( n, m, derivative=false ) {
 
   if ( derivative ) {
 
+    if ( n === 0 && m === 1 ) return 0;
+
     var b = ( m + n/2 - 3/4 ) * pi;
     var e = b - ( 4*n**2 + 3 ) / ( 8*b );
 
-    return findRoot( x => diff( x => besselJ(n,x), x ), [ e-delta, e+delta ] );
+    // keep search evaluation real
+    return findRoot( x => diff( x => besselJ(n,x), x ), [ e-delta < 0 ? 0 : e-delta, e+delta ] );
 
   } else {
 
