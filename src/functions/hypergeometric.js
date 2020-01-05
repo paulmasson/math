@@ -402,7 +402,7 @@ function hypergeometric1F2( a, b, c, x ) {
 
   if ( isComplex(a) || isComplex(b) || isComplex(c) || isComplex(x) ) {
 
-    // functions.wolfram.com/HypergeometricFunctions/Hypergeometric1F2/06/02/03/
+    // functions.wolfram.com/HypergeometricFunctions/Hypergeometric1F2/06/02/03/0002/
 
     if ( abs(x) > useAsymptotic ) {
 

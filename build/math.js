@@ -1502,6 +1502,8 @@ function erfi( x ) {
 
 function fresnelS( x ) {
 
+  // can also be evaluated with hypergeometric1F2
+
   var m1 = hypergeometric1F1( .5, 1.5, mul( complex(0,pi/2), pow(x,2) ) );
   var m2 = hypergeometric1F1( .5, 1.5, mul( complex(0,-pi/2), pow(x,2) ) );
 
@@ -1514,6 +1516,8 @@ function fresnelS( x ) {
 }
 
 function fresnelC( x ) {
+
+  // can also be evaluated with hypergeometric1F2
 
   var m1 = hypergeometric1F1( .5, 1.5, mul( complex(0,pi/2), pow(x,2) ) );
   var m2 = hypergeometric1F1( .5, 1.5, mul( complex(0,-pi/2), pow(x,2) ) );
@@ -1931,7 +1935,7 @@ function hypergeometric1F2( a, b, c, x ) {
 
   if ( isComplex(a) || isComplex(b) || isComplex(c) || isComplex(x) ) {
 
-    // functions.wolfram.com/HypergeometricFunctions/Hypergeometric1F2/06/02/03/
+    // functions.wolfram.com/HypergeometricFunctions/Hypergeometric1F2/06/02/03/0002/
 
     if ( abs(x) > useAsymptotic ) {
 
