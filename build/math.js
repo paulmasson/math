@@ -2788,6 +2788,23 @@ function diff( f, x, n=1, method='ridders' ) {
 var D = diff;
 
 
+function taylorSeries( f, x0, terms=5 ) {
+
+  var c = [ f(x0) ];
+  for ( var i = 1 ; i < terms ; i++ ) c.push( diff( f, x0, i ) );
+
+  return function( x ) {
+
+    var s = 0;
+    for ( var i = 0 ; i < c.length ; i++ )
+      s = add( s, mul( c[i], pow( sub(x,x0), i ), 1/factorial(i) ) );
+    return s;
+
+  }
+
+}
+
+
 function gradient( f, point ) {
 
   if ( f.length !== point.length ) throw Error( 'Gradient point length differs from function' );
