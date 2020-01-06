@@ -105,7 +105,14 @@ function logGamma( x ) {
 
 function gamma( x, y, z ) {
 
-  if ( arguments.length === 2 ) return sub( gamma(x), gamma(x,0,y) );
+  if ( arguments.length === 2 ) {
+
+    // patch lower end or evaluate exponential integral independently
+    if ( isZero(x) ) return taylorSeries( x => gamma(x,y), 1e-5 )(0);
+
+    return sub( gamma(x), gamma(x,0,y) );
+
+  }
 
   if ( arguments.length === 3 ) {
 
