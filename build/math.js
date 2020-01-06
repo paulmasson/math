@@ -1532,68 +1532,6 @@ function fresnelC( x ) {
 
 
 
-// accessing array only slightly slower than local variables
-// for loops faster than forEach or reduce
-
-function hypergeometricSeries( A, B, x, complexArguments=false, tolerance=1e-10 ) {
-
-  if ( complexArguments ) {
-
-    var s = complex(1);
-    var p = complex(1);
-    var i = 1;
-
-    while ( Math.abs(p.re) > tolerance || Math.abs(p.im) > tolerance ) {
-
-      for ( var j = 0 ; j < A.length ; j++ ) {
-        p = mul( p, A[j] );
-        A[j] = add( A[j], 1 );
-      }
-
-      for ( var j = 0 ; j < B.length ; j++ ) {
-        p = div( p, B[j] );
-        B[j] = add( B[j], 1 );
-      }
-
-      p = mul( p, x, 1/i );
-      s = add( s, p );
-      i++;
-
-    }
-
-    return s;
-
-  } else {
-
-    var s = 1;
-    var p = 1;
-    var i = 1;
-
-    while ( Math.abs(p) > tolerance ) {
-
-      for ( var j = 0 ; j < A.length ; j++ ) {
-        p *= A[j];
-        A[j]++;
-      }
-
-      for ( var j = 0 ; j < B.length ; j++ ) {
-        p /= B[j];
-        B[j]++;
-      }
-
-      p *= x / i;
-      s += p;
-      i++;
-
-    }
-
-    return s;
-
-  }
-
-}
-
-
 function hypergeometric0F1( a, x, tolerance=1e-10 ) {
 
   var useAsymptotic = 100;
@@ -1976,7 +1914,7 @@ function hypergeometric1F2( a, b, c, x ) {
       var t1 = mul( 1/(2*sqrt(pi)), inv(gamma(a)), pow(neg(x),p), s );
 
       var t2 = mul( inv(gamma(sub(b,a))), inv(gamma(sub(c,a))), pow(neg(x),neg(a)),
-                    hypergeometricPFQ( [a,add(a,neg(b),1),add(a,neg(c),1)], [], inv(x), true ) );
+                    hypergeometricSeries( [ a, add(a,neg(b),1), add(a,neg(c),1) ], [], inv(x), true ) );
 
       return mul( gamma(b), gamma(c), add( t1, t2 ) );
 
@@ -1996,12 +1934,75 @@ function hypergeometric1F2( a, b, c, x ) {
 }
 
 
+// convenience function for less-used hypergeometrics
+// accessing array slower than local variables
+// for loops faster than forEach or reduce
+
+function hypergeometricSeries( A, B, x, complexArguments=false, tolerance=1e-10 ) {
+
+  if ( complexArguments ) {
+
+    var s = complex(1);
+    var p = complex(1);
+    var i = 1;
+
+    while ( Math.abs(p.re) > tolerance || Math.abs(p.im) > tolerance ) {
+
+      for ( var j = 0 ; j < A.length ; j++ ) {
+        p = mul( p, A[j] );
+        A[j] = add( A[j], 1 );
+      }
+
+      for ( var j = 0 ; j < B.length ; j++ ) {
+        p = div( p, B[j] );
+        B[j] = add( B[j], 1 );
+      }
+
+      p = mul( p, x, 1/i );
+      s = add( s, p );
+      i++;
+
+    }
+
+    return s;
+
+  } else {
+
+    var s = 1;
+    var p = 1;
+    var i = 1;
+
+    while ( Math.abs(p) > tolerance ) {
+
+      for ( var j = 0 ; j < A.length ; j++ ) {
+        p *= A[j];
+        A[j]++;
+      }
+
+      for ( var j = 0 ; j < B.length ; j++ ) {
+        p /= B[j];
+        B[j]++;
+      }
+
+      p *= x / i;
+      s += p;
+      i++;
+
+    }
+
+    return s;
+
+  }
+
+}
+
+
 function hypergeometricPFQ( A, B, x ) {
 
   // dlmf.nist.gov/16.11 for general transformations
 
   // for B.length > A.length terms can get very large
-  // roundoff errors for formally convergent series
+  // roundoff errors even for formally convergent series
 
   if ( abs(x) > 1 ) throw Error( 'General hypergeometric argument currently restricted' );
 
