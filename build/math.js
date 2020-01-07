@@ -1538,6 +1538,74 @@ function fresnelC( x ) {
 }
 
 
+function expIntegral( x ) {
+
+  var result = add( neg(gamma(0,neg(x))), mul( .5, sub( log(x), log(inv(x)) ) ),
+                    neg(log(neg(x))) );
+
+  if ( isComplex(x) ) return result;
+
+  return result.re;
+
+}
+
+function logIntegral( x ) {
+
+  var result = add( neg(gamma(0,neg(log(x)))), mul( .5, sub( log(log(x)), log(inv(log(x))) ) ),
+                    neg(log(neg(log(x)))) );
+
+  if ( isComplex(x) ) return result;
+
+  return result.re;
+
+}
+
+function sinIntegral( x ) {
+
+  var ix = mul( complex(0,1), x );
+
+  var result = mul( complex(0,.5), add( gamma(0,neg(ix)), neg(gamma(0,ix)),
+                                        log(neg(ix)), neg(log(ix)) ) );
+
+  if ( isComplex(x) ) return result;
+
+  return result.re;
+
+}
+
+function cosIntegral( x ) {
+
+  var ix = mul( complex(0,1), x );
+
+  var result = sub( log(x), mul( .5, add( gamma(0,neg(ix)), gamma(0,ix),
+                                          log(neg(ix)), log(ix) ) ) );
+
+  if ( isComplex(x) ) return result;
+
+  return result.re;
+
+}
+
+function sinhIntegral( x ) {
+
+  var result = mul( .5, add( gamma(0,x), neg(gamma(0,neg(x))), log(x), neg(log(neg(x))) ) );
+
+  if ( isComplex(x) ) return result;
+
+  return result.re;
+
+}
+
+function coshIntegral( x ) {
+
+  var result = mul( -.5, add( gamma(0,x), gamma(0,neg(x)), neg(log(x)), log(neg(x)) ) );
+
+  if ( isComplex(x) ) return result;
+
+  return result.re;
+
+}
+
 
 function hypergeometric0F1( a, x, tolerance=1e-10 ) {
 
