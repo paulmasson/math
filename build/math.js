@@ -353,17 +353,17 @@ function besselK( n, x ) {
 
   if ( isComplex(n) || isComplex(x) ) {
 
-    if ( !isComplex(n) ) n = complex(n);
-
-    // asymptotic form as per Johansson
+    // asymptotic form as per Johansson arxiv.org/abs/1606.06977
     if ( abs(x) > useAsymptotic ) {
 
-      var t1 = mul( sqrt( div( pi/2, x ) ), exp( mul(-1,x) ) );
-      var t2 = hypergeometric2F0( add(n,.5), sub(.5,n), div( -1, mul(2,x) ) );
+      var t1 = mul( sqrt( div( pi/2, x ) ), exp( neg(x) ) );
+      var t2 = hypergeometric2F0( add(n,.5), sub(.5,n), div(-.5,x) );
 
       return mul( t1, t2 );
 
     }
+
+    if ( !isComplex(n) ) n = complex(n);
 
     // based on dlmf.nist.gov/10.2#E3
     if ( Number.isInteger(n.re) && n.im === 0 )
@@ -376,7 +376,7 @@ function besselK( n, x ) {
   }
 
   if ( x > useAsymptotic )
-    return sqrt(pi/2/x) * exp(-x) * hypergeometric2F0( n+.5, .5-n, -1/2/x );
+    return sqrt(pi/2/x) * exp(-x) * hypergeometric2F0( n+.5, .5-n, -.5/x );
 
   if ( x < 0 ) return besselK( n, complex(x) );
 
