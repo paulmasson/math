@@ -258,3 +258,9 @@ function coshIntegral( x ) {
 
 }
 
+function expIntegralEn( n, x ) {
+
+  return mul( pow( x, sub(n,1) ), gamma( sub(1,n), x ) );
+
+}
+

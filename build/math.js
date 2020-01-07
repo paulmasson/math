@@ -1606,6 +1606,12 @@ function coshIntegral( x ) {
 
 }
 
+function expIntegralEn( n, x ) {
+
+  return mul( pow( x, sub(n,1) ), gamma( sub(1,n), x ) );
+
+}
+
 
 function hypergeometric0F1( a, x, tolerance=1e-10 ) {
 
