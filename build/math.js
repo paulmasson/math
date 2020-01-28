@@ -2668,26 +2668,20 @@ function zeta( x, tolerance=1e-10 ) {
 
   if ( isComplex(x) ) {
 
-    // functional equation
+    // functional equation dlmf.nist.gov/25.4#E2
     if ( x.re < 0 )
       return mul( pow(2,x), pow(pi,sub(x,1)), sin( mul(pi/2,x) ), gamma( sub(1,x) ), zeta( sub(1,x) ) );
 
-    var s = complex(0);
-
-    for ( var k = 0 ; k < n ; k++ )
-      s = add( s, div( (-1)**k * ( d[k] - d[n] ), pow( k+1, x ) ) );
+    var s = summation( k => div( (-1)**k * ( d[k] - d[n] ), pow( k+1, x ) ), [0,n-1] );
 
     return div( div( s, -d[n] ), sub( 1, pow( 2, sub(1,x) ) ) );
 
   } else {
 
-    // functional equation
+    // functional equation dlmf.nist.gov/25.4#E2
     if ( x < 0 ) return 2**x * pi**(x-1) * sin(pi*x/2) * gamma(1-x) * zeta(1-x);
 
-    var s = 0;
-
-    for ( var k = 0 ; k < n ; k++ )
-      s += (-1)**k * ( d[k] - d[n] ) / (k+1)**x;
+    var s = summation( k => (-1)**k * ( d[k] - d[n] ) / (k+1)**x, [0,n-1] );
 
     return -s / d[n] / ( 1 - 2**(1-x) );
 
@@ -2711,6 +2705,41 @@ function bernoulli( n ) {
   if ( n & 1 ) return 0;
 
   return (-1)**(n+1) * n * zeta(-n+1);
+
+}
+
+
+function hurwitzZeta( x, a, tolerance=1e-10 ) {
+
+  // Johansson arxiv.org/abs/1309.2877
+
+  if ( isComplex(x) || isComplex(a) ) {
+
+
+  } else {
+
+    if ( x === 1 ) throw Error( 'Hurwitz zeta pole' );
+
+    // dlmf.nist.gov/25.11#E4
+
+    if ( a > 1 ) {
+      var m = Math.floor(a);
+      a -= m;
+      return hurwitzZeta(x,a) - summation( i => 1 / (a+i)**x, [0,m-1] );
+    }
+
+    if ( a < 0 ) return hurwitzZeta( x, complex(a) );
+
+    var n = Math.round( -log( tolerance, 2) ); // from bit precision
+    var m = Math.round( -log( tolerance, 2) );
+
+    var s = summation( i => 1 / (a+i)**x, [0,n-1] );
+
+    var t = summation( i => bernoulli(2*i) / factorial(2*i) * gamma(x+2*i-1) / (a+n)**(2*i-1), [1,m] );
+
+    return s + (a+n)**(1-x) / (x-1) + ( .5 + t / gamma(x) ) / (a+n)**x;
+
+  }
 
 }
 
@@ -3171,6 +3200,29 @@ function discreteIntegral( values, step ) {
   for ( var i = 1 ; i < values.length - 1 ; i++ ) s += values[i];
 
   return s * step;
+
+}
+
+
+function summation( f, [a,b] ) {
+
+  if ( isComplex( f(a) ) ) {
+
+    var s = complex(0);
+
+    for ( var i = a ; i <= b ; i++ ) s = add( s, f(i) );
+
+    return s;
+
+  } else {
+
+    var s = 0;
+
+    for ( var i = a ; i <= b ; i++ ) s += f(i);
+
+    return s;
+
+  }
 
 }
 

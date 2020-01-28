@@ -56,3 +56,37 @@ function bernoulli( n ) {
 }
 
 
+function hurwitzZeta( x, a, tolerance=1e-10 ) {
+
+  // Johansson arxiv.org/abs/1309.2877
+
+  if ( isComplex(x) || isComplex(a) ) {
+
+
+  } else {
+
+    if ( x === 1 ) throw Error( 'Hurwitz zeta pole' );
+
+    // dlmf.nist.gov/25.11#E4
+
+    if ( a > 1 ) {
+      var m = Math.floor(a);
+      a -= m;
+      return hurwitzZeta(x,a) - summation( i => 1 / (a+i)**x, [0,m-1] );
+    }
+
+    if ( a < 0 ) return hurwitzZeta( x, complex(a) );
+
+    var n = Math.round( -log( tolerance, 2) ); // from bit precision
+    var m = Math.round( -log( tolerance, 2) );
+
+    var s = summation( i => 1 / (a+i)**x, [0,n-1] );
+
+    var t = summation( i => bernoulli(2*i) / factorial(2*i) * gamma(x+2*i-1) / (a+n)**(2*i-1), [1,m] );
+
+    return s + (a+n)**(1-x) / (x-1) + ( .5 + t / gamma(x) ) / (a+n)**x;
+
+  }
+
+}
+
