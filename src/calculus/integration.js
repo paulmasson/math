@@ -236,3 +236,26 @@ function discreteIntegral( values, step ) {
 
 }
 
+
+function summation( f, [a,b] ) {
+
+  if ( isComplex( f(a) ) ) {
+
+    var s = complex(0);
+
+    for ( var i = a ; i <= b ; i++ ) s = add( s, f(i) );
+
+    return s;
+
+  } else {
+
+    var s = 0;
+
+    for ( var i = a ; i <= b ; i++ ) s += f(i);
+
+    return s;
+
+  }
+
+}
+
