@@ -55,6 +55,14 @@ function bernoulli( n ) {
 
 }
 
+function harmonic( n ) {
+
+  if ( !Number.isInteger(n) ) throw Error( 'Noninteger argument for harmonic number' );
+
+  return summation( i => 1/i, [1,n] );
+
+}
+
 
 function hurwitzZeta( x, a, tolerance=1e-10 ) {
 
