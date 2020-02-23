@@ -56,7 +56,7 @@ function besselY( n, x ) {
 
     if ( !isComplex(n) ) n = complex(n);
 
-    // dlmf.nist.gov/10.2#E3
+    // dlmf.nist.gov/10.2.3
     if ( Number.isInteger(n.re) && n.im === 0 )
       return div( add( diff( n => besselJ(n,x), n ),
                        mul( pow(-1,n), diff( n => besselJ(n,x), neg(n) ) ) ), pi );
@@ -68,7 +68,7 @@ function besselY( n, x ) {
 
   if ( x < 0 ) return besselY( n, complex(x) );
 
-  // dlmf.nist.gov/10.2#E3
+  // dlmf.nist.gov/10.2.3
   if ( Number.isInteger(n) )
     return ( diff( n => besselJ(n,x), n ) + (-1)**n * diff( n => besselJ(n,x), -n ) ) / pi;
 
@@ -142,7 +142,7 @@ function besselK( n, x ) {
 
     if ( !isComplex(n) ) n = complex(n);
 
-    // based on dlmf.nist.gov/10.2#E3
+    // based on dlmf.nist.gov/10.2.3
     if ( Number.isInteger(n.re) && n.im === 0 )
       return mul( pow(-1,add(n,1)), 1/2,
                   add( diff( n => besselI(n,x), n ), diff( n => besselI(n,x), neg(n) ) ) );
@@ -157,7 +157,7 @@ function besselK( n, x ) {
 
   if ( x < 0 ) return besselK( n, complex(x) );
 
-  // based on dlmf.nist.gov/10.2#E3
+  // based on dlmf.nist.gov/10.2.3
   if ( Number.isInteger(n) )
     return (-1)**(n+1)/2 * ( diff( n => besselI(n,x), n ) + diff( n => besselI(n,x), -n ) );
 

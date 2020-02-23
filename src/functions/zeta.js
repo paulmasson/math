@@ -15,7 +15,7 @@ function zeta( x, tolerance=1e-10 ) {
 
   if ( isComplex(x) ) {
 
-    // functional equation dlmf.nist.gov/25.4#E2
+    // functional equation dlmf.nist.gov/25.4.2
     if ( x.re < 0 )
       return mul( pow(2,x), pow(pi,sub(x,1)), sin( mul(pi/2,x) ), gamma( sub(1,x) ), zeta( sub(1,x) ) );
 
@@ -25,7 +25,7 @@ function zeta( x, tolerance=1e-10 ) {
 
   } else {
 
-    // functional equation dlmf.nist.gov/25.4#E2
+    // functional equation dlmf.nist.gov/25.4.2
     if ( x < 0 ) return 2**x * pi**(x-1) * sin(pi*x/2) * gamma(1-x) * zeta(1-x);
 
     var s = summation( k => (-1)**k * ( d[k] - d[n] ) / (k+1)**x, [0,n-1] );
@@ -75,7 +75,7 @@ function hurwitzZeta( x, a, tolerance=1e-10 ) {
 
     if ( x === 1 ) throw Error( 'Hurwitz zeta pole' );
 
-    // dlmf.nist.gov/25.11#E4
+    // dlmf.nist.gov/25.11.4
 
     if ( a > 1 ) {
       var m = Math.floor(a);
