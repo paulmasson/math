@@ -2651,6 +2651,10 @@ function sinc( x ) {
 
 }
 
+function gudermannian( x ) { return arctan( sinh(x) ); }
+
+function inverseGudermannian( x ) { return arctanh( sin(x) ); }
+
 
 function zeta( x, tolerance=1e-10 ) {
 
