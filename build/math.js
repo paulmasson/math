@@ -1316,7 +1316,7 @@ function ellipticPi( n, x, m ) {
 
   } else {
 
-    if ( n > 1 && x > Math.asin( 1 / Math.sqrt(n) ) ) return ellipticPi( n, complex(x), m );
+    if ( n > 1 && Math.abs(x) > Math.asin( 1 / Math.sqrt(n) ) ) return ellipticPi( n, complex(x), m );
 
     if ( m > 1 && Math.abs(x) > Math.asin( 1 / Math.sqrt(m) ) ) return ellipticPi( n, complex(x), m );
 
