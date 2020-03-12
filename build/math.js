@@ -979,7 +979,9 @@ function carlsonRC( x, y ) {
 
     if ( x.re === y.re && x.im === y.im ) return inv( sqrt(x) );
 
-    return div( arccos( sqrt( div(x,y) ) ), sqrt( sub(y,x) ) );
+    // return value by continuity
+
+    return div( arccos( div( sqrt(x), sqrt(y) ) ), mul( sqrt(y), sqrt( sub( 1, div(x,y) ) ) ) );
 
   }
 
