@@ -1089,7 +1089,11 @@ function carlsonRF( x, y, z, tolerance=1e-10 ) {
 
 function carlsonRG( x, y, z ) {
 
-  throw Error( 'Carlson RG not implemented' );
+  var t1 = mul( z, carlsonRF(x,y,z) );
+  var t2 = mul( -1/3, sub(x,z), sub(y,z), carlsonRD(x,y,z) );
+  var t3 = sqrt( mul( x, y, inv(z) ) );
+
+  return mul( .5, add( t1, t2, t3 ) );
 
 }
 
