@@ -718,7 +718,7 @@ function sn( x, m ) {
 
   }
 
-  // dlmf.nist.gov/22.5#ii
+  // dlmf.nist.gov/22.5.ii
   if ( m === 0 ) return sin(x);
   if ( m === 1 ) return tanh(x);
 
@@ -757,7 +757,7 @@ function cn( x, m ) {
 
   }
 
-  // dlmf.nist.gov/22.5#ii
+  // dlmf.nist.gov/22.5.ii
   if ( m === 0 ) return cos(x);
   if ( m === 1 ) return sech(x);
 
@@ -796,7 +796,7 @@ function dn( x, m ) {
 
   }
 
-  // dlmf.nist.gov/22.5#ii
+  // dlmf.nist.gov/22.5.ii
   if ( m === 0 ) return 1;
   if ( m === 1 ) return sech(x);
 
