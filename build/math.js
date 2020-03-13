@@ -976,6 +976,22 @@ function inverseWeierstrassP( x, g2, g3 ) {
 }
 
 
+function kleinJ( x ) {
+
+  // from mpmath / elliptic.py
+
+  var q = exp( mul( complex(0,pi), x ) );
+  var t2 = chop( jacobiTheta(2,0,q) );
+  var t3 = chop( jacobiTheta(3,0,q) );
+  var t4 = chop( jacobiTheta(4,0,q) );
+  var P = pow( add( pow(t2,8), pow(t3,8), pow(t4,8) ), 3 );
+  var Q = mul( 54, pow( mul(t2,t3,t4), 8 ) );
+
+  return div( P, Q );
+
+}
+
+
 // Carlson symmetric integrals
 
 function carlsonRC( x, y ) {
