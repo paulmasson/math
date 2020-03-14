@@ -391,9 +391,6 @@ function weierstrassHalfPeriods( g2, g3 ) {
   var w1 = div( ellipticK(m), lambda );
   var w3 = div( mul( complex(0,1), ellipticK( sub(1,m) ) ), lambda );
 
-  // order half periods by complex slope
-  if ( w3.im/w3.re > w1.im/w1.re ) [ w1, w3 ] = [ w3, neg(w1) ];
-
   return [ w1, w3 ];
 
 }
