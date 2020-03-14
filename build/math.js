@@ -1326,6 +1326,8 @@ function ellipticPi( n, x, m ) {
     x = pi / 2;
   }
 
+  // x outside period and abs(n)>1 agrees with mpmath, differs from Mathematica
+
   if ( isComplex(n) || isComplex(x) || isComplex(m) ) {
 
     if ( !isComplex(x) ) x = complex(x);
