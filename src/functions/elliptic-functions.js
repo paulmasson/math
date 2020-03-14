@@ -381,20 +381,20 @@ function weierstrassRoots( g2, g3 ) {
 
 function weierstrassHalfPeriods( g2, g3 ) {
 
+  // Davis, Intro to Diff. Eqs., pp.157-8
+
   var [ e1, e2, e3 ] = weierstrassRoots( g2, g3 );
 
-  var w1 = inverseWeierstrassP( e1, g2, g3 );
-  var w2 = inverseWeierstrassP( e2, g2, g3 );
-  var w3 = inverseWeierstrassP( e3, g2, g3 );
+  var lambda = sqrt( sub(e1,e3) );
+  var m = div( sub(e2,e3), sub(e1,e3) );
 
-  var w = [ w1, w2, w3 ];
-  w.sort( (a,b) => abs(a) - abs(b) );
-  var smallest = w.shift();
+  var w1 = div( ellipticK(m), lambda );
+  var w3 = div( mul( complex(0,1), ellipticK( sub(1,m) ) ), lambda );
 
-  w.push( sub(w[0],smallest), sub(w[1],smallest) );
-  w.sort( (a,b) => abs(a) - abs(b) );  
+  // order half periods by complex slope
+  if ( w3.im/w3.re > w1.im/w1.re ) [ w1, w3 ] = [ w3, neg(w1) ];
 
-  return [ smallest, w[0] ];
+  return [ w1, w3 ];
 
 }
 
