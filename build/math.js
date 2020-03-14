@@ -875,6 +875,8 @@ function weierstrassRoots( g2, g3 ) {
 function weierstrassHalfPeriods( g2, g3 ) {
 
   // Davis, Intro to Diff. Eqs., pp.157-8
+  // consistent with periods of Jacobi sine in weierstrassP
+  // not consistent with Mathematica
 
   var [ e1, e2, e3 ] = weierstrassRoots( g2, g3 );
 
