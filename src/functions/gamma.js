@@ -260,6 +260,10 @@ function coshIntegral( x ) {
 
 function expIntegralEn( n, x ) {
 
+  if ( isZero(n) ) return div( exp(neg(x)), x );
+
+  if ( isZero(x) && ( n > 1 || n.re > 1 ) ) return inv( sub(n,1) );
+
   return mul( pow( x, sub(n,1) ), gamma( sub(1,n), x ) );
 
 }
