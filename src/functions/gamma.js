@@ -194,7 +194,7 @@ function fresnelC( x ) {
 
 function expIntegral( x, tolerance=1e-10 ) {
 
-  var useAsymptotic = 10;
+  var useAsymptotic = 30;
 
   if ( isComplex(x) ) {
 
@@ -228,7 +228,8 @@ function expIntegral( x, tolerance=1e-10 ) {
 
   } else {
 
-    if ( x < 0 ) return expIntegral( complex(x) );
+    // phase jumps from pi to -pi across negative axis
+    if ( x < 0 ) return expIntegral( complex(x) ).re;
 
     if ( Math.abs(x) > useAsymptotic ) {
 
