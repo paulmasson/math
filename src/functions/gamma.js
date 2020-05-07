@@ -116,7 +116,7 @@ function gamma( x, y, z ) {
 
   if ( arguments.length === 3 ) {
 
-    if ( y !== 0 ) return sub( gamma(x,0,z), gamma(x,0,y) );
+    if ( !isZero(y) ) return sub( gamma(x,0,z), gamma(x,0,y) );
 
     return mul( pow(z,x), inv(x), hypergeometric1F1( x, add(x,1), neg(z) ) );
 
