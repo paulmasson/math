@@ -190,14 +190,73 @@ function fresnelC( x ) {
 }
 
 
-function expIntegral( x ) {
+function expIntegral( x, tolerance=1e-10 ) {
 
-  var result = add( neg(gamma(0,neg(x))), mul( .5, sub( log(x), log(inv(x)) ) ),
-                    neg(log(neg(x))) );
+  var useAsymptotic = 10;
 
-  if ( isComplex(x) ) return result;
+  if ( isComplex(x) ) {
 
-  return result.re;
+    if ( abs(x) > useAsymptotic ) {
+
+      var s = complex(1);
+      var p = complex(1);
+      var i = 1;
+
+      while ( Math.abs(p.re) > tolerance || Math.abs(p.im) > tolerance ) {
+        p = mul( p, i, inv(x) );
+        s = add( s, p );
+        i++;
+      }
+
+      return mul( s, exp(x), inv(x) );
+
+    }
+
+    var s = complex(0);
+    var p = complex(1);
+    var i = 1;
+
+    while ( Math.abs(p.re/i) > tolerance || Math.abs(p.im/i) > tolerance ) {
+      p = mul( p, x, 1/i );
+      s = add( s, div(p,i) );
+      i++;
+    }
+
+    return add( s, eulerGamma, log(x) );
+
+  } else {
+
+    if ( x < 0 ) return expIntegral( complex(x) );
+
+    if ( Math.abs(x) > useAsymptotic ) {
+
+      var s = 1;
+      var p = 1;
+      var i = 1;
+
+      while ( Math.abs(p) > tolerance ) {
+        p *= i / x;
+        s += p;
+        i++;
+      }
+
+      return s * Math.exp(x) / x;
+
+    }
+
+    var s = 0;
+    var p = 1;
+    var i = 1;
+
+    while ( Math.abs(p/i) > tolerance ) {
+      p *= x / i;
+      s += p / i;
+      i++;
+    }
+
+    return s + eulerGamma + Math.log(x);
+
+  }
 
 }
 
