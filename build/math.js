@@ -1486,8 +1486,10 @@ function gamma( x, y, z ) {
 
   if ( arguments.length === 2 ) {
 
-    // patch lower end or evaluate exponential integral independently
-    if ( isZero(x) ) return taylorSeries( x => gamma(x,y), 1e-5 )(0);
+    if ( isZero(x) )
+      return add( neg(expIntegral(neg(y))),
+                  mul( .5, sub( log(neg(y)), log(neg(inv(y))) ) ),
+                  neg(log(y)) );
 
     return sub( gamma(x), gamma(x,0,y) );
 
@@ -1641,12 +1643,7 @@ function expIntegral( x, tolerance=1e-10 ) {
 
 function logIntegral( x ) {
 
-  var result = add( neg(gamma(0,neg(log(x)))), mul( .5, sub( log(log(x)), log(inv(log(x))) ) ),
-                    neg(log(neg(log(x)))) );
-
-  if ( isComplex(x) ) return result;
-
-  return result.re;
+  return expIntegral( log(x) );
 
 }
 
