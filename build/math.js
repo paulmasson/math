@@ -2223,7 +2223,7 @@ function log( x, base ) {
 
 }
 
-var ln = log;
+function ln( x ) { return log(x); }
 
 
 function lambertW( k, x, tolerance=1e-10 ) {
