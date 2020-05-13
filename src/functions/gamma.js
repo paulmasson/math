@@ -108,7 +108,7 @@ function gamma( x, y, z ) {
   if ( arguments.length === 2 ) {
 
     if ( isZero(x) )
-      return add( neg(expIntegral(neg(y))),
+      return add( neg(expIntegralEi(neg(y))),
                   mul( .5, sub( log(neg(y)), log(neg(inv(y))) ) ),
                   neg(log(y)) );
 
@@ -192,7 +192,7 @@ function fresnelC( x ) {
 }
 
 
-function expIntegral( x, tolerance=1e-10 ) {
+function expIntegralEi( x, tolerance=1e-10 ) {
 
   var useAsymptotic = 30;
 
@@ -229,7 +229,7 @@ function expIntegral( x, tolerance=1e-10 ) {
   } else {
 
     // phase jumps from pi to -pi across negative axis
-    if ( x < 0 ) return expIntegral( complex(x) ).re;
+    if ( x < 0 ) return expIntegralEi( complex(x) ).re;
 
     if ( Math.abs(x) > useAsymptotic ) {
 
@@ -315,7 +315,7 @@ function coshIntegral( x ) {
 
 }
 
-function expIntegralEn( n, x ) {
+function expIntegralE( n, x ) {
 
   if ( isZero(n) ) return div( exp(neg(x)), x );
 
