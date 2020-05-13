@@ -1603,7 +1603,12 @@ function expIntegralEi( x, tolerance=1e-10 ) {
       i++;
     }
 
-    return add( s, eulerGamma, log(x) );
+    s = add( s, eulerGamma, log(x) );
+
+    // phase jumps from pi to -pi across negative axis
+    if ( x.re < 0 && x.im === 0 ) s.im = 0;
+
+    return s;
 
   } else {
 
