@@ -289,14 +289,12 @@ function sinIntegral( x ) {
 
 function cosIntegral( x ) {
 
+  // complex for negative real argument
+
   var ix = mul( complex(0,1), x );
 
-  var result = sub( log(x), mul( .5, add( gamma(0,neg(ix)), gamma(0,ix),
-                                          log(neg(ix)), log(ix) ) ) );
-
-  if ( isComplex(x) ) return result;
-
-  return result.re;
+  return sub( log(x), mul( .5, add( gamma(0,neg(ix)), gamma(0,ix),
+                                    log(neg(ix)), log(ix) ) ) );
 
 }
 
@@ -312,11 +310,9 @@ function sinhIntegral( x ) {
 
 function coshIntegral( x ) {
 
-  var result = mul( -.5, add( gamma(0,x), gamma(0,neg(x)), neg(log(x)), log(neg(x)) ) );
+  // complex for negative real argument
 
-  if ( isComplex(x) ) return result;
-
-  return result.re;
+  return mul( -.5, add( gamma(0,x), gamma(0,neg(x)), neg(log(x)), log(neg(x)) ) );
 
 }
 
