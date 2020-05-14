@@ -226,14 +226,14 @@ function expIntegralEi( x, tolerance=1e-10 ) {
 
     s = add( s, eulerGamma, log(x) );
 
-    // phase jumps from pi to -pi across negative axis
+    // form (log(x)-log(1/x))/2 has wrong phase from -0 in division
+    // can either chop inv(x) or set phase explicitly
     if ( x.re < 0 && x.im === 0 ) s.im = 0;
 
     return s;
 
   } else {
 
-    // phase jumps from pi to -pi across negative axis
     if ( x < 0 ) return expIntegralEi( complex(x) ).re;
 
     if ( Math.abs(x) > useAsymptotic ) {
