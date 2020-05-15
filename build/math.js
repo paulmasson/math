@@ -1486,10 +1486,20 @@ function gamma( x, y, z ) {
 
   if ( arguments.length === 2 ) {
 
-    if ( isZero(x) )
-      return add( neg(expIntegralEi(neg(y))),
-                  mul( .5, sub( log(neg(y)), log(neg(inv(y))) ) ),
-                  neg(log(y)) );
+    if ( isZero(x) ) {
+
+      if ( isZero(y) ) throw Error( 'Gamma function pole' );
+
+      // combination of logarithms merely adds/subtracts complex(0,pi)
+      var result = add( neg(expIntegralEi(neg(y))),
+                        mul( .5, sub( log(neg(y)), log(neg(inv(y))) ) ),
+                        neg(log(y)) );
+
+      if ( !isComplex(y) && y > 0 ) return result.re;
+
+      return result;
+
+    }
 
     return sub( gamma(x), gamma(x,0,y) );
 
