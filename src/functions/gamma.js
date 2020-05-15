@@ -276,6 +276,8 @@ function logIntegral( x ) {
 
 function sinIntegral( x ) {
 
+  if ( isZero(x) ) return isComplex(x) ? complex(0) : 0;
+
   var ix = mul( complex(0,1), x );
 
   var result = mul( complex(0,.5), add( gamma(0,neg(ix)), neg(gamma(0,ix)),
@@ -299,6 +301,8 @@ function cosIntegral( x ) {
 }
 
 function sinhIntegral( x ) {
+
+  if ( isZero(x) ) return isComplex(x) ? complex(0) : 0;
 
   var result = mul( .5, add( gamma(0,x), neg(gamma(0,neg(x))), log(x), neg(log(neg(x))) ) );
 
