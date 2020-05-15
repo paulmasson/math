@@ -122,6 +122,11 @@ function gamma( x, y, z ) {
 
     }
 
+    // this complex lerp patches the real part, not so much the imaginary
+    var delta = 1e-5;
+    if ( abs(x) < delta )
+      return taylorSeries( t => gamma(t,y), mul( x, delta/abs(x) ), 2 )(x);
+
     return sub( gamma(x), gamma(x,0,y) );
 
   }
