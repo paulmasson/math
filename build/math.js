@@ -23,6 +23,27 @@ function isZero( x ) {
 
 }
 
+function isInteger( x ) {
+
+  if ( isComplex(x) ) return Number.isInteger(x.re) && x.im === 0;
+  return Number.isInteger(x);
+
+}
+
+function isPositiveInteger( x ) {
+
+  if ( isComplex(x) ) return Number.isInteger(x.re) && x.re > 0 && x.im === 0;
+  return Number.isInteger(x) && x > 0;
+
+}
+
+function isNegativeInteger( x ) {
+
+  if ( isComplex(x) ) return Number.isInteger(x.re) && x.re < 0 && x.im === 0;
+  return Number.isInteger(x) && x < 0;
+
+}
+
 
 function re( x ) {
 
