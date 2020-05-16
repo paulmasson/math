@@ -127,6 +127,20 @@ function gamma( x, y, z ) {
     if ( abs(x) < delta )
       return taylorSeries( t => gamma(t,y), mul( x, delta/abs(x) ), 2 )(x);
 
+    // dlmf.nist.gov/8.4.15
+    if ( isNegativeInteger(x) ) {
+
+      var n = isComplex(x) ? -x.re : -x;
+      var t = mul( exp(neg(y)), summation( k => div( (-1)**k*factorial(k), pow(y,k+1) ), [0,n-1] ) );
+
+      var result = mul( (-1)**n/factorial(n), sub( expIntegralE(1,y), t ) );
+
+      if ( isComplex(x) && !isComplex(result) ) return complex(result); // complex in, complex out
+
+      return result;
+
+    }
+
     return sub( gamma(x), gamma(x,0,y) );
 
   }
