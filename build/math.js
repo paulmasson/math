@@ -1929,6 +1929,20 @@ function hypergeometricU( a, b, x ) {
 
 }
 
+function whittakerM( k, m, x ) {
+
+  return mul( exp( mul(-.5,x) ), pow( x, add(m,.5) ),
+              hypergeometric1F1( add(m,neg(k),.5), add(mul(2,m),1), x ) );
+
+}
+
+function whittakerW( k, m, x ) {
+
+  return mul( exp( mul(-.5,x) ), pow( x, add(m,.5) ),
+              hypergeometricU( add(m,neg(k),.5), add(mul(2,m),1), x ) );
+
+}
+
 
 function hypergeometric2F0( a, b, x, tolerance=1e-10 ) {
 
