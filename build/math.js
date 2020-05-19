@@ -247,17 +247,14 @@ function besselJ( n, x ) {
 
   if ( isComplex(n) || isComplex(x) ) {
 
-    if ( !isComplex(n) ) n = complex(n);
-
-    if ( Number.isInteger(n.re) && n.re < 0 && n.im === 0 )
-      return mul( pow(-1,n), besselJ( mul(-1,n), x ) );
+    if ( isNegativeInteger(n) ) return mul( pow(-1,n), besselJ( mul(-1,n), x ) );
 
     var product = div( pow( div(x,2), n ), gamma( add(n,1) ) );
     return mul( product, hypergeometric0F1( add(n,1), mul(-.25, pow(x,2) ) ) );
 
   } 
 
-  if ( Number.isInteger(n) && n < 0 ) return (-1)**n * besselJ( -n, x );
+  if ( isNegativeInteger(n) ) return (-1)**n * besselJ( -n, x );
 
   if ( !Number.isInteger(n) && x < 0 ) return besselJ( n, complex(x) );
 
@@ -298,10 +295,8 @@ function besselY( n, x ) {
 
   if ( isComplex(n) || isComplex(x) ) {
 
-    if ( !isComplex(n) ) n = complex(n);
-
     // dlmf.nist.gov/10.2.3
-    if ( Number.isInteger(n.re) && n.im === 0 )
+    if ( isInteger(n) )
       return div( add( diff( n => besselJ(n,x), n ),
                        mul( pow(-1,n), diff( n => besselJ(n,x), neg(n) ) ) ), pi );
 
@@ -350,17 +345,14 @@ function besselI( n, x ) {
 
   if ( isComplex(n) || isComplex(x) ) {
 
-    if ( !isComplex(n) ) n = complex(n);
-
-    if ( Number.isInteger(n.re) && n.re < 0 && n.im === 0 )
-      return besselI( mul(-1,n), x );
+    if ( isNegativeInteger(n) ) return besselI( mul(-1,n), x );
 
     var product = div( pow( div(x,2), n ), gamma( add(n,1) ) );
     return mul( product, hypergeometric0F1( add(n,1), mul(.25, pow(x,2) ) ) );
 
   }
 
-  if ( Number.isInteger(n) && n < 0 ) return besselI( -n, x );
+  if ( isNegativeInteger(n) ) return besselI( -n, x );
 
   if ( !Number.isInteger(n) && x < 0 ) return besselI( n, complex(x) );
 
@@ -384,10 +376,8 @@ function besselK( n, x ) {
 
     }
 
-    if ( !isComplex(n) ) n = complex(n);
-
     // based on dlmf.nist.gov/10.2.3
-    if ( Number.isInteger(n.re) && n.im === 0 )
+    if ( isInteger(n) )
       return mul( pow(-1,add(n,1)), 1/2,
                   add( diff( n => besselI(n,x), n ), diff( n => besselI(n,x), neg(n) ) ) );
 
