@@ -1909,6 +1909,27 @@ function hypergeometric1F1( a, b, x, tolerance=1e-10 ) {
 }
 
 
+function hypergeometricU( a, b, x ) {
+
+  var useAsymptotic = 15;
+
+  // asymptotic form as per Johansson arxiv.org/abs/1606.06977
+  if ( abs(x) > useAsymptotic ) {
+
+    return mul( pow( x, neg(a) ), hypergeometric2F0( a, add(a,neg(b),1), neg(inv(x)) ) );
+
+  }
+
+  var t1 = mul( gamma(sub(b,1)), inv( gamma(a) ), pow( x, sub(1,b) ),
+                hypergeometric1F1( add(a,neg(b),1), sub(2,b), x ) );
+
+  var t2 = mul( gamma(sub(1,b)), inv( gamma(add(a,neg(b),1)) ), hypergeometric1F1( a, b, x ) );
+
+  return add( t1, t2 );
+
+}
+
+
 function hypergeometric2F0( a, b, x, tolerance=1e-10 ) {
 
   var terms = 50;
