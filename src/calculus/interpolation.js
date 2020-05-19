@@ -40,19 +40,48 @@ function partialBell( n, k, argumentArray ) {
 }
 
 
-function findRoot( f, interval, options={} ) {
+function findRoot( f, start, options={} ) {
 
-  if ( !Array.isArray(interval) && !options.method ) options.method = 'newton';
+  var tolerance = 'tolerance' in options ? options.tolerance : 1e-10;
+  var maxIter = 100;
+
+  if ( Array.isArray(f) ) {
+
+    if ( f.length !== start.length ) throw Error( 'Mismatch between equations and starting point for root' );
+
+    var root = start;
+
+    for ( var i = 0; i < maxIter ; i++ ) {
+
+      var J = [], F = [];
+
+      for ( var j = 0 ; j < root.length ; j++ ) {
+        J.push( gradient( f[j], root ) );
+        F.push( f[j].apply( null, root ) );
+      }
+
+      var delta = luSolve( J, F );
+
+      for ( var j = 0 ; j < root.length ; j++ ) root[j] -= delta[j];
+
+      if ( delta.every( d => Math.abs(d) < tolerance ) ) return root;
+
+    }
+
+    throw Error( 'No root found for tolerance ' + tolerance );
+
+  }
+
+  if ( !Array.isArray(start) && !options.method ) options.method = 'newton';
 
   var method = 'method' in options ? options.method : 'bisect';
-  var tolerance = 'tolerance' in options ? options.tolerance : 1e-10;
 
   switch( method ) {
 
     case 'bisect':
 
-      var a = interval[0];
-      var b = interval[1];
+      var a = start[0];
+      var b = start[1];
 
       var fa = f(a);
       var fb = f(b);
@@ -68,7 +97,6 @@ function findRoot( f, interval, options={} ) {
         h = a - b;
       }
 
-      var maxIter = 100;
       for ( var i = 0; i < maxIter ; i++ ) {
         h /= 2;
         var mid = root + h;
@@ -81,8 +109,7 @@ function findRoot( f, interval, options={} ) {
 
     case 'newton':
 
-      var root = interval;
-      var maxIter = 100;
+      var root = start;
 
       if ( isComplex(root) ) {
 
@@ -115,28 +142,7 @@ function findRoot( f, interval, options={} ) {
 
 function findRoots( f, point, tolerance=1e-10 ) {
 
-  if ( f.length !== point.length ) throw Error( 'Mismatch between equations and starting point for root' );
-
-  var maxIter = 100;
-
-  for ( var i = 0; i < maxIter ; i++ ) {
-
-    var J = [], F = [];
-
-    for ( var j = 0 ; j < point.length ; j++ ) {
-      J.push( gradient( f[j], point ) );
-      F.push( f[j].apply( null, point ) );
-    }
-
-    var delta = luSolve( J, F );
-
-    for ( var j = 0 ; j < point.length ; j++ ) point[j] -= delta[j];
-
-    if ( delta.every( d => Math.abs(d) < tolerance ) ) return point;
-
-  }
-
-  throw Error( 'No root found for tolerance ' + tolerance );
+  console.log( 'Renamed to findRoot' );
 
 }
 
