@@ -2540,6 +2540,21 @@ function sphericalHarmonic( l, m, theta, phi ) {
 
 }
 
+function legendreQ( l, m, x ) {
+
+  if ( arguments.length < 3 ) {
+    x = m;
+    m = 0;
+  }
+
+  var t1 = mul( cos( mul(pi,m) ), legendreP(l,m,x) );
+
+  var t2 = mul( gamma( add(l,m,1) ), inv( gamma( add(l,neg(m),1) ) ), legendreP(l,neg(m),x) );
+
+  return mul( div( pi/2, sin( mul(pi,m) ) ), sub( t1, t2 ) );
+
+}
+
 
 // complex circular functions
 
