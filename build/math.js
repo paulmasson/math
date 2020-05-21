@@ -2532,6 +2532,13 @@ function legendreP( l, m, x, renormalized=false ) {
 
   }
 
+  // dlmf.nist.gov/14.3.5
+  if ( isPositiveInteger(m) )
+    return mul( pow(-1,m), inv( gamma( add(m,1) ) ),
+                gamma( add(l,m,1) ), inv( gamma( add(l,neg(m),1) ) ),
+                pow( add(1,x), div(m,-2) ), pow( sub(1,x), div(m,2) ),
+                hypergeometric2F1( neg(l), add(l,1), add(m,1), div(sub(1,x),2) ) );
+
   return mul( inv( gamma( sub(1,m) ) ),
               pow( add(1,x), div(m,2) ), pow( sub(1,x), div(m,-2) ),
               hypergeometric2F1( neg(l), add(l,1), sub(1,m), div(sub(1,x),2) ) );
