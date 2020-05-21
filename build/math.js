@@ -1790,10 +1790,7 @@ function hypergeometric0F1( a, x, tolerance=1e-10 ) {
 
   if ( isComplex(a) || isComplex(x) ) {
 
-    if ( !isComplex(a) ) a = complex(a);
-
-    if ( Number.isInteger(a.re) && a.re <= 0 && a.im === 0 )
-      throw Error( 'Hypergeometric function pole' );
+    if ( isNegativeIntegerOrZero(a) ) throw Error( 'Hypergeometric function pole' );
 
     // asymptotic form as per Johansson arxiv.org/abs/1606.06977
     if ( abs(x) > useAsymptotic ) {
@@ -1829,7 +1826,7 @@ function hypergeometric0F1( a, x, tolerance=1e-10 ) {
 
   } else {
 
-    if ( Number.isInteger(a) && a <= 0 ) throw Error( 'Hypergeometric function pole' );
+    if ( isNegativeIntegerOrZero(a) ) throw Error( 'Hypergeometric function pole' );
 
     // asymptotic form is complex
     if ( Math.abs(x) > useAsymptotic ) return hypergeometric0F1( a, complex(x) ).re;
@@ -1858,11 +1855,9 @@ function hypergeometric1F1( a, b, x, tolerance=1e-10 ) {
 
   if ( isComplex(a) || isComplex(b) || isComplex(x) ) {
 
-    if ( !isComplex(b) ) b = complex(b);
     if ( !isComplex(x) ) x = complex(x);
 
-    if ( Number.isInteger(b.re) && b.re <= 0 && b.im === 0 )
-      throw Error( 'Hypergeometric function pole' );
+    if ( isNegativeIntegerOrZero(b) ) throw Error( 'Hypergeometric function pole' );
 
     // Kummer transformation
     if ( x.re < 0 ) return mul( exp(x), hypergeometric1F1( sub(b,a), b, neg(x) ) );
@@ -1896,7 +1891,7 @@ function hypergeometric1F1( a, b, x, tolerance=1e-10 ) {
 
   } else {
 
-    if ( Number.isInteger(b) && b <= 0 ) throw Error( 'Hypergeometric function pole' );
+    if ( isNegativeIntegerOrZero(b) ) throw Error( 'Hypergeometric function pole' );
 
     // Kummer transformation
     if ( x < 0 ) return exp(x) * hypergeometric1F1( b-a, b, -x );
@@ -2090,10 +2085,7 @@ function hypergeometric2F1( a, b, c, x, tolerance=1e-10 ) {
 
     }
 
-    if ( !isComplex(c) ) c = complex(c);
-
-    if ( Number.isInteger(c.re) && c.re <= 0 && c.im === 0 )
-      throw Error( 'Hypergeometric function pole' );
+    if ( isNegativeIntegerOrZero(c) ) throw Error( 'Hypergeometric function pole' );
 
     var s = complex(1);
     var p = complex(1);
@@ -2112,7 +2104,7 @@ function hypergeometric2F1( a, b, c, x, tolerance=1e-10 ) {
 
   } else {
 
-    if ( Number.isInteger(c) && c <= 0 ) throw Error( 'Hypergeometric function pole' );
+    if ( isNegativeIntegerOrZero(c) ) throw Error( 'Hypergeometric function pole' );
 
     // transformation from Abramowitz & Stegun p.559
     if ( x < -1 ) {
