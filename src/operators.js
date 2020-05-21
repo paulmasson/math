@@ -39,6 +39,20 @@ function isNegativeInteger( x ) {
 
 }
 
+function isPositiveIntegerOrZero( x ) {
+
+  if ( isComplex(x) ) return Number.isInteger(x.re) && x.re >= 0 && x.im === 0;
+  return Number.isInteger(x) && x >= 0;
+
+}
+
+function isNegativeIntegerOrZero( x ) {
+
+  if ( isComplex(x) ) return Number.isInteger(x.re) && x.re <= 0 && x.im === 0;
+  return Number.isInteger(x) && x <= 0;
+
+}
+
 
 function re( x ) {
 
