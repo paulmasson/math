@@ -153,11 +153,29 @@ function legendreQ( l, m, x ) {
     m = 0;
   }
 
-  var t1 = mul( cos( mul(pi,m) ), legendreP(l,m,x) );
+  function difference( t ) {
 
-  var t2 = mul( gamma( add(l,m,1) ), inv( gamma( add(l,neg(m),1) ) ), legendreP(l,neg(m),x) );
+    var t1 = mul( cos( mul(pi,t) ), legendreP(l,t,x) );
 
-  return mul( div( pi/2, sin( mul(pi,m) ) ), sub( t1, t2 ) );
+    var t2 = mul( gamma( add(l,t,1) ), inv( gamma( add(l,neg(t),1) ) ), legendreP(l,neg(t),x) );
+
+    return sub( t1, t2 );
+
+  }
+
+  // l'Hopital's rule decent for small m, more accurate might be
+  // functions.wolfram.com/HypergeometricFunctions/LegendreQ2General/26/01/02/0005/
+
+  if ( isInteger(m) ) {
+
+    // legendreP is pure real outside unit circle for even integers
+   if ( abs(x) > 1 && !isComplex(m) && !( m & 1 ) ) m = complex(m);
+
+    return mul( .5, pow(-1,m), diff( t => difference(t), m ) );
+
+  }
+
+  return mul( pi/2, inv( sin(mul(pi,m)) ), difference(m) );
 
 }
 
