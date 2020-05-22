@@ -1,0 +1,33 @@
+<html>
+<head>
+<title>Math - Evaluator</title>
+<link rel="stylesheet" type="text/css" href="style.css">
+<style></style>
+</head>
+
+<body>
+
+<script src="../build/math.js"></script>
+
+<p>This evaluator can be used to test individual numerical expressions in Math. Enter an expression in the area below and press enter to evaluate.</p>
+
+<br><p style="text-align: center">
+<input id="input" type="text" value="" style="width: 5in" onchange="process()"></input>
+</p><br>
+
+<p>Result of evaluation: <span id="output" style="color: rgb(0,127,255)"></span></p>
+
+<script>
+
+function process() {
+
+  try { output.innerText = JSON.stringify( Function( 'return ' + input.value )() ); }
+
+  catch( e ) { output.innerText = e.message; }
+
+}
+
+</script>
+
+</body>
+</html>
