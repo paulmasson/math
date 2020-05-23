@@ -108,14 +108,23 @@ function hurwitzZeta( x, a, tolerance=1e-10 ) {
     // Johansson arxiv.org/abs/1309.2877
 
     var n = 15; // recommendation of Vepstas, Efficient Algorithm, p.12
-    var m = 5; // series is asymptotic, could check size of terms
 
     var S = summation( i => 1 / (a+i)**x, [0,n-1] );
 
     var I = (a+n)**(1-x) / (x-1);
 
-    var T = summation( i => bernoulli(2*i) / factorial(2*i) * gamma(x+2*i-1) / (a+n)**(2*i-1), [1,m] );
-    T = ( .5 + T / gamma(x) ) / (a+n)**x;
+    var p = x / 2 / (a+n);
+    var t = bernoulli(2) * p;
+    var i = 1;
+
+    // converges rather quickly
+    while ( Math.abs(p) > tolerance ) {
+      i++;
+      p *= ( x + 2*i - 2 ) * ( x + 2*i - 3 ) / ( 2*i * (2*i-1) * (a+n)**2 )
+      t += bernoulli(2*i) * p;
+    }
+
+    var T = ( .5 + t ) / (a+n)**x;
 
     return S + I + T;
 
