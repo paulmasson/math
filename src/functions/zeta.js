@@ -83,7 +83,8 @@ function hurwitzZeta( x, a, tolerance=1e-10 ) {
 
     if ( a < 0 ) return hurwitzZeta( x, complex(a) );
 
-    // dlmf.nist.gov/25.11.9
+    // Euler-Maclaurin has differences of large values in left-hand plane
+    // swith to difference summation: dlmf.nist.gov/25.11.9
 
     var switchForms = -5;
 
