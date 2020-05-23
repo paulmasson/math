@@ -2961,8 +2961,6 @@ function harmonic( n ) {
 
 function hurwitzZeta( x, a, tolerance=1e-10 ) {
 
-  // Johansson arxiv.org/abs/1309.2877
-
   if ( isComplex(x) || isComplex(a) ) {
 
 
@@ -2980,14 +2978,40 @@ function hurwitzZeta( x, a, tolerance=1e-10 ) {
 
     if ( a < 0 ) return hurwitzZeta( x, complex(a) );
 
-    var n = Math.round( -log( tolerance, 2) ); // from bit precision
-    var m = Math.round( -log( tolerance, 2) );
+    // dlmf.nist.gov/25.11.9
 
-    var s = summation( i => 1 / (a+i)**x, [0,n-1] );
+    var switchForms = -5;
 
-    var t = summation( i => bernoulli(2*i) / factorial(2*i) * gamma(x+2*i-1) / (a+n)**(2*i-1), [1,m] );
+    if ( x < switchForms ) {
 
-    return s + (a+n)**(1-x) / (x-1) + ( .5 + t / gamma(x) ) / (a+n)**x;
+      x = 1 - x;
+      var t = Math.cos( pi*x/2 - 2*pi*a );
+      var s = t;
+      var i = 1;
+
+      while ( Math.abs(t) > tolerance ) {
+        i++;
+        t = Math.cos( pi*x/2 - 2*i*pi*a ) / i**x;
+        s += t;
+      }
+
+      return 2 * gamma(x) / (2*pi)**x * s;
+
+    }
+
+    // Johansson arxiv.org/abs/1309.2877
+
+    var n = 15; // recommendation of Vepstas, Efficient Algorithm, p.12
+    var m = 5; // series is asymptotic, could check size of terms
+
+    var S = summation( i => 1 / (a+i)**x, [0,n-1] );
+
+    var I = (a+n)**(1-x) / (x-1);
+
+    var T = summation( i => bernoulli(2*i) / factorial(2*i) * gamma(x+2*i-1) / (a+n)**(2*i-1), [1,m] );
+    T = ( .5 + T / gamma(x) ) / (a+n)**x;
+
+    return S + I + T;
 
   }
 
