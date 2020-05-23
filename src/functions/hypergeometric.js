@@ -176,7 +176,7 @@ function hypergeometric2F0( a, b, x, tolerance=1e-10 ) {
 
     var s = complex(1);
     var p = complex(1), pLast = p;
-    var converging = false;
+    var converging = false; // first few terms can be larger than unity
     var i = 1;
 
     while ( Math.abs(p.re) > tolerance || Math.abs(p.im) > tolerance ) {
@@ -201,7 +201,7 @@ function hypergeometric2F0( a, b, x, tolerance=1e-10 ) {
 
     var s = 1;
     var p = 1, pLast = p;
-    var converging = false;
+    var converging = false; // first few terms can be larger than unity
     var i = 1;
 
     while ( Math.abs(p) > tolerance ) {
