@@ -1961,7 +1961,7 @@ function hypergeometric2F0( a, b, x, tolerance=1e-10 ) {
 
     var s = complex(1);
     var p = complex(1), pLast = p;
-    var converging = false;
+    var converging = false; // first few terms can be larger than unity
     var i = 1;
 
     while ( Math.abs(p.re) > tolerance || Math.abs(p.im) > tolerance ) {
@@ -1986,7 +1986,7 @@ function hypergeometric2F0( a, b, x, tolerance=1e-10 ) {
 
     var s = 1;
     var p = 1, pLast = p;
-    var converging = false;
+    var converging = false; // first few terms can be larger than unity
     var i = 1;
 
     while ( Math.abs(p) > tolerance ) {
@@ -2979,7 +2979,7 @@ function hurwitzZeta( x, a, tolerance=1e-10 ) {
     if ( a < 0 ) return hurwitzZeta( x, complex(a) );
 
     // Euler-Maclaurin has differences of large values in left-hand plane
-    // swith to difference summation: dlmf.nist.gov/25.11.9
+    // switch to different summation: dlmf.nist.gov/25.11.9
 
     var switchForms = -5;
 
@@ -3015,7 +3015,7 @@ function hurwitzZeta( x, a, tolerance=1e-10 ) {
     // converges rather quickly
     while ( Math.abs(p) > tolerance ) {
       i++;
-      p *= ( x + 2*i - 2 ) * ( x + 2*i - 3 ) / ( 2*i * (2*i-1) * (a+n)**2 )
+      p *= ( x + 2*i - 2 ) * ( x + 2*i - 3 ) / ( 2*i * (2*i-1) * (a+n)**2 );
       t += bernoulli(2*i) * p;
     }
 

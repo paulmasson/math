@@ -84,7 +84,7 @@ function hurwitzZeta( x, a, tolerance=1e-10 ) {
     if ( a < 0 ) return hurwitzZeta( x, complex(a) );
 
     // Euler-Maclaurin has differences of large values in left-hand plane
-    // swith to difference summation: dlmf.nist.gov/25.11.9
+    // switch to different summation: dlmf.nist.gov/25.11.9
 
     var switchForms = -5;
 
@@ -120,7 +120,7 @@ function hurwitzZeta( x, a, tolerance=1e-10 ) {
     // converges rather quickly
     while ( Math.abs(p) > tolerance ) {
       i++;
-      p *= ( x + 2*i - 2 ) * ( x + 2*i - 3 ) / ( 2*i * (2*i-1) * (a+n)**2 )
+      p *= ( x + 2*i - 2 ) * ( x + 2*i - 3 ) / ( 2*i * (2*i-1) * (a+n)**2 );
       t += bernoulli(2*i) * p;
     }
 
