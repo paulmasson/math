@@ -68,6 +68,69 @@ function hurwitzZeta( x, a, tolerance=1e-10 ) {
 
   if ( isComplex(x) || isComplex(a) ) {
 
+    if ( !isComplex(x) ) x = complex(x);
+    if ( !isComplex(a) ) a = complex(a);
+
+    if ( x.re === 1 && x.im === 0 ) throw Error( 'Hurwitz zeta pole' );
+
+    // dlmf.nist.gov/25.11.4
+
+    if ( a.re > 1 ) {
+      var m = Math.floor(a.re);
+      a = sub( a, m );
+      return sub( hurwitzZeta(x,a), summation( i => pow( add(a,i), neg(x) ), [0,m-1] ) );
+    }
+
+    if ( a.re < 0 ) {
+      var m = -Math.floor(a.re);
+      return add( hurwitzZeta(x,add(a,m)), summation( i => pow( add(a,i), neg(x) ), [0,m-1] ) );
+    }
+
+    // Euler-Maclaurin has differences of large values in left-hand plane
+    // but different summation (dlmf.nist.gov/25.11.9) does not converge for complex a
+    // to be improved...
+
+    var switchForms = -5;
+
+    if ( x.re < switchForms ) throw Error( 'Currently unsuppported complex Hurwitz zeta' );
+/*
+      x = sub( 1, x );
+      var t = cos( sub( mul(pi/2,x), mul(2*pi,a) ) );
+      var s = t;
+      var i = 1;
+
+      while ( Math.abs(t.re) > tolerance || Math.abs(t.im) > tolerance ) {
+        i++;
+        t = div( cos( sub( mul(pi/2,x), mul(2*i*pi,a) ) ), pow(i,x) );
+        s = add( s, t );
+      }
+
+      return mul( 2, gamma(x), pow(2*pi,neg(x)), s );
+
+    }
+*/
+    // Johansson arxiv.org/abs/1309.2877
+
+    var n = 15; // recommendation of Vepstas, Efficient Algorithm, p.12
+
+    var S = summation( i => pow( add(a,i), neg(x) ), [0,n-1] );
+
+    var I = div( pow( add(a,n), sub(1,x) ), sub(x,1) );
+
+    var p = mul( .5, x, inv(add(a,n)) );
+    var t = mul( bernoulli(2), p );
+    var i = 1;
+
+    // converges rather quickly
+    while ( Math.abs(p.re) > tolerance || Math.abs(p.im) > tolerance ) {
+      i++;
+      p = mul ( p, add( x, 2*i - 2 ), add( x, 2*i - 3 ), inv( mul( 2*i * (2*i-1), pow( add(a,n), 2 ) ) ) );
+      t = add( t, mul( bernoulli(2*i), p ) );
+    }
+
+    var T = div( add( .5, t ), pow( add(a,n), x ) );
+
+    return add( S, I, T );
 
   } else {
 
