@@ -426,9 +426,20 @@ function hankel2( n, x ) {
 }
 
 
+// dlmf.nist.gov/9.2.ii and dlmf.nist.gov/9.6.i
+
 function airyAi( x ) {
 
   if ( isComplex(x) ) {
+
+    if ( isZero(x) ) return complex( 1 / 3**(2/3) / gamma(2/3) );
+
+    if ( x.re < 0 ) {
+
+      var z = mul( 2/3, pow( neg(x), 3/2 ) );
+      return mul( 1/3, sqrt(neg(x)), add( besselJ( 1/3, z ), besselJ( -1/3, z ) ) );
+
+    }
 
     return mul( 1/pi, sqrt( div( x, 3 ) ), besselK( 1/3, mul( 2/3, pow( x, 3/2 ) ) ) );
 
@@ -436,8 +447,12 @@ function airyAi( x ) {
 
   if ( x === 0 ) return 1 / 3**(2/3) / gamma(2/3);
 
-  if ( x < 0 ) return sqrt(-x) / 2 * ( besselJ( 1/3, 2/3*(-x)**(3/2) )
-                                       - besselY( 1/3, 2/3*(-x)**(3/2) ) / sqrt(3) );
+  if ( x < 0 ) {
+
+    var z = 2/3*(-x)**(3/2);
+    return sqrt(-x) / 3 * ( besselJ( 1/3, z ) + besselJ( -1/3, z ) );
+
+  }
 
   return 1/pi * sqrt(x/3) * besselK( 1/3, 2/3*x**(3/2) );
 
