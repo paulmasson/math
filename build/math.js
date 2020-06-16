@@ -441,7 +441,8 @@ function airyAi( x ) {
 
     }
 
-    return mul( 1/pi, sqrt( div( x, 3 ) ), besselK( 1/3, mul( 2/3, pow( x, 3/2 ) ) ) );
+    var z = mul( 2/3, pow( x, 3/2 ) );
+    return mul( 1/pi, sqrt( div( x, 3 ) ), besselK( 1/3, z ) );
 
   }
 
@@ -449,12 +450,13 @@ function airyAi( x ) {
 
   if ( x < 0 ) {
 
-    var z = 2/3*(-x)**(3/2);
+    var z = 2/3 * (-x)**(3/2);
     return sqrt(-x) / 3 * ( besselJ( 1/3, z ) + besselJ( -1/3, z ) );
 
   }
 
-  return 1/pi * sqrt(x/3) * besselK( 1/3, 2/3*x**(3/2) );
+  var z = 2/3 * x**(3/2);
+  return 1/pi * sqrt(x/3) * besselK( 1/3, z );
 
 }
 
