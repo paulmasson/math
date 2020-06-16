@@ -210,17 +210,31 @@ function airyBi( x ) {
 
   if ( isComplex(x) ) {
 
-    return mul( sqrt( div( x, 3 ) ), add( besselI( 1/3, mul( 2/3, pow( x, 3/2 ) ) ),
-                                          besselI( -1/3, mul( 2/3, pow( x, 3/2 ) ) ) ) );
+    if ( isZero(x) ) return complex( 1 / 3**(1/6) / gamma(2/3) );
+
+    if ( x.re < 0 ) {
+
+      var z = mul( 2/3, pow( neg(x), 3/2 ) );
+      return mul( sqrt( div(neg(x),3) ), sub( besselJ( -1/3, z ), besselJ( 1/3, z ) ) );
+
+    }
+
+    var z = mul( 2/3, pow( x, 3/2 ) );
+    return mul( sqrt( div( x, 3 ) ), add( besselI( 1/3, z ), besselI( -1/3, z ) ) );
 
   }
 
   if ( x === 0 ) return 1 / 3**(1/6) / gamma(2/3);
 
-  if ( x < 0 ) return -sqrt(-x) / 2 * ( besselJ( 1/3, 2/3*(-x)**(3/2) ) / sqrt(3)
-                                        + besselY( 1/3, 2/3*(-x)**(3/2) ) );
+  if ( x < 0 ) {
 
-  return sqrt(x/3) * ( besselI( 1/3, 2/3*x**(3/2) ) + besselI( -1/3, 2/3*x**(3/2) ) );
+    var z = 2/3 * (-x)**(3/2);
+    return sqrt(-x/3) * ( besselJ( -1/3, z ) - besselJ( 1/3, z ) );
+
+  }
+
+  var z = 2/3 * x**(3/2);
+  return sqrt(x/3) * ( besselI( 1/3, z ) + besselI( -1/3, z ) );
 
 }
 
