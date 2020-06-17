@@ -462,7 +462,33 @@ function airyAi( x ) {
 
 function airyAiPrime( x ) {
 
-  return mul( -1/pi/sqrt(3), x, besselK( 2/3, mul( 2/3, pow( x, 3/2 ) ) ) );
+  if ( isComplex(x) ) {
+
+    if ( isZero(x) ) return complex( -1 / 3**(1/3) / gamma(1/3) );
+
+    if ( x.re < 0 ) {
+
+      var z = mul( 2/3, pow( neg(x), 3/2 ) );
+      return mul( 1/3, neg(x), sub( besselJ( 2/3, z ), besselJ( -2/3, z ) ) );
+
+    }
+
+    var z = mul( 2/3, pow( x, 3/2 ) );
+    return mul( -1/pi/sqrt(3), x, besselK( 2/3, z ) );
+
+  }
+
+  if ( x === 0 ) return -1 / 3**(1/3) / gamma(1/3);
+
+  if ( x < 0 ) {
+
+    var z = 2/3 * (-x)**(3/2);
+    return -x/3 * ( besselJ( 2/3, z ) - besselJ( -2/3, z ) );
+
+  }
+
+  var z = 2/3 * x**(3/2);
+  return -1/pi/sqrt(3) * x * besselK( 2/3, z );
 
 }
 
