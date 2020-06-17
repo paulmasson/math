@@ -526,8 +526,33 @@ function airyBi( x ) {
 
 function airyBiPrime( x ) {
 
-  return mul( 1/sqrt(3), x, add( besselI( 2/3, mul( 2/3, pow( x, 3/2 ) ) ),
-                                 besselI( -2/3, mul( 2/3, pow( x, 3/2 ) ) ) ) );
+  if ( isComplex(x) ) {
+
+    if ( isZero(x) ) return complex( 3**(1/6) / gamma(1/3) );
+
+    if ( x.re < 0 ) {
+
+      var z = mul( 2/3, pow( neg(x), 3/2 ) );
+      return mul( 1/sqrt(3), neg(x), add( besselJ( 2/3, z ), besselJ( -2/3, z ) ) );
+
+    }
+
+    var z = mul( 2/3, pow( x, 3/2 ) );
+    return mul( 1/sqrt(3), x, add( besselI( 2/3, z ), besselI( -2/3, z ) ) );
+
+  }
+
+  if ( x === 0 ) return 3**(1/6) / gamma(1/3);
+
+  if ( x < 0 ) {
+
+    var z = 2/3 * (-x)**(3/2);
+    return -x/sqrt(3) * ( besselJ( 2/3, z ) + besselJ( -2/3, z ) );
+
+  }
+
+  var z = 2/3 * x**(3/2);
+  return x/sqrt(3) * ( besselI( 2/3, z ) + besselI( -2/3, z ) );
 
 }
 
