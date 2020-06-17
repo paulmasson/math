@@ -47,32 +47,7 @@ parent.update( id );
 </script>
 </div>
 
-<p>Imaginary part on the real axis:</p>
-
-<div class="mathcell" style="height: 4in">
-<script>
-
-var parent = document.currentScript.parentNode;
-
-var id = generateId();
-parent.id = id;
-
-MathCell( id, [] );
-
-parent.update = function( id ) {
-
-  var p = plot( x => airyBi( complex(x) ).im, [-10,10] );
-
-  var config = { type: 'svg' };
-
-  evaluate( id, [ p ], config );
-
-}
-
-parent.update( id );
-
-</script>
-</div>
+<p>Imaginary part on the real axis is zero.</p>
 
 <p>Real part on the imaginary axis:</p>
 
