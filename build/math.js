@@ -469,7 +469,7 @@ function airyAiPrime( x ) {
     if ( x.re < 0 ) {
 
       var z = mul( 2/3, pow( neg(x), 3/2 ) );
-      return mul( 1/3, neg(x), sub( besselJ( 2/3, z ), besselJ( -2/3, z ) ) );
+      return mul( 1/3, x, sub( besselJ( -2/3, z ), besselJ( 2/3, z ) ) );
 
     }
 
@@ -483,7 +483,7 @@ function airyAiPrime( x ) {
   if ( x < 0 ) {
 
     var z = 2/3 * (-x)**(3/2);
-    return -x/3 * ( besselJ( 2/3, z ) - besselJ( -2/3, z ) );
+    return x/3 * ( besselJ( -2/3, z ) - besselJ( 2/3, z ) );
 
   }
 
