@@ -57,7 +57,7 @@ xhr.send();
 var canvas = document.createElement( 'canvas' );
 canvas.width = 500;
 canvas.height = 500;
-canvas.style.border = '1.1px solid black';
+canvas.style.border = '1.5px solid black';
 
 var context = canvas.getContext( '2d' );
 context.fillStyle = 'white';
@@ -100,11 +100,25 @@ function update() {
     var data = xhr.response.split( '\n' );
     data.pop();
 
+    var f = selection.value, pre = '', post = '';
+
+    if ( f.includes('[') ) {
+      pre = f.slice( f.indexOf('[') + 1, f.length - 1 );
+      f = f.slice( 0, f.indexOf('[') );
+      if ( pre.includes('][') ) {
+        post = pre.slice( pre.indexOf( '][' ) + 2 );
+        pre = pre.slice( 0, pre.indexOf( '][' ) );
+      }
+    }
+
+    if ( pre.length > 0 ) pre += ',';
+    if ( post.length > 0 ) post = ',' + post;
+
     data.forEach( p => {
 
       p = JSON.parse(p);
 
-      var z = Function( `return ${selection.value}( complex(${p[0]},${p[1]}) )` )();
+      var z = Function( `return ${f}( ${pre} complex(${p[0]},${p[1]}) ${post} )` )();
 
       var r = 0, g = 255, b = 0, test, standard;
 
