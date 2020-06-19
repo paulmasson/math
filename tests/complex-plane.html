@@ -1,0 +1,153 @@
+<html>
+<head>
+<title>Functions on the Complex Plane</title>
+<link rel="stylesheet" type="text/css" href="../docs/style.css">
+<style>
+
+#errors {
+
+  width: 6in;
+  height: 1in;
+  margin: auto;
+  overflow-y: scroll;
+  background-color: #f0ffff;
+  font-family: monospace;
+
+}
+
+</style>
+</head>
+
+<body>
+
+<script src="../build/math.js"></script>
+
+<p>This web page indicates how well functions evaluated with Math.js compare with the equivalent computation in <a href="http://mpmath.org">mpmath</a>. Select a function and part and the test results will appear below.</p>
+
+<div style="text-align: center">
+Function: &nbsp; <select id="selection" onchange="update()"></select>
+<div style="display: inline-block; width: 1in"></div>
+Part: &nbsp; <select id="part" onchange="update()">
+  <option value="re">Real</option><option value="im">Imaginary</option></select>
+</div><br>
+
+<div id="container" style="text-align: center"></div>
+
+<br><div id="errors">Errors will appear here<br></div>
+
+<script>
+
+var xhr = new XMLHttpRequest();
+xhr.responseType = 'text';
+xhr.open( 'GET', 'https://api.github.com/repos/paulmasson/math-test-data/contents/complex-plane', true );
+
+xhr.onload = function() {
+
+  var s = '<option>Select</option>';
+
+  var files = JSON.parse( xhr.response );
+  files.forEach( f => s += '<option>' + f.name.slice(0,-4) + '</option>' );
+
+  selection.innerHTML = s;
+
+}
+
+xhr.send();
+
+var canvas = document.createElement( 'canvas' );
+canvas.width = 500;
+canvas.height = 500;
+canvas.style.border = '1.1px solid black';
+
+var context = canvas.getContext( '2d' );
+context.fillStyle = 'white';
+context.fillRect( 0, 0, canvas.width, canvas.height );
+
+container.appendChild( canvas );
+
+var size = 2.5;
+var imageData = context.createImageData( size, size );
+
+var dataRange = 50;
+
+function drawPoint( r, g, b, x, y ) {
+
+  for ( var i = 0 ; i < imageData.data.length ; i += 4 ) {
+
+    imageData.data[i] = r;
+    imageData.data[i+1] = g;
+    imageData.data[i+2] = b;
+    imageData.data[i+3] = 255;
+
+  }
+
+  context.putImageData( imageData, canvas.width/2 * ( x / dataRange + 1 ),
+                                   canvas.height/2 * ( 1 - y / dataRange ) );
+
+}
+
+function update() {
+
+  context.fillRect( 0, 0, canvas.width, canvas.height );
+  errors.innerHTML = '';
+
+  var xhr = new XMLHttpRequest();
+  xhr.responseType = 'text';
+  xhr.open( 'GET', '../../math-test-data/complex-plane/' + selection.value + '.txt', true );
+
+  xhr.onload = function() {
+
+    var data = xhr.response.split( '\n' );
+    data.pop();
+
+    data.forEach( p => {
+
+      p = JSON.parse(p);
+
+      var z = Function( `return ${selection.value}( complex(${p[0]},${p[1]}) )` )();
+
+      var r = 0, g = 255, b = 0, test, standard;
+
+      if ( part.value === 're' ) {
+        test = z.re.toExponential(9);
+        standard = p[2].toExponential(9);
+      } else {
+        test = z.im.toExponential(9);
+        standard = p[3].toExponential(9);
+      }
+
+      if ( test !== standard ) {
+        var t = test.split( 'e' ).map( Number );
+        var s = standard.split( 'e' ).map( Number );
+        if ( t[1] !== s[1] ) {
+          errors.innerHTML += `Serious issue at [${p[0]},${p[1]}]<br>`;
+          g = 0; // black for serious
+        } else {
+          var delta = Math.abs( t[0] - s[0] );
+          if ( delta > 1e-8 ) g = 0; // yellow for two digits off
+          r = 255; // red else
+          if ( delta > 1e-7 )
+            errors.innerHTML += `Loss of precision at [${p[0]},${p[1]}] with &Delta;=${delta.toFixed(10)}<br>`;
+        }
+      }
+
+      drawPoint( r, g, b, p[0], p[1] )
+
+    } );
+
+  }
+
+  setTimeout( function() { xhr.send(); }, 10 );
+
+}
+
+</script>
+
+<p>The <a href="https://github.com/math-test-data">test data</a> has been evaluated in unit increments from -49.5 to 49.5 in both directions on the the complex plane. A green dot above indicates that the same calculation with this library matches the test data to ten significant digits. A yellow dot indicates a variance of two digits in the significand, <i>i.e.</i> the part of the value in scientific notation without the exponent. A red dot indicates a larger variation than two digits, where again this difference in the significand. A black dot is either a serious error or <code>NaN</code>.</p>
+
+<p>Functions requiring more that one argument, such as Bessel or elliptic functions, indicate the additional parameters in the function name in square brackets. Most of these parameters precede the main argument in the function call. When they do not an empty list is included in the file name to allow detection of these cases.</p>
+
+<p>These tests give an immediate visual sense of the accuracy of this library. They can also be used to pinpoint ranges in arguments that need attention.</p>
+
+</body>
+</html>
