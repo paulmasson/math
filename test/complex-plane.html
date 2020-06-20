@@ -149,7 +149,8 @@ function update() {
 
     data.forEach( p => {
 
-      p = JSON.parse(p);
+      try { p = JSON.parse(p); }
+      catch(e) { console.log(p); }
 
       var z = Function( `return ${f}( ${pre} complex(${p[0]},${p[1]}) ${post} )` )();
 
