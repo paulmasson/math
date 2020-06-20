@@ -86,6 +86,27 @@ function drawPoint( r, g, b, x, y ) {
 
 }
 
+function complexString( s ) {
+
+  var t = s[0] === '+' || s[0] === '-' ? s.slice(1) : s;
+
+  // two mixed cases
+  if ( t.includes('+') )
+    return `{ re: ${s.slice( 0, t.indexOf('+') + 1 )},
+              im: ${t.slice( t.indexOf('+'), t.length - 1 )} }`;
+
+  if ( t.includes('-') )
+    return `{ re: ${s.slice( 0, t.indexOf('-') + 1 )},
+              im: ${t.slice( t.indexOf('-'), t.length - 1 )} }`;
+
+  // pure imaginary
+  if ( s.includes('i') ) return `{ re: 0, im: ${s.slice( 0, s.length - 1 )} }`;
+
+  // pure real
+  return s;
+
+}
+
 function update() {
 
   context.fillRect( 0, 0, canvas.width, canvas.height );
@@ -109,6 +130,18 @@ function update() {
         post = pre.slice( pre.indexOf( '][' ) + 2 );
         pre = pre.slice( 0, pre.indexOf( '][' ) );
       }
+    }
+
+    if ( pre.includes('i') ) {
+      pre = pre.split();
+      pre.forEach( (e,i,a) => a[i] = complexString(e) );
+      pre = pre.join();
+    }
+
+    if ( post.includes('i') ) {
+      post = post.split();
+      post.forEach( (e,i,a) => a[i] = complexString(e) );
+      post = post.join();
     }
 
     if ( pre.length > 0 ) pre += ',';
