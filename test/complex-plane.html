@@ -169,11 +169,12 @@ function update() {
       if ( test !== standard ) {
         var t = test.split( 'e' ).map( Number );
         var s = standard.split( 'e' ).map( Number );
-        if ( t[1] !== s[1] ) {
-          errors.innerHTML += `Serious issue at [${p[0]},${p[1]}]<br>`;
+        var expDiff = Math.abs( t[1] - s[1] );
+        if ( expDiff > 1 || isNaN(test) ) {
+          errors.innerHTML += `Problem to investigate at [${p[0]},${p[1]}]<br>`;
           g = 0; // black for serious
         } else {
-          var delta = Math.abs( t[0] - s[0] );
+          var delta = expDiff === 0 ? Math.abs( t[0] - s[0] ) : Math.abs( t[0]*10**t[1] - s[0]*10**s[1] );
           if ( delta > 1e-8 ) g = 0; // yellow for two digits off
           r = 255; // red else
           if ( delta > 1e-7 )
@@ -193,7 +194,7 @@ function update() {
 
 </script>
 
-<p>The <a href="https://github.com/math-test-data">test data</a> has been evaluated in unit increments from -49.5 to 49.5 in both directions on the the complex plane. A green dot above indicates that the same calculation with this library matches the test data to ten significant digits. A yellow dot indicates a variance of two digits in the significand, <i>i.e.</i> the part of the value in scientific notation without the exponent. A red dot indicates a variation larger than two digits, where again this difference in the significand. A black dot is either a serious error or <code>NaN</code>.</p>
+<p>The <a href="https://github.com/math-test-data">test data</a> has been evaluated in unit increments from -49.5 to 49.5 in both directions on the the complex plane. A green dot above indicates that the same calculation with this library matches the test data to ten significant digits. A yellow dot indicates a variance of two digits in the significand, <i>i.e.</i> the part of the value in scientific notation without the exponent. A red dot indicates a variation larger than two digits, where again this difference in the significand. A black dot is either a large error or <code>NaN</code>.</p>
 
 <p>Functions requiring more that one argument, such as Bessel or elliptic functions, indicate the additional parameters in the function name in square brackets. Most of these parameters precede the main argument in the function call. When they do not an empty list is included in the file name to allow detection of these cases.</p>
 
