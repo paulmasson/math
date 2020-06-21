@@ -150,7 +150,9 @@ function update() {
     data.forEach( p => {
 
       try { p = JSON.parse(p); }
-      catch(e) { console.log(p); }
+      catch(e) { alert( 'The selected file is not currently being served by GitHub' ); }
+
+      if ( p.includes( 'inf' ) ) return;
 
       var z = Function( `return ${f}( ${pre} complex(${p[0]},${p[1]}) ${post} )` )();
 
