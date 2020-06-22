@@ -54,6 +54,8 @@ xhr.onload = function() {
 
 xhr.send();
 
+window.onerror = function( message ) { errors.innerHTML = message; }
+
 var canvas = document.createElement( 'canvas' );
 canvas.width = 500;
 canvas.height = 500;
@@ -175,8 +177,8 @@ function update() {
           g = 0; // black for serious
         } else {
           var delta = expDiff === 0 ? Math.abs( t[0] - s[0] ) : Math.abs( t[0]*10**t[1] - s[0]*10**s[1] );
-          if ( delta > 1e-8 ) g = 0; // yellow for two digits off
-          r = 255; // red else
+          if ( delta > 1e-8 ) g = 0;
+          r = 255; // yellow for two digits off, red else
           if ( delta > 1e-7 )
             errors.innerHTML += `Loss of precision at [${p[0]},${p[1]}] with &Delta;=${delta.toFixed(10)}<br>`;
         }
