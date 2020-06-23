@@ -22,7 +22,7 @@
 
 <script src="../build/math.js"></script>
 
-<p>This web page indicates how well functions evaluated with Math.js compare with the equivalent computation in <a href="http://mpmath.org">mpmath</a>. Select a function and part and the test results will appear below.</p>
+<p>This web page indicates how well functions evaluated with Math compare with the equivalent computation in <a href="http://mpmath.org">mpmath</a>. Select a function and part and the test results will appear below.</p>
 
 <div style="text-align: center">
 Function: &nbsp; <select id="selection" onchange="update()"></select>
@@ -158,14 +158,16 @@ function update() {
 
       var z = Function( `return ${f}( ${pre} complex(${p[0]},${p[1]}) ${post} )` )();
 
-      var r = 0, g = 255, b = 0, test, standard;
+      var r = 0, g = 255, b = 0, test, standard, testZero;
 
       if ( part.value === 're' ) {
         test = z.re.toExponential(9);
         standard = p[2].toExponential(9);
+        testZero = chop(z.re);
       } else {
         test = z.im.toExponential(9);
         standard = p[3].toExponential(9);
+        testZero = chop(z.im);
       }
 
       if ( test !== standard ) {
@@ -173,8 +175,12 @@ function update() {
         var s = standard.split( 'e' ).map( Number );
         var expDiff = Math.abs( t[1] - s[1] );
         if ( expDiff > 1 || isNaN(test) ) {
-          errors.innerHTML += `Problem to investigate at [${p[0]},${p[1]}]<br>`;
-          g = 0; // black for serious
+          if ( testZero === 0 ) {
+            r = 210; g = 210; b = 210;
+          } else {
+            errors.innerHTML += `Problem to investigate at [${p[0]},${p[1]}]<br>`;
+            g = 0; // black for serious
+          }
         } else {
           var delta = expDiff === 0 ? Math.abs( t[0] - s[0] ) : Math.abs( t[0]*10**t[1] - s[0]*10**s[1] );
           if ( delta > 1e-8 ) g = 0;
@@ -196,7 +202,7 @@ function update() {
 
 </script>
 
-<p>The <a href="https://github.com/math-test-data">test data</a> has been evaluated in unit increments from -49.5 to 49.5 in both directions on the the complex plane. A green dot above indicates that the same calculation with this library matches the test data to ten significant digits. A yellow dot indicates a variance of two digits in the significand, <i>i.e.</i> the part of the value in scientific notation without the exponent. A red dot indicates a variation larger than two digits, where again this difference in the significand. A black dot is either a large error or <code>NaN</code>.</p>
+<p>The <a href="https://github.com/math-test-data">test data</a> has been evaluated in unit increments from -49.5 to 49.5 in both directions on the the complex plane. A green dot above indicates that the same calculation with this library matches the test data to ten significant digits. A yellow dot indicates a variance of two digits in the significand, <i>i.e.</i> the part of the value in scientific notation without the exponent. A red dot indicates a variation larger than two digits, where again this difference in the significand. A gray dot indicates a difference from the standard where the calculated value is zero relative to the tolerance of the library. A black dot is either a large error or <code>NaN</code>.</p>
 
 <p>Functions requiring more that one argument, such as Bessel or elliptic functions, indicate the additional parameters in the function name in square brackets. Most of these parameters precede the main argument in the function call. When they do not an empty list is included in the file name to allow detection of these cases.</p>
 
