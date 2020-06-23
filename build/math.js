@@ -376,7 +376,7 @@ function besselI( n, x ) {
 
 function besselK( n, x ) {
 
-  var useAsymptotic = 5;
+  var useAsymptotic = 10;
 
   if ( isComplex(n) || isComplex(x) ) {
 
