@@ -88,24 +88,36 @@ function drawPoint( r, g, b, x, y ) {
 
 }
 
-function complexString( s ) {
+function complexFromString( s ) {
 
-  var t = s[0] === '+' || s[0] === '-' ? s.slice(1) : s;
+  var lead = '', real, imag;
 
-  // two mixed cases
-  if ( t.includes('+') )
-    return `{ re: ${s.slice( 0, t.indexOf('+') + 1 )},
-              im: ${t.slice( t.indexOf('+'), t.length - 1 )} }`;
+  if ( s[0] === '+' || s[0] === '-' ) {
+    lead = s[0];
+    s = s.slice(1);
+  }
 
-  if ( t.includes('-') )
-    return `{ re: ${s.slice( 0, t.indexOf('-') + 1 )},
-              im: ${t.slice( t.indexOf('-'), t.length - 1 )} }`;
+  if ( s.includes('+') || s.includes('-') ) {
+    if ( s.includes('+') ) {
+      real = lead + s.slice( 0, s.indexOf('+') );
+      imag = s.slice( s.indexOf('+') + 1, s.length - 1 );
+    } else {
+      real = lead + s.slice( 0, s.indexOf('-') );
+      imag = s.slice( s.indexOf('-'), s.length - 1 );
+    }
+  } else {
+    if ( s.includes('i') ) {
+      real = '0';
+      imag = lead + s.slice( 0, s.length - 1 );
+    } else {
+      real = lead + s;
+      imag = '0';
+    }
+  }
 
-  // pure imaginary
-  if ( s.includes('i') ) return `{ re: 0, im: ${s.slice( 0, s.length - 1 )} }`;
+  if ( imag === '' || imag === '-' ) imag += '1';
 
-  // pure real
-  return s;
+  return `{ re: ${real}, im: ${imag} }`;
 
 }
 
@@ -136,13 +148,13 @@ function update() {
 
     if ( pre.includes('i') ) {
       pre = pre.split();
-      pre.forEach( (e,i,a) => a[i] = complexString(e) );
+      pre.forEach( (e,i,a) => a[i] = complexFromString(e) );
       pre = pre.join();
     }
 
     if ( post.includes('i') ) {
       post = post.split();
-      post.forEach( (e,i,a) => a[i] = complexString(e) );
+      post.forEach( (e,i,a) => a[i] = complexFromString(e) );
       post = post.join();
     }
 
