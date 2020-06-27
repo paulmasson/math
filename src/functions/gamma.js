@@ -193,11 +193,38 @@ function digamma( x ) {
 
 function erf( x ) {
 
-  return mul( 2/sqrt(pi), x, hypergeometric1F1( .5, 1.5, neg(pow(x,2)) ) );
+  var useAsymptotic = 5;
+
+  var absArg = Math.abs( arg(x) );
+
+  if ( abs(x) > useAsymptotic && ( absArg < pi/4 || absArg > 3*pi/4 ) )
+
+    return sub( 1, erfc(x) );
+
+  return mul( 2/sqrt(pi), x, hypergeometric1F1( .5, 1.5, neg(mul(x,x)) ) );
 
 }
 
 function erfc( x ) {
+
+  var useAsymptotic = 5;
+
+  var absArg = Math.abs( arg(x) );
+
+  if ( abs(x) > useAsymptotic && ( absArg < pi/4 || absArg > 3*pi/4 ) ) {
+
+    // as per dlmf.nist.gov/7.12.1 this could be an independent sum for minor improvement
+    // these numbers are tiny and need to stay in this function even though
+    //   there is some code duplication with erf
+
+    var t = mul( 1/sqrt(pi), exp( neg(mul(x,x)) ), inv(x),
+                 hypergeometric2F0( .5, 1, neg(inv(mul(x,x))) ) );
+
+    if ( x.re < 0 || x < 0 ) return add( 2, t );
+
+    return t;
+
+  }
 
   return sub( 1, erf(x) );
 
@@ -205,7 +232,7 @@ function erfc( x ) {
 
 function erfi( x ) {
 
-  return mul( 2/sqrt(pi), x, hypergeometric1F1( .5, 1.5, pow(x,2) ) );
+  return mul( complex(0,-1), erf( mul( complex(0,1), x ) ) );
 
 }
 
