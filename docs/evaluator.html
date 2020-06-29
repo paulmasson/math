@@ -21,9 +21,9 @@
 
 function process() {
 
-  try { output.innerText = JSON.stringify( Function( 'return ' + input.value )() ); }
+  try { output.innerHTML = JSON.stringify( Function( 'return ' + input.value )() ); }
 
-  catch( e ) { output.innerText = e.message; }
+  catch( e ) { output.innerHTML = e.message; }
 
 }
 
