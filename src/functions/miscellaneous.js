@@ -7,7 +7,7 @@ function chop( x, tolerance=1e-10 ) {
     return v;
   }
 
-  if ( isComplex(x) ) return { re: chop(x.re), im: chop(x.im) };
+  if ( isComplex(x) ) return complex( chop(x.re), chop(x.im) );
 
   if ( Math.abs(x) < tolerance ) x = 0;
 
