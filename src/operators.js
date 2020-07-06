@@ -32,17 +32,17 @@ function isPositiveInteger( x ) {
 
 }
 
-function isNegativeInteger( x ) {
-
-  if ( isComplex(x) ) return Number.isInteger(x.re) && x.re < 0 && x.im === 0;
-  return Number.isInteger(x) && x < 0;
-
-}
-
 function isPositiveIntegerOrZero( x ) {
 
   if ( isComplex(x) ) return Number.isInteger(x.re) && x.re >= 0 && x.im === 0;
   return Number.isInteger(x) && x >= 0;
+
+}
+
+function isNegativeInteger( x ) {
+
+  if ( isComplex(x) ) return Number.isInteger(x.re) && x.re < 0 && x.im === 0;
+  return Number.isInteger(x) && x < 0;
 
 }
 
