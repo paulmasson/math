@@ -1901,6 +1901,11 @@ function hypergeometric0F1( a, x, tolerance=1e-10 ) {
 
     if ( isNegativeIntegerOrZero(a) ) throw Error( 'Hypergeometric function pole' );
 
+    function average( f, x ) {
+      var offset = 1e-5;
+      return div( add( f(add(x,offset)), f(sub(x,offset)) ), 2 );
+    }
+
     // asymptotic form as per Johansson arxiv.org/abs/1606.06977
     if ( abs(x) > useAsymptotic ) {
 
@@ -1970,6 +1975,11 @@ function hypergeometric1F1( a, b, x, tolerance=1e-10 ) {
 
     // Kummer transformation
     if ( x.re < 0 ) return mul( exp(x), hypergeometric1F1( sub(b,a), b, neg(x) ) );
+
+    function average( f, x ) {
+      var offset = 1e-5;
+      return div( add( f(add(x,offset)), f(sub(x,offset)) ), 2 );
+    }
 
     // asymptotic form as per Johansson arxiv.org/abs/1606.06977
     if ( abs(x) > useAsymptotic ) {
@@ -2135,11 +2145,8 @@ function hypergeometric2F1( a, b, c, x, tolerance=1e-10 ) {
     var index = absArray.indexOf( Math.min.apply( null, absArray ) );
 
     function average( f, x ) {
-
       var offset = 1e-5;
-
       return div( add( f(add(x,offset)), f(sub(x,offset)) ), 2 );
-
     }
 
     switch( index ) {
