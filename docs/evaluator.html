@@ -7,9 +7,10 @@
 
 <body>
 
+<script src="../../mathcell/build/mathcell.js"></script>
 <script src="../build/math.js"></script>
 
-<p>This evaluator can be used to test individual numerical expressions in Math. Enter an expression in the area below and press enter to evaluate.</p>
+<p>This evaluator can be used to test individual numerical expressions in Math. Type an expression in the area below and press enter to evaluate.</p>
 
 <br><p style="text-align: center">
 <input id="input" type="text" value="" style="width: 5in" onchange="process()"></input>
@@ -28,6 +29,50 @@ function process() {
 }
 
 </script>
+
+<br/><p>This plotter can be used to visualize individual functions over the indicated domain. The independent variable must be typed as <code>x</code> for evaluation.</p>
+
+<div class="mathcell" style="width: 6in; height: 4in">
+<script>
+
+var parent = document.currentScript.parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [ { type: 'text', name: 'f', label: 'Function:' },
+              [ { type: 'number', min: -1e10, max: 1e10, default: -1,
+                                    name: 'xMin', label: '<i>x</i><sub>min</sub>' },
+                { type: 'number', min: -1e10, max: 1e10, default: 1,
+                                    name: 'xMax', label: '<i>x</i><sub>max</sub>' },
+                { type: 'number', min: 200, max: 1e10, default: 500,
+                                    name: 'points', label: 'points' } ] ] );
+
+parent.update = function( id ) {
+
+  var f = getVariable( id, 'f' );
+  var xMin = getVariable( id, 'xMin' );
+  var xMax = getVariable( id, 'xMax' );
+  var points = getVariable( id, 'points' );
+
+  var data = [];
+
+  if ( f ) {
+
+    data.push( plot( x => Function( 'x', 'return ' + f )(x), [ xMin, xMax, points ] ) );
+
+    var config = { type: 'svg' };
+
+    evaluate( id, data, config );
+
+  }
+
+}
+
+parent.update( id );
+
+</script>
+</div>
 
 </body>
 </html>
