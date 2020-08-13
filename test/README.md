@@ -9,4 +9,4 @@ TODO
 
 * comparisons of functions on the unit circle to mpmath
 
-* comparisons of function on the real line to mpmath
+* comparisons of functions on the real line to mpmath
