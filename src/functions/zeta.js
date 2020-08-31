@@ -59,6 +59,8 @@ function harmonic( n ) {
 
   if ( !Number.isInteger(n) ) throw Error( 'Noninteger argument for harmonic number' );
 
+  if ( n > 1e3 ) return log(n) + eulerGamma + 1/2/n - 1/12/n**2;
+
   return summation( i => 1/i, [1,n] );
 
 }
