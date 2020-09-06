@@ -167,7 +167,7 @@ MathCell( id, [] );
 parent.update = function( id ) {
 
   var p = parametric( (x,y) => [ x, y, logGamma( complex(x,y) ) ], [-4.999,4.999,201], [-4.999,4.999,201],
-                      { complexFunction: 'im', colormap: 'complexArgument' } );
+                      { complexFunction: 'im', colormap: 'complexArgument', maxFaceSlope: 40 } );
 
   var config = { type: 'threejs', zMin: -10, zMax: 10, aspectRatio: [1,1,.5] };
 

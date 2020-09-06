@@ -169,7 +169,7 @@ MathCell( id, [] );
 parent.update = function( id ) {
 
   var p = parametric( (x,y) => [ x, y, arcsech( complex(x,y) ) ], [-5,5,151], [-5,5,151],
-                      { complexFunction: 'im', colormap: 'complexArgument' } );
+                      { complexFunction: 'im', colormap: 'complexArgument', maxFaceSlope: 10 } );
 
   var config = { type: 'threejs' };
 

@@ -144,7 +144,7 @@ MathCell( id, [] );
 parent.update = function( id ) {
 
   var p = parametric( (x,y) => [ x, y, arccos( complex(x,y) ) ], [-5,5,150], [-5,5,150],
-                      { complexFunction: 'im', colormap: 'complexArgument' } );
+                      { complexFunction: 'im', colormap: 'complexArgument', maxFaceSlope: 10 } );
 
   var config = { type: 'threejs' };
 
