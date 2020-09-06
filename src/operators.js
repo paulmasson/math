@@ -251,3 +251,39 @@ function sqrt( x ) {
 
 }
 
+
+function complexFromString( s, returnAsString=false ) {
+
+  var lead = '', real, imag;
+
+  if ( s[0] === '+' || s[0] === '-' ) {
+    lead = s[0];
+    s = s.slice(1);
+  }
+
+  if ( s.includes('+') || s.includes('-') ) {
+    if ( s.includes('+') ) {
+      real = lead + s.slice( 0, s.indexOf('+') );
+      imag = s.slice( s.indexOf('+') + 1, s.length - 1 );
+    } else {
+      real = lead + s.slice( 0, s.indexOf('-') );
+      imag = s.slice( s.indexOf('-'), s.length - 1 );
+    }
+  } else {
+    if ( s.includes('i') ) {
+      real = '0';
+      imag = lead + s.slice( 0, s.length - 1 );
+    } else {
+      real = lead + s;
+      imag = '0';
+    }
+  }
+
+  if ( imag === '' || imag === '-' ) imag += '1';
+
+  if ( returnAsString ) return `{ re: ${real}, im: ${imag} }`;
+
+  return { re: +real, im: +imag };
+
+}
+
