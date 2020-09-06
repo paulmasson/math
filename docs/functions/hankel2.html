@@ -156,7 +156,7 @@ parent.update = function( id ) {
   var n = getVariable( id, 'n' );
 
   var p = parametric( (x,y) => [ x, y, hankel2( n, complex(x,y) ) ], [-8,8,201], [-8,8,201],
-                      { complexFunction: 're', colormap: 'complexArgument', maxFaceSlope: 10 } );
+                      { complexFunction: 're', colormap: 'complexArgument' } );
 
   var config = { type: 'threejs', zMin: -5, zMax: 5 };
 
