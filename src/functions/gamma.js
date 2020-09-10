@@ -160,13 +160,27 @@ function gamma( x, y, z ) {
 
 }
 
-function beta( x, y, z ) {
+function beta( x, y, z, w ) {
+
+  if ( arguments.length === 4 )
+
+    return sub( beta(y,z,w), beta(x,z,w) );
 
   if ( arguments.length === 3 )
 
     return mul( pow(x,y), inv(y), hypergeometric2F1( y, sub(1,z), add(y,1), x ) );
 
   return div( mul( gamma(x), gamma(y) ), gamma( add(x,y) ) ); 
+
+}
+
+function betaRegularized( x, y, z, w ) {
+
+  if ( arguments.length === 4 )
+
+    return div( beta(x,y,z,w), beta(z,w) );
+
+  return div( beta(x,y,z), beta(y,z) );
 
 }
 
