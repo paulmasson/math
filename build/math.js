@@ -1682,6 +1682,14 @@ function gamma( x, y, z ) {
 
 }
 
+function gammaRegularized( x, y, z ) {
+
+  if ( arguments.length === 3 ) return div( gamma(x,y,z), gamma(x) );
+
+  return div( gamma(x,y), gamma(x) );
+
+}
+
 function beta( x, y, z, w ) {
 
   if ( arguments.length === 4 )
