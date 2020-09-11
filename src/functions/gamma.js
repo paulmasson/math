@@ -121,11 +121,6 @@ function gamma( x, y, z ) {
 
     }
 
-    // this complex lerp patches the real part, not so much the imaginary
-    var delta = 1e-5;
-    if ( abs(x) < delta )
-      return taylorSeries( t => gamma(t,y), mul( x, delta/abs(x) ), 2 )(x);
-
     // dlmf.nist.gov/8.4.15
     if ( isNegativeInteger(x) ) {
 
@@ -151,6 +146,8 @@ function gamma( x, y, z ) {
     return mul( pow(z,x), inv(x), hypergeometric1F1( x, add(x,1), neg(z) ) );
 
   }
+
+  if ( isPositiveInteger(x) ) return factorial( sub(x,1) );
 
   // logGamma complex on negative axis
   if ( !isComplex(x) && x < 0 ) return exp( logGamma( complex(x) ) ).re;
