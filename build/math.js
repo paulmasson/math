@@ -1555,7 +1555,9 @@ function factorial( n ) {
 
 function factorial2( n ) {
 
-  if ( Number.isInteger(n) && n > 0 ) {
+  if ( isZero(n) ) return 1;
+
+  if ( isPositiveInteger(n) ) {
 
     // bitwise test for odd integer, upward recursion for possible caching
     var result = n & 1 ? 1 : 2;
@@ -1563,8 +1565,6 @@ function factorial2( n ) {
     return result;
 
   }
-
-  if ( Number.isInteger(n) && n === 0 ) return 1;
 
   var f1 = pow( 2, div(n,2) );
   var f2 = pow( pi/2, div( sub( cos(mul(pi,n)), 1 ), 4 ) );
