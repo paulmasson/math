@@ -3,6 +3,8 @@ var pi = Math.PI;
 
 var eulerGamma = .5772156649015329;
 
+var factorialCache = [ 1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880, 3628800 ];
+
 
 function complex( x, y ) {
 
@@ -1533,8 +1535,16 @@ function factorial( n ) {
 
   if ( isPositiveIntegerOrZero(n) ) {
 
-    var result = 1;
-    for ( var i = 2 ; i <= n ; i++ ) result *= i;
+    if ( factorialCache[n] ) return factorialCache[n];
+
+    var last = factorialCache.length - 1;
+    var result = factorialCache[last];
+
+    for ( var i = last + 1 ; i <= n ; i++ ) {
+      result *= i;
+      factorialCache[i] = result;
+    }
+
     return result;
 
   }

@@ -11,8 +11,16 @@ function factorial( n ) {
 
   if ( isPositiveIntegerOrZero(n) ) {
 
-    var result = 1;
-    for ( var i = 2 ; i <= n ; i++ ) result *= i;
+    if ( factorialCache[n] ) return factorialCache[n];
+
+    var last = factorialCache.length - 1;
+    var result = factorialCache[last];
+
+    for ( var i = last + 1 ; i <= n ; i++ ) {
+      result *= i;
+      factorialCache[i] = result;
+    }
+
     return result;
 
   }
