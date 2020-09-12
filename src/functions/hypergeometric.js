@@ -7,11 +7,6 @@ function hypergeometric0F1( a, x, tolerance=1e-10 ) {
 
     if ( isNegativeIntegerOrZero(a) ) throw Error( 'Hypergeometric function pole' );
 
-    function average( f, x ) {
-      var offset = 1e-5;
-      return div( add( f(add(x,offset)), f(sub(x,offset)) ), 2 );
-    }
-
     // asymptotic form as per Johansson arxiv.org/abs/1606.06977
     if ( abs(x) > useAsymptotic ) {
 
@@ -81,11 +76,6 @@ function hypergeometric1F1( a, b, x, tolerance=1e-10 ) {
 
     // Kummer transformation
     if ( x.re < 0 ) return mul( exp(x), hypergeometric1F1( sub(b,a), b, neg(x) ) );
-
-    function average( f, x ) {
-      var offset = 1e-5;
-      return div( add( f(add(x,offset)), f(sub(x,offset)) ), 2 );
-    }
 
     // asymptotic form as per Johansson arxiv.org/abs/1606.06977
     if ( abs(x) > useAsymptotic ) {
@@ -250,11 +240,6 @@ function hypergeometric2F1( a, b, c, x, tolerance=1e-10 ) {
 
     var index = absArray.indexOf( Math.min.apply( null, absArray ) );
 
-    function average( f, x ) {
-      var offset = 1e-5;
-      return div( add( f(add(x,offset)), f(sub(x,offset)) ), 2 );
-    }
-
     switch( index ) {
 
       case 0:
@@ -268,10 +253,10 @@ function hypergeometric2F1( a, b, c, x, tolerance=1e-10 ) {
       case 2:
 
         if ( isInteger(sub(c,add(a,b))) || isNegativeIntegerOrZero(sub(c,a)) )
-          return average( a => hypergeometric2F1(a,b,c,x), a );
+          return complexAverage( a => hypergeometric2F1(a,b,c,x), a );
 
         if ( isNegativeIntegerOrZero(sub(c,b)) )
-          return average( b => hypergeometric2F1(a,b,c,x), b );
+          return complexAverage( b => hypergeometric2F1(a,b,c,x), b );
 
         var t1 = mul( gamma(c), gamma( sub(c,add(a,b)) ), 
                       inv( gamma(sub(c,a)) ), inv( gamma(sub(c,b)) ),
@@ -286,10 +271,10 @@ function hypergeometric2F1( a, b, c, x, tolerance=1e-10 ) {
       case 3:
 
         if ( isInteger(sub(a,b)) || isNegativeIntegerOrZero(sub(c,a)) )
-          return average( a => hypergeometric2F1(a,b,c,x), a );
+          return complexAverage( a => hypergeometric2F1(a,b,c,x), a );
 
         if ( isNegativeIntegerOrZero(sub(c,b)) )
-          return average( b => hypergeometric2F1(a,b,c,x), b );
+          return complexAverage( b => hypergeometric2F1(a,b,c,x), b );
 
         var t1 = mul( gamma(c), gamma(sub(b,a)), inv( gamma(b) ),
                       inv( gamma(sub(c,a)) ), pow( neg(x), neg(a) ),
@@ -304,10 +289,10 @@ function hypergeometric2F1( a, b, c, x, tolerance=1e-10 ) {
       case 4:
 
         if ( isInteger(sub(a,b)) || isNegativeIntegerOrZero(sub(c,a)) )
-          return average( a => hypergeometric2F1(a,b,c,x), a );
+          return complexAverage( a => hypergeometric2F1(a,b,c,x), a );
 
         if ( isNegativeIntegerOrZero(sub(c,b)) )
-          return average( b => hypergeometric2F1(a,b,c,x), b );
+          return complexAverage( b => hypergeometric2F1(a,b,c,x), b );
 
         var t1 = mul( pow( sub(1,x), neg(a) ), gamma(c), gamma(sub(b,a)),
                       inv( gamma(b) ), inv( gamma(sub(c,a)) ),
@@ -322,10 +307,10 @@ function hypergeometric2F1( a, b, c, x, tolerance=1e-10 ) {
       case 5:
 
         if ( isInteger(sub(c,add(a,b))) || isNegativeIntegerOrZero(sub(c,a)) )
-          return average( a => hypergeometric2F1(a,b,c,x), a );
+          return complexAverage( a => hypergeometric2F1(a,b,c,x), a );
 
         if ( isNegativeIntegerOrZero(sub(c,b)) )
-          return average( b => hypergeometric2F1(a,b,c,x), b );
+          return complexAverage( b => hypergeometric2F1(a,b,c,x), b );
 
         var t1 = mul( gamma(c), gamma( sub(c,add(a,b)) ), inv( gamma(sub(c,a)) ),
                       inv( gamma(sub(c,b)) ), pow( x, neg(a) ),

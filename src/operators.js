@@ -252,6 +252,13 @@ function sqrt( x ) {
 }
 
 
+function complexAverage( f, x, offset=1e-5 ) {
+
+  return div( add( f(add(x,offset)), f(sub(x,offset)) ), 2 );
+
+}
+
+
 function complexFromString( s, returnAsString=false ) {
 
   var lead = '', real, imag;
