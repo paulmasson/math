@@ -1833,6 +1833,8 @@ function fresnelC( x ) {
 
 function expIntegralEi( x, tolerance=1e-10 ) {
 
+//  return add( mul( neg(exp(x)), hypergeometricU(1,1,neg(x)) ), neg(log(neg(x))), log(x) );
+
   var useAsymptotic = 30;
 
   if ( isComplex(x) ) {
@@ -2106,7 +2108,7 @@ function hypergeometric1F1( a, b, x, tolerance=1e-10 ) {
 
 function hypergeometricU( a, b, x ) {
 
-  var useAsymptotic = 15;
+  var useAsymptotic = 20;
 
   // asymptotic form as per Johansson arxiv.org/abs/1606.06977
   if ( abs(x) > useAsymptotic ) {
@@ -2116,7 +2118,7 @@ function hypergeometricU( a, b, x ) {
   }
 
   if ( b === 1 || ( b.re === 1 && b.im === 0 ) )
-    return complexAverage( b => hypergeometricU( a, b, x ), b );
+    return complexAverage( b => hypergeometricU(a,b,x), b );
 
   var t1 = mul( gamma(sub(b,1)), inv( gamma(a) ), pow( x, sub(1,b) ),
                 hypergeometric1F1( add(a,neg(b),1), sub(2,b), x ) );
