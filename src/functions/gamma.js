@@ -1,15 +1,21 @@
 
 function factorial( n ) {
 
-  if ( Number.isInteger(n) && n >= 0 ) {
+  if ( isComplex(n) ) {
+
+    if ( isPositiveIntegerOrZero(n.re) ) return complex( factorial(n.re) );
+
+    return gamma( add(n,1) );
+
+  }
+
+  if ( isPositiveIntegerOrZero(n) ) {
 
     var result = 1;
     for ( var i = 2 ; i <= n ; i++ ) result *= i;
     return result;
 
   }
-
-  if ( isComplex(n) ) return gamma( add(n,1) );
 
   return gamma( n+1 );
 
