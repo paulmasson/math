@@ -137,16 +137,14 @@ function update() {
 
       var z = Function( `return ${f}( ${pre} complex(${p[0]},${p[1]}) ${post} )` )();
 
-      var r = 0, g = 255, b = 0, test, standard, testZero;
+      var r = 0, g = 255, b = 0, test, standard;
 
       if ( part.value === 're' ) {
         test = z.re.toExponential(9);
         standard = p[2].toExponential(9);
-        testZero = chop(z.re);
       } else {
         test = z.im.toExponential(9);
         standard = p[3].toExponential(9);
-        testZero = chop(z.im);
       }
 
       if ( test !== standard ) {
@@ -154,12 +152,8 @@ function update() {
         var s = standard.split( 'e' ).map( Number );
         var expDiff = Math.abs( t[1] - s[1] );
         if ( expDiff > 1 || isNaN(test) ) {
-          if ( testZero === 0 ) {
-            r = 210; g = 210; b = 210;
-          } else {
-            errors.innerHTML += `Problem to investigate at [${p[0]},${p[1]}]<br>`;
-            g = 0; // black for serious
-          }
+          errors.innerHTML += `Problem to investigate at [${p[0]},${p[1]}]<br>`;
+          g = 0; // black for serious
         } else {
           var delta = expDiff === 0 ? Math.abs( t[0] - s[0] ) : Math.abs( t[0]*10**t[1] - s[0]*10**s[1] );
           if ( delta > 1e-8 ) g = 0;
@@ -181,11 +175,17 @@ function update() {
 
 </script>
 
-<p>The <a href="https://github.com/math-test-data">test data</a> has been evaluated in unit increments from -49.5 to 49.5 in both directions on the the complex plane. A green dot above indicates that the same calculation with this library matches the test data to ten significant digits. A yellow dot indicates a variance of two digits in the significand, <i>i.e.</i> the part of the value in scientific notation without the exponent. A red dot indicates a variation larger than two digits, where again this difference is in the significand. A gray dot indicates a difference from the standard where the calculated value is zero relative to the tolerance of the library. A black dot is either a large error or <code>NaN</code>.</p>
+<p>The <a href="https://github.com/math-test-data">test data</a> has been evaluated in unit increments from -49.5 to 49.5 in both directions on the the complex plane. A green dot above indicates that the same calculation with this library matches the test data to ten significant digits. A yellow dot indicates a variance of two digits in the significand, <i>i.e.</i> the part of the value in scientific notation without the exponent. A red dot indicates a variation larger than two digits, where again this difference is in the significand. A black dot is either a large error or <code>NaN</code>.</p>
 
 <p>Functions requiring more that one argument, such as Bessel or elliptic functions, indicate the additional parameters in the function name in square brackets. Most of these parameters precede the main argument in the function call. When they do not an empty list is included in the file name to allow detection of these cases.</p>
 
 <p>These tests give an immediate visual sense of the accuracy of this library. They can also be used to identify argument domains that need attention.</p>
+
+<p>Known issues with data from mpmath as of 2020.09.13:</p>
+
+<blockquote>The imaginary parts of error functions are <a href="https://github.com/fredrik-johansson/mpmath/issues/545">incorrect</a> in large regions of the complex plane. These show as significant black wedges for imaginary <code>erf</code> and <code>erfc</code>, as well as real <code>erfi</code>.</blockquote>
+
+<blockquote>The imaginary part of the zeta function is <a href="https://github.com/fredrik-johansson/mpmath/issues/551">incorrect</a> in the far right-hand plane. This shows as a strip of red on the right-hand edge above.</blockquote>
 
 </body>
 </html>
