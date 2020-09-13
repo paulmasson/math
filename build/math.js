@@ -1833,8 +1833,6 @@ function fresnelC( x ) {
 
 function expIntegralEi( x, tolerance=1e-10 ) {
 
-//  return add( mul( neg(exp(x)), hypergeometricU(1,1,neg(x)) ), neg(log(neg(x))), log(x) );
-
   var useAsymptotic = 30;
 
   if ( isComplex(x) ) {
@@ -3111,12 +3109,50 @@ function inverseGudermannian( x ) { return arctanh( sin(x) ); }
 
 function zeta( x, tolerance=1e-10 ) {
 
-  // Borwein algorithm
+  // direct summation fast in right-hand plane
+  var directSummation = 5;
+
+  if ( x > directSummation || x.re > directSummation ) {
+
+    if ( isComplex(x) ) {
+
+      var s = complex(1);
+      var p = complex(1);
+      var i = 2;
+
+      while ( Math.abs(p.re) > tolerance || Math.abs(p.im) > tolerance*tolerance ) {
+        p = pow( i, neg(x) );
+        s = add( s, p );
+        i++;
+      }
+
+      return s;
+
+    } else {
+
+      var s = 1;
+      var p = 1;
+      var i = 2;
+
+      while ( Math.abs(p) > tolerance ) {
+        p = 1 / i**x;
+        s += p;
+        i++;
+      }
+
+      return s;
+
+    }
+
+  }
+
+  // Borwein, Efficient Algorithm
 
   var n = 14; // from error bound for tolerance
 
+  // Borwein p.3 simplified
   if ( isComplex(x) && x.im !== 0 )
-    n = Math.max( n, Math.ceil( log( 2 / abs(gamma(x)) / tolerance ) / log( 3 + sqrt(8) ) ) );
+    n = Math.max( n, Math.ceil( log( 2 / abs(gamma(x)) / tolerance ) / 1.5 ) );
 
   var d = [ 1 ];
   for ( var i = 1 ; i <= n ; i++ )
