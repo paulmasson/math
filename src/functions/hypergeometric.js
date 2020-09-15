@@ -66,6 +66,8 @@ function hypergeometric0F1( a, x, tolerance=1e-10 ) {
 
 function hypergeometric1F1( a, b, x, tolerance=1e-10 ) {
 
+  if ( isEqualTo(a,b) ) return exp(x);
+
   var useAsymptotic = 30;
 
   if ( isComplex(a) || isComplex(b) || isComplex(x) ) {
