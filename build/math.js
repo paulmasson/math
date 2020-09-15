@@ -2218,6 +2218,10 @@ function hypergeometric2F0( a, b, x, tolerance=1e-10 ) {
 
 function hypergeometric2F1( a, b, c, x, tolerance=1e-10 ) {
 
+  if ( isEqualTo(a,c) ) return pow( sub(1,x), neg(b) );
+
+  if ( isEqualTo(b,c) ) return pow( sub(1,x), neg(a) );
+
   if ( isComplex(a) || isComplex(b) || isComplex(c) || isComplex(x) ) {
 
     // choose smallest absolute value of transformed argument
