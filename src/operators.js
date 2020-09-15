@@ -53,6 +53,18 @@ function isNegativeIntegerOrZero( x ) {
 
 }
 
+function isEqualTo( x, y ) {
+
+  if ( isComplex(x) || isComplex(y) ) {
+    if ( !isComplex(x) ) x = complex(x);
+    if ( !isComplex(y) ) y = complex(y);
+    return x.re === y.re && x.im === y.im;
+  }
+
+  return x === y;
+
+}
+
 
 function re( x ) {
 
