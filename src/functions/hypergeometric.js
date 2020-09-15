@@ -80,11 +80,14 @@ function hypergeometric1F1( a, b, x, tolerance=1e-10 ) {
     // asymptotic form as per Johansson arxiv.org/abs/1606.06977
     if ( abs(x) > useAsymptotic ) {
 
-      var t1 = mul( gamma(b), pow( neg(x), neg(a) ), inv( gamma(sub(b,a)) ) );
-      t1 = mul( t1, hypergeometric2F0( a, add(a,neg(b),1), div(-1,x) ) );
+      if ( isZero(a) || isNegativeIntegerOrZero(sub(b,a)) )
+        return complexAverage( a => hypergeometric1F1(a,b,x), a );
 
-      var t2 = mul( gamma(b), pow( x, sub(a,b) ), exp(x), inv( gamma(a) ) );
-      t2 = mul( t2, hypergeometric2F0( sub(b,a), sub(1,a), div(1,x) ) );
+      var t1 = mul( gamma(b), pow( neg(x), neg(a) ), inv( gamma(sub(b,a)) ),
+                    hypergeometric2F0( a, add(a,neg(b),1), div(-1,x) ) );
+
+      var t2 = mul( gamma(b), pow( x, sub(a,b) ), exp(x), inv( gamma(a) ),
+                    hypergeometric2F0( sub(b,a), sub(1,a), div(1,x) ) );
 
       return add( t1, t2 );
 
