@@ -1668,9 +1668,9 @@ function gamma( x, y, z ) {
       if ( isZero(y) ) throw Error( 'Gamma function pole' );
 
       // combination of logarithms merely adds/subtracts complex(0,pi)
-      var result = add( neg(expIntegralEi(neg(y))),
-                        mul( .5, sub( log(neg(y)), log(neg(inv(y))) ) ),
-                        neg(log(y)) );
+      var sign = y.im > 0 ? -1 : y.im < 0 ? 1 : 0;
+
+      var result = add( neg(expIntegralEi(neg(y))), complex(0,sign*pi) );
 
       if ( !isComplex(y) && y > 0 ) return result.re;
 
