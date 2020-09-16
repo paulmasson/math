@@ -1861,7 +1861,10 @@ function expIntegralEi( x, tolerance=1e-10 ) {
         i++;
       }
 
-      return mul( s, exp(x), inv(x) );
+      // combination of logarithms merely adds/subtracts complex(0,pi)
+      var sign = x.im > 0 ? 1 : x.im < 0 ? -1 : 0;
+
+      return add( mul( s, exp(x), inv(x) ), complex(0,sign*pi) );
 
     }
 
