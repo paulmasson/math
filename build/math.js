@@ -1667,7 +1667,7 @@ function gamma( x, y, z ) {
 
       if ( isZero(y) ) throw Error( 'Gamma function pole' );
 
-      // combination of logarithms merely adds/subtracts complex(0,pi)
+      // combination of logarithms adds/subtracts complex(0,pi)
       var sign = y.im > 0 ? -1 : y.im < 0 ? 1 : 0;
 
       var result = add( neg(expIntegralEi(neg(y))), complex(0,sign*pi) );
@@ -1861,7 +1861,7 @@ function expIntegralEi( x, tolerance=1e-10 ) {
         i++;
       }
 
-      // combination of logarithms merely adds/subtracts complex(0,pi)
+      // combination of logarithms adds/subtracts complex(0,pi)
       var sign = x.im > 0 ? 1 : x.im < 0 ? -1 : 0;
 
       return add( mul( s, exp(x), inv(x) ), complex(0,sign*pi) );
@@ -1880,8 +1880,7 @@ function expIntegralEi( x, tolerance=1e-10 ) {
 
     s = add( s, eulerGamma, log(x) );
 
-    // form (log(x)-log(1/x))/2 has wrong phase from -0 in division
-    // can either chop inv(x) or set phase explicitly
+    // real on negative real axis, set phase explicitly rather than log combo
     if ( x.re < 0 && x.im === 0 ) s.im = 0;
 
     return s;
