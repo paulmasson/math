@@ -1,7 +1,8 @@
 
 function complex( x, y ) {
 
-  var y = y || 0;
+  var y = y || ( isArbitrary(x) ? 0n : 0 );
+
   return { re: x, im: y };
 
 }
@@ -9,6 +10,22 @@ function complex( x, y ) {
 var C = complex;
 
 function isComplex( x ) { return typeof x === 'object' && 're' in x; }
+
+
+// BigInt division does not round, add extra digit to compensate
+var precisionScale = { float: 10**11, bigint: 10n**11n };
+
+function arbitrary( x ) {
+
+  if ( isComplex(x) ) return { re: arbitrary(x.re), im: arbitrary(x.im) };
+
+  if ( isArbitrary(x) ) return Number(x) / precisionScale.float;
+
+  return BigInt( Math.round( precisionScale.float * x ) );
+
+}
+
+function isArbitrary( x ) { return typeof x === 'bigint'; }
 
 
 function isZero( x ) {
@@ -168,10 +185,17 @@ function mul( x, y ) {
     if ( !isComplex(x) ) x = complex(x);
     if ( !isComplex(y) ) y = complex(y);
 
+    if ( isArbitrary(x.re) )
+
+      return { re: ( x.re * y.re - x.im * y.im ) / precisionScale.bigint,
+               im: ( x.im * y.re + x.re * y.im ) / precisionScale.bigint };
+
     return { re: x.re * y.re - x.im * y.im,
              im: x.im * y.re + x.re * y.im };
 
   }
+
+  if ( isArbitrary(x) ) return x * y / precisionScale.bigint;
 
   return x * y;
 
@@ -186,7 +210,19 @@ function div( x, y ) {
     if ( !isComplex(x) ) x = complex(x);
     if ( !isComplex(y) ) y = complex(y);
 
-    if ( y.re === 0 && y.im === 0 ) throw Error( 'Division by zero' );
+    if ( y.re === 0 && y.im === 0 || y.re === 0n && y.im === 0n )
+      throw Error( 'Division by zero' );
+
+    if ( isArbitrary(x.re) ) {
+
+      var N = { re: x.re * y.re + x.im * y.im,
+                im: x.im * y.re - x.re * y.im };
+      var D = y.re * y.re + y.im * y.im;
+
+      return { re: precisionScale.bigint * N.re / D,
+               im: precisionScale.bigint * N.im / D };
+
+    }
 
     if ( Math.abs(y.re) < Math.abs(y.im) ) {
 
@@ -204,7 +240,9 @@ function div( x, y ) {
 
   }
 
-  if ( y === 0 ) throw Error( 'Division by zero' );
+  if ( y === 0 || y === 0n ) throw Error( 'Division by zero' );
+
+  if ( isArbitrary(x) ) return precisionScale.bigint * x / y;
 
   return x / y;
 
