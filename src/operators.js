@@ -12,20 +12,19 @@ var C = complex;
 function isComplex( x ) { return typeof x === 'object' && 're' in x; }
 
 
-// BigInt division does not round, add extra digit to compensate
-var precisionScale = { float: 10**11, bigint: 10n**11n };
+function arbitrary( x, decimals=10 ) {
 
-function arbitrary( x ) {
+  var precisionScale = 10**decimals;
 
-  if ( isComplex(x) ) return { re: arbitrary(x.re), im: arbitrary(x.im) };
+  if ( isComplex(x) ) return { re: arbitrary( x.re, decimals ), im: arbitrary( x.im, decimals ) };
 
-  if ( isArbitrary(x) ) return Number(x) / precisionScale.float;
+  if ( isArbitrary(x) ) return Number(x) / precisionScale;
 
-  return BigInt( Math.round( precisionScale.float * x ) );
+  return BigInt( Math.round( precisionScale * x ) );
 
 }
 
-function isArbitrary( x ) { return typeof x === 'bigint'; }
+function isArbitrary( x ) { return typeof x === 'bigint' || typeof x.re === 'bigint'; }
 
 
 function isZero( x ) {
@@ -170,12 +169,23 @@ function sub( x, y ) {
 
 }
 
-function mul( x, y ) {
+function mul( x, y, precisionScale ) {
 
-  if ( arguments.length > 2 ) {
+  if ( arguments.length > 2 && !isArbitrary(x) ) {
 
     var z = mul( x, y );
     for ( var i = 2 ; i < arguments.length ; i++ ) z = mul( z, arguments[i] );
+    return z; 
+
+  }
+
+  if ( arguments.length > 3 && isArbitrary(x) ) {
+
+    var len = arguments.length - 1;
+    var prec = arguments[len];
+
+    var z = mul( x, y, prec );
+    for ( var i = 2 ; i < len ; i++ ) z = mul( z, arguments[i], prec );
     return z; 
 
   }
@@ -185,17 +195,17 @@ function mul( x, y ) {
     if ( !isComplex(x) ) x = complex(x);
     if ( !isComplex(y) ) y = complex(y);
 
-    if ( isArbitrary(x.re) )
+    if ( isArbitrary(x) )
 
-      return { re: ( x.re * y.re - x.im * y.im ) / precisionScale.bigint,
-               im: ( x.im * y.re + x.re * y.im ) / precisionScale.bigint };
+      return { re: ( x.re * y.re - x.im * y.im ) / precisionScale,
+               im: ( x.im * y.re + x.re * y.im ) / precisionScale };
 
     return { re: x.re * y.re - x.im * y.im,
              im: x.im * y.re + x.re * y.im };
 
   }
 
-  if ( isArbitrary(x) ) return x * y / precisionScale.bigint;
+  if ( isArbitrary(x) ) return x * y / precisionScale;
 
   return x * y;
 
@@ -203,7 +213,7 @@ function mul( x, y ) {
 
 function neg( x ) { return mul( -1, x ); }
 
-function div( x, y ) {
+function div( x, y, precisionScale ) {
 
   if ( isComplex(x) || isComplex(y) ) {
 
@@ -213,14 +223,14 @@ function div( x, y ) {
     if ( y.re === 0 && y.im === 0 || y.re === 0n && y.im === 0n )
       throw Error( 'Division by zero' );
 
-    if ( isArbitrary(x.re) ) {
+    if ( isArbitrary(x) ) {
 
       var N = { re: x.re * y.re + x.im * y.im,
                 im: x.im * y.re - x.re * y.im };
       var D = y.re * y.re + y.im * y.im;
 
-      return { re: precisionScale.bigint * N.re / D,
-               im: precisionScale.bigint * N.im / D };
+      return { re: precisionScale * N.re / D,
+               im: precisionScale * N.im / D };
 
     }
 
@@ -242,7 +252,7 @@ function div( x, y ) {
 
   if ( y === 0 || y === 0n ) throw Error( 'Division by zero' );
 
-  if ( isArbitrary(x) ) return precisionScale.bigint * x / y;
+  if ( isArbitrary(x) ) return precisionScale * x / y;
 
   return x / y;
 

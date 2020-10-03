@@ -302,7 +302,7 @@ function fresnelC( x ) {
 
 function expIntegralEi( x, tolerance=1e-10 ) {
 
-  var useAsymptotic = 30;
+  var useAsymptotic = 26;
 
   if ( isComplex(x) ) {
 
@@ -325,14 +325,39 @@ function expIntegralEi( x, tolerance=1e-10 ) {
 
     }
 
-    var s = complex(0);
-    var p = complex(1);
-    var i = 1;
+    var useArbitrary = x.re < 0;
 
-    while ( Math.abs(p.re/i) > tolerance || Math.abs(p.im/i) > tolerance ) {
-      p = mul( p, x, 1/i );
-      s = add( s, div(p,i) );
-      i++;
+    if ( useArbitrary ) {
+
+      var decimals = 25;
+      var ps = 10n**BigInt(decimals); // precision scale for mul/div
+
+      var y = arbitrary( x, decimals );
+
+      var s = arbitrary( complex(0), decimals );
+      var p = arbitrary( complex(1), decimals );
+      var i = arbitrary( 1, decimals ), unit = i;
+
+      while ( div(p.re,i,ps) !== 0n || div(p.im,i,ps) !== 0n ) {
+        p = div( mul(p,y,ps), i, ps );
+        s = add( s, div(p,i,ps) );
+        i = add( i, unit );
+      }
+
+      s = arbitrary( s, decimals );
+
+    } else {
+
+      var s = complex(0);
+      var p = complex(1);
+      var i = 1;
+
+      while ( Math.abs(p.re/i) > tolerance || Math.abs(p.im/i) > tolerance ) {
+        p = mul( p, x, 1/i );
+        s = add( s, div(p,i) );
+        i++;
+      }
+
     }
 
     s = add( s, eulerGamma, log(x) );
