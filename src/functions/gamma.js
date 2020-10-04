@@ -329,22 +329,23 @@ function expIntegralEi( x, tolerance=1e-10 ) {
 
     if ( useArbitrary ) {
 
-      var decimals = 25;
-      var ps = 10n**BigInt(decimals); // precision scale for mul/div
+      setPrecisionScale( 25 );
 
-      var y = arbitrary( x, decimals );
+      var y = arbitrary( x );
 
-      var s = arbitrary( complex(0), decimals );
-      var p = arbitrary( complex(1), decimals );
-      var i = arbitrary( 1, decimals ), unit = i;
+      var s = arbitrary( complex(0) );
+      var p = arbitrary( complex(1) );
+      var i = arbitrary( 1 ), unit = i;
 
-      while ( div(p.re,i,ps) !== 0n || div(p.im,i,ps) !== 0n ) {
-        p = div( mul(p,y,ps), i, ps );
-        s = add( s, div(p,i,ps) );
+      while ( div(p.re,i) !== 0n || div(p.im,i) !== 0n ) {
+        p = div( mul(p,y), i );
+        s = add( s, div(p,i) );
         i = add( i, unit );
       }
 
-      s = arbitrary( s, decimals );
+      s = add( s, constants.eulerGamma*precisionScale/constants.precisionScale, arbitrary( log(x) ) );
+
+      s = arbitrary( s );
 
     } else {
 
@@ -358,9 +359,9 @@ function expIntegralEi( x, tolerance=1e-10 ) {
         i++;
       }
 
-    }
+      s = add( s, eulerGamma, log(x) );
 
-    s = add( s, eulerGamma, log(x) );
+    }
 
     // real on negative real axis, set phase explicitly rather than log combo
     if ( x.re < 0 && x.im === 0 ) s.im = 0;

@@ -1,17 +1,19 @@
 
 var constants = {
 
-  e: 2.71828182845904523536028747135266249775724709369995,
+  decimals: 50, precisionScale: 10n**50n,
 
-  eulerGamma: 0.57721566490153286060651209008240243104215933593992,
+  e: 271828182845904523536028747135266249775724709369995n,
 
-  pi: 3.14159265358979323846264338327950288419716939937510
+  eulerGamma: 57721566490153286060651209008240243104215933593992n,
+
+  pi: 314159265358979323846264338327950288419716939937510n
 
 };
 
-var pi = constants.pi;
+var pi = Number( constants.pi ) / 10**constants.decimals;
 
-var eulerGamma = constants.eulerGamma;
+var eulerGamma = Number( constants.eulerGamma ) / 10**constants.decimals;
 
 
 var factorialCache = [ 1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880, 3628800 ];
@@ -1931,24 +1933,23 @@ function expIntegralEi( x, tolerance=1e-10 ) {
 
     if ( useArbitrary ) {
 
-      var decimals = 25;
-      var ps = 10n**BigInt(decimals); // precision scale for mul/div
+      setPrecisionScale( 25 );
 
-      var y = arbitrary( x, decimals );
+      var y = arbitrary( x );
 
-      var s = arbitrary( complex(0), decimals );
-      var p = arbitrary( complex(1), decimals );
-      var i = arbitrary( 1, decimals ), unit = i;
+      var s = arbitrary( complex(0) );
+      var p = arbitrary( complex(1) );
+      var i = arbitrary( 1 ), unit = i;
 
-      while ( div(p.re,i,ps) !== 0n || div(p.im,i,ps) !== 0n ) {
-        p = div( mul(p,y,ps), i, ps );
-        s = add( s, div(p,i,ps) );
+      while ( div(p.re,i) !== 0n || div(p.im,i) !== 0n ) {
+        p = div( mul(p,y), i );
+        s = add( s, div(p,i) );
         i = add( i, unit );
       }
 
-      s = add( s, BigInt( Math.round( 10**decimals * eulerGamma ) ), arbitrary( log(x), decimals ) );
+      s = add( s, constants.eulerGamma*precisionScale/constants.precisionScale, arbitrary( log(x) ) );
 
-      s = arbitrary( s, decimals );
+      s = arbitrary( s );
 
     } else {
 
