@@ -12,15 +12,26 @@ var C = complex;
 function isComplex( x ) { return typeof x === 'object' && 're' in x; }
 
 
-function arbitrary( x, decimals=10 ) {
+var decimals, precisionScale;
 
-  var precisionScale = 10**decimals;
+function setPrecisionScale( n ) {
 
-  if ( isComplex(x) ) return { re: arbitrary( x.re, decimals ), im: arbitrary( x.im, decimals ) };
+  decimals = n;
+  precisionScale = 10n**BigInt(decimals);
 
-  if ( isArbitrary(x) ) return Number(x) / precisionScale;
+}
 
-  return BigInt( Math.round( precisionScale * x ) );
+setPrecisionScale( 10 );
+
+function arbitrary( x ) {
+
+  if ( isComplex(x) ) return { re: arbitrary( x.re ), im: arbitrary( x.im ) };
+
+  var floatPrecisionScale = 10**decimals;
+
+  if ( isArbitrary(x) ) return Number(x) / floatPrecisionScale;
+
+  return BigInt( Math.round( floatPrecisionScale * x ) );
 
 }
 
@@ -169,23 +180,12 @@ function sub( x, y ) {
 
 }
 
-function mul( x, y, precisionScale ) {
+function mul( x, y ) {
 
-  if ( arguments.length > 2 && !isArbitrary(x) ) {
+  if ( arguments.length > 2 ) {
 
     var z = mul( x, y );
     for ( var i = 2 ; i < arguments.length ; i++ ) z = mul( z, arguments[i] );
-    return z; 
-
-  }
-
-  if ( arguments.length > 3 && isArbitrary(x) ) {
-
-    var len = arguments.length - 1;
-    var prec = arguments[len];
-
-    var z = mul( x, y, prec );
-    for ( var i = 2 ; i < len ; i++ ) z = mul( z, arguments[i], prec );
     return z; 
 
   }
@@ -213,7 +213,7 @@ function mul( x, y, precisionScale ) {
 
 function neg( x ) { return mul( -1, x ); }
 
-function div( x, y, precisionScale ) {
+function div( x, y ) {
 
   if ( isComplex(x) || isComplex(y) ) {
 
