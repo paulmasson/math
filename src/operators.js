@@ -306,6 +306,23 @@ function root( x, y ) { return pow( x, div( 1, y ) ); }
 
 function sqrt( x ) {
 
+  if ( isArbitrary(x) ) {
+
+    // Brent, Modern Computer Arithmetic, SqrtInt routine
+
+    var u = x, s, t;
+    var arb2 = arbitrary(2);
+
+    while ( u !== s ) {
+      s = u;
+      t = s + div( x, s );
+      u = div( t, arb2 );
+    }
+
+    return s;
+
+  }
+
   if ( isComplex(x) ) {
 
     var R = ( x.re * x.re + x.im * x.im )**(1/4);
