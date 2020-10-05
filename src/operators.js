@@ -27,13 +27,23 @@ function arbitrary( x ) {
 
   if ( isComplex(x) ) return { re: arbitrary( x.re ), im: arbitrary( x.im ) };
 
-  var floatPrecisionScale = 10**decimals;
+  if ( isArbitrary(x) ) return Number(x) / 10**decimals;
 
-  if ( isArbitrary(x) ) return Number(x) / floatPrecisionScale;
+  // BigInt from exponential form includes wrong digits
+  // manual construction from string more accurate
 
-  return BigInt( Math.round( floatPrecisionScale * x ) );
+  var parts = x.toExponential().split( 'e' );
+  var mantissa = parts[0].replace( '.', '' );
+  var digits = mantissa.length - ( mantissa[0] === '-' ? 2 : 1 )
+  var padding = +parts[1] + decimals - digits;
+
+  if ( padding < 0 ) return BigInt( Math.round( x * 10**decimals ) );
+
+  return BigInt( mantissa + '0'.repeat(padding) );
 
 }
+
+var A = arbitrary;
 
 function isArbitrary( x ) { return typeof x === 'bigint' || typeof x.re === 'bigint'; }
 
