@@ -1980,7 +1980,7 @@ function expIntegralEi( x, tolerance=1e-10 ) {
         i = add( i, unit );
       }
 
-      s = add( s, constants.eulerGamma*precisionScale/constants.precisionScale, arbitrary( log(x) ) );
+      s = add( s, getConstant( 'eulerGamma' ), ln(y) );
 
       s = arbitrary( s );
 
@@ -2748,7 +2748,7 @@ function ln( x ) {
     var t2 = arbitraryTheta2(x);
     var t3 = arbitraryTheta3(x);
 
-    return div( getConstant('pi'), mul( arbitrary(4), arbitraryAGM( mul(t2,t2), mul(t3,t3) ) ) );
+    return div( getConstant( 'pi' ), mul( arbitrary(4), arbitraryAGM( mul(t2,t2), mul(t3,t3) ) ) );
 
   }
 

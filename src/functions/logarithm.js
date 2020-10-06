@@ -94,7 +94,7 @@ function ln( x ) {
     var t2 = arbitraryTheta2(x);
     var t3 = arbitraryTheta3(x);
 
-    return div( getConstant('pi'), mul( arbitrary(4), arbitraryAGM( mul(t2,t2), mul(t3,t3) ) ) );
+    return div( getConstant( 'pi' ), mul( arbitrary(4), arbitraryAGM( mul(t2,t2), mul(t3,t3) ) ) );
 
   }
 

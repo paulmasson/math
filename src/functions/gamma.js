@@ -343,7 +343,7 @@ function expIntegralEi( x, tolerance=1e-10 ) {
         i = add( i, unit );
       }
 
-      s = add( s, constants.eulerGamma*precisionScale/constants.precisionScale, arbitrary( log(x) ) );
+      s = add( s, getConstant( 'eulerGamma' ), ln(y) );
 
       s = arbitrary( s );
 
