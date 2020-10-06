@@ -79,7 +79,24 @@ function ln( x ) {
 
   }
 
-  if ( isArbitrary(x) ) return 1;
+  if ( isArbitrary(x) ) {
+
+    if ( x < 0n ) throw Error( 'Complex arbitrary logarithm not yet supported' );
+
+    var arb1 = arbitrary(1);
+
+    if ( x === arb1 ) return 0n;
+
+    if ( x < arb1 ) return -ln( div( arb1, x ) );
+
+    x = div( arb1, x );
+
+    var t2 = arbitraryTheta2(x);
+    var t3 = arbitraryTheta3(x);
+
+    return div( getConstant('pi'), mul( arbitrary(4), arbitraryAGM( mul(t2,t2), mul(t3,t3) ) ) );
+
+  }
 
   return log(x);
 
