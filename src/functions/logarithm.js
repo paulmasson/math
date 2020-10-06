@@ -29,7 +29,61 @@ function log( x, base ) {
 
 }
 
-function ln( x ) { return log(x); }
+function ln( x ) {
+
+  // Brent, Modern Computer Arithmetic, second AGM algorithm
+
+  function arbitraryAGM( x, y ) {
+
+    var t, u, arb2 = arbitrary(2);
+
+    while( x !== y ) {
+      t = x, u = y;
+      x = div( t + u, arb2 );
+      y = sqrt( mul(t,u) );
+    }
+
+    return x;
+
+  }
+
+  function arbitraryTheta2( x ) {
+
+    var p = mul( arbitrary(2), x );
+    var s = p;
+    var i = 1;
+
+    while ( p !== 0n ) {
+      for ( var j = 0 ; j < 8*i ; j++ ) p = mul( p, x );
+      s = s + p;
+      i++;
+    }
+
+    return s;
+
+  }
+
+  function arbitraryTheta3( x ) {
+
+    var p = arbitrary(2);
+    var s = arbitrary(1);
+    var i = 1;
+
+    while ( p !== 0n ) {
+      for ( var j = 0 ; j < 4*(2*i-1) ; j++ ) p = mul( p, x );
+      s = s + p;
+      i++;
+    }
+
+    return s;
+
+  }
+
+  if ( isArbitrary(x) ) return 1;
+
+  return log(x);
+
+}
 
 
 function lambertW( k, x, tolerance=1e-10 ) {
