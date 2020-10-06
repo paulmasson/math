@@ -308,7 +308,7 @@ function sqrt( x ) {
 
   if ( isArbitrary(x) ) {
 
-    // Brent, Modern Computer Arithmetic, SqrtInt routine
+    // Brent, Modern Computer Arithmetic, SqrtInt algorithm
 
     var u = x, s, t;
     var arb2 = arbitrary(2);
