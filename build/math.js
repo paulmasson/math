@@ -332,7 +332,27 @@ function root( x, y ) { return pow( x, div( 1, y ) ); }
 
 function sqrt( x ) {
 
+  if ( isComplex(x) ) {
+
+    if ( isArbitrary(x) ) {
+
+      var c = sqrt( mul(x.re,x.re) + mul(x.im,x.im) );
+      var sign = x.im < 0n ? -1n : 1n;
+      var arb2 = arbitrary(2);
+
+      return { re: sqrt( div( c + x.re, arb2 ) ), im: sign * sqrt( div( c - x.re, arb2 ) ) }
+
+    }
+
+    var c = Math.hypot( x.re, x.im );
+
+    return { re: Math.sqrt( (c + x.re)/2 ), im: Math.sign(x.im) * Math.sqrt( (c - x.re)/2 ) };
+
+  }
+
   if ( isArbitrary(x) ) {
+
+    if ( x === 0n ) return 0n;
 
     // Brent, Modern Computer Arithmetic, SqrtInt algorithm
 
@@ -346,15 +366,6 @@ function sqrt( x ) {
     }
 
     return s;
-
-  }
-
-  if ( isComplex(x) ) {
-
-    var R = ( x.re * x.re + x.im * x.im )**(1/4);
-    var Phi = Math.atan2( x.im, x.re ) / 2;
-
-    return { re: R * Math.cos(Phi), im: R * Math.sin(Phi) };
 
   }
 
