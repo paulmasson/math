@@ -1,4 +1,8 @@
 
+var pi = Math.PI;
+
+var eulerGamma = .5772156649015329;
+
 var constants = {
 
   decimals: 50, precisionScale: 10n**50n,
@@ -11,9 +15,11 @@ var constants = {
 
 };
 
-var pi = Number( constants.pi ) / 10**constants.decimals;
+function getConstant( name ) {
 
-var eulerGamma = Number( constants.eulerGamma ) / 10**constants.decimals;
+  return constants[name] * precisionScale / constants.precisionScale;
+
+}
 
 
 var factorialCache = [ 1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880, 3628800 ];
