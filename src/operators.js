@@ -21,7 +21,7 @@ function setPrecisionScale( n ) {
 
 }
 
-setPrecisionScale( 10 );
+setPrecisionScale( 20 );
 
 function arbitrary( x ) {
 
@@ -127,6 +127,8 @@ function abs( x ) {
 
     if ( x.re === 0 && x.im === 0 ) return 0;
 
+    if ( isArbitrary(x) ) return sqrt( mul(x.re,x.re) + mul(x.im,x.im) );
+
     if ( Math.abs(x.re) < Math.abs(x.im) )
 
       return Math.abs(x.im) * Math.sqrt( 1 + ( x.re / x.im )**2 );
@@ -136,6 +138,10 @@ function abs( x ) {
       return Math.abs(x.re) * Math.sqrt( 1 + ( x.im / x.re )**2 );
 
   }
+
+  if ( isArbitrary(x) )
+    if ( x < 0n ) return -x;
+    else return x;
 
   return Math.abs(x);
 
@@ -310,7 +316,9 @@ function sqrt( x ) {
 
     if ( isArbitrary(x) ) {
 
-      var c = sqrt( mul(x.re,x.re) + mul(x.im,x.im) );
+      if ( x.im === 0n ) return { re: sqrt(x.re), im: 0n };
+
+      var c = abs(x);
       var sign = x.im < 0n ? -1n : 1n;
       var arb2 = arbitrary(2);
 
@@ -327,6 +335,8 @@ function sqrt( x ) {
   if ( isArbitrary(x) ) {
 
     if ( x === 0n ) return 0n;
+
+    if ( x < 0n ) throw Error( 'Cannot evaluate real square root of ' + x );
 
     // Brent, Modern Computer Arithmetic, SqrtInt algorithm
 
