@@ -325,11 +325,15 @@ function expIntegralEi( x, tolerance=1e-10 ) {
 
     }
 
-    var useArbitrary = x.re < 0;
+    // determined from pattern on test page
+    var distanceScale = abs( sub(x,useAsymptotic) ) / useAsymptotic;
+    var useArbitrary = distanceScale > 1;
 
     if ( useArbitrary ) {
 
-      setPrecisionScale( 25 );
+      // use only decimals needed
+      var n = Math.round( 17 + 5 * distanceScale );
+      setPrecisionScale( n );
 
       var y = arbitrary( x );
 
