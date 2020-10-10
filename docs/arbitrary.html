@@ -1,0 +1,27 @@
+<html>
+<head>
+<title>Math - Complex</title>
+<link rel="stylesheet" type="text/css" href="style.css">
+<style></style>
+</head>
+
+<body>
+
+<p>Arbitrary precision numbers are represented with the built-in <code>BigInt</code> variable type. Precision of a calculation is determined here by the number of decimal places in the value, not significant digits. This allows leveraging routines already available for addition, subtraction, multiplication and division. The first two are straightforward in this context, but simple multiplication will acquire an extra factor of the precision scale while simple division loses the same factor. The functions <code>mul()</code> and <code>div()</code> remove or restore these factors as appropriate and should always be used for these two operations on arbitrary precision numbers.</p>
+
+<p>Arbitrary precision is tracked by two global variables: <code>decimals</code>, with a default value of 20, and <code>precisionScale</code>, with a default value of <code>10n**20n</code>. The precision can be changed at will:</p>
+
+<p><b>setPrecision( <i>n</i> )</b> &mdash; set precision of future calculations to <i>n</i> decimals</p>
+
+<p>Since JavaScript is single threaded, tracking precision globally rather than at each calculational step should pose no problems, but if so then please open an <a href="https://github.com/paulmasson/math/issues">issue</a> on GitHub.</p>
+
+<p>Additional functions available:</p>
+
+<p><b>arbitrary( <i>x</i> )</b> &mdash; convert a real or complex float to arbitrary precision or the reverse</p>
+
+<p><b>getConstant( name )</b> &mdash; retrieve a mathematical constant at the current precision scale</p>
+
+<p>The two functions <code>sqrt()</code> and <code>ln()</code> already support arbitrary precision evaluation, and additional functions will follow. The arbitrary precision apparatus is used internally to improve the evaluation of certain functions, such as <code>expIntegralEi</code>.</p>
+
+</body>
+</html>
