@@ -1989,8 +1989,8 @@ function expIntegralEi( x, tolerance=1e-10 ) {
 
     if ( useArbitrary ) {
 
-      // use only what needed in decimals
-      var n = Math.round( 17 + 5 * distanceScale );
+      // use only decimals needed
+      var n = 17 + Math.round( 10 * ( distanceScale - 1 ) );
       setPrecisionScale( n );
 
       var y = arbitrary( x );

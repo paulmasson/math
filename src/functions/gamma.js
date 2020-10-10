@@ -332,7 +332,7 @@ function expIntegralEi( x, tolerance=1e-10 ) {
     if ( useArbitrary ) {
 
       // use only decimals needed
-      var n = Math.round( 17 + 5 * distanceScale );
+      var n = 17 + Math.round( 10 * ( distanceScale - 1 ) );
       setPrecisionScale( n );
 
       var y = arbitrary( x );
