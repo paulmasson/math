@@ -37,10 +37,26 @@ function ln( x ) {
 
     var t, u, arb2 = arbitrary(2);
 
-    while( x !== y ) {
-      t = x, u = y;
-      x = div( t + u, arb2 );
-      y = sqrt( mul(t,u) );
+    if ( isComplex(x) ) {
+
+      var maxIter = 10, i = 0;
+
+      while( x.re !== y.re || x.im !== y.im ) {
+        t = x, u = y;
+        x = div( add( t, u ), arb2 );
+        y = sqrt( mul( t, u ) );
+        i++;
+        if ( i > maxIter ) break; // convergence on complex plane not assured...
+      }
+
+    } else {
+
+      while( x !== y ) {
+        t = x, u = y;
+        x = div( t + u, arb2 );
+        y = sqrt( mul( t, u ) );
+      }
+
     }
 
     return x;
@@ -53,10 +69,22 @@ function ln( x ) {
     var s = p;
     var i = 1;
 
-    while ( p !== 0n ) {
-      for ( var j = 0 ; j < 8*i ; j++ ) p = mul( p, x );
-      s = s + p;
-      i++;
+    if ( isComplex(x) ) {
+
+      while ( p.re !== 0n || p.im !== 0n ) {
+        for ( var j = 0 ; j < 8*i ; j++ ) p = mul( p, x );
+        s = add( s, p );
+        i++;
+      }
+
+    } else {
+
+      while ( p !== 0n ) {
+        for ( var j = 0 ; j < 8*i ; j++ ) p = mul( p, x );
+        s = s + p;
+        i++;
+      }
+
     }
 
     return s;
@@ -69,10 +97,22 @@ function ln( x ) {
     var s = arbitrary(1);
     var i = 1;
 
-    while ( p !== 0n ) {
-      for ( var j = 0 ; j < 4*(2*i-1) ; j++ ) p = mul( p, x );
-      s = s + p;
-      i++;
+    if ( isComplex(x) ) {
+
+      while ( p.re !== 0n || p.im !== 0n ) {
+        for ( var j = 0 ; j < 4*(2*i-1) ; j++ ) p = mul( p, x );
+        s = add( s, p );
+        i++;
+      }
+
+    } else {
+
+      while ( p !== 0n ) {
+        for ( var j = 0 ; j < 4*(2*i-1) ; j++ ) p = mul( p, x );
+        s = s + p;
+        i++;
+      }
+
     }
 
     return s;
@@ -81,20 +121,35 @@ function ln( x ) {
 
   if ( isArbitrary(x) ) {
 
-    if ( x < 0n ) throw Error( 'Complex arbitrary logarithm not yet supported' );
-
     var arb1 = arbitrary(1);
 
-    if ( x === arb1 ) return 0n;
+    if ( !isComplex(x) ) {
 
-    if ( x < arb1 ) return -ln( div( arb1, x ) );
+      if ( x < 0n ) return { re: ln( -x ), im: getConstant( 'pi' ) };
+
+      if ( x === arb1 ) return 0n;
+
+      if ( x < arb1 ) return -ln( div( arb1, x ) );
+
+    }
+
+    if ( abs(x) < arb1 ) return mul( -arb1, ln( div( arb1, x ) ) );
 
     x = div( arb1, x );
 
     var t2 = arbitraryTheta2(x);
     var t3 = arbitraryTheta3(x);
+    var Pi = getConstant( 'pi' );
 
-    return div( getConstant( 'pi' ), mul( arbitrary(4), arbitraryAGM( mul(t2,t2), mul(t3,t3) ) ) );
+    var result = div( Pi, mul( arbitrary(4), arbitraryAGM( mul(t2,t2), mul(t3,t3) ) ) );
+
+    // adjust imaginary part
+    if ( x.re < 0n ) {
+      if ( result.im > 0n ) result.im -= Pi;
+      else result.im += Pi;
+    }
+
+    return result;
 
   }
 
