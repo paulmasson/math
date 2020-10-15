@@ -1997,12 +1997,12 @@ function expIntegralEi( x, tolerance=1e-10 ) {
 
       var s = arbitrary( complex(0) );
       var p = arbitrary( complex(1) );
-      var i = arbitrary( 1 ), unit = i;
+      var i = arbitrary( 1 ), arb1 = i;
 
       while ( div(p.re,i) !== 0n || div(p.im,i) !== 0n ) {
         p = div( mul(p,y), i );
         s = add( s, div(p,i) );
-        i = add( i, unit );
+        i = add( i, arb1 );
       }
 
       s = add( s, getConstant( 'eulerGamma' ), ln(y) );
@@ -2679,6 +2679,28 @@ function hypergeometricPFQ( A, B, x ) {
 
 
 function exp( x ) {
+
+  if ( isArbitrary(x) ) {
+
+    var ln10 = ln(arbitrary(10));
+    var m = Math.trunc( arbitrary( div( x, ln10 ) ) );
+    x = x - mul( arbitrary(m), ln10 );
+
+    // direct sum faster than function inversion
+    var arb1 = arbitrary(1);
+    var s = arb1;
+    var p = arb1;
+    var i = arb1;
+
+    while ( p !== 0n ) {
+      p = div( mul( p, x ), i );
+      s += p;
+      i += arb1;
+    }
+
+    return mul( s, arbitrary( Number('1e'+m) ) );
+
+  }
 
   if ( isComplex(x) )
 
