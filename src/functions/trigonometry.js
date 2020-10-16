@@ -189,7 +189,7 @@ function arccsc( x ) {
 
 function sinh( x ) {
 
-  if ( isArbitrary(x) ) return div( sub( exp(x), exp( mul(arbitrary(-1),x) ) ), arbitrary(2) );
+  if ( isArbitrary(x) ) return div( sub( exp(x), exp( mul(-arb1,x) ) ), arb2 );
 
   if ( isComplex(x) )
 
@@ -202,7 +202,7 @@ function sinh( x ) {
 
 function cosh( x ) {
 
-  if ( isArbitrary(x) ) return div( add( exp(x), exp( mul(arbitrary(-1),x) ) ), arbitrary(2) );
+  if ( isArbitrary(x) ) return div( add( exp(x), exp( mul(-arb1,x) ) ), arb2 );
 
   if ( isComplex(x) )
 
