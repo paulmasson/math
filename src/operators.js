@@ -12,12 +12,19 @@ var C = complex;
 function isComplex( x ) { return typeof x === 'object' && 're' in x; }
 
 
-var decimals, precisionScale;
+var decimals, precisionScale, arb1, arb2, onePi, twoPi, halfPi;
 
 function setPrecisionScale( n ) {
 
   decimals = n;
   precisionScale = 10n**BigInt(decimals);
+
+  // set some commonly used constants
+  arb1 = arbitrary(1);
+  arb2 = arbitrary(2);
+  onePi = getConstant( 'pi' )
+  twoPi = mul( onePi, arb2 );
+  halfPi = div( onePi, arb2 );
 
 }
 

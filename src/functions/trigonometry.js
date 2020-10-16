@@ -3,6 +3,33 @@
 
 function sin( x ) {
 
+  if ( isArbitrary(x) ) {
+
+    if ( isComplex(x) )
+
+      return { re: mul( sin(x.re), cosh(x.im) ),
+               im: mul( cos(x.re), sinh(x.im) ) };
+
+    x = x % twoPi;
+
+    // reduce to [-pi/2,pi/2] with successive reductions
+    if ( x > halfPi ) return sin( onePi - x );
+    if ( x < -halfPi ) return sin( -onePi - x );
+
+    var s = x;
+    var p = x;
+    var i = arb2;
+
+    while ( p !== 0n ) {
+      p = div( mul( p, -arb1, x, x ), mul( i, i + arb1 ) );
+      s += p;
+      i += arb2;
+    }
+
+    return s;
+
+  }
+
   if ( isComplex(x) )
 
     return { re: Math.sin(x.re) * Math.cosh(x.im),
@@ -13,6 +40,33 @@ function sin( x ) {
 }
 
 function cos( x ) {
+
+  if ( isArbitrary(x) ) {
+
+    if ( isComplex(x) )
+
+      return { re: mul( cos(x.re), cosh(x.im) ),
+               im: mul( arbitrary(-1), sin(x.re), sinh(x.im) ) };
+
+    x = x % twoPi;
+
+    // reduce to [-pi/2,pi/2] with successive reductions
+    if ( x > halfPi ) return -cos( onePi - x );
+    if ( x < -halfPi ) return -cos( -onePi - x );
+
+    var s = arb1;
+    var p = arb1;
+    var i = arb1;
+
+    while ( p !== 0n ) {
+      p = div( mul( p, -arb1, x, x ), mul( i, i + arb1 ) );
+      s += p;
+      i += arb2;
+    }
+
+    return s;
+
+  }
 
   if ( isComplex(x) )
 
