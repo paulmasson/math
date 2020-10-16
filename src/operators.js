@@ -12,7 +12,7 @@ var C = complex;
 function isComplex( x ) { return typeof x === 'object' && 're' in x; }
 
 
-var decimals, precisionScale, arb1, arb2, onePi, twoPi, halfPi;
+var decimals, precisionScale, arb1, arb2, onePi, twoPi, halfPi, ln10;
 
 function setPrecisionScale( n ) {
 
@@ -25,6 +25,7 @@ function setPrecisionScale( n ) {
   onePi = getConstant( 'pi' )
   twoPi = mul( onePi, arb2 );
   halfPi = div( onePi, arb2 );
+  ln10 = ln( arbitrary(10) );
 
 }
 
