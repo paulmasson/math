@@ -3,6 +3,11 @@ function exp( x ) {
 
   if ( isArbitrary(x) ) {
 
+    if ( isComplex(x) )
+
+      return { re: mul( exp(x.re), cos(x.im) ),
+               im: mul( exp(x.re), sin(x.im) ) };
+
     var ln10 = ln(arbitrary(10));
     var m = Math.trunc( arbitrary( div( x, ln10 ) ) );
     x = x - mul( arbitrary(m), ln10 );
