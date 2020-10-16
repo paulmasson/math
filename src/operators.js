@@ -286,6 +286,15 @@ function inv( x ) { return div( 1, x ); }
 
 function pow( x, y ) {
 
+  if ( isArbitrary(x) || isArbitrary(y) ) {
+
+    if ( !isArbitrary(x) ) x = arbitrary(x);
+    if ( !isArbitrary(y) ) y = arbitrary(y);
+
+    return exp( mul( y, ln(x) ) );
+
+  }
+
   if ( isComplex(x) || isComplex(y) ) {
 
     if ( !isComplex(x) ) x = complex(x);
