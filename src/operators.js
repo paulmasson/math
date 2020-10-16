@@ -327,7 +327,6 @@ function sqrt( x ) {
 
       var c = abs(x);
       var sign = x.im < 0n ? -1n : 1n;
-      var arb2 = arbitrary(2);
 
       return { re: sqrt( div( c + x.re, arb2 ) ), im: sign * sqrt( div( c - x.re, arb2 ) ) }
 
@@ -348,7 +347,6 @@ function sqrt( x ) {
     // Brent, Modern Computer Arithmetic, SqrtInt algorithm
 
     var u = x, s, t;
-    var arb2 = arbitrary(2);
 
     while ( u !== s ) {
       s = u;

@@ -8,7 +8,6 @@ function exp( x ) {
     x = x - mul( arbitrary(m), ln10 );
 
     // direct sum faster than function inversion
-    var arb1 = arbitrary(1);
     var s = arb1;
     var p = arb1;
     var i = arb1;
@@ -19,6 +18,7 @@ function exp( x ) {
       i += arb1;
     }
 
+    // could also return as mantissa/exponent
     return mul( s, arbitrary( Number('1e'+m) ) );
 
   }
@@ -143,8 +143,6 @@ function ln( x ) {
 
   if ( isArbitrary(x) ) {
 
-    var arb1 = arbitrary(1);
-
     if ( !isComplex(x) ) {
 
       if ( x < 0n ) return { re: ln( -x ), im: getConstant( 'pi' ) };
@@ -161,14 +159,13 @@ function ln( x ) {
 
     var t2 = arbitraryTheta2(x);
     var t3 = arbitraryTheta3(x);
-    var Pi = getConstant( 'pi' );
 
-    var result = div( Pi, mul( arbitrary(4), arbitraryAGM( mul(t2,t2), mul(t3,t3) ) ) );
+    var result = div( onePi, mul( arbitrary(4), arbitraryAGM( mul(t2,t2), mul(t3,t3) ) ) );
 
     // adjust imaginary part
     if ( x.re < 0n ) {
-      if ( result.im > 0n ) result.im -= Pi;
-      else result.im += Pi;
+      if ( result.im > 0n ) result.im -= onePi;
+      else result.im += onePi;
     }
 
     return result;

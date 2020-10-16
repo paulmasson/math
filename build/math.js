@@ -353,7 +353,6 @@ function sqrt( x ) {
 
       var c = abs(x);
       var sign = x.im < 0n ? -1n : 1n;
-      var arb2 = arbitrary(2);
 
       return { re: sqrt( div( c + x.re, arb2 ) ), im: sign * sqrt( div( c - x.re, arb2 ) ) }
 
@@ -374,7 +373,6 @@ function sqrt( x ) {
     // Brent, Modern Computer Arithmetic, SqrtInt algorithm
 
     var u = x, s, t;
-    var arb2 = arbitrary(2);
 
     while ( u !== s ) {
       s = u;
@@ -2004,7 +2002,7 @@ function expIntegralEi( x, tolerance=1e-10 ) {
 
       var s = arbitrary( complex(0) );
       var p = arbitrary( complex(1) );
-      var i = arbitrary( 1 ), arb1 = i;
+      var i = arb1;
 
       while ( div(p.re,i) !== 0n || div(p.im,i) !== 0n ) {
         p = div( mul(p,y), i );
@@ -2694,7 +2692,6 @@ function exp( x ) {
     x = x - mul( arbitrary(m), ln10 );
 
     // direct sum faster than function inversion
-    var arb1 = arbitrary(1);
     var s = arb1;
     var p = arb1;
     var i = arb1;
@@ -2705,6 +2702,7 @@ function exp( x ) {
       i += arb1;
     }
 
+    // could also return as mantissa/exponent
     return mul( s, arbitrary( Number('1e'+m) ) );
 
   }
@@ -2829,8 +2827,6 @@ function ln( x ) {
 
   if ( isArbitrary(x) ) {
 
-    var arb1 = arbitrary(1);
-
     if ( !isComplex(x) ) {
 
       if ( x < 0n ) return { re: ln( -x ), im: getConstant( 'pi' ) };
@@ -2847,14 +2843,13 @@ function ln( x ) {
 
     var t2 = arbitraryTheta2(x);
     var t3 = arbitraryTheta3(x);
-    var Pi = getConstant( 'pi' );
 
-    var result = div( Pi, mul( arbitrary(4), arbitraryAGM( mul(t2,t2), mul(t3,t3) ) ) );
+    var result = div( onePi, mul( arbitrary(4), arbitraryAGM( mul(t2,t2), mul(t3,t3) ) ) );
 
     // adjust imaginary part
     if ( x.re < 0n ) {
-      if ( result.im > 0n ) result.im -= Pi;
-      else result.im += Pi;
+      if ( result.im > 0n ) result.im -= onePi;
+      else result.im += onePi;
     }
 
     return result;

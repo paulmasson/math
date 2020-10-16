@@ -339,7 +339,7 @@ function expIntegralEi( x, tolerance=1e-10 ) {
 
       var s = arbitrary( complex(0) );
       var p = arbitrary( complex(1) );
-      var i = arbitrary( 1 ), arb1 = i;
+      var i = arb1;
 
       while ( div(p.re,i) !== 0n || div(p.im,i) !== 0n ) {
         p = div( mul(p,y), i );
