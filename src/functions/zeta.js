@@ -126,32 +126,46 @@ function hurwitzZeta( x, a, tolerance=1e-10 ) {
       return add( hurwitzZeta(x,add(a,m)), summation( i => pow( add(a,i), neg(x) ), [0,m-1] ) );
     }
 
-    // Euler-Maclaurin has differences of large values in left-hand plane
-    // but different summation (dlmf.nist.gov/25.11.9) does not converge for complex a
-    // to be improved...
-
-    var switchForms = -5;
-
-    if ( x.re < switchForms ) throw Error( 'Currently unsuppported complex Hurwitz zeta' );
-/*
-      x = sub( 1, x );
-      var t = cos( sub( mul(pi/2,x), mul(2*pi,a) ) );
-      var s = t;
-      var i = 1;
-
-      while ( Math.abs(t.re) > tolerance || Math.abs(t.im) > tolerance ) {
-        i++;
-        t = div( cos( sub( mul(pi/2,x), mul(2*i*pi,a) ) ), pow(i,x) );
-        s = add( s, t );
-      }
-
-      return mul( 2, gamma(x), pow(2*pi,neg(x)), s );
-
-    }
-*/
     // Johansson arxiv.org/abs/1309.2877
 
     var n = 15; // recommendation of Vepstas, Efficient Algorithm, p.12
+
+    // Euler-Maclaurin has differences of large values in left-hand plane
+    var useArbitrary = x.re < 0;
+
+    if ( useArbitrary ) {
+
+      setPrecisionScale( 20 - Math.round(x.re) );
+
+      x = arbitrary(x), a = arbitrary(a), arbN = arbitrary(n), arb3 = arbitrary(3);
+
+      var S = 0n;
+      for ( var i = 0 ; i < n ; i++ )
+        S = add( S, pow( div( add(a,arbN), add(a,arbitrary(i)) ), x ) );
+
+      var I = div( add(a,arbN), sub(x,arb1) );
+
+      var p = div( mul( arb1/2n, x ), add(a,arbN) );
+      var b = div( arbitrary(bernoulli2nN[1]), arbitrary(bernoulli2nD[1]) );
+      var t = mul( b, p );
+      var i = arb2;
+      var j = 2;
+
+      while ( p.re !== 0n || p.im !== 0n ) {
+        if ( j === bernoulli2nN.length ) break;
+        p = div( mul( p, add( x, 2n*i - arb2 ), add( x, 2n*i - arb3 ) ),
+                 mul( 2n*i, 2n*i - arb1, add(a,arbN), add(a,arbN) ) );
+        b = div( arbitrary(bernoulli2nN[j]), arbitrary(bernoulli2nD[j]) );
+        t = add( t, mul( b, p ) );
+        i += arb1;
+        j++;
+      }
+
+      var T = add( arb1/2n, t );
+
+      return arbitrary( mul( add( S, I, T ), pow( add(a,arbN), mul(-arb1,x) ) ) );
+
+    }
 
     var S = summation( i => pow( add(a,i), neg(x) ), [0,n-1] );
 
@@ -159,13 +173,14 @@ function hurwitzZeta( x, a, tolerance=1e-10 ) {
 
     var p = mul( .5, x, inv(add(a,n)) );
     var t = mul( bernoulli(2), p );
-    var i = 1;
+    var i = 2;
 
     // converges rather quickly
     while ( Math.abs(p.re) > tolerance || Math.abs(p.im) > tolerance ) {
-      i++;
-      p = mul ( p, add( x, 2*i - 2 ), add( x, 2*i - 3 ), inv( mul( 2*i * (2*i-1), pow( add(a,n), 2 ) ) ) );
+      p = div( mul( p, add( x, 2*i - 2 ), add( x, 2*i - 3 ) ),
+               mul( 2*i * (2*i-1), add(a,n), add(a,n) ) );
       t = add( t, mul( bernoulli(2*i), p ) );
+      i++;
     }
 
     var T = div( add( .5, t ), pow( add(a,n), x ) );
@@ -218,13 +233,13 @@ function hurwitzZeta( x, a, tolerance=1e-10 ) {
 
     var p = x / 2 / (a+n);
     var t = bernoulli(2) * p;
-    var i = 1;
+    var i = 2;
 
     // converges rather quickly
     while ( Math.abs(p) > tolerance ) {
-      i++;
       p *= ( x + 2*i - 2 ) * ( x + 2*i - 3 ) / ( 2*i * (2*i-1) * (a+n)**2 );
       t += bernoulli(2*i) * p;
+      i++;
     }
 
     var T = ( .5 + t ) / (a+n)**x;
