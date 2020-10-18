@@ -204,20 +204,17 @@ function betaRegularized( x, y, z, w ) {
 
 function polygamma( n, x ) {
 
-  if ( arguments.length === 1 ) {
-    x = n;
-    n = 0;
-  }
+  if ( arguments.length === 1 ) return digamma(x);
 
-  // numerical differentiation not accurate enough for large indices
-  console.log( 'Not yet implemented' );
+  if ( !isPositiveInteger(n) ) throw Error( 'Unsupported polygamma index' );
+
+  return mul( (-1)**(n+1) * factorial(n), hurwitzZeta( n+1, x ) );
 
 }
 
 
 function digamma( x ) {
 
-  // return polygamma(x) in future
   return diff( x => logGamma(x), x );
 
 }
