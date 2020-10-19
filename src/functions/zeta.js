@@ -146,7 +146,7 @@ function hurwitzZeta( x, a, tolerance=1e-10 ) {
       var I = div( add(a,arbN), sub(x,arb1) );
 
       var p = div( mul( arb1/2n, x ), add(a,arbN) );
-      var b = div( arbitrary(bernoulli2nN[1]), arbitrary(bernoulli2nD[1]) );
+      var b = div( bernoulli2nN[1], bernoulli2nD[1] );
       var t = mul( b, p );
       var i = arb2;
       var j = 2;
@@ -155,7 +155,7 @@ function hurwitzZeta( x, a, tolerance=1e-10 ) {
         if ( j === bernoulli2nN.length ) break;
         p = div( mul( p, add( x, 2n*i - arb2 ), add( x, 2n*i - arb3 ) ),
                  mul( 2n*i, 2n*i - arb1, add(a,arbN), add(a,arbN) ) );
-        b = div( arbitrary(bernoulli2nN[j]), arbitrary(bernoulli2nD[j]) );
+        b = div( bernoulli2nN[j], bernoulli2nD[j] );
         t = add( t, mul( b, p ) );
         i += arb1;
         j++;
