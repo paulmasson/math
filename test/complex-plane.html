@@ -128,12 +128,14 @@ function update() {
     if ( pre.length > 0 ) pre += ',';
     if ( post.length > 0 ) post = ',' + post;
 
+    try { JSON.parse( data[0] ); }
+    catch(e) { alert( 'The selected file is not currently being served by GitHub' ); }
+
     data.forEach( p => {
 
       if ( p.includes( 'inf' ) ) return;
 
-      try { p = JSON.parse(p); }
-      catch(e) { alert( 'The selected file is not currently being served by GitHub' ); }
+      p = JSON.parse(p);
 
       var z = Function( `return ${f}( ${pre} complex(${p[0]},${p[1]}) ${post} )` )();
 
