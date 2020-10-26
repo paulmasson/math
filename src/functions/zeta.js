@@ -113,13 +113,9 @@ function hurwitzZeta( x, a, tolerance=1e-10 ) {
 
     if ( x.re === 1 && x.im === 0 ) throw Error( 'Hurwitz zeta pole' );
 
-    // dlmf.nist.gov/25.11.4
+    if ( isNegativeIntegerOrZero(a) ) throw Error( 'Hurwitz zeta parameter pole' );
 
-    if ( a.re > 1 ) {
-      var m = Math.floor(a.re);
-      a = sub( a, m );
-      return sub( hurwitzZeta(x,a), summation( i => pow( add(a,i), neg(x) ), [0,m-1] ) );
-    }
+    // direct summation more accurate than dlmf.nist.gov/25.11.4 for positive a
 
     if ( a.re < 0 ) {
       var m = -Math.floor(a.re);
@@ -191,15 +187,11 @@ function hurwitzZeta( x, a, tolerance=1e-10 ) {
 
     if ( x === 1 ) throw Error( 'Hurwitz zeta pole' );
 
-    // dlmf.nist.gov/25.11.4
-
-    if ( a > 1 ) {
-      var m = Math.floor(a);
-      a -= m;
-      return hurwitzZeta(x,a) - summation( i => 1 / (a+i)**x, [0,m-1] );
-    }
+    if ( isNegativeIntegerOrZero(a) ) throw Error( 'Hurwitz zeta parameter pole' );
 
     if ( a < 0 ) return hurwitzZeta( x, complex(a) );
+
+    // direct summation more accurate than dlmf.nist.gov/25.11.4
 
     // Euler-Maclaurin has differences of large values in left-hand plane
     // switch to different summation: dlmf.nist.gov/25.11.9
