@@ -42,9 +42,8 @@ function zeta( x, tolerance=1e-10 ) {
 
   var n = 14; // from error bound for tolerance
 
-  // Borwein p.3 simplified
   if ( isComplex(x) && x.im !== 0 )
-    n = Math.max( n, Math.ceil( log( 2 / abs(gamma(x)) / tolerance ) / 1.5 ) );
+    n = Math.max( n, Math.ceil( log( 2 / abs(gamma(x)) / tolerance ) / log( 3 + sqrt(8) ) ) );
 
   var d = [ 1 ];
   for ( var i = 1 ; i <= n ; i++ )
