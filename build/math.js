@@ -3744,6 +3744,57 @@ function hurwitzZeta( x, a, tolerance=1e-10 ) {
 }
 
 
+function polylog( n, x, tolerance=1e-10 ) {
+
+  if ( abs(x) >= 1 ) {
+
+    // simple first fix at positive integers
+    if ( isPositiveInteger(n) ) return complexAverage( n => polylog(n,x), n );
+
+    var v = sub(1,n);
+    var I = complex(0,1);
+    var L = div( log(neg(x)), complex(0,2*pi) );
+
+    var z1 = mul( pow(I,v), hurwitzZeta( v, add(.5,L) ) );
+    var z2 = mul( pow(I,neg(v)), hurwitzZeta( v, sub(.5,L) ) );
+
+    return mul( gamma(v), pow(2*pi,neg(v)), add(z1,z2) )
+
+  }
+
+  if ( isComplex(n) || isComplex(x) ) {
+
+    var s = x;
+    var p = complex(1);
+    var i = 2;
+
+    while ( Math.abs(p.re) > tolerance || Math.abs(p.im) > tolerance ) {
+      p = div( pow(x,i), pow(i,n) );
+      s = add( s, p );
+      i++;
+    }
+
+    return s;
+
+  } else {
+
+    var s = x;
+    var p = 1;
+    var i = 2;
+
+    while ( Math.abs(p) > tolerance ) {
+      p = x**i / i**n;
+      s += p;
+      i++;
+    }
+
+    return s;
+
+  }
+
+}
+
+
 function ode( f, y, [x0,x1], step=.001, method='runge-kutta' ) {
 
   if ( x1 < x0 ) {
