@@ -3746,9 +3746,18 @@ function hurwitzZeta( x, a, tolerance=1e-10 ) {
 
 function polylog( n, x, tolerance=1e-10 ) {
 
+  if ( isEqualTo(x,1) ) return zeta(n);
+
+  if ( isEqualTo(x,-1) ) return neg( dirichletEta(n) );
+
+  if ( isEqualTo(n,1) ) return neg( log( sub(1,x) ) );
+
+  if ( isEqualTo(n,0) ) return div( x, sub(1,x) );
+
+  if ( isEqualTo(n,-1) ) return div( x, mul( sub(1,x), sub(1,x) ) );
+
   if ( abs(x) >= 1 ) {
 
-    // simple first fix at positive integers
     if ( isPositiveInteger(n) ) return complexAverage( n => polylog(n,x), n );
 
     var v = sub(1,n);
