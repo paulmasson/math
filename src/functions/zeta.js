@@ -1,6 +1,8 @@
 
 function zeta( x, tolerance=1e-10 ) {
 
+  if ( isEqualTo(x,1) ) throw Error( 'Riemann zeta pole' );
+
   // direct summation fast in right-hand plane
   var directSummation = 5;
 
@@ -105,12 +107,12 @@ function harmonic( n ) {
 
 function hurwitzZeta( x, a, tolerance=1e-10 ) {
 
+  if ( isEqualTo(x,1) ) throw Error( 'Hurwitz zeta pole' );
+
   if ( isComplex(x) || isComplex(a) ) {
 
     if ( !isComplex(x) ) x = complex(x);
     if ( !isComplex(a) ) a = complex(a);
-
-    if ( x.re === 1 && x.im === 0 ) throw Error( 'Hurwitz zeta pole' );
 
     if ( isNegativeIntegerOrZero(a) ) throw Error( 'Hurwitz zeta parameter pole' );
 
@@ -183,8 +185,6 @@ function hurwitzZeta( x, a, tolerance=1e-10 ) {
     return add( S, I, T );
 
   } else {
-
-    if ( x === 1 ) throw Error( 'Hurwitz zeta pole' );
 
     if ( isNegativeIntegerOrZero(a) ) throw Error( 'Hurwitz zeta parameter pole' );
 
