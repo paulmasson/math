@@ -3580,11 +3580,13 @@ function zeta( x, tolerance=1e-10 ) {
 function dirichletEta( x ) { return mul( zeta(x), sub( 1, pow( 2, sub(1,x) ) ) ); }
 
 
-function bernoulli( n ) {
+function bernoulli( n, x ) {
 
-  if ( !Number.isInteger(n) ) throw Error( 'Noninteger argument for Bernoulli number' );
+  if ( !Number.isInteger(n) ) throw Error( 'Noninteger index for Bernoulli number' );
 
-  if ( n < 0 ) throw Error( 'Unsupported argument for Bernoulli number' );
+  if ( n < 0 ) throw Error( 'Unsupported index for Bernoulli number' );
+
+  if ( arguments.length > 1 && !isZero(x) ) return mul( -n, hurwitzZeta(1-n,x) );
 
   if ( n === 0 ) return 1;
 
@@ -3592,13 +3594,13 @@ function bernoulli( n ) {
 
   if ( n & 1 ) return 0;
 
-  return (-1)**(n+1) * n * zeta(-n+1);
+  return -n * zeta(1-n);
 
 }
 
 function harmonic( n ) {
 
-  if ( !Number.isInteger(n) ) throw Error( 'Noninteger argument for harmonic number' );
+  if ( !Number.isInteger(n) ) throw Error( 'Noninteger index for harmonic number' );
 
   if ( n > 1e3 ) return log(n) + eulerGamma + 1/2/n - 1/12/n**2;
 
