@@ -3760,11 +3760,27 @@ function polylog( n, x, tolerance=1e-10 ) {
 
   if ( abs(x) >= 1 ) {
 
-    if ( isPositiveInteger(n) ) return complexAverage( n => polylog(n,x), n );
+    var twoPiI = complex(0,2*pi);
+
+    if ( isPositiveInteger(n) ) {
+
+      // Crandall, Note on Fast Polylogarithm Computation
+
+      var t1 = mul( (-1)**n, polylog( n, inv(x) ) );
+
+      var t2 = mul( div( pow(twoPiI,n), factorial(n) ), bernoulli( n, div(log(x),twoPiI) ) );
+
+      var y = isComplex(x) ? x : complex(x); // just for test
+      var t3 = y.im < 0 || ( y.im === 0 && y.re >= 1 ) ?
+               mul( twoPiI, div( pow(log(x),n-1), factorial(n-1) ) ) : 0;      
+
+      return neg( add( t1, t2, t3 ) );
+
+    }
 
     var v = sub(1,n);
     var I = complex(0,1);
-    var L = div( log(neg(x)), complex(0,2*pi) );
+    var L = div( log(neg(x)), twoPiI );
 
     var z1 = mul( pow(I,v), hurwitzZeta( v, add(.5,L) ) );
     var z2 = mul( pow(I,neg(v)), hurwitzZeta( v, sub(.5,L) ) );
