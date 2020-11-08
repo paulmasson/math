@@ -25,9 +25,9 @@
 <p>This web page indicates how well functions evaluated with Math compare with the equivalent computation in <a href="http://mpmath.org">mpmath</a>. Select a function and part and the test results will appear below.</p>
 
 <div style="text-align: center">
-Function: &nbsp; <select id="selection" onchange="update()"></select>
+Function: &nbsp; <select id="selection" onchange="calculate()"></select>
 <div style="display: inline-block; width: .5in"></div>
-Part: &nbsp; <select id="part" onchange="update()">
+Part: &nbsp; <select id="part" onchange="updatePart()">
   <option value="re">Real</option><option value="im">Imaginary</option></select>
 </div><br>
 
@@ -70,7 +70,7 @@ container.appendChild( canvas );
 var size = 2.5;
 var imageData = context.createImageData( size, size );
 
-var dataRange = 50;
+var dataRange = 50, dataAll;
 
 function drawPoint( r, g, b, x, y ) {
 
@@ -88,10 +88,11 @@ function drawPoint( r, g, b, x, y ) {
 
 }
 
-function update() {
+function calculate() {
 
   context.fillRect( 0, 0, canvas.width, canvas.height );
   errors.innerHTML = '';
+  dataAll = [];
 
   var xhr = new XMLHttpRequest();
   xhr.responseType = 'text';
@@ -139,13 +140,35 @@ function update() {
 
       var z = Function( `return ${f}( ${pre} complex(${p[0]},${p[1]}) ${post} )` )();
 
+      p.push( z.re, z.im );
+      dataAll.push( p );
+
+    } );
+
+    updatePart();
+
+  }
+
+  setTimeout( function() { xhr.send(); }, 10 );
+
+}
+
+function updatePart() {
+
+  context.fillRect( 0, 0, canvas.width, canvas.height );
+  errors.innerHTML = '';
+
+  function update() {
+
+    dataAll.forEach( p => {
+
       var r = 0, g = 255, b = 0, test, standard;
 
       if ( part.value === 're' ) {
-        test = z.re.toExponential(9);
+        test = p[4].toExponential(9);
         standard = p[2].toExponential(9);
       } else {
-        test = z.im.toExponential(9);
+        test = p[5].toExponential(9);
         standard = p[3].toExponential(9);
       }
 
@@ -171,7 +194,7 @@ function update() {
 
   }
 
-  setTimeout( function() { xhr.send(); }, 10 );
+  setTimeout( function() { update(); }, 10 );
 
 }
 
