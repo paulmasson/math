@@ -3774,7 +3774,12 @@ function polylog( n, x, tolerance=1e-10 ) {
       var t3 = y.im < 0 || ( y.im === 0 && y.re >= 1 ) ?
                mul( twoPiI, div( pow(log(x),n-1), factorial(n-1) ) ) : 0;      
 
-      return neg( add( t1, t2, t3 ) );
+      var result = neg( add( t1, t2, t3 ) );
+
+      // real on negative real axis
+      if ( !isComplex(x) && x < 0 ) return result.re;
+
+      return result;
 
     }
 
