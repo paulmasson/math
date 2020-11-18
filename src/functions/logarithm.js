@@ -188,29 +188,35 @@ function lambertW( k, x, tolerance=1e-10 ) {
     k = 0;
   }
 
-  if ( Math.abs( x + Math.exp(-1) ) < tolerance ) return -1;
+  // restrict to real integers for convenience
+  if ( !Number.isInteger(k) ) throw Error( 'Unsupported Lambert W index' );
 
-  // inversion by root finding
+  if ( isZero(x) )
+    if ( k === 0 ) return x;
+    else throw Error( 'Lambert W pole' );
 
-  switch ( k ) {
+  var expMinusOne = Math.exp(-1);
 
-    case 0:
+  if ( abs( add( x, expMinusOne ) ) < tolerance*tolerance && ( k === 0 || k === -1 ) )
+    if ( isComplex(x) ) return complex(-1);
+    else return -1;
 
-      if ( x < -Math.exp(-1) ) throw Error( 'Unsupported lambertW argument' );
+  // inversion by complex root finding
 
-      return findRoot( w => w * Math.exp(w) - x, [-1,1000], { tolerance: tolerance } );
-
-    case -1:
-
-      if ( x < -Math.exp(-1) || x > 0 ) throw Error( 'Unsupported lambertW argument' );
-
-      return findRoot( w => w * Math.exp(w) - x, [-1000,-1], { tolerance: tolerance } );
-
-    default:
-
-      throw Error( 'Unsupported lambertW index' );
-
+  if ( abs(x) <= 1 && k === 0 ) var start = complex(0);
+  else {
+    var L = add( log(x), complex(0,2*pi*k) );
+    var start = add( L, neg(log(L)) );
   }
+
+  var result = findRoot( w => sub( mul(w,exp(w)), x ), start, { tolerance: tolerance } );
+
+  if ( !isComplex(x) ) {
+    if ( x > -expMinusOne && k === 0 ) return result.re;
+    if ( x > -expMinusOne && x < 0 && k === -1 ) return result.re;
+  }
+
+  return result;
 
 }
 
