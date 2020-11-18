@@ -201,6 +201,15 @@ function lambertW( k, x, tolerance=1e-10 ) {
     if ( isComplex(x) ) return complex(-1);
     else return -1;
 
+  // handle real cases separately
+
+  if ( !isComplex(x) ) {
+    if ( x > -expMinusOne && k === 0 )
+      return findRoot( w => w * Math.exp(w) - x, [-1,1000], { tolerance: tolerance } );
+    if ( x > -expMinusOne && x < 0 && k === -1 )
+      return findRoot( w => w * Math.exp(w) - x, [-1000,-1], { tolerance: tolerance } );
+  }
+
   // inversion by complex root finding
 
   if ( abs(x) <= 1 && k === 0 ) var start = complex(0);
@@ -209,14 +218,7 @@ function lambertW( k, x, tolerance=1e-10 ) {
     var start = add( L, neg(log(L)) );
   }
 
-  var result = findRoot( w => sub( mul(w,exp(w)), x ), start, { tolerance: tolerance } );
-
-  if ( !isComplex(x) ) {
-    if ( x > -expMinusOne && k === 0 ) return result.re;
-    if ( x > -expMinusOne && x < 0 && k === -1 ) return result.re;
-  }
-
-  return result;
+  return findRoot( w => sub( mul(w,exp(w)), x ), start, { tolerance: tolerance } );
 
 }
 
