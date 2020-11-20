@@ -2908,15 +2908,22 @@ function lambertW( k, x, tolerance=1e-10 ) {
       return findRoot( w => w * Math.exp(w) - x, [-1000,-1], { tolerance: tolerance } );
   }
 
-  // inversion by complex root finding
+  // inversion by complex root finding with custom Newton's method
+  var maxIter = 100;
 
-  if ( k === 0 && abs(x) <= 1 ) var start = complex(0);
+  if ( k === 0 && abs(x) <= 1.5 ) var w = complex(0);
   else {
     var L = add( log(x), complex(0,2*pi*k) );
-    var start = add( L, neg(log(L)) );
+    var w = add( L, neg(log(L)) );
   }
 
-  return findRoot( w => sub( mul(w,exp(w)), x ), start, { tolerance: tolerance } );
+  for ( var i = 0; i < maxIter ; i++ ) {
+     var delta = div( sub( mul(w,exp(w)), x ), mul( exp(w), add(w,1) ) );
+     w = sub( w, delta );
+     if ( abs(delta) < tolerance ) return w;
+  }
+
+  throw Error( 'No Lambert W root found for tolerance ' + tolerance );
 
 }
 
