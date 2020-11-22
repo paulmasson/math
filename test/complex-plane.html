@@ -83,8 +83,8 @@ function drawPoint( r, g, b, x, y ) {
 
   }
 
-  context.putImageData( imageData, canvas.width/2 * ( x / dataRange + 1 ),
-                                   canvas.height/2 * ( 1 - y / dataRange ) );
+  context.putImageData( imageData, ( canvas.width - size ) / 2 * ( x / dataRange + 1 ),
+                                   ( canvas.height - size ) / 2 * ( 1 - y / dataRange ) );
 
 }
 
