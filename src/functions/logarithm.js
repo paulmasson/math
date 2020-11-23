@@ -213,7 +213,9 @@ function lambertW( k, x, tolerance=1e-10 ) {
   // inversion by complex root finding with custom Newton's method
   var maxIter = 100;
 
-  if ( k === 0 && abs(x) <= 1.5 ) var w = complex(0);
+  if ( k === 0 && abs(x) <= 1.25 )
+    // based on test page: unstable region jumps between sheets
+    var w = x.re < .5 ? complex( 0, .5*Math.sign(x.im) ) : complex(0);
   else {
     var L = add( log(x), complex(0,2*pi*k) );
     var w = add( L, neg(log(L)) );
@@ -225,7 +227,7 @@ function lambertW( k, x, tolerance=1e-10 ) {
      if ( abs(delta) < tolerance ) return w;
   }
 
-  throw Error( 'No Lambert W root found for tolerance ' + tolerance );
+  throw Error( 'No Lambert W root found' );
 
 }
 
