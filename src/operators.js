@@ -343,8 +343,9 @@ function sqrt( x ) {
     }
 
     var c = Math.hypot( x.re, x.im );
+    var sign = x.im === 0 ? 1 : Math.sign(x.im);
 
-    return { re: Math.sqrt( (c + x.re)/2 ), im: Math.sign(x.im) * Math.sqrt( (c - x.re)/2 ) };
+    return { re: Math.sqrt( (c + x.re)/2 ), im: sign * Math.sqrt( (c - x.re)/2 ) };
 
   }
 
@@ -368,7 +369,7 @@ function sqrt( x ) {
 
   }
 
-  if ( x < 0 ) return sqrt( complex(x) );
+  if ( x < 0 ) return { re: 0, im: Math.sqrt(-x) };
 
   return Math.sqrt(x);
 
