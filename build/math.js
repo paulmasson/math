@@ -2929,7 +2929,7 @@ function lambertW( k, x, tolerance=1e-10 ) {
      if ( abs(delta) < tolerance ) return w;
   }
 
-  throw Error( 'No Lambert W root found' );
+  throw Error( 'No Lambert W root found at ' + JSON.stringify(x) );
 
 }
 
