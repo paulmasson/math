@@ -2899,22 +2899,25 @@ function lambertW( k, x, tolerance=1e-10 ) {
     if ( isComplex(x) ) return complex(-1);
     else return -1;
 
-  // handle real cases separately
+  // handle real cases separately, complex otherwise
 
   if ( !isComplex(x) ) {
     if ( k === 0 && x > -expMinusOne )
       return findRoot( w => w * Math.exp(w) - x, [-1,1000], { tolerance: tolerance } );
     if ( k === -1 && x > -expMinusOne && x < 0 )
       return findRoot( w => w * Math.exp(w) - x, [-1000,-1], { tolerance: tolerance } );
+    x = complex(x);
   }
 
   // inversion by complex root finding with custom Newton's method
   var maxIter = 100;
 
-  if ( k === 0 && abs(x) <= 1.25 )
+  if ( k === 0 && abs(x) < 1.25 ) {
+    // unstable along branch cut, add small complex part to avoid error
+    if ( x.im === 0 &&  x.re < -expMinusOne ) x.im = tolerance;
     // based on test page: unstable region jumps between sheets
     var w = x.re < .5 ? complex( 0, .5*Math.sign(x.im) ) : complex(0);
-  else {
+  } else {
     var L = add( log(x), complex(0,2*pi*k) );
     var w = add( L, neg(log(L)) );
   }
