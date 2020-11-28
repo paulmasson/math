@@ -2933,6 +2933,8 @@ function lambertW( k, x, tolerance=1e-10 ) {
 
 }
 
+function inverseLambertW( x ) { return mul( x, exp(x) ); }
+
 
 function chop( x, tolerance=1e-10 ) {
 
