@@ -2920,7 +2920,7 @@ function lambertW( k, x, tolerance=1e-10 ) {
     var w = x.re < .5 ? complex( 0, .5*Math.sign(x.im) ) : complex(0);
   } else {
     var L = add( log(x), complex(0,2*pi*k) );
-    var w = add( L, neg(log(L)) );
+    var w = sub( L, log(L) );
   }
 
   for ( var i = 0; i < maxIter ; i++ ) {
