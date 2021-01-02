@@ -2944,7 +2944,7 @@ function chop( x, tolerance=1e-10 ) {
     return v;
   }
 
-  if ( isComplex(x) ) return complex( chop(x.re), chop(x.im) );
+  if ( isComplex(x) ) return { re: chop(x.re), im: chop(x.im) };
 
   if ( Math.abs(x) < tolerance ) x = 0;
 
@@ -2952,12 +2952,34 @@ function chop( x, tolerance=1e-10 ) {
 
 }
 
+function round( x, y ) {
 
-function kronecker( i, j ) {
+  if ( arguments.length === 2 ) return mul( y, round( div(x,y) ) );
 
-  return i === j ? 1 : 0;
+  if ( isComplex(x) ) return { re: Math.round(x.re), im: Math.round(x.im) };
+
+  return Math.round(x);
 
 }
+
+function ceiling( x ) {
+
+  if ( isComplex(x) ) return { re: Math.ceil(x.re), im: Math.ceil(x.im) };
+
+  return Math.ceil(x);
+
+}
+
+function floor( x ) {
+
+  if ( isComplex(x) ) return { re: Math.floor(x.re), im: Math.floor(x.im) };
+
+  return Math.floor(x);
+
+}
+
+
+function kronecker( i, j ) { return i === j ? 1 : 0; }
 
 
 function piecewise() {
