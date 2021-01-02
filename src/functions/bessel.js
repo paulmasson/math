@@ -132,7 +132,7 @@ function besselK( n, x ) {
 
     }
 
-    // based on dlmf.nist.gov/10.2.3
+    // dlmf.nist.gov/10.27.5
     if ( isInteger(n) )
       return mul( pow(-1,add(n,1)), .5,
                   add( diff( n => besselI(n,x), n ), diff( n => besselI(n,x), neg(n) ) ) );
@@ -147,7 +147,7 @@ function besselK( n, x ) {
 
   if ( x < 0 ) return besselK( n, complex(x) );
 
-  // based on dlmf.nist.gov/10.2.3
+  // dlmf.nist.gov/10.27.5
   if ( Number.isInteger(n) )
     return (-1)**(n+1)/2 * ( diff( n => besselI(n,x), n ) + diff( n => besselI(n,x), -n ) );
 
