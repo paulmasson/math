@@ -587,7 +587,7 @@ function besselK( n, x ) {
 
     // based on dlmf.nist.gov/10.2.3
     if ( isInteger(n) )
-      return mul( pow(-1,add(n,1)), 1/2,
+      return mul( pow(-1,add(n,1)), .5,
                   add( diff( n => besselI(n,x), n ), diff( n => besselI(n,x), neg(n) ) ) );
 
     var product = div( pi/2, sin( mul(n,pi) ) );
@@ -754,13 +754,13 @@ function airyBiPrime( x ) {
 
 function sphericalBesselJ( n, x ) {
 
-  return mul( div( sqrt(pi/2), sqrt(x) ), besselJ( add( n, 1/2 ), x ) );
+  return mul( div( sqrt(pi/2), sqrt(x) ), besselJ( add( n, .5 ), x ) );
 
 }
 
 function sphericalBesselY( n, x ) {
 
-  return mul( div( sqrt(pi/2), sqrt(x) ), besselY( add( n, 1/2 ), x ) );
+  return mul( div( sqrt(pi/2), sqrt(x) ), besselY( add( n, .5 ), x ) );
 
 }
 
@@ -2162,7 +2162,7 @@ function hypergeometric0F1( a, x, tolerance=1e-10 ) {
 
       // transform variables for convenience
       var b = sub( mul(2,a), 1 );
-      a = sub( a, 1/2 );
+      a = sub( a, .5 );
       x = mul( 4, sqrt(x) );
 
       // copied from hypergeometric1F1
@@ -2557,7 +2557,7 @@ function hypergeometric1F2( a, b, c, x ) {
 
     if ( abs(x) > useAsymptotic ) {
 
-      var p = div( add( a, neg(b), neg(c), 1/2 ), 2 );
+      var p = div( add( a, neg(b), neg(c), .5 ), 2 );
 
       var ck = [ 1, add( mul( add(mul(3,a),b,c,-2), sub(a,add(b,c)), 1/2 ), mul(2,b,c), -3/8 ),
 
@@ -3035,8 +3035,8 @@ function hermite( n, x ) {
     var a = div( n, -2 );
     var b = div( sub(1,n), 2 );
 
-    var s = sub( div( hypergeometric1F1( a, 1/2, pow(x,2) ), gamma( b ) ),
-                 mul( 2, x, div( hypergeometric1F1( b, 3/2, pow(x,2) ), gamma( a ) ) ) );
+    var s = sub( div( hypergeometric1F1( a, .5, pow(x,2) ), gamma( b ) ),
+                 mul( 2, x, div( hypergeometric1F1( b, 1.5, pow(x,2) ), gamma( a ) ) ) );
 
     return mul( pow(2,n), sqrt(pi), s );
 
@@ -3044,8 +3044,8 @@ function hermite( n, x ) {
 
   if ( Number.isInteger(n) && n >= 0 ) return polynomial( x, coefficients(n) );
 
-  var s = hypergeometric1F1( -n/2, 1/2, x**2 ) / gamma( (1-n)/2 )
-          - 2 * x * hypergeometric1F1( (1-n)/2, 3/2, x**2 ) / gamma( -n/2 );
+  var s = hypergeometric1F1( -n/2, .5, x**2 ) / gamma( (1-n)/2 )
+          - 2 * x * hypergeometric1F1( (1-n)/2, 1.5, x**2 ) / gamma( -n/2 );
 
   return 2**n * sqrt(pi) * s;
 
@@ -3330,7 +3330,7 @@ function arctan( x ) {
 
     var s = sub( log( sub( 1, mul( complex(0,1), x ) ) ),
                  log( add( 1, mul( complex(0,1), x ) ) ) );
-    return mul( complex(0,1/2), s );
+    return mul( complex(0,.5), s );
 
   }
 
@@ -3465,7 +3465,7 @@ function arctanh( x ) {
   if ( isComplex(x) ) {
 
     var s = sub( log( add( 1, x ) ), log( sub( 1, x ) ) );
-    return mul( 1/2, s );
+    return mul( .5, s );
 
   }
 
