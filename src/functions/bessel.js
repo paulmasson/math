@@ -134,7 +134,7 @@ function besselK( n, x ) {
 
     // based on dlmf.nist.gov/10.2.3
     if ( isInteger(n) )
-      return mul( pow(-1,add(n,1)), 1/2,
+      return mul( pow(-1,add(n,1)), .5,
                   add( diff( n => besselI(n,x), n ), diff( n => besselI(n,x), neg(n) ) ) );
 
     var product = div( pi/2, sin( mul(n,pi) ) );
@@ -301,13 +301,13 @@ function airyBiPrime( x ) {
 
 function sphericalBesselJ( n, x ) {
 
-  return mul( div( sqrt(pi/2), sqrt(x) ), besselJ( add( n, 1/2 ), x ) );
+  return mul( div( sqrt(pi/2), sqrt(x) ), besselJ( add( n, .5 ), x ) );
 
 }
 
 function sphericalBesselY( n, x ) {
 
-  return mul( div( sqrt(pi/2), sqrt(x) ), besselY( add( n, 1/2 ), x ) );
+  return mul( div( sqrt(pi/2), sqrt(x) ), besselY( add( n, .5 ), x ) );
 
 }
 

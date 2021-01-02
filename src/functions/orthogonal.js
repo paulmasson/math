@@ -34,8 +34,8 @@ function hermite( n, x ) {
     var a = div( n, -2 );
     var b = div( sub(1,n), 2 );
 
-    var s = sub( div( hypergeometric1F1( a, 1/2, pow(x,2) ), gamma( b ) ),
-                 mul( 2, x, div( hypergeometric1F1( b, 3/2, pow(x,2) ), gamma( a ) ) ) );
+    var s = sub( div( hypergeometric1F1( a, .5, pow(x,2) ), gamma( b ) ),
+                 mul( 2, x, div( hypergeometric1F1( b, 1.5, pow(x,2) ), gamma( a ) ) ) );
 
     return mul( pow(2,n), sqrt(pi), s );
 
@@ -43,8 +43,8 @@ function hermite( n, x ) {
 
   if ( Number.isInteger(n) && n >= 0 ) return polynomial( x, coefficients(n) );
 
-  var s = hypergeometric1F1( -n/2, 1/2, x**2 ) / gamma( (1-n)/2 )
-          - 2 * x * hypergeometric1F1( (1-n)/2, 3/2, x**2 ) / gamma( -n/2 );
+  var s = hypergeometric1F1( -n/2, .5, x**2 ) / gamma( (1-n)/2 )
+          - 2 * x * hypergeometric1F1( (1-n)/2, 1.5, x**2 ) / gamma( -n/2 );
 
   return 2**n * sqrt(pi) * s;
 

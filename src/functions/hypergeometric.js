@@ -12,7 +12,7 @@ function hypergeometric0F1( a, x, tolerance=1e-10 ) {
 
       // transform variables for convenience
       var b = sub( mul(2,a), 1 );
-      a = sub( a, 1/2 );
+      a = sub( a, .5 );
       x = mul( 4, sqrt(x) );
 
       // copied from hypergeometric1F1
@@ -407,7 +407,7 @@ function hypergeometric1F2( a, b, c, x ) {
 
     if ( abs(x) > useAsymptotic ) {
 
-      var p = div( add( a, neg(b), neg(c), 1/2 ), 2 );
+      var p = div( add( a, neg(b), neg(c), .5 ), 2 );
 
       var ck = [ 1, add( mul( add(mul(3,a),b,c,-2), sub(a,add(b,c)), 1/2 ), mul(2,b,c), -3/8 ),
 

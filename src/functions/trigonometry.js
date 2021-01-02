@@ -148,7 +148,7 @@ function arctan( x ) {
 
     var s = sub( log( sub( 1, mul( complex(0,1), x ) ) ),
                  log( add( 1, mul( complex(0,1), x ) ) ) );
-    return mul( complex(0,1/2), s );
+    return mul( complex(0,.5), s );
 
   }
 
@@ -283,7 +283,7 @@ function arctanh( x ) {
   if ( isComplex(x) ) {
 
     var s = sub( log( add( 1, x ) ), log( sub( 1, x ) ) );
-    return mul( 1/2, s );
+    return mul( .5, s );
 
   }
 
