@@ -41,6 +41,16 @@ function floor( x ) {
 
 }
 
+function sign( x ) {
+
+  if ( isZero(x) )
+    if ( isComplex(x) ) return complex(0);
+    else return 0;
+
+  return div( x, abs(x) );
+
+}
+
 
 function kronecker( i, j ) {
 
