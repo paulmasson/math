@@ -51,6 +51,16 @@ function sign( x ) {
 
 }
 
+function integerPart( x ) {
+
+  if ( isComplex(x) ) return complex( Math.trunc(x.re), Math.trunc(x.im) );
+
+  return Math.trunc(x);
+
+}
+
+function fractionalPart( x ) { return sub( x, integerPart(x) ); }
+
 
 function kronecker( i, j ) {
 
