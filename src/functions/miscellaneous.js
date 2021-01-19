@@ -42,7 +42,31 @@ function floor( x ) {
 }
 
 
-function kronecker( i, j ) { return i === j ? 1 : 0; }
+function kronecker( i, j ) {
+
+  if ( arguments.length === 2 ) {
+
+    if ( isComplex(i) || isComplex(j) ) {
+
+      if ( !isComplex(i) ) i = complex(i);
+      if ( !isComplex(j) ) j = complex(j);
+
+      return kronecker( i.re, j.re) * kronecker( i.im, j.im );
+
+    }
+
+    return i === j ? 1 : 0;
+
+  }
+
+  var result = kronecker( i, j );
+
+  for ( var k = 2 ; k < arguments.length ; k++ )
+    result *= kronecker( i, arguments[k] );
+
+  return result;
+
+}
 
 
 function piecewise() {
