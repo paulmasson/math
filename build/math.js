@@ -340,13 +340,7 @@ function pow( x, y ) {
     if ( x.re === 0 && x.im === 0 && y.re < 0 )
       throw Error( 'Power singularity' );
 
-    var r = Math.sqrt( x.re * x.re + x.im * x.im );
-    var phi = Math.atan2( x.im, x.re );
-
-    var R = r**y.re * Math.exp( -phi * y.im );
-    var Phi = phi * y.re + y.im * Math.log(r);
-
-    return { re: R * Math.cos(Phi), im: R * Math.sin(Phi) };
+    return exp( mul( y, log(x) ) );
 
   }
 
