@@ -321,6 +321,23 @@ function pow( x, y ) {
 
 function root( x, y ) { return pow( x, div( 1, y ) ); }
 
+function surd( x, n ) {
+
+  if ( isArbitrary(x) || isArbitrary(n) ) throw Error( 'Surd requires real inputs' );
+
+  if ( !isInteger(n) ) throw Error( 'Second parameter of surd must be integer' );
+
+  if ( n & 1 ) {
+    var sign = Math.sign(x);
+    return sign * root( sign*x, n );
+  }
+
+  if ( x < 0 ) throw Error( 'First parameter of surd must be positive for even integers' );
+
+  return root( x, n );
+
+}
+
 function sqrt( x ) {
 
   if ( isComplex(x) ) {
