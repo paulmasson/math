@@ -4,12 +4,11 @@ function integrate( f, [a,b], options={} ) {
   var method = 'method' in options ? options.method : 'adaptive-simpson';
   var tolerance = 'tolerance' in options ? options.tolerance : 1e-10;
 
-  if ( isComplex(a) || isComplex(b) ) {
+  if ( isComplex(a) || isComplex(b) || isComplex(f(a)) ) {
 
     if ( !isComplex(a) ) a = complex(a);
-    if ( !isComplex(b) ) b = complex(b);
 
-    if ( !isComplex(f(a)) || !isComplex(f(b)) ) throw Error( 'Function must handle complex math' );
+    if ( !isComplex(f(a)) ) throw Error( 'Function must handle complex math' );
 
     function lerp( t ) { return add( mul( sub(b,a), t ), a ); }
 
