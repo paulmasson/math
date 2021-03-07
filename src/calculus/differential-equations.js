@@ -8,7 +8,7 @@ function ode( f, y, [x0,x1], step=.001, method='runge-kutta' ) {
     function compare( x ) { return x <= x1; };
 
   if ( f(x0,y)[0] === undefined ) {
-    g = f;
+    var g = f;
     f = function(x,y) { return [ g(x,y) ]; };
     y = [ y ];
   }
@@ -19,10 +19,10 @@ function ode( f, y, [x0,x1], step=.001, method='runge-kutta' ) {
 
     if ( !isComplex(x0) ) x0 = complex(x0);
 
+    y.forEach( (e,i,a) => { if ( !isComplex(e) ) a[i] = complex(e); } );
+
     if ( f(x0,y).every( e => !isComplex(e) ) )
       throw Error( 'All functions must handle complex math' );
-
-    y.forEach( (e,i,a) => { if ( !isComplex(e) ) a[i] = complex(e); } );
 
     var d = sub(x1,x0), absD = abs(d);
     step = mul( step, div( d, absD ) );
