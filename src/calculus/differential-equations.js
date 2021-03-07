@@ -7,6 +7,10 @@ function ode( f, y, [x0,x1], step=.001, method='runge-kutta' ) {
   } else
     function compare( x ) { return x <= x1; };
 
+  // vectorizing first-order real equation works because +[1] = 1
+  // for complex case +[C(1)] = NaN, so explicit array references
+  //    are necessary in the input function
+
   if ( f(x0,y)[0] === undefined ) {
     var g = f;
     f = function(x,y) { return [ g(x,y) ]; };
