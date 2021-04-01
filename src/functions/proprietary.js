@@ -28,7 +28,9 @@ function doubleLambert( n, x, y, tolerance=1e-10 ) {
 
     var testValue = .9;
 
-    if ( n === 0 || abs(test(n,x,y)) < testValue ) return a;
+    if ( abs(test(n,x,y)) < testValue ) return a;
+
+    if ( n === 0 ) console.log( 'Using Lambert W on principal branch' );
 
     if ( n & 1 ) {
 
@@ -65,7 +67,8 @@ function doubleLambert( n, x, y, tolerance=1e-10 ) {
     if ( abs(delta) < tolerance ) return root;
   }
 
-  throw Error( 'No root found for tolerance ' + tolerance );
+  throw Error( 'No double Lambert root found for x = ' + JSON.stringify(x)
+               + ' and y = ' + JSON.stringify(y) );
 
 }
 
