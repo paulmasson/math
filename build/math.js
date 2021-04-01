@@ -2099,7 +2099,7 @@ function expIntegralEi( x, tolerance=1e-10 ) {
 
 function logIntegral( x ) {
 
-  return expIntegral( log(x) );
+  return expIntegralEi( log(x) );
 
 }
 
