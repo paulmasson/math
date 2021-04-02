@@ -32,9 +32,9 @@ bernoulli2nD = [ 1n, 6n, 30n, 42n, 30n, 66n, 2730n, 6n, 510n, 798n, 330n, 138n, 
 var factorialCache = [ 1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880, 3628800 ];
 
 
-function complex( x, y ) {
+function complex( x, y=0 ) {
 
-  var y = y || ( isArbitrary(x) ? 0n : 0 );
+  if ( y === 0 && isArbitrary(x) ) y = 0n;
 
   return { re: x, im: y };
 

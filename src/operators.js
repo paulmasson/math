@@ -1,7 +1,7 @@
 
-function complex( x, y ) {
+function complex( x, y=0 ) {
 
-  var y = y || ( isArbitrary(x) ? 0n : 0 );
+  if ( y === 0 && isArbitrary(x) ) y = 0n;
 
   return { re: x, im: y };
 
