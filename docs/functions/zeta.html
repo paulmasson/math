@@ -115,7 +115,7 @@ MathCell( id, [] );
 
 parent.update = function( id ) {
 
-  var p = parametric( (x,y) => [ x, y, zeta( complex(x,y) ) ], [-8,8,200], [-8,8,200],
+  var p = parametric( (x,y) => [ x, y, zeta( complex(x,y) ) ], [-8,8,150], [-8,8,150],
                       { complexFunction: 're', colormap: 'complexArgument' } );
 
   var config = { type: 'threejs', zMin: -5, zMax: 5 };
@@ -143,7 +143,7 @@ MathCell( id, [] );
 
 parent.update = function( id ) {
 
-  var p = parametric( (x,y) => [ x, y, zeta( complex(x,y) ) ], [-8,8,200], [-8,8,200],
+  var p = parametric( (x,y) => [ x, y, zeta( complex(x,y) ) ], [-8,8,150], [-8,8,150],
                       { complexFunction: 'im', colormap: 'complexArgument' } );
 
   var config = { type: 'threejs', zMin: -5, zMax: 5 };
@@ -171,7 +171,7 @@ MathCell( id, [] );
 
 parent.update = function( id ) {
 
-  var p = parametric( (x,y) => [ x, y, zeta( complex(x,y) ) ], [-8,8,200], [-8,8,200],
+  var p = parametric( (x,y) => [ x, y, zeta( complex(x,y) ) ], [-8,8,150], [-8,8,150],
                       { complexFunction: 'abs', colormap: 'complexArgument' } );
 
   var config = { type: 'threejs', zMax: 8 };
