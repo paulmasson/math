@@ -3677,7 +3677,11 @@ function zeta( x, tolerance=1e-10 ) {
 
   if ( isEqualTo(x,1) ) throw Error( 'Riemann zeta pole' );
 
-  // direct summation fast in right-hand plane
+  // functional equation dlmf.nist.gov/25.4.2 - connects both half planes
+  if ( x < 0 || x.re < 0 )
+    return mul( pow(2,x), pow(pi,sub(x,1)), sin( mul(pi/2,x) ), gamma( sub(1,x) ), zeta( sub(1,x) ) );
+
+  // direct summation more accurate in right-hand plane
   var directSummation = 5;
 
   if ( x > directSummation || x.re > directSummation ) {
@@ -3721,25 +3725,20 @@ function zeta( x, tolerance=1e-10 ) {
   if ( isComplex(x) && x.im !== 0 )
     n = Math.max( n, Math.ceil( log( 2 / abs(gamma(x)) / tolerance ) / log( 3 + sqrt(8) ) ) );
 
-  var d = [ 1 ];
-  for ( var i = 1 ; i <= n ; i++ )
-    // order of multiplication reduces overflow, but factorial overflows at 171
-    d.push( d[i-1] + n * factorial( n+i-1 ) / factorial( n-i ) / factorial( 2*i ) * 4**i );
+  var d = [ 1 ], prod = n;
+  for ( var i = 1 ; i <= n ; i++ ) {
+    d.push( d[i-1] + n * prod / factorial( 2*i ) * 4**i );
+    // manually evaluate factorial( n+i-1 ) / factorial( n-i ) to avoid overflow
+    prod *= (n+i)*(n-i);
+  }
 
   if ( isComplex(x) ) {
-
-    // functional equation dlmf.nist.gov/25.4.2
-    if ( x.re < 0 )
-      return mul( pow(2,x), pow(pi,sub(x,1)), sin( mul(pi/2,x) ), gamma( sub(1,x) ), zeta( sub(1,x) ) );
 
     var s = summation( k => div( (-1)**k * ( d[k] - d[n] ), pow( k+1, x ) ), [0,n-1] );
 
     return div( div( s, -d[n] ), sub( 1, pow( 2, sub(1,x) ) ) );
 
   } else {
-
-    // functional equation dlmf.nist.gov/25.4.2
-    if ( x < 0 ) return 2**x * pi**(x-1) * sin(pi*x/2) * gamma(1-x) * zeta(1-x);
 
     var s = summation( k => (-1)**k * ( d[k] - d[n] ) / (k+1)**x, [0,n-1] );
 
