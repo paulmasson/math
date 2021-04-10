@@ -3242,6 +3242,12 @@ function legendreQ( l, m, x ) {
 
 function doubleLambert( n, x, y, tolerance=1e-10 ) {
 
+  if ( arguments.length === 2 ) {
+    y = x;
+    x = n;
+    n = 0;
+  }
+
   if ( isZero(y) ) return lambertW(n,x);
   if ( isZero(x) ) return neg( lambertW( -n, neg(y) ) );
 
