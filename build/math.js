@@ -4524,7 +4524,7 @@ function integrate( f, [a,b], options={} ) {
 
 function discreteIntegral( values, step ) {
 
-  // Euler-Maclaurin summation over fixed intervals
+  // composite trapezoidal rule
 
   var s = ( values[0] + values[ values.length - 1 ] ) / 2;
 
