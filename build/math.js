@@ -356,7 +356,7 @@ function root( x, y ) { return pow( x, div( 1, y ) ); }
 
 function surd( x, n ) {
 
-  if ( isArbitrary(x) || isArbitrary(n) ) throw Error( 'Surd requires real inputs' );
+  if ( isComplex(x) || isComplex(n) ) throw Error( 'Surd requires real inputs' );
 
   if ( !isInteger(n) ) throw Error( 'Second parameter of surd must be integer' );
 
