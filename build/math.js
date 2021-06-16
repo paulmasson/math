@@ -3674,9 +3674,12 @@ function sinc( x ) {
 
 }
 
-function gudermannian( x ) { return arctan( sinh(x) ); }
 
-function inverseGudermannian( x ) { return arctanh( sin(x) ); }
+// analyticphysics.com / The Complex Gudermannian Function
+
+function gudermannian( x ) { return mul( 2, arctan( tanh( div(x,2) ) ) ); }
+
+function inverseGudermannian( x ) { return mul( 2, arctanh( tan( div(x,2) ) ) ); }
 
 
 function zeta( x, tolerance=1e-10 ) {
