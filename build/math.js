@@ -3674,6 +3674,10 @@ function sinc( x ) {
 
 }
 
+function haversine( x ) { return div( sub( 1, cos(x) ), 2 ); }
+
+function inverseHaversine( x ) { return arccos( sub( 1, mul(2,x) ) ); }
+
 
 // analyticphysics.com / The Complex Gudermannian Function
 
