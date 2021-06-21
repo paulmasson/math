@@ -74,6 +74,8 @@ function carlsonRF( x, y, z, tolerance=1e-10 ) {
     if ( x === z ) return carlsonRC( y, x );
     if ( x === y ) return carlsonRC( z, x );
 
+    if ( x < 0 || y < 0 || z < 0 ) return carlsonRF( complex(x), y, z );
+
     // adapted from mpmath / elliptic.py
 
     var xm = x;
@@ -177,6 +179,8 @@ function carlsonRJ( x, y, z, p, tolerance=1e-10 ) {
     return add( v1, v2 );
 
   } else {
+
+    if ( x < 0 || y < 0 || z < 0 || p < 0 ) return carlsonRJ( complex(x), y, z, p );
 
     // adapted from mpmath / elliptic.py
 
