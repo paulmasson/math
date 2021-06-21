@@ -1348,7 +1348,6 @@ function carlsonRF( x, y, z, tolerance=1e-10 ) {
             * Math.max( abs( sub(A0,x) ), abs( sub(A0,y) ), abs( sub(A0,z) ) );
     var g = .25;
     var pow4 = 1;
-    var m = 0;
 
     while ( true ) {
       var xs = sqrt(xm);
@@ -1361,7 +1360,6 @@ function carlsonRF( x, y, z, tolerance=1e-10 ) {
       zm = mul( add(zm,lm), g );
       if ( pow4 * Q < abs(Am) ) break;
       Am = Am1;
-      m += 1;
       pow4 *= g;
     }
 
@@ -1392,7 +1390,6 @@ function carlsonRF( x, y, z, tolerance=1e-10 ) {
             * Math.max( Math.abs(A0-x), Math.abs(A0-y), Math.abs(A0-z) );
     var g = .25;
     var pow4 = 1;
-    var m = 0;
 
     while ( true ) {
       var xs = Math.sqrt(xm);
@@ -1405,7 +1402,6 @@ function carlsonRF( x, y, z, tolerance=1e-10 ) {
       zm = (zm + lm) * g;
       if ( pow4 * Q < Math.abs(Am) ) break;
       Am = Am1;
-      m += 1;
       pow4 *= g;
     }
 
@@ -1446,7 +1442,6 @@ function carlsonRJ( x, y, z, p, tolerance=1e-10 ) {
     var delta = mul( sub(p,x), sub(p,y), sub(p,z) );
     var Q = Math.pow( .25*tolerance, -1/6 )
             * Math.max( abs( sub(A0,x) ), abs( sub(A0,y) ), abs( sub(A0,z) ), abs( sub(A0,p) ) );
-    var m = 0;
     var g = .25;
     var pow4 = 1;
     var S = complex(0);
@@ -1463,16 +1458,15 @@ function carlsonRJ( x, y, z, p, tolerance=1e-10 ) {
       zm = mul( add(zm,lm), g );
       pm = mul( add(pm,lm), g );
       var dm = mul( add(sp,sx), add(sp,sy), add(sp,sz) );
-      var em = mul( delta, Math.pow( 4, -3*m ), inv(dm), inv(dm) );
+      var em = mul( delta, pow4**3, inv(dm), inv(dm) );
       if ( pow4 * Q < abs(Am) ) break;
       var T = mul( carlsonRC( 1, add(1,em) ), pow4, inv(dm) );
       S = add( S, T );
       pow4 *= g;
-      m += 1;
       Am = Am1;
     }
 
-    var t = div( Math.pow( 2, -2*m ), Am );
+    var t = div( pow4, Am );
     var X = mul( sub(A0,x), t );
     var Y = mul( sub(A0,y), t );
     var Z = mul( sub(A0,z), t );
@@ -1482,7 +1476,7 @@ function carlsonRJ( x, y, z, p, tolerance=1e-10 ) {
     var E4 = mul( add( mul(2,X,Y,Z), mul(E2,P), mul(3,P,P,P) ), P );
     var E5 = mul(X,Y,Z,P,P);
     P = add( 24024, mul(-5148,E2), mul(2457,E2,E2), mul(4004,E3), mul(-4158,E2,E3), mul(-3276,E4), mul(2772,E5) );
-    var v1 = mul( g**m, pow( Am, -1.5 ), P, 1/24024 );
+    var v1 = mul( pow4, pow( Am, -1.5 ), P, 1/24024 );
     var v2 = mul(6,S);
 
     return add( v1, v2 );
@@ -1500,7 +1494,6 @@ function carlsonRJ( x, y, z, p, tolerance=1e-10 ) {
     var delta = (p-x) * (p-y) * (p-z);
     var Q = Math.pow( .25*tolerance, -1/6 )
             * Math.max( Math.abs(A0-x), Math.abs(A0-y), Math.abs(A0-z), Math.abs(A0-p) );
-    var m = 0;
     var g = .25;
     var pow4 = 1;
     var S = 0;
@@ -1517,16 +1510,15 @@ function carlsonRJ( x, y, z, p, tolerance=1e-10 ) {
       zm = (zm + lm) * g;
       pm = (pm + lm) * g;
       var dm = (sp+sx) * (sp+sy) * (sp+sz);
-      var em = delta * Math.pow( 4, -3*m ) / dm**2;
+      var em = delta * pow4**3 / dm**2;
       if ( pow4 * Q < Math.abs(Am) ) break;
       var T = carlsonRC( 1, 1 + em ) * pow4 / dm;
       S += T;
       pow4 *= g;
-      m += 1;
       Am = Am1;
     }
 
-    var t = Math.pow( 2, -2*m ) / Am;
+    var t = pow4 / Am;
     var X = (A0-x) * t;
     var Y = (A0-y) * t;
     var Z = (A0-z) * t;
@@ -1536,7 +1528,7 @@ function carlsonRJ( x, y, z, p, tolerance=1e-10 ) {
     var E4 = ( 2*X*Y*Z + E2*P + 3*P**3 ) * P;
     var E5 = X*Y*Z*P**2;
     P = 24024 - 5148*E2 + 2457*E2**2 + 4004*E3 - 4158*E2*E3 - 3276*E4 + 2772*E5;
-    var v1 = g**m * Math.pow( Am, -1.5 ) * P / 24024;
+    var v1 = pow4 * Math.pow( Am, -1.5 ) * P / 24024;
     var v2 = 6*S;
 
     return v1 + v2;
