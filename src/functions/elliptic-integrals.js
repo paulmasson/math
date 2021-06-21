@@ -243,7 +243,7 @@ function ellipticF( x, m ) {
 
   if ( arguments.length === 1 ) {
     m = x;
-    x = pi / 2;
+    x = pi/2;
   }
 
   if ( isComplex(x) || isComplex(m) ) {
@@ -251,7 +251,7 @@ function ellipticF( x, m ) {
     if ( !isComplex(x) ) x = complex(x);
 
     var period = complex(0);
-    if ( Math.abs(x.re) > pi / 2 ) {
+    if ( Math.abs(x.re) > pi/2 ) {
       var p = Math.round( x.re / pi );
       x.re = x.re - p * pi;
       period = mul( 2 * p, ellipticK( m ) );
@@ -264,7 +264,7 @@ function ellipticF( x, m ) {
     if ( m > 1 && Math.abs(x) > Math.asin( 1 / Math.sqrt(m) ) ) return ellipticF( complex(x), m );
 
     var period = 0;
-    if ( Math.abs(x) > pi / 2 ) {
+    if ( Math.abs(x) > pi/2 ) {
       var p = Math.round( x / pi );
       x = x - p * pi;
       period = 2 * p * ellipticK( m );
@@ -286,7 +286,7 @@ function ellipticE( x, m ) {
 
   if ( arguments.length === 1 ) {
     m = x;
-    x = pi / 2;
+    x = pi/2;
   }
 
   if ( isComplex(x) || isComplex(m) ) {
@@ -294,7 +294,7 @@ function ellipticE( x, m ) {
     if ( !isComplex(x) ) x = complex(x);
 
     var period = complex(0);
-    if ( Math.abs(x.re) > pi / 2 ) {
+    if ( Math.abs(x.re) > pi/2 ) {
       var p = Math.round( x.re / pi );
       x.re = x.re - p * pi;
       period = mul( 2 * p,  ellipticE( m ) );
@@ -309,7 +309,7 @@ function ellipticE( x, m ) {
     if ( m > 1 && Math.abs(x) > Math.asin( 1 / Math.sqrt(m) ) ) return ellipticE( complex(x), m );
 
     var period = 0;
-    if ( Math.abs(x) > pi / 2 ) {
+    if ( Math.abs(x) > pi/2 ) {
       var p = Math.round( x / pi );
       x = x - p * pi;
       period = 2 * p * ellipticE( m );
@@ -327,7 +327,7 @@ function ellipticPi( n, x, m ) {
 
   if ( arguments.length === 2 ) {
     m = x;
-    x = pi / 2;
+    x = pi/2;
   }
 
   // x outside period and abs(n)>1 agrees with mpmath, differs from Mathematica
@@ -337,7 +337,7 @@ function ellipticPi( n, x, m ) {
     if ( !isComplex(x) ) x = complex(x);
 
     var period = complex(0);
-    if ( Math.abs(x.re) > pi / 2 ) {
+    if ( Math.abs(x.re) > pi/2 ) {
       var p = Math.round( x.re / pi );
       x.re = x.re - p * pi;
       period = mul( 2 * p, ellipticPi( n, m ) );
@@ -356,7 +356,7 @@ function ellipticPi( n, x, m ) {
     if ( m > 1 && Math.abs(x) > Math.asin( 1 / Math.sqrt(m) ) ) return ellipticPi( n, complex(x), m );
 
     var period = 0;
-    if ( Math.abs(x) > pi / 2 ) {
+    if ( Math.abs(x) > pi/2 ) {
       var p = Math.round( x / pi );
       x = x - p * pi;
       period = 2 * p * ellipticPi( n, m );
