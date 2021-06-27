@@ -244,7 +244,7 @@ function div( x, y ) {
     if ( !isComplex(x) ) x = complex(x);
     if ( !isComplex(y) ) y = complex(y);
 
-    if ( y.re === 0 && y.im === 0 || y.re === 0n && y.im === 0n )
+    if ( y.re === 0 && y.im === 0 || y.re === 0n && y.im === 0n ) // operator precedence
       throw Error( 'Division by zero' );
 
     if ( isArbitrary(x) ) {
@@ -328,7 +328,7 @@ function surd( x, n ) {
   if ( !isInteger(n) ) throw Error( 'Second parameter of surd must be integer' );
 
   if ( n & 1 ) {
-    var sign = Math.sign(x);
+    var sign = Math.sign(x); // zero at origin anyway
     return sign * root( sign*x, n );
   }
 
