@@ -377,7 +377,11 @@ function sqrt( x ) {
 
     if ( isArbitrary(x) ) {
 
-      if ( x.im === 0n ) return { re: sqrt(x.re), im: 0n };
+      if ( x.im === 0n )
+        if ( x.re < 0n ) return { re: 0n, im: sqrt(-x.re) };
+        else return { re: sqrt(x.re), im: 0n };
+
+      // need evaluation independent of natural logarithm
 
       var c = abs(x);
       var sign = x.im < 0n ? -1n : 1n;
@@ -386,10 +390,16 @@ function sqrt( x ) {
 
     }
 
-    var c = Math.hypot( x.re, x.im );
-    var sign = x.im === 0 ? 1 : Math.sign(x.im);
+    if ( x.im === 0 )
+      if ( x.re < 0 ) return { re: 0, im: Math.sqrt(-x.re) };
+      else return { re: Math.sqrt(x.re), im: 0 };
 
-    return { re: Math.sqrt( (c + x.re)/2 ), im: sign * Math.sqrt( (c - x.re)/2 ) };
+    if ( x.re === 0 ) return { re: 0, im: 0 };
+
+    // expression above suffers from rounding errors when not arbitrary,
+    //   especially affecting elliptic integral of third kind
+
+    return exp( mul( .5, log(x) ) );
 
   }
 
