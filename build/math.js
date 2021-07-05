@@ -394,8 +394,6 @@ function sqrt( x ) {
       if ( x.re < 0 ) return { re: 0, im: Math.sqrt(-x.re) };
       else return { re: Math.sqrt(x.re), im: 0 };
 
-    if ( x.re === 0 ) return { re: 0, im: 0 };
-
     // expression above suffers from rounding errors when not arbitrary,
     //   especially affecting elliptic integral of third kind
 
