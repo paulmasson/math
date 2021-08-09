@@ -1837,7 +1837,8 @@ function gamma( x, y, z ) {
       var n = isComplex(x) ? -x.re : -x;
       var t = mul( exp(neg(y)), summation( k => div( (-1)**k*factorial(k), pow(y,k+1) ), [0,n-1] ) );
 
-      var result = mul( (-1)**n/factorial(n), sub( expIntegralE(1,y), t ) );
+      // dlmf.nist.gov/8.4.4
+      var result = mul( (-1)**n/factorial(n), sub( gamma(0,y), t ) );
 
       if ( isComplex(x) && !isComplex(result) ) return complex(result); // complex in, complex out
 
