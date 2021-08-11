@@ -1699,7 +1699,7 @@ function factorial( n ) {
 
   if ( isComplex(n) ) {
 
-    if ( isPositiveIntegerOrZero(n.re) ) return complex( factorial(n.re) );
+    if ( n.im === 0 && isPositiveIntegerOrZero(n.re) ) return complex( factorial(n.re) );
 
     return gamma( add(n,1) );
 
