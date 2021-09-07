@@ -135,7 +135,8 @@ function hurwitzZeta( x, a, tolerance=1e-10 ) {
 
       setPrecisionScale( 20 - Math.round(x.re) );
 
-      x = arbitrary(x), a = arbitrary(a), arbN = arbitrary(n), arb3 = arbitrary(3);
+      x = arbitrary(x), a = arbitrary(a);
+      var arbN = arbitrary(n), arb3 = arbitrary(3);
 
       var S = 0n;
       for ( var i = 0 ; i < n ; i++ )
