@@ -61,7 +61,7 @@ function ln( x ) {
 
   function arbitraryAGM( x, y ) {
 
-    var t, u, arb2 = arbitrary(2);
+    var t, u;
 
     if ( isComplex(x) ) {
 

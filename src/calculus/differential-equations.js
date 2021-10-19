@@ -135,6 +135,3 @@ function ode( f, y, [x0,x1], step=.001, method='runge-kutta' ) {
 
 }
 
-
-
-

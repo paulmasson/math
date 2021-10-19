@@ -2776,7 +2776,7 @@ function ln( x ) {
 
   function arbitraryAGM( x, y ) {
 
-    var t, u, arb2 = arbitrary(2);
+    var t, u;
 
     if ( isComplex(x) ) {
 
@@ -4152,9 +4152,6 @@ function ode( f, y, [x0,x1], step=.001, method='runge-kutta' ) {
   }
 
 }
-
-
-
 
 
 function diff( f, x, n=1, method='ridders' ) {
