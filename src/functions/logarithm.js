@@ -91,7 +91,7 @@ function ln( x ) {
 
   function arbitraryTheta2( x ) {
 
-    var p = mul( arbitrary(2), x );
+    var p = mul( arb2, x );
     var s = p;
     var i = 1;
 
@@ -119,8 +119,8 @@ function ln( x ) {
 
   function arbitraryTheta3( x ) {
 
-    var p = arbitrary(2);
-    var s = arbitrary(1);
+    var p = arb2;
+    var s = arb1;
     var i = 1;
 
     if ( isComplex(x) ) {

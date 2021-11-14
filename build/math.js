@@ -11,6 +11,8 @@ var constants = {
 
   eulerGamma: 57721566490153286060651209008240243104215933593992n,
 
+  ln10: 230258509299404568401799145468436420760110148862877n,
+
   pi: 314159265358979323846264338327950288419716939937510n
 
 };
@@ -55,10 +57,10 @@ function setPrecisionScale( n ) {
   // set some commonly used constants
   arb1 = arbitrary(1);
   arb2 = arbitrary(2);
-  onePi = getConstant( 'pi' )
+  onePi = getConstant( 'pi' );
   twoPi = mul( onePi, arb2 );
   halfPi = div( onePi, arb2 );
-  ln10 = ln( arbitrary(10) );
+  ln10 = getConstant( 'ln10' );
 
 }
 
@@ -2806,7 +2808,7 @@ function ln( x ) {
 
   function arbitraryTheta2( x ) {
 
-    var p = mul( arbitrary(2), x );
+    var p = mul( arb2, x );
     var s = p;
     var i = 1;
 
@@ -2834,8 +2836,8 @@ function ln( x ) {
 
   function arbitraryTheta3( x ) {
 
-    var p = arbitrary(2);
-    var s = arbitrary(1);
+    var p = arb2;
+    var s = arb1;
     var i = 1;
 
     if ( isComplex(x) ) {
