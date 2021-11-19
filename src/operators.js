@@ -235,7 +235,13 @@ function mul( x, y ) {
 
 }
 
-function neg( x ) { return mul( -1, x ); }
+function neg( x ) {
+
+  if ( isComplex(x) ) return { re: -x.re, im: -x.im };
+
+  return -x;
+
+}
 
 function div( x, y ) {
 
