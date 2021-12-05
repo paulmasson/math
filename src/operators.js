@@ -29,7 +29,7 @@ function setPrecisionScale( n ) {
 
 }
 
-setPrecisionScale( 20 );
+setPrecisionScale( defaultDecimals );
 
 function arbitrary( x ) {
 

@@ -1,4 +1,6 @@
 
+var defaultDecimals = 15;
+
 var pi = Math.PI;
 
 var eulerGamma = .5772156649015329;
@@ -64,7 +66,7 @@ function setPrecisionScale( n ) {
 
 }
 
-setPrecisionScale( 20 );
+setPrecisionScale( defaultDecimals );
 
 function arbitrary( x ) {
 
@@ -2052,6 +2054,8 @@ function expIntegralEi( x, tolerance=1e-10 ) {
       s = add( s, getConstant( 'eulerGamma' ), ln(y) );
 
       s = arbitrary( s );
+
+      setPrecisionScale( defaultDecimals );
 
     } else {
 

@@ -349,6 +349,8 @@ function expIntegralEi( x, tolerance=1e-10 ) {
 
       s = arbitrary( s );
 
+      setPrecisionScale( defaultDecimals );
+
     } else {
 
       var s = complex(0);
