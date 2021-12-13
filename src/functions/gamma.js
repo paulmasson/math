@@ -63,6 +63,30 @@ function binomial( n, m ) {
 
 }
 
+function pochhammer( x, n ) {
+
+  var one = isArbitrary(x) ? arb1 : 1;
+
+  if ( isPositiveInteger(n) ) {
+
+    var result = x, current = one, count = 1;
+
+    while ( count < n ) {
+      result = mul( result, add( x, current ) );
+      current = add( current, one );
+      count++;
+    }
+
+    return result;
+
+  }
+
+  if ( isZero(n) ) return one;
+
+  return div( gamma( add(x,n) ), gamma(x) );
+
+}
+
 
 // log of gamma less likely to overflow than gamma
 // Lanczos approximation as evaluated by Paul Godfrey
