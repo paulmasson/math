@@ -21,10 +21,10 @@ function setPrecisionScale( n ) {
 
   // set some commonly used constants
   arb1 = arbitrary(1);
-  arb2 = arbitrary(2);
+  arb2 = 2n * arb1;
   onePi = getConstant( 'pi' );
-  twoPi = mul( onePi, arb2 );
-  halfPi = div( onePi, arb2 );
+  twoPi = 2n * onePi;
+  halfPi = onePi / 2n;
   ln10 = getConstant( 'ln10' );
 
 }
