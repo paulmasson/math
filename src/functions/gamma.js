@@ -128,7 +128,9 @@ function logGamma( x ) {
 
   } else {
 
-    if ( isNegativeIntegerOrZero(x) ) throw Error( 'Gamma function pole' ); 
+    if ( isNegativeIntegerOrZero(x) ) throw Error( 'Gamma function pole' );
+
+    if ( x < 0 ) return logGamma( complex(x) ); 
 
     var t = x + 5.24218750000000000;
     t = ( x + .5 ) * log(t) - t;
