@@ -1805,9 +1805,9 @@ function logGamma( x ) {
             .217439618115212643e-3, -.164318106536763890e-3, .844182239838527433e-4,
             -.261908384015814087e-4, .368991826595316234e-5 ];
 
-  if ( isComplex(x) ) {
+  if ( isNegativeIntegerOrZero(x) ) throw Error( 'Gamma function pole' );
 
-    if ( isNegativeIntegerOrZero(x) ) throw Error( 'Gamma function pole' );
+  if ( isComplex(x) ) {
 
     // reflection formula with modified Hare correction to imaginary part
     if ( x.re < 0 ) {
@@ -1833,8 +1833,6 @@ function logGamma( x ) {
     return u;
 
   } else {
-
-    if ( isNegativeIntegerOrZero(x) ) throw Error( 'Gamma function pole' );
 
     if ( x < 0 ) return logGamma( complex(x) ); 
 
@@ -2207,9 +2205,9 @@ function hypergeometric0F1( a, x, tolerance=1e-10 ) {
 
   var useAsymptotic = 100;
 
-  if ( isComplex(a) || isComplex(x) ) {
+  if ( isNegativeIntegerOrZero(a) ) throw Error( 'Hypergeometric function pole' );
 
-    if ( isNegativeIntegerOrZero(a) ) throw Error( 'Hypergeometric function pole' );
+  if ( isComplex(a) || isComplex(x) ) {
 
     // asymptotic form as per Johansson arxiv.org/abs/1606.06977
     if ( abs(x) > useAsymptotic ) {
@@ -2245,8 +2243,6 @@ function hypergeometric0F1( a, x, tolerance=1e-10 ) {
 
   } else {
 
-    if ( isNegativeIntegerOrZero(a) ) throw Error( 'Hypergeometric function pole' );
-
     // asymptotic form is complex
     if ( Math.abs(x) > useAsymptotic ) return hypergeometric0F1( a, complex(x) ).re;
 
@@ -2274,11 +2270,11 @@ function hypergeometric1F1( a, b, x, tolerance=1e-10 ) {
 
   var useAsymptotic = 30;
 
+  if ( isNegativeIntegerOrZero(b) ) throw Error( 'Hypergeometric function pole' );
+
   if ( isComplex(a) || isComplex(b) || isComplex(x) ) {
 
     if ( !isComplex(x) ) x = complex(x);
-
-    if ( isNegativeIntegerOrZero(b) ) throw Error( 'Hypergeometric function pole' );
 
     // Kummer transformation
     if ( x.re < 0 ) return mul( exp(x), hypergeometric1F1( sub(b,a), b, neg(x) ) );
@@ -2314,8 +2310,6 @@ function hypergeometric1F1( a, b, x, tolerance=1e-10 ) {
     return s;
 
   } else {
-
-    if ( isNegativeIntegerOrZero(b) ) throw Error( 'Hypergeometric function pole' );
 
     // Kummer transformation
     if ( x < 0 ) return exp(x) * hypergeometric1F1( b-a, b, -x );
@@ -2445,6 +2439,8 @@ function hypergeometric2F1( a, b, c, x, tolerance=1e-10 ) {
 
   if ( isEqualTo(b,c) ) return pow( sub(1,x), neg(a) );
 
+  if ( isNegativeIntegerOrZero(c) ) throw Error( 'Hypergeometric function pole' );
+
   if ( isComplex(a) || isComplex(b) || isComplex(c) || isComplex(x) ) {
 
     // choose smallest absolute value of transformed argument
@@ -2540,8 +2536,6 @@ function hypergeometric2F1( a, b, c, x, tolerance=1e-10 ) {
 
     }
 
-    if ( isNegativeIntegerOrZero(c) ) throw Error( 'Hypergeometric function pole' );
-
     var s = complex(1);
     var p = complex(1);
     var i = 1;
@@ -2558,8 +2552,6 @@ function hypergeometric2F1( a, b, c, x, tolerance=1e-10 ) {
     return s;
 
   } else {
-
-    if ( isNegativeIntegerOrZero(c) ) throw Error( 'Hypergeometric function pole' );
 
     // transformation from Abramowitz & Stegun p.559
     if ( x < -1 ) {
@@ -3840,12 +3832,12 @@ function hurwitzZeta( x, a, tolerance=1e-10 ) {
 
   if ( isEqualTo(x,1) ) throw Error( 'Hurwitz zeta pole' );
 
+  if ( isNegativeIntegerOrZero(a) ) throw Error( 'Hurwitz zeta parameter pole' );
+
   if ( isComplex(x) || isComplex(a) ) {
 
     if ( !isComplex(x) ) x = complex(x);
     if ( !isComplex(a) ) a = complex(a);
-
-    if ( isNegativeIntegerOrZero(a) ) throw Error( 'Hurwitz zeta parameter pole' );
 
     // direct summation more accurate than dlmf.nist.gov/25.11.4 for positive a
 
@@ -3917,8 +3909,6 @@ function hurwitzZeta( x, a, tolerance=1e-10 ) {
     return add( S, I, T );
 
   } else {
-
-    if ( isNegativeIntegerOrZero(a) ) throw Error( 'Hurwitz zeta parameter pole' );
 
     if ( a < 0 ) return hurwitzZeta( x, complex(a) );
 

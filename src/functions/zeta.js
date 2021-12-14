@@ -110,12 +110,12 @@ function hurwitzZeta( x, a, tolerance=1e-10 ) {
 
   if ( isEqualTo(x,1) ) throw Error( 'Hurwitz zeta pole' );
 
+  if ( isNegativeIntegerOrZero(a) ) throw Error( 'Hurwitz zeta parameter pole' );
+
   if ( isComplex(x) || isComplex(a) ) {
 
     if ( !isComplex(x) ) x = complex(x);
     if ( !isComplex(a) ) a = complex(a);
-
-    if ( isNegativeIntegerOrZero(a) ) throw Error( 'Hurwitz zeta parameter pole' );
 
     // direct summation more accurate than dlmf.nist.gov/25.11.4 for positive a
 
@@ -187,8 +187,6 @@ function hurwitzZeta( x, a, tolerance=1e-10 ) {
     return add( S, I, T );
 
   } else {
-
-    if ( isNegativeIntegerOrZero(a) ) throw Error( 'Hurwitz zeta parameter pole' );
 
     if ( a < 0 ) return hurwitzZeta( x, complex(a) );
 

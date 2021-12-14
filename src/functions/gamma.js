@@ -99,9 +99,9 @@ function logGamma( x ) {
             .217439618115212643e-3, -.164318106536763890e-3, .844182239838527433e-4,
             -.261908384015814087e-4, .368991826595316234e-5 ];
 
-  if ( isComplex(x) ) {
+  if ( isNegativeIntegerOrZero(x) ) throw Error( 'Gamma function pole' );
 
-    if ( isNegativeIntegerOrZero(x) ) throw Error( 'Gamma function pole' );
+  if ( isComplex(x) ) {
 
     // reflection formula with modified Hare correction to imaginary part
     if ( x.re < 0 ) {
@@ -127,8 +127,6 @@ function logGamma( x ) {
     return u;
 
   } else {
-
-    if ( isNegativeIntegerOrZero(x) ) throw Error( 'Gamma function pole' );
 
     if ( x < 0 ) return logGamma( complex(x) ); 
 
