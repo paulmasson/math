@@ -65,7 +65,7 @@ function ln( x ) {
 
     if ( isComplex(x) ) {
 
-      var maxIter = 10, i = 0;
+      var maxIter = 20, i = 0;
 
       while( x.re !== y.re || x.im !== y.im ) {
         t = x, u = y;

@@ -1,5 +1,5 @@
 
-var defaultDecimals = 15;
+var defaultDecimals = 18;
 
 var pi = Math.PI;
 

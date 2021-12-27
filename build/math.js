@@ -1,5 +1,5 @@
 
-var defaultDecimals = 15;
+var defaultDecimals = 18;
 
 var pi = Math.PI;
 
@@ -1794,10 +1794,55 @@ function pochhammer( x, n ) {
 }
 
 
-// log of gamma less likely to overflow than gamma
-// Lanczos approximation as evaluated by Paul Godfrey
-
 function logGamma( x ) {
+
+  if ( isArbitrary(x) ) {
+
+    var useAsymptotic = 10n * arb1;
+
+    if ( isNegativeIntegerOrZero( arbitrary(x) ) ) throw Error( 'Gamma function pole' );
+
+    if ( abs(x) < useAsymptotic ) return 0n;
+
+    if ( x < 0n ) x = complex(x);
+
+    // reflection formula with Hare correction to imaginary part
+    if ( x.re < 0n ) {
+      var t = sub( sub( ln(onePi), ln(sin(mul(onePi,x))) ), logGamma( sub(arb1,x) ) );
+      var s = x.im < 0n ? -1n : 1n;
+      var d = x.im === 0n ? 1/4 : 0;
+      var k = BigInt( Math.ceil( arbitrary(x.re)/2 - 3/4 + d ) );
+      return add( t, complex( 0n, 2n*s*k*onePi ) );
+    }
+
+    // Johansson arxiv.org/abs/2109.08392
+
+    var k = 1, K = arb1, p = 1n, s = 0n;
+
+    if ( isComplex(x) ) { function compare() { return p.re !== 0n || p.im !== 0n; } }
+    else function compare() { return p !== 0n; }
+
+    while ( compare() ) {
+
+      if ( k === bernoulli2nN.length ) {
+        console.log( 'Not enough Bernoulli numbers for logGamma' );
+        break;
+      }
+
+      p = div( div( bernoulli2nN[k], bernoulli2nD[k] ),
+               mul( K+arb1, K, pow(x,K) ) );
+      s = add( s, p );
+      k++;
+      K += arb2;
+
+    }
+
+    return add( mul( sub(x,arb1/2n), ln(x) ), neg(x), div(ln(twoPi),arb2), s );
+
+  }
+
+  // log of gamma less likely to overflow than gamma
+  // Lanczos approximation as evaluated by Paul Godfrey
 
   var c = [ 57.1562356658629235, -59.5979603554754912, 14.1360979747417471,
             -.491913816097620199, .339946499848118887e-4, .465236289270485756e-4,
@@ -1809,7 +1854,7 @@ function logGamma( x ) {
 
   if ( isComplex(x) ) {
 
-    // reflection formula with modified Hare correction to imaginary part
+    // reflection formula with Hare correction to imaginary part
     if ( x.re < 0 ) {
       var t = sub( log( div( pi, sin( mul(pi,x) ) ) ), logGamma( sub(1,x) ) );
       var s = x.im < 0 ? -1 : 1;
@@ -2810,7 +2855,7 @@ function ln( x ) {
 
     if ( isComplex(x) ) {
 
-      var maxIter = 10, i = 0;
+      var maxIter = 20, i = 0;
 
       while( x.re !== y.re || x.im !== y.im ) {
         t = x, u = y;
