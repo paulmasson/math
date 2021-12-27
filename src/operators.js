@@ -133,7 +133,7 @@ function abs( x ) {
 
   if ( isComplex(x) ) {
 
-    if ( x.re === 0 && x.im === 0 ) return 0;
+    if ( x.re === 0 && x.im === 0 ) return complex(0);
 
     if ( isArbitrary(x) ) return sqrt( mul(x.re,x.re) + mul(x.im,x.im) );
 

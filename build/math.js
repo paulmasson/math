@@ -170,7 +170,7 @@ function abs( x ) {
 
   if ( isComplex(x) ) {
 
-    if ( x.re === 0 && x.im === 0 ) return 0;
+    if ( x.re === 0 && x.im === 0 ) return complex(0);
 
     if ( isArbitrary(x) ) return sqrt( mul(x.re,x.re) + mul(x.im,x.im) );
 
@@ -2947,7 +2947,7 @@ function ln( x ) {
 
     }
 
-    if ( abs(x) < arb1 ) return mul( -arb1, ln( div( arb1, x ) ) );
+    if ( abs(x) < arb1 ) return neg( ln( div( arb1, x ) ) );
 
     x = div( arb1, x );
 
@@ -2966,7 +2966,7 @@ function ln( x ) {
 
   }
 
-  return log(x);
+  return Math.log(x);
 
 }
 
@@ -3441,7 +3441,7 @@ function cos( x ) {
     if ( isComplex(x) )
 
       return { re: mul( cos(x.re), cosh(x.im) ),
-               im: mul( arbitrary(-1), sin(x.re), sinh(x.im) ) };
+               im: -mul( sin(x.re), sinh(x.im) ) };
 
     x = x % twoPi;
 
@@ -3584,7 +3584,7 @@ function arccsc( x ) {
 
 function sinh( x ) {
 
-  if ( isArbitrary(x) ) return div( sub( exp(x), exp( mul(-arb1,x) ) ), arb2 );
+  if ( isArbitrary(x) ) return div( sub( exp(x), exp(neg(x)) ), arb2 );
 
   if ( isComplex(x) )
 
@@ -3597,7 +3597,7 @@ function sinh( x ) {
 
 function cosh( x ) {
 
-  if ( isArbitrary(x) ) return div( add( exp(x), exp( mul(-arb1,x) ) ), arb2 );
+  if ( isArbitrary(x) ) return div( add( exp(x), exp(neg(x)) ), arb2 );
 
   if ( isComplex(x) )
 

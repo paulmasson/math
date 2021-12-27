@@ -157,7 +157,7 @@ function ln( x ) {
 
     }
 
-    if ( abs(x) < arb1 ) return mul( -arb1, ln( div( arb1, x ) ) );
+    if ( abs(x) < arb1 ) return neg( ln( div( arb1, x ) ) );
 
     x = div( arb1, x );
 
@@ -176,7 +176,7 @@ function ln( x ) {
 
   }
 
-  return log(x);
+  return Math.log(x);
 
 }
 

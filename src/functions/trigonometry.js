@@ -46,7 +46,7 @@ function cos( x ) {
     if ( isComplex(x) )
 
       return { re: mul( cos(x.re), cosh(x.im) ),
-               im: mul( arbitrary(-1), sin(x.re), sinh(x.im) ) };
+               im: -mul( sin(x.re), sinh(x.im) ) };
 
     x = x % twoPi;
 
@@ -189,7 +189,7 @@ function arccsc( x ) {
 
 function sinh( x ) {
 
-  if ( isArbitrary(x) ) return div( sub( exp(x), exp( mul(-arb1,x) ) ), arb2 );
+  if ( isArbitrary(x) ) return div( sub( exp(x), exp(neg(x)) ), arb2 );
 
   if ( isComplex(x) )
 
@@ -202,7 +202,7 @@ function sinh( x ) {
 
 function cosh( x ) {
 
-  if ( isArbitrary(x) ) return div( add( exp(x), exp( mul(-arb1,x) ) ), arb2 );
+  if ( isArbitrary(x) ) return div( add( exp(x), exp(neg(x)) ), arb2 );
 
   if ( isComplex(x) )
 
