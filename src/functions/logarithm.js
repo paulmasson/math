@@ -176,7 +176,7 @@ function ln( x ) {
 
   }
 
-  return Math.log(x);
+  return log(x);
 
 }
 
