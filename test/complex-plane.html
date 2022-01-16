@@ -33,7 +33,7 @@ Part: &nbsp; <select id="part" onchange="updatePart()">
 
 <div id="container" style="text-align: center"></div>
 
-<br><div id="errors">Errors will appear here<br></div>
+<br><div id="errors">Major errors will appear here<br></div>
 
 <script>
 
@@ -60,6 +60,15 @@ var canvas = document.createElement( 'canvas' );
 canvas.width = 500;
 canvas.height = 500;
 canvas.style.border = '1px solid black';
+canvas.title = '';
+
+function bin( x ) { return Math.round( x + .5 ) - .5 }
+
+canvas.onmousemove = function() {
+  var x = bin( dataRange * ( 2 * event.offsetX / canvas.width - 1 ) );
+  var y = bin( dataRange * ( 1 - 2 * event.offsetY / canvas.height ) );
+  this.title = '(' + x + ',' + y + ')';
+}
 
 var context = canvas.getContext( '2d' );
 context.fillStyle = 'white';
@@ -83,8 +92,8 @@ function drawPoint( r, g, b, x, y ) {
 
   }
 
-  context.putImageData( imageData, ( canvas.width - size ) / 2 * ( x / dataRange + 1 ),
-                                   ( canvas.height - size ) / 2 * ( 1 - y / dataRange ) );
+  context.putImageData( imageData, canvas.width * ( x / dataRange + 1 ) / 2,
+                                   canvas.height * ( 1 - y / dataRange ) / 2 );
 
 }
 
@@ -184,7 +193,7 @@ function updatePart() {
           if ( delta > 1e-8 ) g = 0;
           r = 255; // yellow for two digits off, red else
           if ( delta > 1e-7 )
-            errors.innerHTML += `Loss of precision at [${p[0]},${p[1]}] with &Delta;=${delta.toFixed(10)}<br>`;
+            errors.innerHTML += `Loss of precision at (${p[0]},${p[1]}) with &Delta;=${delta.toFixed(10)}<br>`;
         }
       }
 

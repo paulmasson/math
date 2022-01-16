@@ -33,7 +33,7 @@ Part: &nbsp; <select id="part" onchange="updatePart()">
 
 <div id="container" style="text-align: center"></div>
 
-<br><div id="errors">Errors will appear here<br></div>
+<br><div id="errors">Major errors will appear here<br></div>
 
 <script>
 
@@ -184,7 +184,7 @@ function updatePart() {
           if ( delta > 1e-8 ) g = 0;
           r = 255; // yellow for two digits off, red else
           if ( delta > 1e-7 )
-            errors.innerHTML += `Loss of precision at [${p[0]},${p[1]}] with &Delta;=${delta.toFixed(10)}<br>`;
+            errors.innerHTML += `Loss of precision at (${p[0]},${p[1]}) with &Delta;=${delta.toFixed(10)}<br>`;
         }
       }
 
