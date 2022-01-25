@@ -1806,7 +1806,7 @@ function logGamma( x ) {
 
     if ( x < 0n ) x = complex(x);
 
-    // reflection formula with Hare correction to imaginary part
+    // reflection formula with modified Hare correction to imaginary part
     if ( x.re < 0n ) {
       var t = sub( sub( ln(onePi), ln(sin(mul(onePi,x))) ), logGamma( sub(arb1,x) ) );
       var s = x.im < 0n ? -1n : 1n;
@@ -1854,7 +1854,7 @@ function logGamma( x ) {
 
   if ( isComplex(x) ) {
 
-    // reflection formula with Hare correction to imaginary part
+    // reflection formula with modified Hare correction to imaginary part
     if ( x.re < 0 ) {
       var t = sub( log( div( pi, sin( mul(pi,x) ) ) ), logGamma( sub(1,x) ) );
       var s = x.im < 0 ? -1 : 1;
