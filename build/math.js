@@ -1856,11 +1856,19 @@ function logGamma( x ) {
 
     // reflection formula with modified Hare correction to imaginary part
     if ( x.re < 0 ) {
-      var t = sub( log( div( pi, sin( mul(pi,x) ) ) ), logGamma( sub(1,x) ) );
+
+      var logRatio = log( div( pi, sin( mul(pi,x) ) ) );
+      // rounding errors can lead to wrong side of branch point
+      if ( x.re - Math.trunc(x.re) === -.5 && Math.trunc(x.re) % 2 === 0 )
+        logRatio.im = pi * Math.sign(x.im);
+
+      var t = sub( logRatio, logGamma( sub(1,x) ) );
       var s = x.im < 0 ? -1 : 1;
       var d = x.im === 0 ? 1/4 : 0;
       var k = Math.ceil( x.re/2 - 3/4 + d );
+
       return add( t, complex( 0, 2*s*k*pi ) );
+
     }
 
     var t = add( x, 5.24218750000000000 );
