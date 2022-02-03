@@ -1806,13 +1806,42 @@ function logGamma( x ) {
 
     if ( x < 0n ) x = complex(x);
 
-    // reflection formula with modified Hare correction to imaginary part
+    // reflection formula with non-Hare correction to imaginary part
     if ( x.re < 0n ) {
-      var t = sub( sub( ln(onePi), ln(sin(mul(onePi,x))) ), logGamma( sub(arb1,x) ) );
-      var s = x.im < 0n ? -1n : 1n;
-      var d = x.im === 0n ? 1/4 : 0;
-      var k = BigInt( Math.ceil( arbitrary(x.re)/2 - 3/4 + d ) );
-      return add( t, complex( 0n, 2n*s*k*onePi ) );
+
+      // expand sine as exponentials for more accurate result
+      var t, p, k = 1n;
+
+      if ( abs(x.im) === 0 ) {
+
+        t = neg( ln( sin( mul( x, onePi ) ) ) )
+
+      } else if ( x.im < 0n ) {
+
+        p = exp( mul( x, complex(0n,-twoPi) ) );
+        t = add( 0n, p );
+        while ( p.re !== 0n || p.im !== 0n ) {
+          k += 1n;
+          p = div( exp( mul( x, complex(0n,-k*twoPi) ) ), arbitrary(Number(k)) );
+          t = add( t, p );
+        }
+        t = add( t, mul( x, complex(0n,-onePi) ), ln(arb2) );
+
+      } else {
+
+        p = exp( mul( x, complex(0n,twoPi) ) );
+        t = add( 0n, p );
+        while ( p.re !== 0n || p.im !== 0n ) {
+          k += 1n;
+          p = div( exp( mul( x, complex(0n,k*twoPi) ) ), arbitrary(Number(k)) );
+          t = add( t, p );
+        }
+        t = add( t, mul( x, complex(0n,onePi) ), complex(0n,-onePi), ln(arb2) );
+
+      }
+
+      return add( t, ln(onePi), neg( logGamma( sub(arb1,x) ) ), complex(0n,halfPi) );
+
     }
 
     // Johansson arxiv.org/abs/2109.08392
