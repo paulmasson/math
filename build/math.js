@@ -1818,7 +1818,23 @@ function logGamma( x ) {
 
     if ( isNegativeIntegerOrZero( arbitrary(x) ) ) throw Error( 'Gamma function pole' );
 
-    if ( abs(x) < useAsymptotic ) return 0n;
+    if ( abs(x) < useAsymptotic ) {
+
+      // slightly faster to get smaller integer near transition circle
+      var n = Math.ceil( arbitrary(useAsymptotic) - arbitrary(x.re) );
+
+      // ln(pochhammer(x,n))
+      var lnPochhammer = ln(x), current = arb1, count = 1;
+
+      while ( count < n ) {
+        lnPochhammer = add( lnPochhammer, ln( add( x, current ) ) );
+        current = add( current, arb1 );
+        count++;
+      }
+
+      return sub( logGamma(add(x,arbitrary(n))), lnPochhammer );
+
+    }
 
     if ( x < 0n ) x = complex(x);
 
