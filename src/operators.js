@@ -133,9 +133,25 @@ function abs( x ) {
 
   if ( isComplex(x) ) {
 
-    if ( x.re === 0 && x.im === 0 ) return 0;
+    if ( isArbitrary(x) ) {
 
-    if ( isArbitrary(x) ) return sqrt( mul(x.re,x.re) + mul(x.im,x.im) );
+      if ( x.im === 0n ) return abs(x.re);
+
+      if ( x.re === 0n ) return abs(x.im);
+
+      if ( abs(x.re) < abs(x.im) )
+
+        return mul( abs(x.im), sqrt( arb1 + div( div( mul(x.re,x.re), x.im ), x.im ) ) );
+
+      else
+
+         return mul( abs(x.re), sqrt( arb1 + div( div( mul(x.im,x.im), x.re ), x.re ) ) );
+
+    }
+
+    if ( x.im === 0 ) return Math.abs(x.re);
+
+    if ( x.re === 0 ) return Math.abs(x.im);
 
     if ( Math.abs(x.re) < Math.abs(x.im) )
 
