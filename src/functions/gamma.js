@@ -99,7 +99,8 @@ function logGamma( x ) {
     if ( abs(x) < useAsymptotic ) {
 
       // slightly faster to get smaller integer near transition circle
-      var n = Math.ceil( arbitrary(useAsymptotic) - arbitrary(x.re) );
+      var xRe = isComplex(x) ? x.re : x;
+      var n = Math.ceil( arbitrary(useAsymptotic) - arbitrary(xRe) );
 
       // ln(pochhammer(x,n))
       var lnPochhammer = ln(x), current = arb1, count = 1;
