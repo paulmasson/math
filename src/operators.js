@@ -304,7 +304,13 @@ function div( x, y ) {
 
 }
 
-function inv( x ) { return div( 1, x ); }
+function inv( x ) {
+
+  if ( isArbitrary(x) ) return div( arb1, x );
+
+  return div( 1, x );
+
+}
 
 function pow( x, y ) {
 

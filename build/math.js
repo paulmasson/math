@@ -341,7 +341,13 @@ function div( x, y ) {
 
 }
 
-function inv( x ) { return div( 1, x ); }
+function inv( x ) {
+
+  if ( isArbitrary(x) ) return div( arb1, x );
+
+  return div( 1, x );
+
+}
 
 function pow( x, y ) {
 
@@ -2382,6 +2388,57 @@ function hypergeometric0F1( a, x, tolerance=1e-10 ) {
 function hypergeometric1F1( a, b, x, tolerance=1e-10 ) {
 
   if ( isEqualTo(a,b) ) return exp(x);
+
+  if ( isArbitrary(x) ) {
+
+    if ( !isArbitrary(a) ) a = arbitrary(a);
+    if ( !isArbitrary(b) ) b = arbitrary(b);
+
+    if ( isNegativeIntegerOrZero(arbitrary(b)) ) throw Error( 'Hypergeometric function pole' );
+
+    // asymptotic forms not yet implemented
+
+    if ( isComplex(x) ) {
+
+      // Kummer transformation
+      if ( x.re < 0n ) return mul( exp(x), hypergeometric1F1( sub(b,a), b, neg(x) ) );
+
+      var s = complex(arb1);
+      var p = complex(arb1);
+      var i = arb1;
+
+      while ( abs(p.re) !== 0n || abs(p.im) !== 0n ) {
+        p = mul( p, x, a, inv(b), inv(i) );
+        s = add( s, p );
+        a = add( a, arb1 );
+        b = add( b, arb1 );
+        i += arb1;
+      }
+
+      return s;
+
+    } else {
+
+      // Kummer transformation
+      if ( x < 0n ) return mul( exp(x), hypergeometric1F1( b-a, b, -x ) );
+
+      var s = arb1;
+      var p = arb1;
+      var i = arb1;
+
+      while ( abs(p) !== 0n ) {
+        p = mul( p, x, a, inv(b), inv(i) );
+        s += p;
+        a += arb1;
+        b += arb1;
+        i += arb1;
+      }
+
+      return s;
+
+    }
+
+  }
 
   var useAsymptotic = 30;
 
