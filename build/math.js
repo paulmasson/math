@@ -2927,9 +2927,11 @@ function exp( x ) {
 
     var m = Math.trunc( arbitrary( div( x, ln10 ) ) );
 
-    if ( m > 0 ) setPrecisionScale( defaultDecimals + m );
+    if ( m > 0 ) {
+      setPrecisionScale( defaultDecimals + m );
+      x = x * BigInt( 10**m ); // pad to match new precision
+    }
 
-    x = x * BigInt( 10**m ); // pad to match new precision
     x = x - mul( arbitrary(m), ln10 );
 
     // direct sum faster than function inversion
@@ -2944,6 +2946,7 @@ function exp( x ) {
     }
 
     if ( m > 0 ) setPrecisionScale( defaultDecimals );
+    else s = s / BigInt( 10**-m ); // value approaches zero for fixed decimals
 
     // could also return as mantissa/exponent
     return s;
