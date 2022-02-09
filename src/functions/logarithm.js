@@ -9,6 +9,10 @@ function exp( x ) {
                im: mul( exp(x.re), sin(x.im) ) };
 
     var m = Math.trunc( arbitrary( div( x, ln10 ) ) );
+
+    if ( m > 0 ) setPrecisionScale( defaultDecimals + m );
+
+    x = x * BigInt( 10**m ); // pad to match new precision
     x = x - mul( arbitrary(m), ln10 );
 
     // direct sum faster than function inversion
@@ -22,8 +26,10 @@ function exp( x ) {
       i += arb1;
     }
 
+    if ( m > 0 ) setPrecisionScale( defaultDecimals );
+
     // could also return as mantissa/exponent
-    return mul( s, arbitrary( Number('1e'+m) ) );
+    return s;
 
   }
 
