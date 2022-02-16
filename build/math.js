@@ -2920,19 +2920,27 @@ function exp( x ) {
 
   if ( isArbitrary(x) ) {
 
-    if ( isComplex(x) )
+    if ( isComplex(x) ) {
 
-      return { re: mul( exp(x.re), cos(x.im) ),
-               im: mul( exp(x.re), sin(x.im) ) };
+      var expXre = exp(x.re);
+
+      return { re: mul( expXre, cos(x.im) ),
+               im: mul( expXre, sin(x.im) ) };
+
+    }
 
     var m = Math.trunc( arbitrary( div( x, ln10 ) ) );
 
     if ( m > 0 ) {
-      setPrecisionScale( defaultDecimals + m );
-      x = x * BigInt( 10**m ); // pad to match new precision
+      if ( defaultDecimals + m > constants.decimals )
+        console.log( 'Not enough decimals in constants for arbitrary exponential' );
+      else {
+        setPrecisionScale( defaultDecimals + m );
+        x *= BigInt( 10**m ); // pad to match new precision
+      }
     }
 
-    x = x - mul( arbitrary(m), ln10 );
+    x -= BigInt(m) * ln10;
 
     // direct sum faster than function inversion
     var s = arb1;
@@ -2945,8 +2953,12 @@ function exp( x ) {
       i += arb1;
     }
 
-    if ( m > 0 ) setPrecisionScale( defaultDecimals );
-    else s = s / BigInt( 10**-m ); // value approaches zero for fixed decimals
+    if ( m > 0 )
+      if ( defaultDecimals + m > constants.decimals )
+        s *= BigInt( 10**m );
+      else
+        setPrecisionScale( defaultDecimals );
+    else s /= BigInt( 10**-m ); // value approaches zero for fixed decimals
 
     // could also return as mantissa/exponent
     return s;
