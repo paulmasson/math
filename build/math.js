@@ -1849,31 +1849,33 @@ function logGamma( x ) {
     if ( x.re < 0n ) {
 
       // expand sine as exponentials for more accurate result
-      var t, p, k = 1n;
+      var t, e, p, k = arb1;
 
       if ( abs(x.im) === 0 ) {
 
-        t = neg( ln( sin( mul( x, onePi ) ) ) )
+        t = neg( ln( sin( mul( x, onePi ) ) ) );
 
       } else if ( x.im < 0n ) {
 
-        p = exp( mul( x, complex(0n,-twoPi) ) );
-        t = add( 0n, p );
+        e = exp( mul( x, complex(0n,-twoPi) ) );
+        p = complex( e.re, e.im );
+        t = complex( e.re, e.im );
         while ( p.re !== 0n || p.im !== 0n ) {
-          k += 1n;
-          p = div( exp( mul( x, complex(0n,-k*twoPi) ) ), arbitrary(Number(k)) );
-          t = add( t, p );
+          k += arb1;
+          p = mul( p, e );
+          t = add( t, div( p, k ) );
         }
         t = add( t, mul( x, complex(0n,-onePi) ), ln(arb2) );
 
       } else {
 
-        p = exp( mul( x, complex(0n,twoPi) ) );
-        t = add( 0n, p );
+        e = exp( mul( x, complex(0n,twoPi) ) );
+        p = complex( e.re, e.im );
+        t = complex( e.re, e.im );
         while ( p.re !== 0n || p.im !== 0n ) {
-          k += 1n;
-          p = div( exp( mul( x, complex(0n,k*twoPi) ) ), arbitrary(Number(k)) );
-          t = add( t, p );
+          k += arb1;
+          p = mul( p, e );
+          t = add( t, div( p, k ) );
         }
         t = add( t, mul( x, complex(0n,onePi) ), complex(0n,-onePi), ln(arb2) );
 
