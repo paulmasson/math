@@ -159,10 +159,15 @@ function logGamma( x ) {
 
     // Johansson arxiv.org/abs/2109.08392
 
-    var k = 1, K = arb1, p = 1n, s = 0n;
+    var k = 1, K = arb1, y, p = 1n, s = 0n;
 
-    if ( isComplex(x) ) { function compare() { return p.re !== 0n || p.im !== 0n; } }
-    else function compare() { return p !== 0n; }
+    if ( isComplex(x) ) {
+      function compare() { return p.re !== 0n || p.im !== 0n; };
+      y = complex( x.re, x.im );
+    } else {
+      function compare() { return p !== 0n; };
+      y = x;
+    }
 
     while ( compare() ) {
 
@@ -172,10 +177,12 @@ function logGamma( x ) {
       }
 
       p = div( div( bernoulli2nN[k], bernoulli2nD[k] ),
-               mul( K+arb1, K, pow(x,K) ) );
+               mul( K+arb1, K, y ) );
       s = add( s, p );
-      k++;
+
+      y = mul( y, x, x );
       K += arb2;
+      k++;
 
     }
 
