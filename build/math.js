@@ -1937,7 +1937,7 @@ function logGamma( x ) {
       var logRatio = log( div( pi, sin( mul(pi,x) ) ) );
       // rounding errors can lead to wrong side of branch point
       if ( x.re - Math.trunc(x.re) === -.5 && Math.trunc(x.re) % 2 === 0 )
-        logRatio.im = pi * Math.sign(x.im);
+        logRatio.im = pi * ( x.im > 0 ? 1 : -1 ); // avoid Math.sign(0) = 0
 
       var t = sub( logRatio, logGamma( sub(1,x) ) );
       var s = x.im < 0 ? -1 : 1;
