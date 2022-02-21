@@ -40,7 +40,7 @@ function exp( x ) {
       if ( defaultDecimals + m > constants.decimals )
         s *= BigInt( 10**m );
       else
-        setPrecisionScale( defaultDecimals );
+        resetPrecisionScale();
     else s /= BigInt( 10**-m ); // value approaches zero for fixed decimals
 
     // could also return as mantissa/exponent

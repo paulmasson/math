@@ -49,12 +49,15 @@ var C = complex;
 function isComplex( x ) { return typeof x === 'object' && 're' in x; }
 
 
-var decimals, precisionScale, arb1, arb2, onePi, twoPi, halfPi, ln10;
+var decimals = [], precisionScale;
+var arb1, arb2, onePi, twoPi, halfPi, ln10;
 
 function setPrecisionScale( n ) {
 
-  decimals = n;
-  precisionScale = 10n**BigInt(decimals);
+  if ( n === 'reset' ) decimals.shift();
+  else decimals.unshift( n );
+
+  precisionScale = 10n**BigInt( decimals[0] );
 
   // set some commonly used constants
   arb1 = arbitrary(1);
@@ -66,13 +69,15 @@ function setPrecisionScale( n ) {
 
 }
 
+function resetPrecisionScale() { setPrecisionScale( 'reset' ); }
+
 setPrecisionScale( defaultDecimals );
 
 function arbitrary( x ) {
 
   if ( isComplex(x) ) return { re: arbitrary( x.re ), im: arbitrary( x.im ) };
 
-  if ( isArbitrary(x) ) return Number(x) / 10**decimals;
+  if ( isArbitrary(x) ) return Number(x) / 10**decimals[0];
 
   // BigInt from exponential form includes wrong digits
   // manual construction from string more accurate
@@ -80,9 +85,9 @@ function arbitrary( x ) {
   var parts = x.toExponential().split( 'e' );
   var mantissa = parts[0].replace( '.', '' );
   var digits = mantissa.length - ( mantissa[0] === '-' ? 2 : 1 )
-  var padding = +parts[1] + decimals - digits;
+  var padding = +parts[1] + decimals[0] - digits;
 
-  if ( padding < 0 ) return BigInt( Math.round( x * 10**decimals ) );
+  if ( padding < 0 ) return BigInt( Math.round( x * 10**decimals[0] ) );
 
   return BigInt( mantissa + '0'.repeat(padding) );
 
@@ -2209,7 +2214,7 @@ function expIntegralEi( x, tolerance=1e-10 ) {
 
       s = arbitrary( s );
 
-      setPrecisionScale( defaultDecimals );
+      resetPrecisionScale();
 
     } else {
 
@@ -2966,7 +2971,7 @@ function exp( x ) {
       if ( defaultDecimals + m > constants.decimals )
         s *= BigInt( 10**m );
       else
-        setPrecisionScale( defaultDecimals );
+        resetPrecisionScale();
     else s /= BigInt( 10**-m ); // value approaches zero for fixed decimals
 
     // could also return as mantissa/exponent
@@ -4086,7 +4091,11 @@ function hurwitzZeta( x, a, tolerance=1e-10 ) {
 
       var T = add( arb1/2n, t );
 
-      return arbitrary( mul( add( S, I, T ), pow( add(a,arbN), mul(-arb1,x) ) ) );
+      var result = arbitrary( mul( add( S, I, T ), pow( add(a,arbN), mul(-arb1,x) ) ) );
+
+      resetPrecisionScale();
+
+      return result;
 
     }
 

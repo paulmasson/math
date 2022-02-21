@@ -481,7 +481,7 @@ function expIntegralEi( x, tolerance=1e-10 ) {
 
       s = arbitrary( s );
 
-      setPrecisionScale( defaultDecimals );
+      resetPrecisionScale();
 
     } else {
 

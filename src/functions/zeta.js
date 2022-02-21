@@ -162,7 +162,11 @@ function hurwitzZeta( x, a, tolerance=1e-10 ) {
 
       var T = add( arb1/2n, t );
 
-      return arbitrary( mul( add( S, I, T ), pow( add(a,arbN), mul(-arb1,x) ) ) );
+      var result = arbitrary( mul( add( S, I, T ), pow( add(a,arbN), mul(-arb1,x) ) ) );
+
+      resetPrecisionScale();
+
+      return result;
 
     }
 
