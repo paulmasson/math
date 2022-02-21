@@ -189,7 +189,7 @@ function updatePart() {
           errors.innerHTML += `Problem to investigate at [${p[0]},${p[1]}]<br>`;
           g = 0; // black for serious
         } else {
-          var delta = expDiff === 0 ? Math.abs( t[0] - s[0] ) : Math.abs( t[0]*10**t[1] - s[0]*10**s[1] );
+          var delta = expDiff === 0 ? Math.abs( t[0] - s[0] ) : Math.abs( t[0]*10**(t[1]-s[1]) - s[0] );
           if ( delta > 1e-8 ) g = 0;
           r = 255; // yellow for two digits off, red else
           if ( delta > 1e-7 )
