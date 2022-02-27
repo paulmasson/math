@@ -470,3 +470,9 @@ function complexFromString( s, returnAsString=false ) {
 
 }
 
+function output() {
+
+  for ( var i = 0 ; i < arguments.length ; i++ ) console.log( arguments[i] );
+
+}
+
