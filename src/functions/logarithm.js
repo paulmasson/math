@@ -13,13 +13,18 @@ function exp( x ) {
     }
 
     var m = Math.trunc( arbitrary( div( x, ln10 ) ) );
+    var extraDecimals = defaultDecimals + m;
+    var reset = false;
 
     if ( m > 0 ) {
-      if ( defaultDecimals + m > constants.decimals )
+      if ( extraDecimals > constants.decimals )
         console.log( 'Not enough decimals in constants for arbitrary exponential' );
       else {
-        setPrecisionScale( defaultDecimals + m );
-        x *= BigInt( 10**m ); // pad to match new precision
+        if ( extraDecimals > decimals[0] ) {
+          setPrecisionScale( extraDecimals );
+          x *= BigInt( 10**m ); // pad to match new precision
+          reset = true;
+        }
       }
     }
 
@@ -36,11 +41,12 @@ function exp( x ) {
       i += arb1;
     }
 
-    if ( m > 0 )
-      if ( defaultDecimals + m > constants.decimals )
+    if ( m > 0 ) {
+      if ( extraDecimals > constants.decimals )
         s *= BigInt( 10**m );
       else
-        resetPrecisionScale();
+        if ( reset ) resetPrecisionScale();
+      }
     else s /= BigInt( 10**-m ); // value approaches zero for fixed decimals
 
     // could also return as mantissa/exponent
