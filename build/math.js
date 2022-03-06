@@ -2466,6 +2466,8 @@ function hypergeometric1F1( a, b, x, tolerance=1e-10 ) {
 
   if ( isComplex(a) || isComplex(b) || isComplex(x) ) {
 
+    if ( isZero(a) ) return complex(1);
+
     if ( !isComplex(x) ) x = complex(x);
 
     // Kummer transformation
@@ -2502,6 +2504,8 @@ function hypergeometric1F1( a, b, x, tolerance=1e-10 ) {
     return s;
 
   } else {
+
+    if ( isZero(a) ) return 1;
 
     // Kummer transformation
     if ( x < 0 ) return exp(x) * hypergeometric1F1( b-a, b, -x );
@@ -2660,6 +2664,8 @@ function hypergeometric2F1( a, b, c, x, tolerance=1e-10 ) {
 
   if ( isComplex(a) || isComplex(b) || isComplex(c) || isComplex(x) ) {
 
+    if ( isZero(a) || isZero(b) ) return complex(1);
+
     // choose smallest absolute value of transformed argument
     // transformations from Abramowitz & Stegun p.559
     // fewer operations compared to dlmf.nist.gov/15.8
@@ -2769,6 +2775,8 @@ function hypergeometric2F1( a, b, c, x, tolerance=1e-10 ) {
     return s;
 
   } else {
+
+    if ( isZero(a) || isZero(b) ) return 1;
 
     // transformation from Abramowitz & Stegun p.559
     if ( x < -1 ) {
