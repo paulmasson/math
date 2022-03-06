@@ -204,7 +204,26 @@ function hypergeometricU( a, b, x ) {
 
   var t2 = mul( gamma(sub(1,b)), inv( gamma(add(a,neg(b),1)) ), hypergeometric1F1( a, b, x ) );
 
-  return add( t1, t2 );
+  var max = Math.max( abs(t1), abs(t2) );
+  if ( max < 100 ) return add( t1, t2 );
+
+  var extraDecimals = +max.toExponential().split( 'e' )[1];
+  setPrecisionScale( defaultDecimals + extraDecimals );
+
+  a = arbitrary(a);
+  b = arbitrary(b);
+  x = arbitrary(x);
+
+  t1 = mul( gamma(sub(b,arb1)), inv( gamma(a) ), pow( x, sub(arb1,b) ),
+            hypergeometric1F1( add(a,neg(b),arb1), sub(arb2,b), x ) );
+
+  t2 = mul( gamma(sub(arb1,b)), inv( gamma(add(a,neg(b),arb1)) ), hypergeometric1F1( a, b, x ) );
+
+  var result = arbitrary( add( t1, t2 ) );
+
+  resetPrecisionScale();
+
+  return result;
 
 }
 
