@@ -187,6 +187,12 @@ function hypergeometric1F1( a, b, x, tolerance=1e-10 ) {
 
 function hypergeometricU( a, b, x ) {
 
+  if ( isEqualTo( add(a,1), b ) ) return pow( x, neg(a) );
+
+  if ( isZero(a) )
+    if ( isComplex(a) || isComplex(b) || isComplex(x) ) return complex(1);
+    else return 1;
+
   var useAsymptotic = 25;
 
   // asymptotic form as per Johansson arxiv.org/abs/1606.06977
