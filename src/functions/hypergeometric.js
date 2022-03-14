@@ -475,9 +475,9 @@ function hypergeometric2F1( a, b, c, x, tolerance=1e-10 ) {
 }
 
 
-function hypergeometric1F2( a, b, c, x ) {
+function hypergeometric1F2( a, b, c, x, tolerance=1e-10 ) {
 
-  var useAsymptotic = 200;
+  var useAsymptotic = 150;
 
   if ( isComplex(a) || isComplex(b) || isComplex(c) || isComplex(x) ) {
 
@@ -485,39 +485,62 @@ function hypergeometric1F2( a, b, c, x ) {
 
     if ( abs(x) > useAsymptotic ) {
 
-      var p = div( add( a, neg(b), neg(c), .5 ), 2 );
+      var aNegbNegc = add( a, neg(b), neg(c) );
 
-      var ck = [ 1, add( mul( add(mul(3,a),b,c,-2), sub(a,add(b,c)), 1/2 ), mul(2,b,c), -3/8 ),
+      var p = div( add( aNegbNegc, 1/2 ), 2 );
 
-                 add( mul( pow( add( mul( add(mul(3,a),b,c,-2), sub(a,add(b,c)), 1/4 ), mul(b,c), -3/16 ), 2 ), 2 ),
-                      mul( -1, sub(mul(2,a),3), b, c ),
-                      mul( add( mul(-8,pow(a,2)), mul(11,a), b, c, -2 ), sub(a,add(b,c)), 1/4 ),
-                      -3/16 ) ];
+      var ck = [ 1 ];
+
+      ck[1] = add( mul( add(mul(3,a),b,c,-2), aNegbNegc, 1/2 ), mul(2,b,c), -3/8 );
+
+      var toSquare = add( mul(b,c), mul( aNegbNegc, add(mul(3,a),b,c,-2), 1/4 ), -3/16 );
+
+      ck[2] = add( mul( 2, toSquare, toSquare ),
+                   neg( mul( sub(mul(2,a),3), b, c ) ),
+                   mul( aNegbNegc, add( mul(-8,mul(a,a)), mul(11,a), b, c, -2 ), 1/4 ),
+                   -3/16 );
+
+      var plusI = complex(0,1), minusI = complex(0,-1);
 
       function w( k ) { return mul( 1/2**k, ck[k], pow(neg(x),-k/2) ); }
 
-      var u1 = exp( mul( complex(0,1), add( mul(pi,p), mul(2,sqrt(neg(x))) ) ) );
-      var u2 = exp( mul( complex(0,-1), add( mul(pi,p), mul(2,sqrt(neg(x))) ) ) );
+      var w1 = w(1), w2 = w(2);
 
-      var s = add( mul( u1, add( 1, mul(complex(0,-1),w(1)), neg(w(2)) ) ),
-                   mul( u2, add( 1, mul(complex(0,1),w(1)), neg(w(2)) ) ) );
-      var k = 3, wLast = w(2);
+      var s1 = add( 1, mul(minusI,w1), neg(w2) );
+      var s2 = add( 1, mul(plusI,w1), neg(w2) );
 
-      while ( abs(wLast) > abs(w(k)) ) {
+      var k = 2, wk = w(k), powPlusI = powMinusI = -1;
 
-        ck.push( sub( mul( add( 3*k**2, mul(add(mul(-6,a),mul(2,b),mul(2,c),-4),k),
-                                mul(3,pow(a,2)), neg(pow(sub(b,c),2)), neg(mul(2,a,add(b,c,-2))), 1/4 ),
-                            1/(2*k), ck[k-1] ),
-                      mul( add(k,neg(a),b,neg(c),-1/2), add(k,neg(a),neg(b),c,-1/2),
-                           add(k,neg(a),b,c,-5/2), ck[k-2] ) ) );
+      // wk not always complex
+      while ( abs(wk) > tolerance ) {
 
-        s = add( s, mul( u1, pow(complex(0,-1),k), w(k) ),
-                    mul( u2, pow(complex(0,1),k), w(k) ) );
-
-        wLast = w(k);
         k++;
+        powPlusI = mul( powPlusI, plusI );
+        powMinusI = mul( powMinusI, minusI );
+
+        var t1 = mul( add( 3*k**2, mul( 2*k, add(mul(-3,a),b,c,-2) ),
+                               mul(3,mul(a,a)), neg(mul(sub(b,c),sub(b,c))),
+                               neg(mul(2,a,add(b,c,-2))), 1/4 ),
+                      ck[k-1] );
+
+        var t2 = mul( add(k,neg(a),b,neg(c),-1/2), add(k,neg(a),neg(b),c,-1/2),
+                      add(k,neg(a),b,c,-5/2), ck[k-2] );
+
+        ck[k] = div( sub( t1, t2 ), 2*k );
+
+        wk = w(k);
+
+        s1 = add( s1, mul( powMinusI, wk ) );
+        s2 = add( s2, mul( powPlusI, wk ) );
 
       }
+
+      var exponent = add( mul(pi,p), mul(2,sqrt(neg(x))) );
+
+      var u1 = exp( mul( plusI, exponent ) );
+      var u2 = exp( mul( minusI, exponent ) );
+
+      var s = add( mul(u1,s1), mul(u2,s2) );
 
       var t1 = mul( 1/(2*sqrt(pi)), inv(gamma(a)), pow(neg(x),p), s );
 
