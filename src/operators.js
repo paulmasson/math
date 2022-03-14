@@ -178,9 +178,11 @@ function abs( x ) {
 
 function arg( x ) {
 
-  if ( isComplex(x) ) return Math.atan2( x.im, x.re );
+  // adding zero prevents unexpected behavior for -0
 
-  return Math.atan2( 0, x );
+  if ( isComplex(x) ) return Math.atan2( x.im + 0, x.re + 0 );
+
+  return Math.atan2( 0, x + 0 );
 
 }
 
