@@ -68,6 +68,13 @@ function isZero( x ) {
 
 }
 
+function isUnity( x ) {
+
+  if ( isComplex(x) ) return x.re === 1 && x.im === 0;
+  return x === 1;
+
+}
+
 function isInteger( x ) {
 
   if ( isComplex(x) ) return Number.isInteger(x.re) && x.im === 0;
