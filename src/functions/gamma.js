@@ -256,14 +256,7 @@ function gamma( x, y, z ) {
 
       if ( isZero(y) ) throw Error( 'Gamma function pole' );
 
-      // combination of logarithms adds/subtracts complex(0,pi)
-      var sign = y.im > 0 ? -1 : y.im < 0 ? 1 : 0;
-
-      var result = add( neg(expIntegralEi(neg(y))), complex(0,sign*pi) );
-
-      if ( !isComplex(y) && y > 0 ) return result.re;
-
-      return result;
+      return neg( expIntegralEi( neg(y), true ) );
 
     }
 
@@ -430,7 +423,7 @@ function fresnelC( x ) {
 }
 
 
-function expIntegralEi( x, tolerance=1e-10 ) {
+function expIntegralEi( x, adjustImForGamma=false, tolerance=1e-10 ) {
 
   var useAsymptotic = 26;
 
@@ -448,10 +441,18 @@ function expIntegralEi( x, tolerance=1e-10 ) {
         i++;
       }
 
-      // combination of logarithms adds/subtracts complex(0,pi)
-      var sign = x.im > 0 ? 1 : x.im < 0 ? -1 : 0;
+      if ( adjustImForGamma )
 
-      return add( mul( s, exp(x), inv(x) ), complex(0,sign*pi) );
+        return mul( s, exp(x), inv(x) );
+
+      else {
+
+        // combination of logarithms adds/subtracts complex(0,pi)
+        var sign = x.im > 0 ? 1 : x.im < 0 ? -1 : 0;
+
+        return add( mul( s, exp(x), inv(x) ), complex(0,sign*pi) );
+
+      }
 
     }
 
@@ -479,6 +480,11 @@ function expIntegralEi( x, tolerance=1e-10 ) {
 
       s = add( s, getConstant( 'eulerGamma' ), ln(y) );
 
+      if ( adjustImForGamma ) {
+        var sign = x.im > 0n ? -1n : x.im < 0n ? 1n : 0n;
+        s = add( s, complex(0n,sign*onePi) );
+      }
+
       s = arbitrary( s );
 
       resetPrecisionScale();
@@ -496,6 +502,11 @@ function expIntegralEi( x, tolerance=1e-10 ) {
       }
 
       s = add( s, eulerGamma, log(x) );
+
+      if ( adjustImForGamma ) {
+        var sign = x.im > 0 ? -1 : x.im < 0 ? 1 : 0;
+        s = add( s, complex(0,sign*pi) );
+      }
 
     }
 
