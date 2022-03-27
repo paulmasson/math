@@ -2569,8 +2569,10 @@ function hypergeometricU( a, b, x ) {
 
   }
 
-  if ( b === 1 || b.re === 1 && b.im === 0 ) // operator precedence
-    return complexAverage( b => hypergeometricU(a,b,x), b );
+  // special case through independent expIntegralEi for speed
+  if ( isUnity(a) && isUnity(b) ) return mul( exp(x), gamma(0,x) );
+
+  if ( isUnity(b) ) return complexAverage( b => hypergeometricU(a,b,x), b );
 
   var t1 = mul( gamma(sub(b,1)), inv( gamma(a) ), pow( x, sub(1,b) ),
                 hypergeometric1F1( add(a,neg(b),1), sub(2,b), x ) );
