@@ -186,7 +186,7 @@ function updatePart() {
         var s = standard.split( 'e' ).map( Number );
         var expDiff = Math.abs( t[1] - s[1] );
         if ( expDiff > 1 || isNaN(test) ) {
-          errors.innerHTML += `Problem to investigate at [${p[0]},${p[1]}]<br>`;
+          errors.innerHTML += `Problem to investigate at (${p[0]},${p[1]})<br>`;
           g = 0; // black for serious
         } else {
           var delta = expDiff === 0 ? Math.abs( t[0] - s[0] ) : Math.abs( t[0]*10**(t[1]-s[1]) - s[0] );
