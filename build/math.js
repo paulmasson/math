@@ -2582,6 +2582,8 @@ function hypergeometricU( a, b, x ) {
 
   if ( isUnity(b) ) return complexAverage( b => hypergeometricU(a,b,x), b );
 
+  if ( isPositiveInteger(a) && isEqualTo(a,b) ) return mul( exp(x), gamma(sub(1,a),x) );
+
   var t1 = mul( gamma(sub(b,1)), inv( gamma(a) ), pow( x, sub(1,b) ),
                 hypergeometric1F1( add(a,neg(b),1), sub(2,b), x ) );
 
