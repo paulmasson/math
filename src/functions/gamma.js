@@ -264,7 +264,15 @@ function gamma( x, y, z ) {
     if ( isNegativeInteger(x) ) {
 
       var n = isComplex(x) ? -x.re : -x;
-      var t = mul( exp(neg(y)), summation( k => div( (-1)**k*factorial(k), pow(y,k+1) ), [0,n-1] ) );
+      var s = inv(y);
+      var p = inv(y);
+
+      for ( var k = 1 ; k < n ; k++ ) {
+        p = mul( p, -k, inv(y) );
+        s = add( s, p );
+      }
+
+      var t = mul( exp(neg(y)), s );
 
       // dlmf.nist.gov/8.4.4
       var result = mul( (-1)**n/factorial(n), sub( gamma(0,y), t ) );
