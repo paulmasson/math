@@ -2023,7 +2023,7 @@ function gamma( x, y, z ) {
 
     }
 
-    return sub( gamma(x), gamma(x,0,y) );
+    return mul( exp(neg(y)), hypergeometricU( sub(1,x), sub(1,x), y ) );
 
   }
 
