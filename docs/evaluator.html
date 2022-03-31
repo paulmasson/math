@@ -13,18 +13,18 @@
 <p>This evaluator can be used to test individual numerical expressions in Math. Type an expression in the area below and press enter to evaluate.</p>
 
 <br><p style="text-align: center">
-<input id="input" type="text" value="" style="width: 5in" onchange="process()"></input>
+<input id="expression" type="text" value="" style="width: 5in" onchange="process()"></input>
 </p><br>
 
-<p>Result of evaluation: <span id="output" style="color: rgb(0,127,255)"></span></p>
+<p>Result of evaluation: <span id="result" style="color: rgb(0,127,255)"></span></p>
 
 <script>
 
 function process() {
 
-  try { output.innerHTML = JSON.stringify( Function( 'return ' + input.value )() ); }
+  try { result.innerHTML = JSON.stringify( Function( 'return ' + expression.value )() ); }
 
-  catch( e ) { output.innerHTML = e.message; }
+  catch( e ) { result.innerHTML = e.message; }
 
 }
 
