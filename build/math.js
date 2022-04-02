@@ -2012,8 +2012,7 @@ function gamma( x, y, z ) {
     if ( isNegativeInteger(x) ) {
 
       var n = isComplex(x) ? -x.re : -x;
-      var s = inv(y);
-      var p = inv(y);
+      var s = inv(y), p = s; // mul returns new object
 
       for ( var k = 1 ; k < n ; k++ ) {
         p = mul( p, -k, inv(y) );
@@ -2023,7 +2022,7 @@ function gamma( x, y, z ) {
       var t = mul( exp(neg(y)), s );
 
       // dlmf.nist.gov/8.4.4
-      var result = mul( (-1)**n/factorial(n), sub( gamma(0,y), t ) );
+      var result = mul( (-1)**n/factorial(n), sub( neg( expIntegralEi( neg(y), true ) ), t ) );
 
       if ( isComplex(x) && !isComplex(result) ) return complex(result); // complex in, complex out
 
@@ -2634,7 +2633,7 @@ function hypergeometric2F0( a, b, x, tolerance=1e-10 ) {
   if ( isComplex(a) || isComplex(b) || isComplex(x) ) {
 
     var s = complex(1);
-    var p = complex(1), pLast = p;
+    var p = complex(1), pLast = p; // mul returns new object
     var converging = false; // first few terms can be larger than unity
     var i = 1;
 

@@ -263,7 +263,7 @@ function hypergeometric2F0( a, b, x, tolerance=1e-10 ) {
   if ( isComplex(a) || isComplex(b) || isComplex(x) ) {
 
     var s = complex(1);
-    var p = complex(1), pLast = p;
+    var p = complex(1), pLast = p; // mul returns new object
     var converging = false; // first few terms can be larger than unity
     var i = 1;
 
