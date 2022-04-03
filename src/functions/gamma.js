@@ -432,6 +432,15 @@ function fresnelC( x ) {
 
 function expIntegralEi( x, adjustImForGamma=false, tolerance=1e-10 ) {
 
+  // direct series hangs at -1 and +i/-i
+  // complex average until investigate further
+
+  if ( isUnity(neg(x)) ) return complexAverage( x => expIntegralEi(x,adjustImForGamma,tolerance), x );
+
+  var ix = mul( x, complex(0,1) );
+  if ( isUnity(ix) || isUnity(neg(ix)) )
+    return complexAverage( x => expIntegralEi(x,adjustImForGamma,tolerance), x, complex(0,1e-5) );
+
   var useAsymptotic = 26;
 
   if ( isComplex(x) ) {
