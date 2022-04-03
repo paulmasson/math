@@ -321,6 +321,9 @@ function hypergeometric2F1( a, b, c, x, tolerance=1e-10 ) {
 
   if ( isEqualTo(b,c) ) return pow( sub(1,x), neg(a) );
 
+  if ( !isUnity(neg(x)) && abs(add(x,1)) < tolerance )
+    return hypergeometric2F1( a, b, c, isComplex(x) ? complex(-1) : -1 );
+
   if ( isNegativeIntegerOrZero(c) ) throw Error( 'Hypergeometric function pole' );
 
   if ( isComplex(a) || isComplex(b) || isComplex(c) || isComplex(x) ) {
