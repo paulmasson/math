@@ -2022,7 +2022,7 @@ function gamma( x, y, z ) {
       var t = mul( exp(neg(y)), s );
 
       // dlmf.nist.gov/8.4.4
-      var result = mul( (-1)**n/factorial(n), sub( neg( expIntegralEi( neg(y), true ) ), t ) );
+      var result = mul( (-1)**n/factorial(n), sub( neg( expIntegralEi( neg(y), true, 1e-12 ) ), t ) );
 
       if ( isComplex(x) && !isComplex(result) ) return complex(result); // complex in, complex out
 
@@ -2187,13 +2187,18 @@ function expIntegralEi( x, adjustImForGamma=false, tolerance=1e-10 ) {
     if ( abs(x) > useAsymptotic ) {
 
       var s = complex(1);
-      var p = complex(1);
+      var p = complex(1), pLast = p; // mul returns new object
       var i = 1;
 
       while ( Math.abs(p.re) > tolerance || Math.abs(p.im) > tolerance ) {
+
         p = mul( p, i, inv(x) );
+        if ( abs(p) > abs(pLast) ) break;
+
         s = add( s, p );
         i++;
+        pLast = p;
+
       }
 
       if ( adjustImForGamma )
@@ -2277,13 +2282,18 @@ function expIntegralEi( x, adjustImForGamma=false, tolerance=1e-10 ) {
     if ( Math.abs(x) > useAsymptotic ) {
 
       var s = 1;
-      var p = 1;
+      var p = 1, pLast = p;
       var i = 1;
 
       while ( Math.abs(p) > tolerance ) {
+
         p *= i / x;
+        if ( Math.abs(p) > Math.abs(pLast) ) break;
+
         s += p;
         i++;
+        pLast = p;
+
       }
 
       return s * Math.exp(x) / x;
