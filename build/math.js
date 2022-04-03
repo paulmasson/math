@@ -2022,7 +2022,7 @@ function gamma( x, y, z ) {
       var t = mul( exp(neg(y)), s );
 
       // dlmf.nist.gov/8.4.4
-      var result = mul( (-1)**n/factorial(n), sub( neg( expIntegralEi( neg(y), true, 1e-12 ) ), t ) );
+      var result = mul( (-1)**n/factorial(n), sub( neg( expIntegralEi( neg(y), true, 1e-14 ) ), t ) );
 
       if ( isComplex(x) && !isComplex(result) ) return complex(result); // complex in, complex out
 
