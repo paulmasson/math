@@ -481,7 +481,9 @@ function expIntegralEi( x, adjustImForGamma=false, tolerance=1e-10 ) {
     var distanceScale = abs( sub(x,useAsymptotic) ) / useAsymptotic;
     var useArbitrary = distanceScale > 1;
 
-    if ( useArbitrary ) {
+    // arbitrary precision series is unstable around the origin but not needed
+
+    if ( useArbitrary && abs(x) > 1.5 ) {
 
       // use only decimals needed
       var n = 17 + Math.round( 10 * ( distanceScale - 1 ) );
