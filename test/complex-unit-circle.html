@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>Functions on the Unit Circle</title>
+<title>Functions on the Complex Unit Circle</title>
 <link rel="stylesheet" type="text/css" href="../docs/style.css">
 <style>
 
@@ -39,7 +39,7 @@ Part: &nbsp; <select id="part" onchange="updatePart()">
 
 var xhr = new XMLHttpRequest();
 xhr.responseType = 'text';
-xhr.open( 'GET', 'https://api.github.com/repos/paulmasson/math-test-data/contents/unit-circle', true );
+xhr.open( 'GET', 'https://api.github.com/repos/paulmasson/math-test-data/contents/complex-unit-circle', true );
 
 xhr.onload = function() {
 
@@ -96,7 +96,7 @@ function calculate() {
 
   var xhr = new XMLHttpRequest();
   xhr.responseType = 'text';
-  xhr.open( 'GET', '../../math-test-data/unit-circle/' + selection.value + '.txt', true );
+  xhr.open( 'GET', '../../math-test-data/complex-unit-circle/' + selection.value + '.txt', true );
 
   xhr.onload = function() {
 
