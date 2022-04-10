@@ -2004,7 +2004,12 @@ function gamma( x, y, z ) {
 
       if ( isZero(y) ) throw Error( 'Gamma function pole' );
 
-      return neg( expIntegralEi( neg(y), true ) );
+      var result = neg( expIntegralEi( neg(y), true ) );
+
+      // complex on negative real axis
+      if ( y < 0 || y.re < 0 && y.im === 0 ) result = sub( result, complex(0,pi) );
+
+      return result;
 
     }
 
