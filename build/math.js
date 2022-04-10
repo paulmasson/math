@@ -2260,6 +2260,9 @@ function expIntegralEi( x, adjustImForGamma=false, tolerance=1e-10 ) {
 
       resetPrecisionScale();
 
+      // adjust phase on positive imaginary axis according to test
+      if ( x.im > 0 && x.re === 0 ) s.im += pi;
+
     } else {
 
       var s = complex(0);
