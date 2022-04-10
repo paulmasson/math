@@ -50,11 +50,12 @@ Function: &nbsp; <select id="selection" onchange="calculate()"></select>
 
 var cs = document.getElementsByTagName( 'canvas' );
 
-// setting in CSS leads to default browser values that ruins images
+// setting in CSS leads to default browser values that distort images
 for ( var i = 0 ; i < cs.length ; i++ ) {
   cs[i].width = 500;
   cs[i].height = 7;
   cs[i].style.border = '1px solid black';
+  cs[i].title = '';
 }
 
 var xhr = new XMLHttpRequest();
@@ -83,6 +84,11 @@ function clearCanvas( canvas ) {
   var context = canvas.getContext( '2d' );
   context.fillStyle = 'white';
   context.fillRect( 0, 0, canvas.width, canvas.height );
+
+  context.beginPath();
+  context.moveTo( canvas.width/2, 0 );
+  context.lineTo( canvas.width/2, canvas.height/4 );
+  context.stroke();
 
 }
 
