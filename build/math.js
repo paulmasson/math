@@ -2362,8 +2362,14 @@ function cosIntegral( x ) {
 
   var ix = mul( complex(0,1), x );
 
-  return sub( log(x), mul( .5, add( gamma(0,neg(ix)), gamma(0,ix),
-                                    log(neg(ix)), log(ix) ) ) );
+  var result = sub( log(x), mul( .5, add( gamma(0,neg(ix)), gamma(0,ix),
+                                     log(neg(ix)), log(ix) ) ) );
+
+  // real for positive real argument
+  if ( x > 0 ) return result.re;
+  if ( x.re > 0 && x.im === 0 ) result.im = chop( result.im );
+
+  return result;
 
 }
 
