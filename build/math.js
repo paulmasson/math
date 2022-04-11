@@ -2027,7 +2027,12 @@ function gamma( x, y, z ) {
       var t = mul( exp(neg(y)), s );
 
       // dlmf.nist.gov/8.4.4
-      var result = mul( (-1)**n/factorial(n), sub( neg( expIntegralEi( neg(y), true, 1e-14 ) ), t ) );
+      var result = sub( neg( expIntegralEi( neg(y), true, 1e-14 ) ), t )
+
+      // complex on negative real axis
+      if ( y < 0 || y.re < 0 && y.im === 0 ) result = sub( result, complex(0,pi) );
+
+      result = mul( (-1)**n/factorial(n), result );
 
       if ( isComplex(x) && !isComplex(result) ) return complex(result); // complex in, complex out
 
