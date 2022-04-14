@@ -656,7 +656,12 @@ function expIntegralE( n, x ) {
 
   if ( isZero(x) && ( n > 1 || n.re > 1 ) ) return inv( sub(n,1) );
 
-  return mul( pow( x, sub(n,1) ), gamma( sub(1,n), x ) );
+  var p = pow( x, sub(n,1) );
+
+  // real on negative real axis for integer powers
+  if ( isInteger(n) && x.re < 0 ) p.im = chop( p.im );
+
+  return mul( p, gamma( sub(1,n), x ) );
 
 }
 
