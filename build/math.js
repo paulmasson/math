@@ -2561,6 +2561,26 @@ function hypergeometric1F1( a, b, x, tolerance=1e-10 ) {
 
     }
 
+    // function to describe wedges along imaginary axis inside
+    //   direct region as per test pages
+    function wedge( x ) {
+      var slope = Math.sqrt(3) - 1;
+      if ( x.re > 0 ) {
+        var test = slope*x.re + useAsymptotic/2;
+        return x.im > test || x.im < -test;
+      } else {
+        var test = -slope*x.re + useAsymptotic/2;
+        return x.im > test || x.im < -test;
+      }
+    }
+
+    if ( wedge(x) ) {
+      setPrecisionScale( 22 );
+      var result = arbitrary( hypergeometric1F1( a, b, arbitrary(x) ) );
+      resetPrecisionScale();
+      return result;
+    }
+
     var s = complex(1);
     var p = complex(1);
     var i = 1;
