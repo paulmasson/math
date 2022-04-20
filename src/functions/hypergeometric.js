@@ -22,7 +22,12 @@ function hypergeometric0F1( a, x, tolerance=1e-10 ) {
       var t2 = mul( gamma(b), pow( x, sub(a,b) ), exp(x), inv( gamma(a) ) );
       t2 = mul( t2, hypergeometric2F0( sub(b,a), sub(1,a), div(1,x) ) );
 
-      return mul( exp( div(x,-2) ), add( t1, t2 ) );
+      var result = mul( exp( div(x,-2) ), add( t1, t2 ) );
+
+      // real for real arguments
+      if ( isReal(a) && isReal(x) ) result.im = 0;
+
+      return result;
 
     }
 
@@ -142,7 +147,12 @@ function hypergeometric1F1( a, b, x, tolerance=1e-10 ) {
       var t2 = mul( gamma(b), pow( x, sub(a,b) ), exp(x), inv( gamma(a) ),
                     hypergeometric2F0( sub(b,a), sub(1,a), div(1,x) ) );
 
-      return add( t1, t2 );
+      var result = add( t1, t2 );
+
+      // real for real arguments
+      if ( isReal(a) && isReal(b) && isReal(x) ) result.im = 0;
+
+      return result;
 
     }
 

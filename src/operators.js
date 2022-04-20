@@ -75,6 +75,13 @@ function isUnity( x ) {
 
 }
 
+function isReal( x ) {
+
+  if ( isComplex(x) ) return x.im === 0;
+  return true;
+
+}
+
 function isInteger( x ) {
 
   if ( isComplex(x) ) return Number.isInteger(x.re) && x.im === 0;
