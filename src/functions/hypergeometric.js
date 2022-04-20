@@ -10,6 +10,12 @@ function hypergeometric0F1( a, x, tolerance=1e-10 ) {
     // asymptotic form as per Johansson arxiv.org/abs/1606.06977
     if ( abs(x) > useAsymptotic ) {
 
+      if ( isNegativeIntegerOrZero( sub(a,.5) ) ) {
+        var result = complexAverage( a => hypergeometric0F1(a,x), a );
+        if ( isReal(x) ) result.im = 0;
+        return result;
+      }
+
       // transform variables for convenience
       var b = sub( mul(2,a), 1 );
       a = sub( a, .5 );
