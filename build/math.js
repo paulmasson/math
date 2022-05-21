@@ -1758,7 +1758,7 @@ function factorial( n ) {
 
   if ( isComplex(n) ) {
 
-    if ( n.im === 0 && isPositiveIntegerOrZero(n.re) ) return complex( factorial(n.re) );
+    if ( isPositiveIntegerOrZero(n) ) return complex( factorial(n.re) );
 
     return gamma( add(n,1) );
 
@@ -1786,7 +1786,19 @@ function factorial( n ) {
 
 function factorial2( n ) {
 
-  if ( isZero(n) ) return 1;
+  if ( isComplex(n) ) {
+
+    if ( isPositiveIntegerOrZero(n) ) return complex( factorial2(n.re) );
+
+    var p1 = pow( 2, div(n,2) );
+    var p2 = pow( pi/2, div( sub( cos(mul(pi,n)), 1 ), 4 ) );
+    var p3 = gamma( add( div(n,2) , 1 ) );
+
+    return mul( p1, p2, p3 );
+
+  }
+
+  if ( n === 0 ) return 1;
 
   if ( isPositiveInteger(n) ) {
 
@@ -1797,22 +1809,18 @@ function factorial2( n ) {
 
   }
 
-  var f1 = pow( 2, div(n,2) );
-  var f2 = pow( pi/2, div( sub( cos(mul(pi,n)), 1 ), 4 ) );
-  var f3 = gamma( add( div(n,2) , 1 ) );
-
-  return mul( f1, f2, f3 );
+  return 2**(n/2) * (pi/2)**((cos(pi*n)-1)/4) * gamma( n/2+1 );
 
 }
 
 function binomial( n, m ) {
 
+  if ( isComplex(n) || isComplex(m) )
+    return div( factorial(n), mul( factorial( sub(n,m) ), factorial(m) ) );
+
   if ( Number.isInteger(m) && m < 0 && n >= 0 ) return 0;
 
   if ( Number.isInteger(n) && Number.isInteger(m) && n >= 0 && m > n ) return 0;
-
-  if ( isComplex(n) || isComplex(m) )
-    return div( factorial(n), mul( factorial( sub(n,m) ), factorial(m) ) );
 
   return factorial(n) / factorial(n-m) / factorial(m);
 
