@@ -71,6 +71,44 @@ function binomial( n, m ) {
 
 }
 
+function multinomial( n ) {
+
+  if ( arguments.length === 1 ) return isComplex(n) ? complex(1) : 1;
+
+  var s = 0, p = 1, nNeg = 0;
+
+  for ( var i = 0 ; i < arguments.length ; i++ ) {
+
+    var ni = arguments[i];
+    s = add( s, ni );
+
+    // catch negative integers for cancellation in ratio
+    // reduce all to factorial(-1) divided by factor
+    // extra overhead with pow() keeps complex in complex out
+
+    if ( isNegativeInteger( ni ) ) {
+      var k = sub( -1, ni );
+      p = div( p, mul( chop(pow(-1,k)), factorial(k) ) );
+      nNeg++;
+    } else
+      // standard factorial
+      p = mul( p, factorial( arguments[i] ) );
+
+  }
+
+  if ( isNegativeInteger(s) ) {
+    nNeg--;
+    if ( nNeg > 0 ) return isComplex(s) ? complex(0) : 0;
+    var k = sub( -1, s );
+    return inv( mul( p, chop(pow(-1,k)), factorial(k) ) );
+  }
+
+  if ( nNeg > 0 ) return isComplex(s) ? complex(0) : 0;
+
+  return div( factorial(s), p );
+
+}
+
 function pochhammer( x, n ) {
 
   var one = isArbitrary(x) ? arb1 : 1;
