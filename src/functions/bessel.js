@@ -20,8 +20,11 @@ function besselJ( n, x ) {
 
 function besselJZero( n, m, derivative=false ) {
 
+  if ( isComplex(n) || isComplex(m) )
+    throw Error( 'Complex arguments not supported in Bessel zero' );
+
   if ( n < 0 ) throw Error( 'Negative order for Bessel zero' );
-  if ( !Number.isInteger(m) ) throw Error( 'Nonintegral index for Bessel zero' );
+  if ( !isPositiveInteger(m) ) throw Error( 'Unsupported index for Bessel zero' );
 
   // approximations from dlmf.nist.gov/10.21#vi
   var delta = pi/4;
@@ -73,8 +76,11 @@ function besselY( n, x ) {
 
 function besselYZero( n, m, derivative=false ) {
 
+  if ( isComplex(n) || isComplex(m) )
+    throw Error( 'Complex arguments not supported in Bessel zero' );
+
   if ( n < 0 ) throw Error( 'Negative order for Bessel zero' );
-  if ( !Number.isInteger(m) ) throw Error( 'Nonintegral index for Bessel zero' );
+  if ( !isPositiveInteger(m) ) throw Error( 'Unsupported index for Bessel zero' );
 
   // approximations from dlmf.nist.gov/10.21#vi
   var delta = pi/4;
