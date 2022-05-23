@@ -113,6 +113,24 @@ function pochhammer( x, n ) {
 
   var one = isArbitrary(x) ? arb1 : 1;
 
+  if ( isZero(n) )
+    if ( isComplex(x) || isComplex(n) ) return complex(one);
+    else return one;
+
+  if ( isComplex(n) ) {
+
+    if ( isPositiveInteger(n) ) {
+      var result = pochhammer( x, n.re );
+      if ( isComplex(result) ) return result;
+      else return complex(result);
+    }
+
+    if ( isArbitrary(x) && !isArbitrary(n) ) n = arbitrary(n);
+
+    return div( gamma( add(x,n) ), gamma(x) );
+
+  }
+
   if ( isPositiveInteger(n) ) {
 
     var result = x, current = one, count = 1;
@@ -127,7 +145,7 @@ function pochhammer( x, n ) {
 
   }
 
-  if ( isZero(n) ) return one;
+  if ( isArbitrary(x) && !isArbitrary(n) ) n = arbitrary(n);
 
   return div( gamma( add(x,n) ), gamma(x) );
 
