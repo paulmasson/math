@@ -47,7 +47,8 @@ function findRoot( f, start, options={} ) {
 
   if ( Array.isArray(f) ) {
 
-    if ( f.length !== start.length ) throw Error( 'Mismatch between equations and starting point for root' );
+    if ( f.length !== start.length )
+      throw Error( 'Mismatch between equations and starting point for root' );
 
     var root = start;
 
@@ -111,7 +112,7 @@ function findRoot( f, start, options={} ) {
 
       var root = start;
 
-      if ( isComplex(root) ) {
+      if ( isComplex( f(root) ) ) {
 
         for ( var i = 0; i < maxIter ; i++ ) {
           var delta = div( f(root), diff( f, root ) );
