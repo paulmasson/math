@@ -54,6 +54,8 @@ function factorial2( n ) {
 
   }
 
+  // github.com/sympy/sympy/pull/10362#issuecomment-170344298
+  
   return 2**(n/2) * (pi/2)**((cos(pi*n)-1)/4) * gamma( n/2+1 );
 
 }
