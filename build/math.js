@@ -554,7 +554,6 @@ function besselJZero( n, m, derivative=false ) {
   if ( isComplex(n) || isComplex(m) )
     throw Error( 'Complex arguments not supported in Bessel zero' );
 
-  if ( n < 0 ) throw Error( 'Negative order for Bessel zero' );
   if ( !isPositiveInteger(m) ) throw Error( 'Unsupported index for Bessel zero' );
 
   // approximations from dlmf.nist.gov/10.21#vi
@@ -564,18 +563,23 @@ function besselJZero( n, m, derivative=false ) {
 
     if ( n === 0 && m === 1 ) return 0;
 
-    var b = ( m + n/2 - 3/4 ) * pi;
+    var b = ( m + Math.abs(n)/2 - 3/4 ) * pi;
     var e = b - ( 4*n**2 + 3 ) / ( 8*b );
 
-    // keep search evaluation real
+    // Zeros not simple to enumerate for negative order
+    // Odd double zero for small range of n to be investigated
+    if ( n < 0 ) throw Error( 'Negative order for Bessel derivative zero not supported' );
+
     return findRoot( x => diff( x => besselJ(n,x), x ), [ e-delta < 0 ? 0 : e-delta, e+delta ] );
 
   } else {
 
-    var a = ( m + n/2 - 1/4 ) * pi;
+    var a = ( m + Math.abs(n)/2 - 1/4 ) * pi;
     var e = a - ( 4*n**2 - 1 ) / ( 8*a );
 
-    return findRoot( x => besselJ(n,x), [ e-delta, e+delta ] );
+    if ( n < 0 ) e += fractionalPart(n) * pi;
+
+    return findRoot( x => besselJ(n,x), [ m === 1 ? 1e-10 : e-delta, e+delta ] );
 
   }
 
@@ -610,7 +614,6 @@ function besselYZero( n, m, derivative=false ) {
   if ( isComplex(n) || isComplex(m) )
     throw Error( 'Complex arguments not supported in Bessel zero' );
 
-  if ( n < 0 ) throw Error( 'Negative order for Bessel zero' );
   if ( !isPositiveInteger(m) ) throw Error( 'Unsupported index for Bessel zero' );
 
   // approximations from dlmf.nist.gov/10.21#vi
@@ -618,17 +621,25 @@ function besselYZero( n, m, derivative=false ) {
 
   if ( derivative ) {
 
-    var b = ( m + n/2 - 1/4 ) * pi;
+    var b = ( m + Math.abs(n)/2 - 1/4 ) * pi;
     var e = b - ( 4*n**2 + 3 ) / ( 8*b );
+
+    // Zeros not simple to enumerate for negative order
+    // Odd double zero for small range of n to be investigated
+    if ( n < 0 ) throw Error( 'Negative order for Bessel derivative zero not supported' );
 
     return findRoot( x => diff( x => besselY(n,x), x ), [ e-delta, e+delta ] );
 
   } else {
 
-    var a = ( m + n/2 - 3/4 ) * pi;
+    var a = ( m + Math.abs(n)/2 - 3/4 ) * pi;
     var e = a - ( 4*n**2 - 1 ) / ( 8*a );
 
-    return findRoot( x => besselY(n,x), [ e-delta, e+delta ] );
+    if ( n < 0 )
+      if ( fractionalPart(n) > -.5 ) e += fractionalPart(n) * pi;
+      else e += ( 1 + fractionalPart(n) ) * pi;
+
+    return findRoot( x => besselY(n,x), [ m === 1 && fractionalPart(n) > -.5 ? 1e-10 : e-delta, e+delta ] );
 
   }
 
