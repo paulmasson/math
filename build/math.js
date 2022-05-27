@@ -534,7 +534,7 @@ function besselJ( n, x ) {
 
   if ( isComplex(n) || isComplex(x) ) {
 
-    if ( isNegativeInteger(n) ) return mul( pow(-1,n), besselJ( mul(-1,n), x ) );
+    if ( isNegativeInteger(n) ) return mul( pow(-1,n), besselJ( neg(n), x ) );
 
     var product = div( pow( div(x,2), n ), gamma( add(n,1) ) );
     return mul( product, hypergeometric0F1( add(n,1), mul(-.25, pow(x,2) ) ) );
@@ -594,7 +594,7 @@ function besselY( n, x ) {
       return div( add( diff( n => besselJ(n,x), n ),
                        mul( pow(-1,n), diff( n => besselJ(n,x), neg(n) ) ) ), pi );
 
-    var sum = sub( mul( besselJ(n,x), cos( mul(n,pi) ) ), besselJ( mul(-1,n), x ) );
+    var sum = sub( mul( besselJ(n,x), cos( mul(n,pi) ) ), besselJ( neg(n), x ) );
     return div( sum, sin( mul(n,pi) ) );
 
   }
@@ -649,7 +649,7 @@ function besselI( n, x ) {
 
   if ( isComplex(n) || isComplex(x) ) {
 
-    if ( isNegativeInteger(n) ) return besselI( mul(-1,n), x );
+    if ( isNegativeInteger(n) ) return besselI( neg(n), x );
 
     var product = div( pow( div(x,2), n ), gamma( add(n,1) ) );
     return mul( product, hypergeometric0F1( add(n,1), mul(.25, pow(x,2) ) ) );
@@ -686,7 +686,7 @@ function besselK( n, x ) {
                   add( diff( n => besselI(n,x), n ), diff( n => besselI(n,x), neg(n) ) ) );
 
     var product = div( pi/2, sin( mul(n,pi) ) );
-    return mul( product, sub( besselI( mul(-1,n), x ), besselI(n,x) ) );
+    return mul( product, sub( besselI( neg(n), x ), besselI(n,x) ) );
 
   }
 
