@@ -58,6 +58,11 @@ function besselY( n, x ) {
 
   if ( isComplex(n) || isComplex(x) ) {
 
+    if ( isZero(x) ) {
+      if ( !isComplex(n) ) n = complex(n);
+      if ( fractionalPart(n.re) === -.5 && n.im === 0 ) return complex(0);
+    }
+
     // dlmf.nist.gov/10.2.3
     if ( isInteger(n) )
       return div( add( diff( n => besselJ(n,x), n ),
@@ -69,6 +74,9 @@ function besselY( n, x ) {
   }
 
   if ( x < 0 ) return besselY( n, complex(x) );
+
+  if ( x === 0 )
+    if ( fractionalPart(n) === -.5 ) return 0;
 
   // dlmf.nist.gov/10.2.3
   if ( Number.isInteger(n) )
