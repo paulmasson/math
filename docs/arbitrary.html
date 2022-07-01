@@ -11,7 +11,7 @@
 
 <p>Arbitrary precision is tracked by two global variables: <code>decimals</code>, with a default value of 20, and <code>precisionScale</code>, with a default value of <code>10n**20n</code>. The precision can be changed at will:</p>
 
-<p><b>setPrecision( <i>n</i> )</b> &mdash; set precision of future calculations to <i>n</i> decimals</p>
+<p><b>setPrecisionScale( <i>n</i> )</b> &mdash; set precision of future calculations to <i>n</i> decimals</p>
 
 <p>Since JavaScript is single threaded, tracking precision globally rather than at each calculational step should pose no problems, but if so then please open an <a href="https://github.com/paulmasson/math/issues">issue</a> on GitHub.</p>
 
