@@ -5796,7 +5796,9 @@ function inverse( A ) {
 function vector( size, value=0 ) {
 
   var v = [];
-  for ( var i = 0 ; i < size ; i++ ) v.push( value );
+  for ( var i = 0 ; i < size ; i++ )
+    if ( Array.isArray(value) ) v.push( random.apply( null, value ) );
+    else v.push( value );
 
   return v;
 
@@ -5809,7 +5811,9 @@ function matrix( rows, columns, value=0 ) {
   var m = [];
   for ( var i = 0 ; i < rows ; i++ ) {
     m.push( [] );
-    for ( var j = 0 ; j < columns ; j++ ) m[i].push( value );
+    for ( var j = 0 ; j < columns ; j++ )
+      if ( Array.isArray(value) ) m[i].push( random.apply( null, value ) );
+      else m[i].push( value );
   }
 
   return m;
