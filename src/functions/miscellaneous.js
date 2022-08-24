@@ -60,6 +60,26 @@ function integerPart( x ) {
 function fractionalPart( x ) { return sub( x, integerPart(x) ); }
 
 
+function random( x, y ) {
+
+  if ( arguments.length === 0 ) return Math.random();
+
+  if ( arguments.length === 1 )
+    if ( isComplex(x) )
+      return { re: x.re * Math.random(), im: x.im * Math.random() };
+    else return x * Math.random();
+
+  if ( isComplex(x) || isComplex(y) ) {
+    if ( !isComplex(x) ) x = complex(x);
+    if ( !isComplex(y) ) y = complex(y);
+    return { re: random( x.re, y.re ), im: random( x.im, y.im ) };
+  }
+
+  return Math.abs(x-y) * Math.random() + ( x > y ? y : x );
+
+}
+
+
 function kronecker( i, j ) {
 
   if ( arguments.length === 2 ) {
