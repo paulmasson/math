@@ -594,7 +594,7 @@ function besselY( n, x ) {
       if ( fractionalPart(n.re) === -.5 && n.im === 0 ) return complex(0);
     }
 
-    // dlmf.nist.gov/10.2.3
+    // dlmf.nist.gov/10.2.4
     if ( isInteger(n) )
       return div( add( diff( n => besselJ(n,x), n ),
                        mul( pow(-1,n), diff( n => besselJ(n,x), neg(n) ) ) ), pi );
@@ -609,7 +609,7 @@ function besselY( n, x ) {
   if ( x === 0 )
     if ( fractionalPart(n) === -.5 ) return 0;
 
-  // dlmf.nist.gov/10.2.3
+  // dlmf.nist.gov/10.2.4
   if ( Number.isInteger(n) )
     return ( diff( n => besselJ(n,x), n ) + (-1)**n * diff( n => besselJ(n,x), -n ) ) / pi;
 
