@@ -326,25 +326,25 @@ function airyBiPrime( x ) {
 
 function sphericalBesselJ( n, x ) {
 
-  return mul( div( sqrt(pi/2), sqrt(x) ), besselJ( add( n, .5 ), x ) );
+  return mul( div( Math.sqrt(pi/2), sqrt(x) ), besselJ( add( n, .5 ), x ) );
 
 }
 
 function sphericalBesselY( n, x ) {
 
-  return mul( div( sqrt(pi/2), sqrt(x) ), besselY( add( n, .5 ), x ) );
+  return mul( div( Math.sqrt(pi/2), sqrt(x) ), besselY( add( n, .5 ), x ) );
 
 }
 
 function sphericalHankel1( n, x ) {
 
-  return add( sphericalBesselJ(n,x), mul( complex(0,1), sphericalBesselY(n,x) ) );
+  return mul( div( Math.sqrt(pi/2), sqrt(x) ), hankel1( add( n, .5 ), x ) );
 
 }
 
 function sphericalHankel2( n, x ) {
 
-  return sub( sphericalBesselJ(n,x), mul( complex(0,1), sphericalBesselY(n,x) ) );
+  return mul( div( Math.sqrt(pi/2), sqrt(x) ), hankel2( add( n, .5 ), x ) );
 
 }
 
