@@ -68,8 +68,8 @@ function besselY( n, x ) {
       return div( add( diff( n => besselJ(n,x), n ),
                        mul( pow(-1,n), diff( n => besselJ(n,x), neg(n) ) ) ), pi );
 
-    var sum = sub( mul( besselJ(n,x), cos( mul(n,pi) ) ), besselJ( neg(n), x ) );
-    return div( sum, sin( mul(n,pi) ) );
+    var s = sub( mul( besselJ(n,x), cos( mul(n,pi) ) ), besselJ( neg(n), x ) );
+    return div( s, sin( mul(n,pi) ) );
 
   }
 
@@ -180,15 +180,71 @@ function besselK( n, x ) {
 
 }
 
-function hankel1( n, x ) {
+function hankel1( n, x, tolerance=1e-10 ) {
 
-  return add( besselJ(n,x), mul( complex(0,1), besselY(n,x) ) );
+  var useAsymptotic = 11;
+
+  // dlmf.nist.gov/10.17
+  if ( x.im > 0 && abs(x) > useAsymptotic ) {
+
+    var w = add( x, mul(n,-pi/2), -pi/4 );
+
+    var s = complex(1);
+    var plusI = complex(0,1);
+    var p = complex(1);
+    var i = 1;
+
+    while ( Math.abs(p.re) > tolerance || Math.abs(p.im) > tolerance ) {
+      p = mul( p, plusI, sub( mul(4,n,n), (2*i-1)**2 ), 1/i, 1/8, inv(x) );
+      s = add( s, p );
+      i++;
+    }
+
+    return mul( div( Math.sqrt(2/pi), sqrt(x) ), exp( mul(plusI,w) ), s );
+
+  }
+
+  // not duplicate special case
+  if ( isInteger(n) )
+    return add( besselJ(n,x), mul( complex(0,1), besselY(n,x) ) );
+
+  // one less call to besselJ
+  var s = sub( mul( besselJ(n,x), exp( mul(n,complex(0,-pi)) ) ), besselJ( neg(n), x ) );
+  return div( mul( complex(0,1), s ), sin( mul(n,pi) ) );
 
 }
 
-function hankel2( n, x ) {
+function hankel2( n, x, tolerance=1e-10 ) {
 
-  return sub( besselJ(n,x), mul( complex(0,1), besselY(n,x) ) );
+  var useAsymptotic = 11;
+
+  // dlmf.nist.gov/10.17
+  if ( x.im < 0 && abs(x) > useAsymptotic ) {
+
+    var w = add( x, mul(n,-pi/2), -pi/4 );
+
+    var s = complex(1);
+    var minusI = complex(0,-1);
+    var p = complex(1);
+    var i = 1;
+
+    while ( Math.abs(p.re) > tolerance || Math.abs(p.im) > tolerance ) {
+      p = mul( p, minusI, sub( mul(4,n,n), (2*i-1)**2 ), 1/i, 1/8, inv(x) );
+      s = add( s, p );
+      i++;
+    }
+
+    return mul( div( Math.sqrt(2/pi), sqrt(x) ), exp( mul(minusI,w) ), s );
+
+  }
+
+  // not duplicate special case
+  if ( isInteger(n) )
+    return sub( besselJ(n,x), mul( complex(0,1), besselY(n,x) ) );
+
+  // one less call to besselJ
+  var s = sub( mul( besselJ(n,x), exp( mul(n,complex(0,pi)) ) ), besselJ( neg(n), x ) );
+  return div( mul( complex(0,-1), s ), sin( mul(n,pi) ) );
 
 }
 
