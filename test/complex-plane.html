@@ -215,11 +215,13 @@ function updatePart() {
 
 <p>These tests give an immediate visual sense of the accuracy of this library. They can also be used to identify argument domains that need attention.</p>
 
-<p>Known issues with data from mpmath as of 2020.09.13:</p>
+<p>Known issues with data from mpmath as of 2022.09.18:</p>
 
 <blockquote>The imaginary parts of error functions are <a href="https://github.com/fredrik-johansson/mpmath/issues/545">incorrect</a> in large regions of the complex plane. These show as significant black wedges for imaginary <code>erf</code> and <code>erfc</code>, as well as real <code>erfi</code>.</blockquote>
 
 <blockquote>The imaginary part of the zeta function is <a href="https://github.com/fredrik-johansson/mpmath/issues/551">inaccurate</a> in the far right-hand plane. This shows as a strip of red on the right-hand edge above.</blockquote>
+
+<blockquote>Hankel functions with large imaginary parts are <a href="https://github.com/fredrik-johansson/mpmath/issues/637">inaccurate</a> in either the upper or lower half plane with standard precision. This can be overcome with a massive increase in precision when generating test data.</blockquote>
 
 </body>
 </html>
