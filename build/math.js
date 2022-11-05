@@ -4894,6 +4894,9 @@ function integrate( f, [a,b], options={} ) {
   if ( isComplex(a) || isComplex(b) || isComplex(f(a)) ) {
 
     if ( !isComplex(a) ) a = complex(a);
+    if ( !isComplex(b) ) b = complex(b);
+
+    if ( a.re === b.re && a.im === b.im ) return complex(0);
 
     if ( !isComplex(f(a)) ) throw Error( 'Function must handle complex math' );
 
@@ -4905,6 +4908,8 @@ function integrate( f, [a,b], options={} ) {
     return mul( sub(b,a), complex( real, imag ) );
 
   }
+
+  if ( a === b ) return 0;
 
   if ( options.avoidEndpoints )
     if ( a < b ) { a += tolerance; b -= tolerance; }
