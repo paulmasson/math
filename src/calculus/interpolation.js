@@ -257,3 +257,44 @@ function spline( points, value='function', tolerance=1e-10 ) {
 
 }
 
+function padeApproximant( f, n, d, center=0 ) {
+
+  if ( !isPositiveInteger(n) || !isPositiveInteger(d) )
+    throw Error( 'Pade indices must be positive integers' );
+
+  var c = [];
+
+  if ( typeof f === 'function' ) {
+    c.push( f(center) );
+    for ( var i = 1 ; i <= n+d ; i++ ) c.push( diff( f, center, i ) / factorial(i) );
+  } else {
+    if ( f.length < n+d+1 ) throw Error( 'Need n+d+1 Pade coefficients' );
+    c = f;
+  }
+
+  var M = matrix( d ), v = vector( d );
+
+  for ( var i = 0 ; i < d ; i++ ) {
+    v[i] = -c[ n + 1 + i ];
+    // avoid negative index leading to undefined entry
+    for ( var j = 0 ; j < d && j <= n+i ; j++ ) M[i][j] = c[ n + i - j ];
+  }
+
+  // need to understand why Mathematica returns results for singular matrices
+  try { var b = luSolve( M, v ); }
+  catch { throw Error( 'Singular Pade matrix encountered' ); };
+  b.unshift( 1 );
+
+  var a = [ c[0] ];
+
+  for ( var i = 1 ; i <= n ; i++ ) {
+    var s = c[i];
+    // cannot exceed i when d > n
+    for( var j = 1 ; j <= d && j <= i ; j++ ) s += b[j] * c[i-j];
+    a.push( s );
+  }
+
+  return { N: chop(a), D: chop(b) };
+
+}
+

@@ -66,6 +66,14 @@
 
 <p><b>spline( points, value )</b> &mdash; interpolating cubic spline over the array of two-dimensional points with a value of <code>'function'</code>, <code>'derivative'</code> or <code>'integral'</code> returned as a function</p>
 
+<p><b>padeApproximant( coefficients, <i>n</i>, <i>d</i> )</b> &mdash; [<i>n</i>/<i>d</i>] Pad&eacute; approximant for Taylor coefficients centered at the origin returned as a pair of coefficient arrays <code>{ N: N, D: D }</code></p>
+
+<p><b>padeApproximant( coefficients, <i>n</i>, <i>d</i>, center )</b> &mdash; [<i>n</i>/<i>d</i>] Pad&eacute; approximant for Taylor coefficients centered at the center returned as a pair of coefficient arrays <code>{ N: N, D: D }</code></p>
+
+<p><b>padeApproximant( <i>f</i>, <i>n</i>, <i>d</i> )</b> &mdash; [<i>n</i>/<i>d</i>] Pad&eacute; approximant using numerical derivatives of a real function centered at the origin returned as a pair of coefficient arrays <code>{ N: N, D: D }</code></p>
+
+<p><b>padeApproximant( <i>f</i>, <i>n</i>, <i>d</i>, center )</b> &mdash; [<i>n</i>/<i>d</i>] Pad&eacute; approximant using numerical derivatives of a real function centered at the center returned as a pair of coefficient arrays <code>{ N: N, D: D }</code></p>
+
 <br id="diffeq"/>
 <h1>Differential Equations</h1>
 
