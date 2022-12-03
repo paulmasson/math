@@ -1,5 +1,10 @@
 
-function polynomial( x, coefficients, derivative=false ) {
+function polynomial( x, coefficients, options={} ) {
+
+  var derivative = 'derivative' in options ? options.derivative : false;
+  var reverse = 'reverse' in options ? options.reverse : false;
+
+  if ( reverse ) coefficients = coefficients.slice().reverse();
 
   // Horner's method with highest power coefficient first
 
