@@ -4734,6 +4734,8 @@ function ode( f, y, [x0,x1], step=.001, method='runge-kutta' ) {
 
 function diff( f, x, n=1, method='ridders' ) {
 
+  if ( !isPositiveInteger(n) ) throw Error( 'Only positive integer orders for differentiation' );
+
   if ( isComplex(x) || isComplex(f(x)) ) {
 
     if ( !isComplex(f(x)) ) throw Error( 'Function must handle complex math' );
