@@ -33,10 +33,10 @@
 
 <p><b>integrate( <i>f</i>, [<i>a</i>,<i>b</i>] )</b> &mdash; numerical integral of a real or complex function on the interval [<i>a</i>,<i>b</i>] by an adaptive Simpson algorithm</p>
 
-<p><b>integrate( <i>f</i>, [<i>a</i>,<i>b</i>], options )</b> &mdash; numerical integral of a real or complex function on the interval [<i>a</i>,<i>b</i>]; options include</p>
+<p><b>integrate( <i>f</i>, [<i>a</i>,<i>b</i>], options )</b> &mdash; numerical integral of a real or complex function on the interval [<i>a</i>,<i>b</i>]. Options for this dictionary argument include</p>
 
 <table style="margin-left: 1in"><tr><td style="width: 1.5in; vertical-align: top">
-  <code>method</code></td><td>one of <nobr><code>'euler-maclaurin'</code></nobr>, <code>'romberg'</code>, <nobr><code>'adaptive-simpson'</code></nobr>, <nobr><code>'tanh-sinh'</code></nobr> or <code>'gaussian'</code>; default <nobr><code>'adaptive-simpson'</code></nobr>
+  <code>method</code></td><td>one of <nobr><code>'euler-maclaurin'</code></nobr>, <code>'romberg'</code>, <nobr><code>'adaptive-simpson'</code></nobr>, <nobr><code>'tanh-sinh'</code></nobr> or <code>'gaussian'</code>, default <nobr><code>'adaptive-simpson'</code></nobr>
 </td></tr><tr><td>
   <code>tolerance</code></td><td>default 10<sup>&minus;10</sup>
 </td></tr><tr><td>
@@ -52,17 +52,25 @@
 
 <p><b>polynomial( <i>x</i>, coefficients )</b> &mdash; value of polynomial with real or complex coefficients at <i>x</i> by Horner&rsquo;s rule with the coefficient of the highest power first</p>
 
-<p><b>polynomial( <i>x</i>, coefficients, <code>true</code> )</b> &mdash; value of polynomial with real or complex coefficients and its derivative at <i>x</i> by Horner&rsquo;s rule returned as <nobr><code>{ polynomial: value, derivative: value }</code></nobr></p>
+<p><b>polynomial( <i>x</i>, coefficients, options )</b> &mdash; value of polynomial with real or complex coefficients at <i>x</i> by Horner&rsquo;s rule. Options for this dictionary argument include</p>
+
+<table style="margin-left: 1in"><tr><td style="width: 1.5in; vertical-align: top">
+  <code>derivative</code></td><td>return both the value of the polynomial and its derivative as <nobr><code>{ polynomial: value, derivative: value }</code></nobr>
+</td></tr><tr><td style="; vertical-align: top">
+  <code>reverse</code></td><td>set to <code>true</code> to reverse the order of coefficients and make the lowest power first
+</td></tr></table>
 
 <p><b>partialBell( <i>n</i>, <i>k</i>, arguments )</b> &mdash; partial Bell polynomial with integer indices <i>n</i> and <i>k</i> and an array of length <i>n</i>&minus;<i>k</i>+1 of real arguments</p>
 
-<p><b>findRoot( <i>f</i>, [<i>a</i>,<i>b</i>] )</b> &mdash; numerical root of a real function on the interval [<i>a</i>,<i>b</i>] by bisection</p>
+<br/><p><b>findRoot( <i>f</i>, [<i>a</i>,<i>b</i>] )</b> &mdash; numerical root of a real function on the interval [<i>a</i>,<i>b</i>] by bisection</p>
 
 <p><b>findRoot( <i>f</i>, <i>a</i> )</b> &mdash; numerical root of a real or complex function starting from <i>a</i> by Newton&rsquo;s method</p>
 
 <p><b>findRoot( functions, point )</b> &mdash; simultaneous numerical root of an array of real functions starting from the correspondingly dimensioned point by Newton&rsquo;s method</p>
 
-<p><b>spline( points )</b> &mdash; interpolating cubic spline over the array of two-dimensional points returned as a function</p>
+<p>All three forms of this function can take a third <code>options</code> argument as a dictionary. The main option is <code>tolerance</code> with default 10<sup>&minus;10</sup>.</p>
+
+<br/><p><b>spline( points )</b> &mdash; interpolating cubic spline over the array of two-dimensional points returned as a function</p>
 
 <p><b>spline( points, value )</b> &mdash; interpolating cubic spline over the array of two-dimensional points with a value of <code>'function'</code>, <code>'derivative'</code> or <code>'integral'</code> returned as a function</p>
 
