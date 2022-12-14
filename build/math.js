@@ -5209,7 +5209,7 @@ function findRoot( f, start, options={} ) {
     if ( f.length !== start.length )
       throw Error( 'Mismatch between equations and starting point for root' );
 
-    var root = start;
+    var root = start.slice();
 
     for ( var i = 0; i < maxIter ; i++ ) {
 
