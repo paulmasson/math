@@ -25,7 +25,7 @@ function besselJZero( n, m, derivative=false ) {
 
   if ( !isPositiveInteger(m) ) throw Error( 'Unsupported index for Bessel zero' );
 
-  // approximations from dlmf.nist.gov/10.21#vi
+  // approximations from dlmf.nist.gov/10.21.vi
   var delta = pi/4;
 
   if ( derivative ) {
@@ -93,7 +93,7 @@ function besselYZero( n, m, derivative=false ) {
 
   if ( !isPositiveInteger(m) ) throw Error( 'Unsupported index for Bessel zero' );
 
-  // approximations from dlmf.nist.gov/10.21#vi
+  // approximations from dlmf.nist.gov/10.21.vi
   var delta = pi/4;
 
   if ( derivative ) {
