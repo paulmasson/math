@@ -3509,6 +3509,14 @@ function lambertW( k, x, tolerance=1e-10 ) {
 
 function inverseLambertW( x ) { return mul( x, exp(x) ); }
 
+function wrightOmega( x ) {
+
+  var unwinding = Math.ceil( ( im(x)/pi - 1 ) / 2 );
+
+  return lambertW( unwinding, exp(x) );
+
+}
+
 
 function chop( x, tolerance=1e-10 ) {
 
