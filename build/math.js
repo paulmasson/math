@@ -3307,6 +3307,8 @@ function exp( x ) {
 
 }
 
+function logisticSigmoid( x ) { return inv( add( 1, exp(neg(x)) ) ); }
+
 
 function log( x, base ) {
 
