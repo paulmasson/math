@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>lambertW &mdash; Math</title>
+<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+
+<body>
+
+<script src="../../build/math.js"></script>
+<script src="../../../mathcell/build/mathcell.js"></script>
+
+<script src="https://cdn.jsdelivr.net/gh/mathjax/MathJax@2.7.5/MathJax.js?config=TeX-AMS_HTML"></script>
+
+<p class="function"> lambertW( <i>z</i> ) </p>
+
+<p>Principal branch of the Lambert <i>W</i> function of <i>z</i> in Math. Defined implicitly by the nonlinear transcendental equation</p>
+
+\[ W(z) e^{W(z)} = z \]
+
+<p>Real part on the real axis:</p>
+
+<div class="mathcell" style="height: 4in">
+<script>
+
+var parent = document.currentScript.parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [] );
+
+parent.update = function( id ) {
+
+  var p = plot( x => lambertW( complex(x) ).re, [-5,5] );
+
+  var config = { type: 'svg' };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Imaginary part on the real axis:</p>
+
+<div class="mathcell" style="height: 4in">
+<script>
+
+var parent = document.currentScript.parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [] );
+
+parent.update = function( id ) {
+
+  var p = plot( x => lambertW( complex(x) ).im, [-5,5] );
+
+  var config = { type: 'svg' };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Real part on the imaginary axis:</p>
+
+<div class="mathcell" style="height: 4in">
+<script>
+
+var parent = document.currentScript.parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [] );
+
+parent.update = function( id ) {
+
+  var p = plot( x => lambertW( complex(0,x) ).re, [-5,5] );
+
+  var config = { type: 'svg' };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Imaginary part on the imaginary axis:</p>
+
+<div class="mathcell" style="height: 4in">
+<script>
+
+var parent = document.currentScript.parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [] );
+
+parent.update = function( id ) {
+
+  var p = plot( x => lambertW( complex(0,x) ).im, [-5,5] );
+
+  var config = { type: 'svg' };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Real part on the complex plane:</p>
+
+<div class="mathcell" style="width: 6in; height: 6in">
+<script>
+
+var parent = document.currentScript.parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [] );
+
+parent.update = function( id ) {
+
+  var p = parametric( (x,y) => [ x, y, lambertW( complex(x,y) ) ], [-5,5,150], [-5,5,150],
+                      { complexFunction: 're', colormap: 'complexArgument' } );
+
+  var config = { type: 'threejs', viewpoint: [1,-1,1] };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Imaginary part on the complex plane:</p>
+
+<div class="mathcell" style="width: 6in; height: 6in">
+<script>
+
+var parent = document.currentScript.parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [] );
+
+parent.update = function( id ) {
+
+  var p = parametric( (x,y) => [ x, y, lambertW( complex(x,y) ) ], [-5,5,150], [-5,5,150],
+                      { complexFunction: 'im', colormap: 'complexArgument', maxFaceSlope: 5 } );
+
+  var config = { type: 'threejs', viewpoint: [1,-1,1] };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Absolute value on the complex plane:</p>
+
+<div class="mathcell" style="width: 6in; height: 6in">
+<script>
+
+var parent = document.currentScript.parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [] );
+
+parent.update = function( id ) {
+
+  var p = parametric( (x,y) => [ x, y, lambertW( complex(x,y) ) ], [-5,5,150], [-5,5,150],
+                      { complexFunction: 'abs', colormap: 'complexArgument' } );
+
+  var config = { type: 'threejs', viewpoint: [1,-1,1] };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Related functions: &nbsp; <a href="exp.html">exp</a> &nbsp; <a href="wrightOmega.html">wrightOmega</a></p>
+
+<p>Function category: <a href="../functions.html#logarithmic">logarithmic functions</a></p>
+
+</body>
+</html>
