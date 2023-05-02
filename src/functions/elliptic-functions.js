@@ -180,6 +180,8 @@ function jacobiTheta( n, x, q, tolerance=1e-10 ) {
 
 function ellipticNome( m ) {
 
+  if ( typeof m === 'undefined' ) throw Error( 'Elliptic parameter is undefined' );
+
   if ( isComplex(m) ) return exp( div( mul( -pi, ellipticK( sub(1,m) ) ), ellipticK(m) ) );
 
   if ( m > 1 ) return ellipticNome( complex(m) );

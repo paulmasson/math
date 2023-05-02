@@ -278,6 +278,8 @@ function ellipticF( x, m ) {
 
 function ellipticK( m ) {
 
+  if ( typeof m === 'undefined' ) throw Error( 'Elliptic parameter is undefined' );
+
   return ellipticF( m );
 
 }
