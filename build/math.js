@@ -2821,7 +2821,14 @@ function hypergeometricU( a, b, x ) {
 
   if ( isUnity(b) ) return complexAverage( b => hypergeometricU(a,b,x), b );
 
+  // could be combined with previous special case
   if ( isPositiveInteger(a) && isEqualTo(a,b) ) return mul( exp(x), gamma(sub(1,a),x) );
+
+  // dlmf.nist.gov/13.2.7
+  if ( isNegativeInteger(a) ) {
+    var m = isComplex(a) ? -a.re : -a;
+    return mul( (-1)**m, pochhammer(b,m), hypergeometric1F1(a,b,x) );
+  }
 
   var t1 = mul( gamma(sub(b,1)), inv( gamma(a) ), pow( x, sub(1,b) ),
                 hypergeometric1F1( add(a,neg(b),1), sub(2,b), x ) );
