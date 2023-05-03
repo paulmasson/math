@@ -2649,7 +2649,16 @@ function hypergeometric0F1( a, x, tolerance=1e-10 ) {
 
 function hypergeometric1F1( a, b, x, tolerance=1e-10 ) {
 
-  if ( isEqualTo(a,b) ) return exp(x);
+  if ( isEqualTo(a,b) ) {
+
+    if ( isNegativeInteger(a) ) {
+      var n = isComplex(a) ? -a.re : -a;
+      return summation( k => div( pow(x,k), factorial(k) ), [0,n] );
+    }
+
+    return exp(x);
+
+  }
 
   if ( isArbitrary(x) ) {
 
