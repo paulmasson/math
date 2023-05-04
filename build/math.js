@@ -1998,7 +1998,7 @@ function subfactorial( n ) {
 
   var result = div( gamma( add(n,1), -1 ), exp(1) );
 
-  if ( isInteger(n) ) return round(result);
+  if ( isPositiveInteger(n) ) return round(result);
 
   return result;
 
