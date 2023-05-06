@@ -95,7 +95,9 @@ function hypergeometric1F1( a, b, x, tolerance=1e-10 ) {
 
     // asymptotic forms not yet implemented
 
-    if ( isComplex(x) ) {
+    if ( isComplex(a) || isComplex(b) || isComplex(x) ) {
+
+      if ( !isComplex(x) ) x = complex(x);
 
       // Kummer transformation
       if ( x.re < 0n ) return mul( exp(x), hypergeometric1F1( sub(b,a), b, neg(x) ) );
