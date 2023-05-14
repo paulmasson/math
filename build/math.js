@@ -3396,41 +3396,41 @@ function ln( x ) {
 
   function arbitraryTheta2( x ) {
 
-    var p = mul( arb2, x );
-    var s = p;
-    var i = 1;
-
-    if ( isComplex(x) ) {
-
-      while ( p.re !== 0n || p.im !== 0n ) {
-        for ( var j = 0 ; j < 8*i ; j++ ) p = mul( p, x );
-        s = add( s, p );
-        i++;
-      }
-
-    } else {
-
-      while ( p !== 0n ) {
-        for ( var j = 0 ; j < 8*i ; j++ ) p = mul( p, x );
-        s = s + p;
-        i++;
-      }
-
-    }
-
-    return s;
-
-  }
-
-  function arbitraryTheta3( x ) {
-
-    var p = arb2;
+    var p = arb1;
     var s = arb1;
     var i = 1;
 
     if ( isComplex(x) ) {
 
       while ( p.re !== 0n || p.im !== 0n ) {
+        for ( var j = 0 ; j < 8*i ; j++ ) p = mul( p, x );
+        s = add( s, p );
+        i++;
+      }
+
+    } else {
+
+      while ( p !== 0n ) {
+        for ( var j = 0 ; j < 8*i ; j++ ) p = mul( p, x );
+        s = s + p;
+        i++;
+      }
+
+    }
+
+    return mul( arb2, x, s );
+
+  }
+
+  function arbitraryTheta3( x ) {
+
+    var p = arb1;
+    var s = 0n;
+    var i = 1;
+
+    if ( isComplex(x) ) {
+
+      while ( p.re !== 0n || p.im !== 0n ) {
         for ( var j = 0 ; j < 4*(2*i-1) ; j++ ) p = mul( p, x );
         s = add( s, p );
         i++;
@@ -3446,7 +3446,7 @@ function ln( x ) {
 
     }
 
-    return s;
+    return add( arb1, mul( arb2, s ) );
 
   }
 
