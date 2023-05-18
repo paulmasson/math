@@ -3452,26 +3452,31 @@ function ln( x ) {
 
   if ( isArbitrary(x) ) {
 
-    if ( !isComplex(x) ) {
+    var arb4 = 4n*arb1, arb10 = 10n*arb1;
 
-      if ( x < 0n ) return { re: ln( -x ), im: getConstant( 'pi' ) };
+    // implicily testing for complex, positive real falls through
 
-      if ( x === arb1 ) return 0n;
+    if ( x < 0n ) return { re: ln( -x ), im: onePi };
+    if ( x === arb1 ) return 0n;
+    if ( x.re === arb1 && x.im === 0n ) return { re: 0n, im: 0n };
 
-      if ( x < arb1 ) return -ln( div( arb1, x ) );
+    if ( x === 0n || x.re === 0n && x.im === 0n )
+      throw Error( 'Arbitrary natural logarithm singularity' );
 
-    }
+    // convergence near unit circle problematic
+    // scale argument radially and subtract scaling
+    // any number will work, convergence faster further out
 
-    if ( abs(x) < arb1 ) return neg( ln( div( arb1, x ) ) );
+    if ( abs(x) < arb10 ) return sub( ln(mul(arb10,x)), ln10 );
 
     x = div( arb1, x );
 
     var t2 = arbitraryTheta2(x);
     var t3 = arbitraryTheta3(x);
 
-    var result = div( onePi, mul( arbitrary(4), arbitraryAGM( mul(t2,t2), mul(t3,t3) ) ) );
+    var result = div( onePi, mul( arb4, arbitraryAGM( mul(t2,t2), mul(t3,t3) ) ) );
 
-    // adjust imaginary part
+    // adjust imaginary part on left half-plane
     if ( x.re < 0n ) {
       if ( result.im > 0n ) result.im -= onePi;
       else result.im += onePi;
