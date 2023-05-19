@@ -220,7 +220,7 @@ parent.update = function( id ) {
   var p = parametric( (x,y) => [ x, y, hankel2( n, complex(x,y) ) ], [-8,8,201], [-8,8,201],
                       { complexFunction: 'abs', colormap: 'complexArgument' } );
 
-  var config = { type: 'threejs', zMax: 8 };
+  var config = { type: 'threejs', zMax: 5 };
 
   evaluate( id, [ p ], config );
 

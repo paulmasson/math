@@ -149,7 +149,7 @@ parent.update = function( id ) {
   var p = parametric( (x,y) => [ x, y, csch( complex(x,y) ) ], [-5,5,151], [-5,5,151],
                       { complexFunction: 'abs', colormap: 'complexArgument' } );
 
-  var config = { type: 'threejs', zMax: 8 };
+  var config = { type: 'threejs', zMax: 5 };
 
   evaluate( id, [ p ], config );
 

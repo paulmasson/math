@@ -220,7 +220,7 @@ parent.update = function( id ) {
   var p = parametric( (x,y) => [ x, y, root( complex(x,y), n ) ], [-5,5,151], [-5,5,151],
                       { complexFunction: 'abs', colormap: 'complexArgument' } );
 
-  var config = { type: 'threejs', zMin: 0, zMax: 2.5, aspectRatio: [1,1,2] };
+  var config = { type: 'threejs', zMax: 2.5, aspectRatio: [1,1,2] };
 
   evaluate( id, [ p ], config );
 

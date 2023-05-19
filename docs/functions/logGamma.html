@@ -141,7 +141,7 @@ parent.update = function( id ) {
   var p = parametric( (x,y) => [ x, y, logGamma( complex(x,y) ) ], [-4.999,4.999,201], [-4.999,4.999,201],
                       { complexFunction: 're', colormap: 'complexArgument' } );
 
-  var config = { type: 'threejs', zMin: -5, zMax: 5 };
+  var config = { type: 'threejs', zMin: -5 };
 
   evaluate( id, [ p ], config );
 
@@ -197,7 +197,7 @@ parent.update = function( id ) {
   var p = parametric( (x,y) => [ x, y, logGamma( complex(x,y) ) ], [-4.999,4.999,201], [-4.999,4.999,201],
                       { complexFunction: 'abs', colormap: 'complexArgument' } );
 
-  var config = { type: 'threejs', zMax: 8 };
+  var config = { type: 'threejs', zMax: 10 };
 
   evaluate( id, [ p ], config );
 

@@ -174,7 +174,7 @@ parent.update = function( id ) {
   var p = parametric( (x,y) => [ x, y, zeta( complex(x,y) ) ], [-8,8,150], [-8,8,150],
                       { complexFunction: 'abs', colormap: 'complexArgument' } );
 
-  var config = { type: 'threejs', zMax: 8 };
+  var config = { type: 'threejs', zMax: 5 };
 
   evaluate( id, [ p ], config );
 

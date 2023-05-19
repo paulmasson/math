@@ -176,7 +176,7 @@ parent.update = function( id ) {
   var p = parametric( (x,y) => [ x, y, airyAi( complex(x,y) ) ], [-5,5,201], [-5,5,201],
                       { complexFunction: 'abs', colormap: 'complexArgument' } );
 
-  var config = { type: 'threejs', zMax: 8 };
+  var config = { type: 'threejs', zMax: 5 };
 
   evaluate( id, [ p ], config );
 
