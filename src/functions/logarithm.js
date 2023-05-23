@@ -168,6 +168,10 @@ function ln( x ) {
     if ( x === 0n || x.re === 0n && x.im === 0n )
       throw Error( 'Arbitrary natural logarithm singularity' );
 
+    if ( x.re === 0n )
+      if ( x.im > 0n ) return { re: ln(x.im), im: halfPi };
+      else return { re: ln(-x.im), im: -halfPi };
+
     // convergence near unit circle problematic
     // scale argument radially and subtract scaling
     // any number will work, convergence faster further out

@@ -229,6 +229,8 @@ function abs( x ) {
 
 function arg( x ) {
 
+  if ( isArbitrary(x) ) return ln(x).im;
+
   // adding zero prevents unexpected behavior for -0
 
   if ( isComplex(x) ) return Math.atan2( x.im + 0, x.re + 0 );
@@ -3462,6 +3464,10 @@ function ln( x ) {
 
     if ( x === 0n || x.re === 0n && x.im === 0n )
       throw Error( 'Arbitrary natural logarithm singularity' );
+
+    if ( x.re === 0n )
+      if ( x.im > 0n ) return { re: ln(x.im), im: halfPi };
+      else return { re: ln(-x.im), im: -halfPi };
 
     // convergence near unit circle problematic
     // scale argument radially and subtract scaling

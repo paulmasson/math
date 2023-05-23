@@ -192,6 +192,8 @@ function abs( x ) {
 
 function arg( x ) {
 
+  if ( isArbitrary(x) ) return ln(x).im;
+
   // adding zero prevents unexpected behavior for -0
 
   if ( isComplex(x) ) return Math.atan2( x.im + 0, x.re + 0 );
