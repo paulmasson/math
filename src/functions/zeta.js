@@ -76,6 +76,14 @@ function zeta( x, tolerance=1e-10 ) {
 
 function dirichletEta( x ) { return mul( zeta(x), sub( 1, pow( 2, sub(1,x) ) ) ); }
 
+function riemannXi( x ) {
+
+  var half = div( x, 2 );
+
+  return mul( half, sub(x,1), pow( pi, neg(half) ), gamma(half), zeta(x) );
+
+}
+
 
 function bernoulli( n, x ) {
 
