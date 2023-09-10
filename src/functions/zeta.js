@@ -79,19 +79,38 @@ function dirichletEta( x ) { return mul( zeta(x), sub( 1, pow( 2, sub(1,x) ) ) )
 
 function bernoulli( n, x ) {
 
-  if ( !Number.isInteger(n) ) throw Error( 'Noninteger index for Bernoulli number' );
+  if ( arguments.length === 2 ) {
 
-  if ( n < 0 ) throw Error( 'Unsupported index for Bernoulli number' );
+    if ( isZero(n) ) return isComplex(n) || isComplex(x) ? complex(1) : 1;
 
-  if ( arguments.length > 1 && !isZero(x) ) return mul( -n, hurwitzZeta(1-n,x) );
+    // avoid Hurwitz zeta parameter poles
+    if (  isNegativeIntegerOrZero(x) ) return complexAverage( x => bernoulli(n,x), x );
 
-  if ( n === 0 ) return 1;
+    return mul( neg(n), hurwitzZeta( sub(1,n), x ) );
 
-  if ( n === 1 ) return -.5;
+  }
 
-  if ( n & 1 ) return 0;
+  if ( Number.isInteger(n) && n >= 0 ) {
 
-  return -n * zeta(1-n);
+    if ( n === 0 ) return 1;
+
+    if ( n === 1 ) return -.5;
+
+    if ( n & 1 ) return 0;
+
+    var m = n/2;
+    if ( m <= bernoulli2nN.length )
+      return arbitrary( div( bernoulli2nN[m], bernoulli2nD[m] ) );
+
+    return -n * zeta(1-n);
+
+  }
+
+  if ( isPositiveIntegerOrZero(n) ) return complex( bernoulli( n.re ) );
+
+  // generalized Bernoulli number
+  console.log( 'Returning generalized Bernoulli number' );
+  return bernoulli( n, 0 );
 
 }
 
