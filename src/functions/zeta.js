@@ -1,7 +1,7 @@
 
 function zeta( x, tolerance=1e-10 ) {
 
-  if ( isEqualTo(x,1) ) throw Error( 'Riemann zeta pole' );
+  if ( isUnity(x) ) throw Error( 'Riemann zeta pole' );
 
   // functional equation dlmf.nist.gov/25.4.2 - connects both half planes
   if ( x < 0 || x.re < 0 )
@@ -135,7 +135,7 @@ function harmonic( n ) {
 
 function hurwitzZeta( x, a, tolerance=1e-10 ) {
 
-  if ( isEqualTo(x,1) ) throw Error( 'Hurwitz zeta pole' );
+  if ( isUnity(x) ) throw Error( 'Hurwitz zeta pole' );
 
   if ( isNegativeIntegerOrZero(a) ) throw Error( 'Hurwitz zeta parameter pole' );
 
