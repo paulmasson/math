@@ -4413,6 +4413,8 @@ function dirichletEta( x ) { return mul( zeta(x), sub( 1, pow( 2, sub(1,x) ) ) )
 
 function riemannXi( x ) {
 
+  if ( isZero(x) || isUnity(x) ) return isComplex(x) ? complex(.5) : .5;
+
   var half = div( x, 2 );
 
   return mul( half, sub(x,1), pow( pi, neg(half) ), gamma(half), zeta(x) );
