@@ -167,6 +167,11 @@ function hurwitzZeta( x, a, tolerance=1e-10 ) {
       x = arbitrary(x), a = arbitrary(a);
       var arbN = arbitrary(n), arb3 = arbitrary(3);
 
+      // at first sight including the factor (a+N)**x in this sum
+      //   appears to be unnecessary calculational overhead
+      // turns out to be more accurate by keeping it on a comparable
+      //   level of numerical precision as the other two terms
+
       var S = 0n;
       for ( var i = 0 ; i < n ; i++ )
         S = add( S, pow( div( add(a,arbN), add(a,arbitrary(i)) ), x ) );
