@@ -1321,6 +1321,8 @@ function weierstrassRoots( g2, g3 ) {
 
     // p, q both negative in defining cubic
 
+    if ( isZero(p) ) return mul( root(q,3), exp( complex(0,2*pi*n/3) ) )
+
     return mul( 2/sqrt(3), sqrt(p),
                 cos( sub( div( arccos( mul( 3*sqrt(3)/2, q, pow(p,-3/2) ) ), 3 ),
                           2*pi*n/3 ) ) );
