@@ -1351,21 +1351,21 @@ function weierstrassHalfPeriods( g2, g3 ) {
   var m = div( sub(e2,e3), sub(e1,e3) );
 
   var w1 = div( ellipticK(m), lambda );
-  var w3 = div( mul( complex(0,1), ellipticK( sub(1,m) ) ), lambda );
+  var w2 = div( mul( complex(0,1), ellipticK( sub(1,m) ) ), lambda );
 
-  return [ w1, w3 ];
+  return [ w1, w2 ];
 
 }
 
-function weierstrassInvariants( w1, w3 ) {
+function weierstrassInvariants( w1, w2 ) {
 
   if ( !isComplex(w1) ) w1 = complex(w1);
-  if ( !isComplex(w3) ) w3 = complex(w3);
+  if ( !isComplex(w2) ) w2 = complex(w2);
 
   // order half periods by complex slope
-  if ( w3.im/w3.re < w1.im/w1.re ) [ w1, w3 ] = [ w3, w1 ];
+  if ( w2.im/w2.re < w1.im/w1.re ) [ w1, w2 ] = [ w2, w1 ];
 
-  var ratio =  div( w3, w1 ), conjugate;
+  var ratio =  div( w2, w1 ), conjugate;
 
   if ( ratio.im < 0 ) {
     ratio.im = -ratio.im;
