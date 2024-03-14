@@ -1401,6 +1401,8 @@ function weierstrassP( x, g2, g3 ) {
 
   if ( !isComplex(x) ) x = complex(x);
 
+  if ( isZero(g2) && isZero(g3) ) return pow( x, -2 );
+
   var [ e1, e2, e3 ] = weierstrassRoots( g2, g3 );
 
   // Whittaker & Watson, Section 22.351
@@ -1414,6 +1416,8 @@ function weierstrassP( x, g2, g3 ) {
 function weierstrassPPrime( x, g2, g3 ) {
 
   if ( !isComplex(x) ) x = complex(x);
+
+  if ( isZero(g2) && isZero(g3) ) return mul( -2, pow( x, -3 ) );
 
   var [ e1, e2, e3 ] = weierstrassRoots( g2, g3 );
 
