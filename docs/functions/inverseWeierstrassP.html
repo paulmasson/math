@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>inverseWeierstrassP &mdash; Math</title>
+<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+
+<body>
+
+<script src="../../build/math.js"></script>
+<script src="../../../mathcell/build/mathcell.js"></script>
+
+<script src="https://cdn.jsdelivr.net/gh/mathjax/MathJax@2.7.5/MathJax.js?config=TeX-AMS_HTML"></script>
+
+<p class="function"> inverseWeierstrassP( <i>z</i>, <i>g</i><sub>2</sub>, <i>g</i><sub>3</sub> ) </p>
+
+<p>The inverse of the Weierstrass elliptic function &weierp; of <i>z</i> and invariants <i>g</i><sub>2</sub> and <i>g</i><sub>3</sub> in Math. Defined as the direct integral</p>
+
+\[ \wp^{-1}(z) = \int_{ z }^\infty \frac{ dt }{ \sqrt{ 4t^3 - g_2 t - g_3 } } \]
+
+<p>Real part on the real axis:</p>
+
+<div class="mathcell" style="height: 5in">
+<script>
+
+var parent = document.currentScript.parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [ { type: 'slider', min: -10, max: 10, default: 0,
+                                  name: 'g2', label: '<i>g</i><sub>2</sub>' },
+                { type: 'slider', min: -10, max: 10, default: 0,
+                                  name: 'g3', label: '<i>g</i><sub>3</sub>' } ] );
+
+parent.update = function( id ) {
+
+  var g2 = getVariable( id, 'g2' );
+  var g3 = getVariable( id, 'g3' );
+
+  var p1 = plot( x => inverseWeierstrassP( complex(x), g2, g3 ).re, [-5,-.01] );
+  var p2 = plot( x => inverseWeierstrassP( complex(x), g2, g3 ).re, [.01,5] );
+
+  var config = { type: 'svg', includeOrigin: true };
+
+  evaluate( id, [ p1, p2 ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Imaginary part on the real axis:</p>
+
+<div class="mathcell" style="height: 5in">
+<script>
+
+var parent = document.currentScript.parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [ { type: 'slider', min: -10, max: 10, default: 0,
+                                  name: 'g2', label: '<i>g</i><sub>2</sub>' },
+                { type: 'slider', min: -10, max: 10, default: 0,
+                                  name: 'g3', label: '<i>g</i><sub>3</sub>' } ] );
+
+parent.update = function( id ) {
+
+  var g2 = getVariable( id, 'g2' );
+  var g3 = getVariable( id, 'g3' );
+
+  var p1 = plot( x => inverseWeierstrassP( complex(x), g2, g3 ).im, [-5,-.01] );
+  var p2 = plot( x => inverseWeierstrassP( complex(x), g2, g3 ).im, [.01,5] );
+
+  var config = { type: 'svg' };
+
+  evaluate( id, [ p1, p2 ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Real part on the imaginary axis:</p>
+
+<div class="mathcell" style="height: 5in">
+<script>
+
+var parent = document.currentScript.parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [ { type: 'slider', min: -10, max: 10, default: 0,
+                                  name: 'g2', label: '<i>g</i><sub>2</sub>' },
+                { type: 'slider', min: -10, max: 10, default: 0,
+                                  name: 'g3', label: '<i>g</i><sub>3</sub>' } ] );
+
+parent.update = function( id ) {
+
+  var g2 = getVariable( id, 'g2' );
+  var g3 = getVariable( id, 'g3' );
+
+  var p = plot( x => inverseWeierstrassP( complex(0,x), g2, g3 ).re, [-5,5] );
+
+  var config = { type: 'svg', includeOrigin: true };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Imaginary part on the imaginary axis:</p>
+
+<div class="mathcell" style="height: 5in">
+<script>
+
+var parent = document.currentScript.parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [ { type: 'slider', min: -10, max: 10, default: 0,
+                                  name: 'g2', label: '<i>g</i><sub>2</sub>' },
+                { type: 'slider', min: -10, max: 10, default: 0,
+                                  name: 'g3', label: '<i>g</i><sub>3</sub>' } ] );
+
+parent.update = function( id ) {
+
+  var g2 = getVariable( id, 'g2' );
+  var g3 = getVariable( id, 'g3' );
+
+  var p1 = plot( x => inverseWeierstrassP( complex(0,x), g2, g3 ).im, [-5,-.01] );
+  var p2 = plot( x => inverseWeierstrassP( complex(0,x), g2, g3 ).im, [.01,5] );
+
+  var config = { type: 'svg' };
+
+  evaluate( id, [ p1, p2 ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Real part on the complex plane:</p>
+
+<div class="mathcell" style="width: 6in; height: 6.5in">
+<script>
+
+var parent = document.currentScript.parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [ { type: 'slider', min: -5, max: 5, default: 0,
+                                  name: 'g2', label: '<i>g</i><sub>2</sub>' },
+                { type: 'slider', min: -5, max: 5, default: 0,
+                                  name: 'g3', label: '<i>g</i><sub>3</sub>' } ] );
+
+parent.update = function( id ) {
+
+  var g2 = getVariable( id, 'g2' );
+  var g3 = getVariable( id, 'g3' );
+
+  // pole at origin degraded - to be fixed
+  var p = parametric( (x,y) => [ x, y, inverseWeierstrassP( complex(x,y), g2, g3 ) ],
+                      [-5,5,101], [-5,5,101],
+                      { complexFunction: 're', colormap: 'complexArgument', maxFaceSlope: 5 } );
+
+  var config = { type: 'threejs' };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Imaginary part on the complex plane:</p>
+
+<div class="mathcell" style="width: 6in; height: 6.5in">
+<script>
+
+var parent = document.currentScript.parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [ { type: 'slider', min: -5, max: 5, default: 0,
+                                  name: 'g2', label: '<i>g</i><sub>2</sub>' },
+                { type: 'slider', min: -5, max: 5, default: 0,
+                                  name: 'g3', label: '<i>g</i><sub>3</sub>' } ] );
+
+parent.update = function( id ) {
+
+  var g2 = getVariable( id, 'g2' );
+  var g3 = getVariable( id, 'g3' );
+
+  // pole at origin degraded - to be fixed
+  var p = parametric( (x,y) => [ x, y, inverseWeierstrassP( complex(x,y), g2, g3 ) ],
+                      [-5,5,101], [-5,5,101],
+                      { complexFunction: 'im', colormap: 'complexArgument', maxFaceSlope: 5 } );
+
+  var config = { type: 'threejs' };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Absolute value on the complex plane:</p>
+
+<div class="mathcell" style="width: 6in; height: 6.5in">
+<script>
+
+var parent = document.currentScript.parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [ { type: 'slider', min: -5, max: 5, default: 0,
+                                  name: 'g2', label: '<i>g</i><sub>2</sub>' },
+                { type: 'slider', min: -5, max: 5, default: 0,
+                                  name: 'g3', label: '<i>g</i><sub>3</sub>' } ] );
+
+parent.update = function( id ) {
+
+  var g2 = getVariable( id, 'g2' );
+  var g3 = getVariable( id, 'g3' );
+
+  // pole at origin degraded - to be fixed
+  var p = parametric( (x,y) => [ x, y, inverseWeierstrassP( complex(x,y), g2, g3 ) ],
+                      [-5,5,101], [-5,5,101],
+                      { complexFunction: 'abs', colormap: 'complexArgument', maxFaceSlope: 5 } );
+
+  var config = { type: 'threejs' };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Related functions: &nbsp; <a href="weierstrassP.html">weierstrassP</a>
+                      &nbsp; <a href="weierstrassPPrime.html">weierstrassPPrime</a></p>
+
+<p>Function category: <a href="../functions.html#elliptic">elliptic functions</a></p>
+
+</body>
+</html>
