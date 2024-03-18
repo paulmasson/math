@@ -292,7 +292,7 @@ function polylog( n, x, tolerance=1e-10 ) {
 
   if ( isEqualTo(n,-1) ) return div( x, mul( sub(1,x), sub(1,x) ) );
 
-  if ( abs(x) >= 1 ) {
+  if ( abs(x) > 1 ) {
 
     var twoPiI = complex(0,2*pi);
 
