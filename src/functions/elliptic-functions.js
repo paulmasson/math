@@ -196,8 +196,10 @@ function fundamentalParallelogram( x, p1, p2 ) {
 
   // x = m p1 + n p2, solve for m, n
 
-  var m = ( x.re * p2.im - x.im * p2.re ) / ( p1.re * p2.im - p1.im * p2.re );
-  var n = ( x.im * p1.re - x.re * p1.im ) / ( p1.re * p2.im - p1.im * p2.re );
+  var det = p1.re * p2.im - p1.im * p2.re;
+
+  var m = ( x.re * p2.im - x.im * p2.re ) / det;
+  var n = ( x.im * p1.re - x.re * p1.im ) / det;
 
   return add( x, mul( -Math.floor(m), p1 ), mul( -Math.floor(n), p2 ) );
 
