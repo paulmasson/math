@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>jacobiTheta &mdash; Math</title>
+<link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+
+<body>
+
+<script src="../../build/math.js"></script>
+<script src="../../../mathcell/build/mathcell.js"></script>
+
+<script src="https://cdn.jsdelivr.net/gh/mathjax/MathJax@2.7.5/MathJax.js?config=TeX-AMS_HTML"></script>
+
+<p class="function"> jacobiTheta( <i>n</i>, <i>z</i>, <i>q</i> ) </p>
+
+<p>The Jacobi theta function of type <i>n</i> of <i>z</i> and nome <i>q</i> in Math. Defined by rapidly converging infinite series in the nome.</p>
+
+<p>Real part on the real axis:</p>
+
+<div class="mathcell" style="height: 4.5in">
+<script>
+
+var parent = document.currentScript.parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [ { type: 'buttons', values: [1,2,3,4], width: '.5in',
+                                   name: 'n', label: 'n' },
+                { type: 'slider', min: -.99, max: .99, default: 0,
+                                  name: 'q', label: 'q' } ] );
+
+parent.update = function( id ) {
+
+  var n = getVariable( id, 'n' );
+  var q = getVariable( id, 'q' );
+
+  var p = plot( x => jacobiTheta( n, complex(x), q ).re, [-5,5] );
+
+  var config = { type: 'svg', includeOrigin: true };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Imaginary part on the real axis:</p>
+
+<div class="mathcell" style="height: 4.5in">
+<script>
+
+var parent = document.currentScript.parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [ { type: 'buttons', values: [1,2,3,4], width: '.5in',
+                                   name: 'n', label: 'n' },
+                { type: 'slider', min: -.99, max: .99, default: 0,
+                                  name: 'q', label: 'q' } ] );
+
+parent.update = function( id ) {
+
+  var n = getVariable( id, 'n' );
+  var q = getVariable( id, 'q' );
+
+  var p = plot( x => jacobiTheta( n, complex(x), q ).im, [-5,5] );
+
+  var config = { type: 'svg' };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Real part on the imaginary axis:</p>
+
+<div class="mathcell" style="height: 4.5in">
+<script>
+
+var parent = document.currentScript.parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [ { type: 'buttons', values: [1,2,3,4], width: '.5in',
+                                   name: 'n', label: 'n' },
+                { type: 'slider', min: -.99, max: .99, default: 0,
+                                  name: 'q', label: 'q' } ] );
+
+parent.update = function( id ) {
+
+  var n = getVariable( id, 'n' );
+  var q = getVariable( id, 'q' );
+
+  var p = plot( x => jacobiTheta( n, complex(0,x), q ).re, [-5,5] );
+
+  var config = { type: 'svg', yMin: -10, yMax: 10 };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Imaginary part on the imaginary axis:</p>
+
+<div class="mathcell" style="height: 4.5in">
+<script>
+
+var parent = document.currentScript.parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [ { type: 'buttons', values: [1,2,3,4], width: '.5in',
+                                   name: 'n', label: 'n' },
+                { type: 'slider', min: -.99, max: .99, default: 0,
+                                  name: 'q', label: 'q' } ] );
+
+parent.update = function( id ) {
+
+  var n = getVariable( id, 'n' );
+  var q = getVariable( id, 'q' );
+
+  var p = plot( x => jacobiTheta( n, complex(0,x), q ).im, [-5,5] );
+
+  var config = { type: 'svg', yMin: -10, yMax: 10 };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Real part on the complex plane:</p>
+
+<div class="mathcell" style="width: 6in; height: 6in">
+<script>
+
+var parent = document.currentScript.parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [ { type: 'buttons', values: [1,2,3,4], width: '.5in',
+                                   name: 'n', label: 'n' },
+                { type: 'slider', min: -.99, max: .99, default: 0,
+                                  name: 'q', label: 'q' } ] );
+
+parent.update = function( id ) {
+
+  var n = getVariable( id, 'n' );
+  var q = getVariable( id, 'q' );
+
+  var p = parametric( (x,y) => [ x, y, jacobiTheta( n, complex(x,y), q ) ], [-5,5,150], [-5,5,150],
+                      { complexFunction: 're', colormap: 'complexArgument' } );
+
+  var config = { type: 'threejs', zMin: -5, zMax: 5 };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Imaginary part on the complex plane:</p>
+
+<div class="mathcell" style="width: 6in; height: 6in">
+<script>
+
+var parent = document.currentScript.parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [ { type: 'buttons', values: [1,2,3,4], width: '.5in',
+                                   name: 'n', label: 'n' },
+                { type: 'slider', min: -.99, max: .99, default: 0,
+                                  name: 'q', label: 'q' } ] );
+
+parent.update = function( id ) {
+
+  var n = getVariable( id, 'n' );
+  var q = getVariable( id, 'q' );
+
+  var p = parametric( (x,y) => [ x, y, jacobiTheta( n, complex(x,y), q ) ], [-5,5,150], [-5,5,150],
+                      { complexFunction: 'im', colormap: 'complexArgument' } );
+
+  var config = { type: 'threejs', zMin: -5, zMax: 5 };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Absolute value on the complex plane:</p>
+
+<div class="mathcell" style="width: 6in; height: 6in">
+<script>
+
+var parent = document.currentScript.parentNode;
+
+var id = generateId();
+parent.id = id;
+
+MathCell( id, [ { type: 'buttons', values: [1,2,3,4], width: '.5in',
+                                   name: 'n', label: 'n' },
+                { type: 'slider', min: -.99, max: .99, default: 0,
+                                  name: 'q', label: 'q' } ] );
+
+parent.update = function( id ) {
+
+  var n = getVariable( id, 'n' );
+  var q = getVariable( id, 'q' );
+
+  var p = parametric( (x,y) => [ x, y, jacobiTheta( n, complex(x,y), q ) ], [-5,5,150], [-5,5,150],
+                      { complexFunction: 'abs', colormap: 'complexArgument' } );
+
+  var config = { type: 'threejs', zMax: 5 };
+
+  evaluate( id, [ p ], config );
+
+}
+
+parent.update( id );
+
+</script>
+</div>
+
+<p>Related functions: &nbsp; <a href="sn.html">sn</a> &nbsp; <a href="cn.html">cn</a>
+                      &nbsp; <a href="dn.html">dn</a></p>
+
+<p>Function category: <a href="../functions.html#elliptic">elliptic functions</a></p>
+
+</body>
+</html>
