@@ -49,11 +49,11 @@ function logisticSigmoid( x ) { return inv( add( 1, exp(neg(x)) ) ); }
 
 function log( x, base ) {
 
-  if ( isComplex(x) ) {
+  if ( isComplex(x) || isComplex(base) ) {
 
-    if ( isComplex(base) ) return div( log(x), log(base) );
+    if ( base === undefined ) return { re: Math.log( abs(x) ), im: arg(x) };
 
-    return { re: log( abs(x), base ), im: log( Math.E, base ) * arg(x) };
+    return div( log(x), log(base) );
 
   }
 
