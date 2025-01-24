@@ -363,6 +363,25 @@ function am( x, m ) {
 
 }
 
+function ns( x, m ) { return inv( sn(x,m) ); }
+
+function nc( x, m ) { return inv( cn(x,m) ); }
+
+function nd( x, m ) { return inv( dn(x,m) ); }
+
+function sc( x, m ) { return div( sn(x,m), cn(x,m) ); }
+
+function cs( x, m ) { return div( cn(x,m), sn(x,m) ); }
+
+function sd( x, m ) { return div( sn(x,m), dn(x,m) ); }
+
+function ds( x, m ) { return div( dn(x,m), sn(x,m) ); }
+
+function cd( x, m ) { return div( cn(x,m), dn(x,m) ); }
+
+function dc( x, m ) { return div( dn(x,m), cn(x,m) ); }
+
+
 
 function weierstrassRoots( g2, g3 ) {
 
