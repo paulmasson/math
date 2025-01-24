@@ -192,6 +192,9 @@ function ellipticNome( m ) {
 
 }
 
+// Jacobi theta functions grow very quickly in imaginary direction
+// evaluating elliptic functions without reduction fails accordingly
+
 function fundamentalParallelogram( x, p1, p2 ) {
 
   // x = m p1 + n p2, solve for m, n
@@ -222,7 +225,7 @@ function sn( x, m ) {
     x = fundamentalParallelogram( x, p1, p2 );
 
     var q = ellipticNome(m);
-    var t = div( x, pow( jacobiTheta(3,0,q), 2 ) );
+    var t = div( x, pow( jacobiTheta(3,0,q), 2 ) );  // theta3**2 = 2K/pi
 
     return mul( div( jacobiTheta(3,0,q), jacobiTheta(2,0,q) ),
                 div( jacobiTheta(1,t,q), jacobiTheta(4,t,q) ) );
@@ -261,7 +264,7 @@ function cn( x, m ) {
     x = fundamentalParallelogram( x, p1, p2 );
 
     var q = ellipticNome(m);
-    var t = div( x, pow( jacobiTheta(3,0,q), 2 ) );
+    var t = div( x, pow( jacobiTheta(3,0,q), 2 ) );  // theta3**2 = 2K/pi
 
     return mul( div( jacobiTheta(4,0,q), jacobiTheta(2,0,q) ),
                 div( jacobiTheta(2,t,q), jacobiTheta(4,t,q) ) );
@@ -300,7 +303,7 @@ function dn( x, m ) {
     x = fundamentalParallelogram( x, p1, p2 );
 
     var q = ellipticNome(m);
-    var t = div( x, pow( jacobiTheta(3,0,q), 2 ) );
+    var t = div( x, pow( jacobiTheta(3,0,q), 2 ) );  // theta3**2 = 2K/pi
 
     return mul( div( jacobiTheta(4,0,q), jacobiTheta(3,0,q) ),
                 div( jacobiTheta(3,t,q), jacobiTheta(4,t,q) ) );
