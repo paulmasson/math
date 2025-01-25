@@ -192,6 +192,47 @@ function ellipticNome( m ) {
 
 }
 
+function am( x, m ) {
+
+  if ( m > 1 || isComplex(x) || isComplex(m) ) {
+
+    if ( !isComplex(x) ) x = complex(x);
+    if ( !isComplex(m) ) m = complex(m);
+
+    if ( m.im === 0 && m.re <= 1 ) {
+
+      var K = ellipticK( m.re );
+      var n = Math.round( x.re / 2 / K );
+      x = sub( x, 2 * n * K );
+
+      if ( m.re < 0 ) {
+
+        var Kp = ellipticK( 1 - m.re );
+        var p = Math.round( x.im / 2 / Kp.re );
+
+        // bitwise test for odd integer
+        if ( p & 1 ) return sub( n * pi, arcsin( sn(x,m) ) );
+
+      }
+
+      return add( arcsin( sn(x,m) ), n * pi );
+
+    }
+
+    return arcsin( sn(x,m) );
+
+  } else {
+
+    var K = ellipticK(m);
+    var n = Math.round( x / 2 / K );
+    x = x - 2 * n * K;
+
+    return Math.asin( sn(x,m) ) + n * pi;
+
+  }
+
+}
+
 // Jacobi theta functions grow very quickly in imaginary direction
 // evaluating elliptic functions without reduction fails accordingly
 
@@ -207,7 +248,6 @@ function fundamentalParallelogram( x, p1, p2 ) {
   return add( x, mul( -Math.floor(m), p1 ), mul( -Math.floor(n), p2 ) );
 
 }
-
 
 function sn( x, m ) {
 
@@ -322,47 +362,6 @@ function dn( x, m ) {
 
 }
 
-function am( x, m ) {
-
-  if ( m > 1 || isComplex(x) || isComplex(m) ) {
-
-    if ( !isComplex(x) ) x = complex(x);
-    if ( !isComplex(m) ) m = complex(m);
-
-    if ( m.im === 0 && m.re <= 1 ) {
-
-      var K = ellipticK( m.re );
-      var n = Math.round( x.re / 2 / K );
-      x = sub( x, 2 * n * K );
-
-      if ( m.re < 0 ) {
-
-        var Kp = ellipticK( 1 - m.re );
-        var p = Math.round( x.im / 2 / Kp.re );
-
-        // bitwise test for odd integer
-        if ( p & 1 ) return sub( n * pi, arcsin( sn(x,m) ) );
-
-      }
-
-      return add( arcsin( sn(x,m) ), n * pi );
-
-    }
-
-    return arcsin( sn(x,m) );
-
-  } else {
-
-    var K = ellipticK(m);
-    var n = Math.round( x / 2 / K );
-    x = x - 2 * n * K;
-
-    return Math.asin( sn(x,m) ) + n * pi;
-
-  }
-
-}
-
 function ns( x, m ) { return inv( sn(x,m) ); }
 
 function nc( x, m ) { return inv( cn(x,m) ); }
@@ -380,7 +379,6 @@ function ds( x, m ) { return div( dn(x,m), sn(x,m) ); }
 function cd( x, m ) { return div( cn(x,m), dn(x,m) ); }
 
 function dc( x, m ) { return div( dn(x,m), cn(x,m) ); }
-
 
 
 function weierstrassRoots( g2, g3 ) {
