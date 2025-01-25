@@ -1336,6 +1336,10 @@ function cd( x, m ) { return div( cn(x,m), dn(x,m) ); }
 
 function dc( x, m ) { return div( dn(x,m), cn(x,m) ); }
 
+function lemniscateSin( x ) { return sn(x,-1); }
+
+function lemniscateCos( x ) { return dn(x,2); }
+
 
 function weierstrassRoots( g2, g3 ) {
 
