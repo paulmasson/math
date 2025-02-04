@@ -124,9 +124,18 @@ function bernoulli( n, x ) {
 
 }
 
-function harmonic( n ) {
+function harmonic( n, r ) {
 
-  if ( !Number.isInteger(n) ) throw Error( 'Noninteger index for harmonic number' );
+  if ( arguments.length === 2 ) {
+
+    if ( !Number.isInteger(n) || isComplex(r) )
+      return sub( zeta(r), hurwitzZeta( r, add(n,1) ) );
+
+    return summation( i => 1/i**r, [1,n] );
+
+  }
+
+  if ( !Number.isInteger(n) ) return add( digamma(add(n,1)), eulerGamma );
 
   if ( n > 1e3 ) return log(n) + eulerGamma + 1/2/n - 1/12/n**2;
 
