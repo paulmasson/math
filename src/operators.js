@@ -445,6 +445,16 @@ function sqrt( x ) {
 
 }
 
+function fibonacci( n, real=false ) {
+
+  var sqrt5 = sqrt(5), r = ( 1 + sqrt5 )/2;
+
+  if ( real ) return div( sub( pow(r,n), mul( pow(1/r,n), cos(mul(n,pi)) ) ), sqrt5 );
+
+  return div( sub( pow(r,n), pow(-1/r,n) ), sqrt5 );
+
+}
+
 
 function complexAverage( f, x, offset=1e-5 ) {
 
