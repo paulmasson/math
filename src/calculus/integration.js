@@ -1,9 +1,6 @@
 
 function integrate( f, [a,b], options={} ) {
 
-  var method = 'method' in options ? options.method : 'adaptive-simpson';
-  var tolerance = 'tolerance' in options ? options.tolerance : 1e-10;
-
   if ( isComplex(a) || isComplex(b) || isComplex(f(a)) ) {
 
     if ( !isComplex(a) ) a = complex(a);
@@ -21,6 +18,9 @@ function integrate( f, [a,b], options={} ) {
     return mul( sub(b,a), complex( real, imag ) );
 
   }
+
+  var method = 'method' in options ? options.method : 'adaptive-simpson';
+  var tolerance = 'tolerance' in options ? options.tolerance : 1e-10;
 
   if ( a === b ) return 0;
 
