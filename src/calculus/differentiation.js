@@ -14,7 +14,7 @@ function diff( f, x, n=1, options={} ) {
     var real = diff( t => f( mul(normed,t) ).re, absX, n, options );
     var imag = diff( t => f( mul(normed,t) ).im, absX, n, options );
 
-    return div( complex( real, imag ), normed );
+    return div( complex( real, imag ), pow(normed,n) );
 
   }
 
