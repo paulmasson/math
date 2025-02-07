@@ -1,7 +1,8 @@
 
-function diff( f, x, n=1, method='ridders' ) {
+function diff( f, x, n=1, options={} ) {
 
-  if ( !isPositiveInteger(n) ) throw Error( 'Only positive integer orders for differentiation' );
+  if ( !Number.isInteger(n) || n < 0 )
+    throw Error( 'Only positive integer orders for differentiation' );
 
   if ( isComplex(x) || isComplex(f(x)) ) {
 
@@ -10,12 +11,15 @@ function diff( f, x, n=1, method='ridders' ) {
     var absX = abs(x);
     var normed = absX === 0 ? complex(1) : div( x, absX );
 
-    var real = diff( t => f( mul(normed,t) ).re, absX, n, method );
-    var imag = diff( t => f( mul(normed,t) ).im, absX, n, method );
+    var real = diff( t => f( mul(normed,t) ).re, absX, n, options );
+    var imag = diff( t => f( mul(normed,t) ).im, absX, n, options );
 
     return div( complex( real, imag ), normed );
 
   }
+
+  var method = 'method' in options ? options.method : 'ridders';
+  var epsilon = 'epsilon' in options ? options.epsilon : 1e-5;
 
   // central differences have h**2 error but division
   //   by h**n increases roundoff error
@@ -36,12 +40,12 @@ function diff( f, x, n=1, method='ridders' ) {
     case 'naive':
 
       // only accurate for first couple derivatives
-      var h = (1e-8)**(1/(n+2));
+      var h = epsilon**(1/(n+2));
       return difference();
 
     case 'ridders':
 
-      var h = (1e-5)**(1/(n+2));
+      var h = epsilon**(1/(n+2));
       var error = Number.MAX_VALUE;
       var maxIter = 10;
       var result;

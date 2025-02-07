@@ -14,11 +14,19 @@
 
 <p><b>diff( <i>f</i>, <i>x</i>, <i>n</i> )</b> &mdash; <i>n</i>th-order numerical derivative of a real or complex function at <i>x</i></p>
 
+<p><b>diff( <i>f</i>, <i>x</i>, <i>n</i>, options )</b> &mdash; <i>n</i>th-order numerical derivative of a real or complex function at <i>x</i>. Options for this dictionary argument include</p>
+
+<table style="margin-left: 1in"><tr><td style="width: 1.5in; vertical-align: top">
+  <code>method</code></td><td>either <code>'naive'</code> or <code>'ridders'</code>, default <code>'ridders'</code>
+</td></tr><tr><td>
+  <code>epsilon</code></td><td>sets initial step, default 10<sup>&minus;5</sup>
+</td></tr></table>
+
 <p><b>D( <i>f</i>, <i>x</i> )</b> &mdash; numerical derivative of a real or complex function at <i>x</i></p>
 
 <p><b>D( <i>f</i>, <i>x</i>, <i>n</i> )</b> &mdash; <i>n</i>th-order numerical derivative of a real or complex function at <i>x</i></p>
 
-<p><b>taylorSeries( <i>f</i>, <i>x</i><sub>0</sub> )</b> &mdash; numerical Taylor series of five terms of a real or complex function around <i>x</i><sub>0</sub> returned as a function</p>
+<br/><p><b>taylorSeries( <i>f</i>, <i>x</i><sub>0</sub> )</b> &mdash; numerical Taylor series of five terms of a real or complex function around <i>x</i><sub>0</sub> returned as a function</p>
 
 <p><b>taylorSeries( <i>f</i>, <i>x</i><sub>0</sub>, terms )</b> &mdash; numerical Taylor series of an arbitrary number of terms of a real or complex function around <i>x</i><sub>0</sub> returned as a function</p>
 
