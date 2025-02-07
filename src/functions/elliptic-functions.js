@@ -259,13 +259,13 @@ function sn( x, m ) {
     if ( abs(m) > 1 ) return mul( inv(sqrt(m)), sn( mul(sqrt(m),x), inv(m) ) ); 
 
     // periods 4K, 2iK'
-    var p1 = mul( 4, ellipticK(m) );
+    var K = ellipticK(m), p1 = mul( 4, K );
     var p2 = mul( complex(0,2), ellipticK( sub(1,m) ) );
 
     x = fundamentalParallelogram( x, p1, p2 );
 
     var q = ellipticNome(m);
-    var t = div( x, pow( jacobiTheta(3,0,q), 2 ) );  // theta3**2 = 2K/pi
+    var t = div( x, mul( 2/pi, K ) );  // theta(3,0,q)**2 = 2K(m)/pi
 
     return mul( div( jacobiTheta(3,0,q), jacobiTheta(2,0,q) ),
                 div( jacobiTheta(1,t,q), jacobiTheta(4,t,q) ) );
@@ -298,13 +298,13 @@ function cn( x, m ) {
     if ( abs(m) > 1 ) return dn( mul(sqrt(m),x), inv(m) ); 
 
     // periods 4K, 2K + 2iK'
-    var p1 = mul( 4, ellipticK(m) );
+    var K = ellipticK(m), p1 = mul( 4, K );
     var p2 = add( div(p1,2), mul( complex(0,2), ellipticK( sub(1,m) ) ) );
 
     x = fundamentalParallelogram( x, p1, p2 );
 
     var q = ellipticNome(m);
-    var t = div( x, pow( jacobiTheta(3,0,q), 2 ) );  // theta3**2 = 2K/pi
+    var t = div( x, mul( 2/pi, K ) );  // theta(3,0,q)**2 = 2K(m)/pi
 
     return mul( div( jacobiTheta(4,0,q), jacobiTheta(2,0,q) ),
                 div( jacobiTheta(2,t,q), jacobiTheta(4,t,q) ) );
@@ -337,13 +337,13 @@ function dn( x, m ) {
     if ( abs(m) > 1 ) return cn( mul(sqrt(m),x), inv(m) ); 
 
     // periods 2K, 4iK'
-    var p1 = mul( 2, ellipticK(m) );
+    var K = ellipticK(m), p1 = mul( 2, K );
     var p2 = mul( complex(0,4), ellipticK( sub(1,m) ) );
 
     x = fundamentalParallelogram( x, p1, p2 );
 
     var q = ellipticNome(m);
-    var t = div( x, pow( jacobiTheta(3,0,q), 2 ) );  // theta3**2 = 2K/pi
+    var t = div( x, mul( 2/pi, K ) );  // theta(3,0,q)**2 = 2K(m)/pi
 
     return mul( div( jacobiTheta(4,0,q), jacobiTheta(3,0,q) ),
                 div( jacobiTheta(3,t,q), jacobiTheta(4,t,q) ) );
