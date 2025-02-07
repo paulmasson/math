@@ -40,6 +40,7 @@ function diff( f, x, n=1, options={} ) {
     case 'naive':
 
       // only accurate for first couple derivatives
+      epsilon /= 1000;
       var h = epsilon**(1/(n+2));
       return difference();
 
