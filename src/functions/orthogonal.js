@@ -3,6 +3,8 @@ function hermite( n, x ) {
 
   function coefficients( n ) {
 
+    if ( isComplex(n) ) var returnComplex = true, n = n.re;
+
     var minus2 = [ 1 ];
     var minus1 = [ 2, 0 ];
     var t, current;
@@ -21,14 +23,18 @@ function hermite( n, x ) {
       minus1 = current;
     }
 
+    if ( returnComplex ) {
+      current.forEach( (e,i,a) => a[i] = complex(e) );
+      return current;
+    }
+
     return current;
 
   }
 
   if ( isComplex(n) || isComplex(x) ) {
 
-    if ( !isComplex(n) ) n = complex(n);
-    if ( isPositiveIntegerOrZero(n) ) return polynomial( x, coefficients(n.re) );
+    if ( isPositiveIntegerOrZero(n) ) return polynomial( x, coefficients(n) );
 
     var a = div( n, -2 );
     var b = div( sub(1,n), 2 );
