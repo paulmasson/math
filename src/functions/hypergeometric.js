@@ -209,7 +209,7 @@ function hypergeometric1F1( a, b, x, tolerance=1e-10 ) {
 
   } else {
 
-    if ( isZero(a) ) return 1;
+    if ( a === 0 ) return 1;
 
     // Kummer transformation
     if ( x < 0 ) return exp(x) * hypergeometric1F1( b-a, b, -x );
@@ -494,7 +494,7 @@ function hypergeometric2F1( a, b, c, x, tolerance=1e-10 ) {
 
   } else {
 
-    if ( isZero(a) || isZero(b) ) return 1;
+    if ( a === 0 || b === 0 ) return 1;
 
     // transformation from Abramowitz & Stegun p.559
     if ( x < -1 ) {
