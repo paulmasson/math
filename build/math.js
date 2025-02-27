@@ -2705,6 +2705,8 @@ function hypergeometric1F1( a, b, x, tolerance=1e-10 ) {
 
   if ( isEqualTo(a,b) ) {
 
+    if ( ( isComplex(a) || isComplex(b) ) && !isComplex(x) ) x = complex(x);
+
     if ( isNegativeInteger(a) ) {
       var n = isComplex(a) ? -a.re : -a;
       return summation( k => div( pow(x,k), factorial(k) ), [0,n] );
