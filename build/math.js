@@ -2783,7 +2783,7 @@ function hypergeometric1F1( a, b, x, tolerance=1e-10 ) {
     // asymptotic form as per Johansson arxiv.org/abs/1606.06977
     if ( abs(x) > useAsymptotic ) {
 
-      if ( isZero(a) || isNegativeIntegerOrZero(sub(b,a)) )
+      if ( isNegativeInteger(sub(b,a)) ) // a is nonzero, b is not a
         return complexAverage( a => hypergeometric1F1(a,b,x), a );
 
       var t1 = mul( gamma(b), pow( neg(x), neg(a) ), inv( gamma(sub(b,a)) ),
