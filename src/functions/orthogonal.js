@@ -184,3 +184,11 @@ function legendreQ( l, m, x ) {
 
 }
 
+
+function jacobiP( n, a, b, x ) {
+
+  return mul( binomial( add(n,a), n ),
+              hypergeometric2F1( neg(n), add(n,a,b,1), add(a,1), div(sub(1,x),2) ) );
+
+}
+
