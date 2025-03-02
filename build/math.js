@@ -3902,9 +3902,10 @@ function legendreP( l, m, x, renormalized=false ) {
 
 function sphericalHarmonic( l, m, theta, phi ) {
 
-  var renormalizedLegendre = legendreP( l, m, cos(theta), true );
+  var norm = sqrt( mul( div( add(mul(2,l),1), 4*pi ),
+                        div( factorial(sub(l,m)), factorial(add(l,m)) ) ) );
 
-  return mul( Math.sign(m)**m, renormalizedLegendre, exp( complex(0,m*phi) ) );
+  return mul( pow(-1,m), norm, legendreP( l, m, cos(theta) ), exp( complex(0,m*phi) ) );
 
 }
 
