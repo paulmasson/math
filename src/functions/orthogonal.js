@@ -143,12 +143,14 @@ function legendreP( l, m, x, renormalized=false ) {
 
 }
 
-function sphericalHarmonic( l, m, theta, phi ) {
+function sphericalHarmonic( l, m, theta, phi, condonShortley=true ) {
 
   var norm = sqrt( mul( div( add(mul(2,l),1), 4*pi ),
                         div( factorial(sub(l,m)), factorial(add(l,m)) ) ) );
 
-  return mul( pow(-1,m), norm, legendreP( l, m, cos(theta) ), exp( complex(0,m*phi) ) );
+  var cs = condonShortley ? pow(-1,m) : 1;
+
+  return mul( cs, norm, legendreP( l, m, cos(theta) ), exp( complex(0,m*phi) ) );
 
 }
 
