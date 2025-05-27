@@ -60,9 +60,9 @@ function laguerre( n, a, x ) {
 
   // explict recursion unnecessary: hypergeometric series handles integers
 
-  if ( arguments.length < 3 ) {
+  if ( arguments.length === 2 ) {
     x = a;
-    a = 0
+    return hypergeometric1F1( neg(n), 1, x );
   }
 
   return mul( binomial( add(n,a), n ), hypergeometric1F1( neg(n), add(a,1), x ) ); 
