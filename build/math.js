@@ -3913,7 +3913,7 @@ function sphericalHarmonic( l, m, theta, phi, condonShortley=true ) {
 
 function legendreQ( l, m, x ) {
 
-  if ( arguments.length < 3 ) {
+  if ( arguments.length === 2 ) {
     x = m;
     m = 0;
   }
