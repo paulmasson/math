@@ -85,10 +85,12 @@ function chebyshevU( n, x ) {
 
 function legendreP( l, m, x, renormalized=false ) {
 
-  if ( arguments.length < 3 ) {
+  if ( arguments.length === 2 ) {
     x = m;
-    m = 0;
+    return hypergeometric2F1( neg(l), add(l,1), 1, div(sub(1,x),2) );
   }
+
+  if ( isZero(m) ) return legendreP( l, x );
 
   if ( Number.isInteger(l) && Number.isInteger(m) && Math.abs(x) <= 1 ) {
 
