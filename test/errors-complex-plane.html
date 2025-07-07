@@ -1,0 +1,100 @@
+<html>
+<head>
+<title>Errors on the Complex Plane</title>
+<link rel="stylesheet" type="text/css" href="../docs/style.css">
+<style></style>
+</head>
+
+<body>
+
+<script src="../build/math.js"></script>
+
+<p>This web page locates errors thrown by the functions of Math. Enter a function and the test results will appear below. The independent variable must be typed as <code>x</code> for evaluation.</p>
+
+<div style="text-align: center">
+Function: &nbsp; 
+<input id="input" type="text" value="hypergeometric2F1( 1, 2, 3, x )"
+                  style="width: 4in" onchange="update()"/>
+</div><br>
+
+<div id="container" style="text-align: center"></div>
+
+<script>
+
+var canvas = document.createElement( 'canvas' );
+canvas.width = 500;
+canvas.height = 500;
+canvas.style.border = '1px solid black';
+canvas.title = '';
+
+function bin( x ) { return Math.round( x + .5 ) - .5 }
+
+canvas.onmousemove = function() {
+  var x = bin( dataRange * ( 2 * event.offsetX / canvas.width - 1 ) );
+  var y = bin( dataRange * ( 1 - 2 * event.offsetY / canvas.height ) );
+  this.title = '(' + x + ',' + y + ')';
+}
+
+var context = canvas.getContext( '2d' );
+context.fillStyle = 'white';
+context.fillRect( 0, 0, canvas.width, canvas.height );
+
+container.appendChild( canvas );
+
+var size = 2.5;
+var imageData = context.createImageData( size, size );
+
+var dataRange = 50;
+
+function drawPoint( r, g, b, x, y ) {
+
+  for ( var i = 0 ; i < imageData.data.length ; i += 4 ) {
+
+    imageData.data[i] = r;
+    imageData.data[i+1] = g;
+    imageData.data[i+2] = b;
+    imageData.data[i+3] = 255;
+
+  }
+
+  context.putImageData( imageData, canvas.width * ( x / dataRange + 1 ) / 2,
+                                   canvas.height * ( 1 - y / dataRange ) / 2 );
+
+}
+
+function update() {
+
+  context.fillRect( 0, 0, canvas.width, canvas.height );
+
+  function process() {
+
+    for ( var x = -dataRange + .5 ; x < dataRange ; x++ )
+      for ( var y = -dataRange + .5 ; y < dataRange ; y++ ) {
+
+        var z = complex(x,y);
+        var r = 0, g = 255, b = 0;
+
+        try { Function( 'x', 'return ' + input.value )(z); }
+
+        catch( e ) { g = 0; }
+
+        drawPoint( r, g, b, x, y )
+
+      }
+
+  }
+
+  setTimeout( function() { process(); }, 10 );
+
+}
+
+update();
+
+</script>
+
+<p>The function is evaluated in unit increments from -49.5 to 49.5 in both directions on the the complex plane. A green dot above indicates that the the library returns a result. A black dot represents a thrown error.</p>
+
+<p>This test is used to identify argument domains that need significant attention.</p>
+
+</body>
+</html>
