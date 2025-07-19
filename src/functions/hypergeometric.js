@@ -386,6 +386,16 @@ function hypergeometric2F1( a, b, c, x, tolerance=1e-10 ) {
 
     if ( isZero(a) || isZero(b) ) return complex(1);
 
+    // terminating hypergeometric series holds for entire complex plane
+    if ( isNegativeInteger(a) || isNegativeInteger(b) )
+      return hypergeometricSeries( [a,b], [c], x, true );
+
+    if ( isUnity(x) )
+      if ( re(sub(c,add(a,b))) > 0 )
+        return div( mul( gamma(c), gamma(sub(c,add(a,b))) ),
+                    mul( gamma(sub(c,a)), gamma(sub(c,b)) ) );
+      else throw Error( 'Divergent Gauss hypergeometric function' );
+
     // choose smallest absolute value of transformed argument
     // transformations from Abramowitz & Stegun p.559
     // fewer operations compared to dlmf.nist.gov/15.8
@@ -407,13 +417,13 @@ function hypergeometric2F1( a, b, c, x, tolerance=1e-10 ) {
 
       case 2:
 
-        // zero a or b already handled, c is not a or b
+        // zero/negative a or b already handled, c is not a or b
         // remaining integer values hit one term or other
 
-        if ( isNegativeInteger(a) || isNegativeInteger(sub(c,a)) || isInteger(sub(c,add(a,b))) )
+        if ( isNegativeInteger(sub(c,a)) || isInteger(sub(c,add(a,b))) )
           return complexAverage( a => hypergeometric2F1(a,b,c,x), a );
 
-        if ( isNegativeInteger(b) || isNegativeInteger(sub(c,b)) )
+        if ( isNegativeInteger(sub(c,b)) )
           return complexAverage( b => hypergeometric2F1(a,b,c,x), b );
 
         var t1 = mul( gamma(c), gamma( sub(c,add(a,b)) ), 
@@ -428,10 +438,10 @@ function hypergeometric2F1( a, b, c, x, tolerance=1e-10 ) {
 
       case 3:
 
-        if ( isNegativeInteger(a) || isNegativeInteger(sub(c,a)) || isInteger(sub(b,a)) )
+        if ( isNegativeInteger(sub(c,a)) || isInteger(sub(b,a)) )
           return complexAverage( a => hypergeometric2F1(a,b,c,x), a );
 
-        if ( isNegativeInteger(b) || isNegativeInteger(sub(c,b)) )
+        if ( isNegativeInteger(sub(c,b)) )
           return complexAverage( b => hypergeometric2F1(a,b,c,x), b );
 
         var t1 = mul( gamma(c), gamma(sub(b,a)), inv( gamma(b) ),
@@ -446,10 +456,10 @@ function hypergeometric2F1( a, b, c, x, tolerance=1e-10 ) {
 
       case 4:
 
-        if ( isNegativeInteger(a) || isNegativeInteger(sub(c,a)) || isInteger(sub(b,a)) )
+        if ( isNegativeInteger(sub(c,a)) || isInteger(sub(b,a)) )
           return complexAverage( a => hypergeometric2F1(a,b,c,x), a );
 
-        if ( isNegativeInteger(b) || isNegativeInteger(sub(c,b)) )
+        if ( isNegativeInteger(sub(c,b)) )
           return complexAverage( b => hypergeometric2F1(a,b,c,x), b );
 
         var t1 = mul( pow( sub(1,x), neg(a) ), gamma(c), gamma(sub(b,a)),
@@ -464,10 +474,10 @@ function hypergeometric2F1( a, b, c, x, tolerance=1e-10 ) {
 
       case 5:
 
-        if ( isNegativeInteger(a) || isNegativeInteger(sub(c,a)) || isInteger(sub(c,add(a,b))) )
+        if ( isNegativeInteger(sub(c,a)) || isInteger(sub(c,add(a,b))) )
           return complexAverage( a => hypergeometric2F1(a,b,c,x), a );
 
-        if ( isNegativeInteger(b) || isNegativeInteger(sub(c,b)) )
+        if ( isNegativeInteger(sub(c,b)) )
           return complexAverage( b => hypergeometric2F1(a,b,c,x), b );
 
         var t1 = mul( gamma(c), gamma( sub(c,add(a,b)) ), inv( gamma(sub(c,a)) ),
@@ -501,15 +511,19 @@ function hypergeometric2F1( a, b, c, x, tolerance=1e-10 ) {
 
     if ( a === 0 || b === 0 ) return 1;
 
+    // terminating series holds for entire axis
+    if ( isNegativeInteger(a) || isNegativeInteger(b) )
+      return hypergeometricSeries( [a,b], [c], x );
+
     // transformation from Abramowitz & Stegun p.559
     if ( x < -1 ) {
 
-      // zero a or b already handled, c is not a or b
+      // zero/negative a or b already handled, c is not a or b
 
-      if ( isNegativeInteger(a) || isNegativeInteger(c-a) )
+      if ( isNegativeInteger(c-a) )
         return complexAverage( a => hypergeometric2F1(a,b,c,x), a );
 
-      if ( isNegativeInteger(b) || isNegativeInteger(c-b) )
+      if ( isNegativeInteger(c-b) )
         return complexAverage( b => hypergeometric2F1(a,b,c,x), b );
 
       var t1 = gamma(c) * gamma(b-a) / gamma(b) / gamma(c-a)
@@ -521,6 +535,7 @@ function hypergeometric2F1( a, b, c, x, tolerance=1e-10 ) {
 
     }
 
+    // faster than direct sum for general case
     if ( x === -1 ) return hypergeometric2F1( a, b, c, complex(x) ).re;
 
     if ( x === 1 )
