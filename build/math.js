@@ -2777,6 +2777,9 @@ function hypergeometric1F1( a, b, x, tolerance=1e-10 ) {
 
     if ( isZero(a) ) return complex(1);
 
+    // terminating hypergeometric series holds for entire complex plane
+    if ( isNegativeInteger(a) ) return hypergeometricSeries( [a], [b], x, true );
+
     if ( !isComplex(x) ) x = complex(x);
 
     // Kummer transformation
@@ -2785,7 +2788,7 @@ function hypergeometric1F1( a, b, x, tolerance=1e-10 ) {
     // asymptotic form as per Johansson arxiv.org/abs/1606.06977
     if ( abs(x) > useAsymptotic ) {
 
-      if ( isNegativeInteger(a) || isNegativeInteger(sub(b,a)) ) // a is nonzero, b is not a
+      if ( isNegativeInteger(sub(b,a)) ) // zero/negative a already handled, b is not a
         return complexAverage( a => hypergeometric1F1(a,b,x), a );
 
       var t1 = mul( gamma(b), pow( neg(x), neg(a) ), inv( gamma(sub(b,a)) ),
@@ -2840,6 +2843,9 @@ function hypergeometric1F1( a, b, x, tolerance=1e-10 ) {
   } else {
 
     if ( a === 0 ) return 1;
+
+    // terminating series holds for entire axis
+    if ( isNegativeInteger(a) ) return hypergeometricSeries( [a], [b], x );
 
     // Kummer transformation
     if ( x < 0 ) return exp(x) * hypergeometric1F1( b-a, b, -x );
