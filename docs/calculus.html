@@ -84,9 +84,9 @@
 
 <p><b>spline( points, value )</b> &mdash; interpolating cubic spline over the array of two-dimensional points with a value of <code>'function'</code>, <code>'derivative'</code> or <code>'integral'</code> returned as a function</p>
 
-<p><b>padeApproximant( coefficients, <i>n</i>, <i>d</i> )</b> &mdash; [<i>n</i>/<i>d</i>] Pad&eacute; approximant for Taylor coefficients centered at the origin returned as a pair of coefficient arrays <code>{ N: N, D: D }</code></p>
+<p><b>padeApproximant( coefficients, <i>n</i>, <i>d</i> )</b> &mdash; [<i>n</i>/<i>d</i>] Pad&eacute; approximant for Taylor coefficients centered at the origin returned as a pair of coefficient arrays <nobr><code>{ N: N, D: D }</code></nobr></p>
 
-<p><b>padeApproximant( coefficients, <i>n</i>, <i>d</i>, center )</b> &mdash; [<i>n</i>/<i>d</i>] Pad&eacute; approximant for Taylor coefficients centered at the center returned as a pair of coefficient arrays <code>{ N: N, D: D }</code></p>
+<p><b>padeApproximant( coefficients, <i>n</i>, <i>d</i>, center )</b> &mdash; [<i>n</i>/<i>d</i>] Pad&eacute; approximant for Taylor coefficients centered at the center returned as a pair of coefficient arrays <nobr><code>{ N: N, D: D }</code></nobr></p>
 
 <p><b>padeApproximant( <i>f</i>, <i>n</i>, <i>d</i> )</b> &mdash; [<i>n</i>/<i>d</i>] Pad&eacute; approximant using numerical derivatives of a real function centered at the origin returned as a pair of coefficient arrays <code>{ N: N, D: D }</code></p>
 
@@ -95,9 +95,9 @@
 <br id="diffeq"/>
 <h1>Differential Equations</h1>
 
-<p><b>ode( <i>f</i>, <i>y</i><sub>0</sub>, [<i>x</i><sub>0</sub>,<i>x</i><sub>1</sub>] )</b> &mdash; numerical solution of the real or complex system <i>dy</i>/<i>dx</i>&nbsp;=&nbsp;<i>f</i>(<i>x</i>,<i>y</i>), <i>y</i>(<i>x</i><sub>0</sub>)&nbsp;=&nbsp;<i>y</i><sub>0</sub> on the specified interval.</p>
+<p><b>ode( <i>f</i>, <i>y</i><sub>0</sub>, [<i>x</i><sub>0</sub>,<i>x</i><sub>1</sub>] )</b> &mdash; numerical solution of the real or complex system <nobr><i>dy</i>/<i>dx</i>&nbsp;=&nbsp;<i>f</i>(<i>x</i>,<i>y</i>), <i>y</i>(<i>x</i><sub>0</sub>)&nbsp;=&nbsp;<i>y</i><sub>0</sub></nobr> on the specified interval.</p>
 
-<p><b>ode( <i>f</i>, <i>y</i><sub>0</sub>, [<i>x</i><sub>0</sub>,<i>x</i><sub>1</sub>], step, method )</b> &mdash; numerical solution of the real or complex system <i>dy</i>/<i>dx</i>&nbsp;=&nbsp;<i>f</i>(<i>x</i>,<i>y</i>), <i>y</i>(<i>x</i><sub>0</sub>)&nbsp;=&nbsp;<i>y</i><sub>0</sub> on the specified interval with specified step size and a method of <code>'euler'</code> or <nobr><code>'runge-kutta'</code></nobr>.</p>
+<p><b>ode( <i>f</i>, <i>y</i><sub>0</sub>, [<i>x</i><sub>0</sub>,<i>x</i><sub>1</sub>], step, method )</b> &mdash; numerical solution of the real or complex system <nobr><i>dy</i>/<i>dx</i>&nbsp;=&nbsp;<i>f</i>(<i>x</i>,<i>y</i>), <i>y</i>(<i>x</i><sub>0</sub>)&nbsp;=&nbsp;<i>y</i><sub>0</sub></nobr> on the specified interval with specified step size and a method of <code>'euler'</code> or <nobr><code>'runge-kutta'</code></nobr>.</p>
 
 <p>For higher-order systems, the function and initial conditions should be vectorized, <i>i.e.</i> the function should return an array of values the same length as the intial conditions array. The solution is returned as an array of arrays of data points, with the independent variable as the first item in each data point array.</p>
 
