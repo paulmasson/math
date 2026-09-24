@@ -22,7 +22,14 @@
 
 function process() {
 
-  try { result.innerHTML = JSON.stringify( Function( 'return ' + expression.value )() ); }
+  try {
+
+    if ( ! /^[0-9a-zA-Z_+\-*/%.,()[\]\s]*$/.test( expression.value ) )
+      throw new Error( 'invalid characters in expression' );
+
+    result.innerHTML = JSON.stringify( Function( 'return ' + expression.value )() );
+
+  }
 
   catch( e ) { result.innerHTML = e.message; }
 
