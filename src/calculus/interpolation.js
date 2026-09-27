@@ -106,18 +106,18 @@ function findRoot( f, start, options={} ) {
 
     var root = start.slice();
 
-    for ( var i = 0; i < maxIter ; i++ ) {
+    for ( var iter = 0; iter < maxIter ; iter++ ) {
 
       var J = [], F = [];
 
-      for ( var j = 0 ; j < root.length ; j++ ) {
-        J.push( gradient( f[j], root ) );
-        F.push( f[j].apply( null, root ) );
+      for ( var i = 0 ; i < root.length ; i++ ) {
+        J.push( gradient( f[i], root ) );
+        F.push( f[i].apply( null, root ) );
       }
 
       var delta = luSolve( J, F );
 
-      for ( var j = 0 ; j < root.length ; j++ ) root[j] -= delta[j];
+      for ( var i = 0 ; i < root.length ; i++ ) root[i] -= delta[i];
 
       if ( delta.every( d => Math.abs(d) < tolerance ) ) return root;
 
@@ -152,7 +152,7 @@ function findRoot( f, start, options={} ) {
         h = a - b;
       }
 
-      for ( var i = 0; i < maxIter ; i++ ) {
+      for ( var iter = 0; iter < maxIter ; iter++ ) {
         h /= 2;
         var mid = root + h;
         fmid = f(mid);
@@ -168,7 +168,7 @@ function findRoot( f, start, options={} ) {
 
       if ( isComplex( f(root) ) ) {
 
-        for ( var i = 0; i < maxIter ; i++ ) {
+        for ( var iter = 0; iter < maxIter ; iter++ ) {
           var delta = div( f(root), diff( f, root ) );
           root = sub( root, delta );
           if ( abs(delta) < tolerance ) return root;
@@ -176,7 +176,7 @@ function findRoot( f, start, options={} ) {
 
       } else {
 
-        for ( var i = 0; i < maxIter ; i++ ) {
+        for ( var iter = 0; iter < maxIter ; iter++ ) {
           var delta = f(root) / diff( f, root );
           root -= delta;
           if ( Math.abs(delta) < tolerance ) return root;
