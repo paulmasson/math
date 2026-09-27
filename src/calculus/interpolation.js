@@ -45,6 +45,55 @@ function partialBell( n, k, argumentArray ) {
 }
 
 
+function polynomialRoots( coefficients, options={} ) {
+
+  var tolerance = 'tolerance' in options ? options.tolerance : 1e-10;
+  var maxIter = 100;
+
+  // Durand-Kerner method simpler than Aberth
+  // coefficient of highest power must be unity
+  
+  var factor = options.reverse ? coefficients[ coefficients.length - 1 ] : coefficients[0];
+  coefficients = coefficients.slice();
+  coefficients.forEach( (e,i,a) => a[i] /= factor );
+
+  function f( x ) { return polynomial( x, coefficients, options ); }
+
+  var roots = [], errors = [];
+
+  if ( 'initial' in options ) {
+    roots = options.initial.slice();
+    if ( roots.length !== coefficients.length - 1 )
+      throw Error( 'Number of initial roots does not match polynomial order' );
+  } else
+    for ( var i = 0 ; i < coefficients.length - 1 ; i++ )
+      roots.push( pow( complex(.4,.9), i ) );
+
+  for ( var iter = 0 ; iter < maxIter ; iter++ ) {
+
+    var temp = [];
+    for ( var i = 0 ; i < roots.length ; i++ ) {
+      var x = roots[i];
+      var combo = f(x); 
+      for ( var j = 0 ; j < roots.length ; j++ ) {
+        if ( j === i ) continue;
+        combo = div( combo, sub( x, roots[j] ) );
+      }
+      temp.push( sub( x, combo ) );
+      errors[i] = combo;
+    }
+
+    for ( var i = 0 ; i < roots.length ; i++ ) roots[i] = temp[i];
+
+    if ( errors.every( e => abs(e) < tolerance ) ) return roots;
+
+  }
+
+  throw Error( 'No roots found for tolerance ' + tolerance );
+
+}
+
+
 function findRoot( f, start, options={} ) {
 
   var tolerance = 'tolerance' in options ? options.tolerance : 1e-10;
