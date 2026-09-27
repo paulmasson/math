@@ -59,7 +59,7 @@ function polynomialRoots( coefficients, options={} ) {
 
   function f( x ) { return polynomial( x, coefficients, options ); }
 
-  var roots = [], errors = [];
+  var roots = [], deltas = [];
 
   if ( 'initial' in options ) {
     roots = options.initial.slice();
@@ -71,7 +71,6 @@ function polynomialRoots( coefficients, options={} ) {
 
   for ( var iter = 0 ; iter < maxIter ; iter++ ) {
 
-    var temp = [];
     for ( var i = 0 ; i < roots.length ; i++ ) {
       var x = roots[i];
       var combo = f(x); 
@@ -79,13 +78,12 @@ function polynomialRoots( coefficients, options={} ) {
         if ( j === i ) continue;
         combo = div( combo, sub( x, roots[j] ) );
       }
-      temp.push( sub( x, combo ) );
-      errors[i] = combo;
+      deltas[i] = combo;
     }
 
-    for ( var i = 0 ; i < roots.length ; i++ ) roots[i] = temp[i];
+    for ( var i = 0 ; i < roots.length ; i++ ) roots[i] = sub( roots[i], deltas[i] );
 
-    if ( errors.every( e => abs(e) < tolerance ) ) return roots;
+    if ( deltas.every( d => abs(d) < tolerance ) ) return roots;
 
   }
 
