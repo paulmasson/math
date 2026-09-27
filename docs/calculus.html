@@ -60,9 +60,9 @@
 <br id="interpolation"/>
 <h1>Interpolation</h1>
 
-<p><b>polynomial( <i>x</i>, coefficients )</b> &mdash; value of polynomial with real or complex coefficients at <i>x</i> by Horner&rsquo;s rule with the coefficient of the highest power first</p>
+<p><b>polynomial( <i>x</i>, coefficients )</b> &mdash; polynomial of a real or complex number from an array of real or complex coefficients with the coefficient of the highest power first</p>
 
-<p><b>polynomial( <i>x</i>, coefficients, options )</b> &mdash; value of polynomial with real or complex coefficients at <i>x</i> by Horner&rsquo;s rule. Options for this dictionary argument include</p>
+<p><b>polynomial( <i>x</i>, coefficients, options )</b> &mdash; polynomial of a real or complex number from an array of real or complex coefficients. Options for this dictionary argument include</p>
 
 <table style="margin-left: 1in"><tr><td style="width: 1.5in; vertical-align: top">
   <code>derivative</code></td><td>return both the value of the polynomial and its derivative as <nobr><code>{ polynomial: value, derivative: value }</code></nobr>
@@ -71,6 +71,16 @@
 </td></tr></table>
 
 <p><b>partialBell( <i>n</i>, <i>k</i>, arguments )</b> &mdash; partial Bell polynomial with integer indices <i>n</i> and <i>k</i> and an array of length <i>n</i>&minus;<i>k</i>+1 of real arguments</p>
+
+<p><b>polynomialRoots( coefficients )</b> &mdash; roots of a polynomial from an array of real or complex coefficients with the coefficient of the highest power first</p>
+
+<p><b>polynomialRoots( coefficients, options )</b> &mdash; roots of a polynomial from an array of real or complex coefficients. Options for this dictionary argument include</p>
+
+<table style="margin-left: 1in"><tr><td style="width: 1.5in; vertical-align: top">
+  <code>initial</code></td><td>array of initial values of roots
+</td></tr><tr><td style="; vertical-align: top">
+  <code>reverse</code></td><td>set to <code>true</code> to reverse the order of coefficients and make the lowest power first
+</td></tr></table>
 
 <br/><p><b>findRoot( <i>f</i>, [<i>a</i>,<i>b</i>] )</b> &mdash; numerical root of a real function on the interval [<i>a</i>,<i>b</i>] by bisection</p>
 
